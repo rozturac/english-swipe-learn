@@ -53,7 +53,7 @@ if (tsc.status !== 0) {
 const mod = await import(
   pathToFileURL(join(tmp, 'distractors.js')).href + '?t=' + Date.now()
 )
-const { pickDistractorItems, detectRegister, buildOptions } = mod
+const { pickDistractorItems, detectRegister, buildOptions, isIdiomItem } = mod
 
 const samples = [
   'go ahead',
@@ -62,11 +62,14 @@ const samples = [
   'could you repeat that?',
   'nice to finally meet you',
   'any plans for the weekend?',
+  'small world',
 ]
 
 function assert(cond, msg) {
   if (!cond) throw new Error(msg)
 }
+
+const IDIOM_LEAK = /dünya küçük|small world|ne tesadüf|buzları erit/i
 
 let failed = 0
 for (const en of samples) {
@@ -77,6 +80,9 @@ for (const en of samples) {
   const regs = picks.map((p) => detectRegister(p))
   const themes = picks.map((p) => p.t)
   const jargonLeak = regT !== 'jargon' && regs.some((r) => r === 'jargon')
+  const idiomLeak =
+    regT !== 'idiom' &&
+    picks.some((p) => isIdiomItem(p) || IDIOM_LEAK.test(`${p.en} ${p.tr} ${p.exTr}`))
   const themeOk = themes.every((t) => t === item.t)
 
   console.log('\n▸', en, `(${regT})`)
@@ -90,13 +96,19 @@ for (const en of samples) {
   try {
     assert(picks.length === 2, 'need 2 distractors')
     assert(!jargonLeak, `jargon distractor for non-jargon target "${en}"`)
+    assert(!idiomLeak, `idiom distractor for non-idiom target "${en}"`)
     const sameThemePool = vocab.filter(
       (x) => x.t === item.t && x.en !== item.en && x.exTr !== item.exTr,
     )
-    if (sameThemePool.length >= 2) {
+    if (sameThemePool.length >= 2 && regT !== 'turn-permission') {
       assert(themeOk, `expected same-theme distractors for "${en}"`)
     }
-    if (regT === 'farewell' || regT === 'turn-permission') {
+    if (
+      regT === 'farewell' ||
+      regT === 'turn-permission' ||
+      regT === 'smalltalk' ||
+      regT === 'clarification'
+    ) {
       const sameRegCount = regs.filter((r) => r === regT).length
       assert(
         sameRegCount >= 1,
@@ -115,12 +127,43 @@ for (const en of samples) {
 
 const go = vocab.find((x) => x.en === 'go ahead')
 const goPicks = pickDistractorItems(go, vocab)
-console.log('\n=== BEFORE (reported bug) ===')
-console.log('EN: go ahead → "Güncellemem bitti; hazır olduğunuzda devam edin."')
-console.log('Bad distractors: "dünya küçük" (small world), "air cover" jargon')
-console.log('=== AFTER ===')
+console.log('\n=== go ahead must never pair with dünya küçük ===')
 for (const p of goPicks) {
   console.log(`- [${detectRegister(p)}] ${p.en}: ${p.exTr}`)
+}
+try {
+  assert(
+    !goPicks.some((p) =>
+      IDIOM_LEAK.test(`${p.en} ${p.tr} ${p.exTr}`),
+    ),
+    'go ahead leaked an idiom distractor',
+  )
+  console.log('  ✓ no idiom leak')
+} catch (e) {
+  failed++
+  console.error('  ✗', e.message)
+}
+
+// Sweep every Tanışma item — functional phrases must not get idioms
+console.log('\n=== Tanışma sweep (no idiom leak on functional phrases) ===')
+const tani = vocab.filter((x) => x.t === 'Tanışma ve sohbet')
+let sweepFail = 0
+for (const item of tani) {
+  const reg = detectRegister(item)
+  if (reg === 'idiom' || isIdiomItem(item)) continue
+  const picks = pickDistractorItems(item, vocab)
+  const leak = picks.filter(
+    (p) => isIdiomItem(p) || IDIOM_LEAK.test(`${p.en} ${p.tr} ${p.exTr}`),
+  )
+  if (leak.length) {
+    sweepFail++
+    console.error(`  ✗ ${item.en} (${reg}) ← ${leak.map((p) => p.en).join(', ')}`)
+  }
+}
+if (sweepFail) {
+  failed += sweepFail
+} else {
+  console.log(`  ✓ ${tani.length} items clean`)
 }
 
 try {

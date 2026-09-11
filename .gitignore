@@ -25,3 +25,6 @@ dist-ssr
 
 .venv
 scripts/.tmp-check
+
+# Local design mockups (large, not needed in git)
+design-refs/

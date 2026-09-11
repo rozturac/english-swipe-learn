@@ -1,6 +1,6 @@
 # English Swipe Learn
 
-Mobile-first EN→TR sentence matching with swipe gestures.
+Mobile-first EN→TR sentence matching with swipe gestures. Dark Reels layout, cosmic glow, neon card border.
 
 **Live:** https://rozturac.github.io/english-swipe-learn/
 
@@ -14,7 +14,7 @@ Mobile-first EN→TR sentence matching with swipe gestures.
 ## Timer & score
 
 - Selectable countdown: **Off / 3s / 5s / 8s / 10s** (chips under the top bar). Preference is remembered.
-- If time runs out before you swipe **up** to lock, the card is marked wrong (red feedback) and the next card appears.
+- If time runs out before you swipe **up** to lock, the card is marked wrong (red flash) and **auto-swipes up** like Reels — it never freezes at 0.0.
 - The countdown number and thin bar reset on every new card.
 - Compact session score in the top bar: **✓ correct · ✗ wrong**.
 

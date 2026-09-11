@@ -22,6 +22,11 @@ type TimerSec = (typeof TIMER_OPTIONS)[number]
 const TIMER_KEY = 'esl-timer-sec'
 const COACH_KEY = 'esl-coach-v1'
 
+/** Reels-style exit: keep in sync with CSS reel-exit-up (~640ms ease-out). */
+const EXIT_OK_MS = 620
+const EXIT_TIMEOUT_MS = 680
+const EXIT_WRONG_MS = 820
+
 function loadTimerPref(): TimerSec {
   try {
     const v = Number(localStorage.getItem(TIMER_KEY) ?? '0')
@@ -175,15 +180,16 @@ export default function App() {
 
   const resolveAnswer = useCallback(
     (forceWrong = false) => {
-      if (!current || lockingRef.current || options.length !== 3) return
+      if (!current || lockingRef.current) return
+      if (!forceWrong && options.length !== 3) return
       lockingRef.current = true
       setLocking(true)
       setDragX(0)
       setDragY(0)
-      // Never freeze on a selectable 0.0 — clear timer + Reels-style fly-up
+      // Never freeze on a selectable 0.0 — clear timer + Reels fly-up
       setRemain(null)
       setExitUp(true)
-      const ok = !forceWrong && selected === correctIndex
+      const ok = !forceWrong && options.length === 3 && selected === correctIndex
       setProgress((p) => recordAnswer(p, current.en, ok))
       setScore((s) =>
         ok
@@ -194,12 +200,11 @@ export default function App() {
         setFlash('correct')
         advanceTimer.current = window.setTimeout(() => {
           goNext(true, current)
-        }, 380)
+        }, EXIT_OK_MS)
       } else {
         setFlash('wrong')
-        setRevealCorrect(correctIndex)
-        // Timeout: snappy Reels advance; manual wrong: brief correct-TR glance
-        const delay = forceWrong ? 520 : 780
+        if (options.length === 3) setRevealCorrect(correctIndex)
+        const delay = forceWrong ? EXIT_TIMEOUT_MS : EXIT_WRONG_MS
         advanceTimer.current = window.setTimeout(() => {
           goNext(false, current)
         }, delay)
@@ -216,25 +221,35 @@ export default function App() {
   }, [resolveAnswer])
 
   useEffect(() => {
-    if (!current || sessionOver || locking || timerSec === 0) {
-      if (timerSec === 0 || !current || sessionOver) setRemain(null)
+    if (!current || sessionOver || locking || timerSec === 0 || showCoach) {
+      if (timerSec === 0 || !current || sessionOver || showCoach) setRemain(null)
       return
     }
     const totalMs = timerSec * 1000
     const started = performance.now()
+    let fired = false
+    const fire = () => {
+      if (fired || lockingRef.current) return
+      fired = true
+      setRemain(null)
+      resolveRef.current(true)
+    }
     setRemain(timerSec)
     const id = window.setInterval(() => {
-      const left = Math.max(0, totalMs - (performance.now() - started))
-      if (left <= 0) {
+      const left = totalMs - (performance.now() - started)
+      if (left <= 80) {
         window.clearInterval(id)
-        // resolveAnswer clears remain + starts Reels fly-up — never paint 0.0
-        resolveRef.current(true)
+        fire()
         return
       }
       setRemain(left / 1000)
     }, 50)
-    return () => window.clearInterval(id)
-  }, [current?.en, doneCount, timerSec, sessionOver, locking])
+    const to = window.setTimeout(fire, totalMs)
+    return () => {
+      window.clearInterval(id)
+      window.clearTimeout(to)
+    }
+  }, [current?.en, doneCount, timerSec, sessionOver, locking, showCoach])
 
   const onLeft = useCallback(() => {
     if (locking) return
@@ -288,7 +303,7 @@ export default function App() {
     saveTimerPref(sec)
   }
 
-  const progressText = `${Math.min(doneCount, SESSION_LEN)} / ${SESSION_LEN}`
+  const progressText = `${Math.min(doneCount, SESSION_LEN)} / ${SESSION_LEN} cümle`
   const flashClass =
     flash === 'correct' ? 'flash-correct' : flash === 'wrong' ? 'flash-wrong' : ''
   const frozen = locking || flash !== 'none' || exitUp
@@ -299,6 +314,7 @@ export default function App() {
       ? Math.max(0, Math.min(100, (remain / timerSec) * 100))
       : 0
   const remainUrgent = remain !== null && remain <= 2 && !frozen
+  const showRemain = remain !== null && remain > 0.12 && !sessionOver && !exitUp
 
   const stopBubble = {
     onPointerDown: (e: PointerEvent) => e.stopPropagation(),
@@ -312,6 +328,15 @@ export default function App() {
 
   return (
     <div className={`app ${flashClass}${frozen ? ' is-frozen' : ''}${exitUp ? ' is-exit-up' : ''}`} {...swipe}>
+      <div className="cosmos" aria-hidden>
+        <span className="nebula" />
+        <span className="orb orb-lg" />
+        <span className="orb orb-sm" />
+        <span className="orb orb-mid" />
+        <span className="star star-a" />
+        <span className="star star-b" />
+        <span className="star star-c" />
+      </div>
       <div className="flash-veil" aria-hidden />
 
       <header className="topbar">
@@ -389,7 +414,7 @@ export default function App() {
             {sec === 0 ? 'Off' : `${sec}s`}
           </button>
         ))}
-        {remain !== null && !sessionOver && !exitUp && (
+        {showRemain && (
           <span
             className={`timer-count ${remainUrgent ? 'urgent' : ''}`}
             aria-live="polite"
@@ -398,7 +423,7 @@ export default function App() {
           </span>
         )}
       </div>
-      {timerSec > 0 && remain !== null && !sessionOver && !exitUp && (
+      {timerSec > 0 && showRemain && (
         <div className="timer-bar" aria-hidden>
           <div
             className={`timer-bar-fill ${remainUrgent ? 'urgent' : ''}`}
@@ -443,6 +468,7 @@ export default function App() {
           </section>
 
           <section className={`tr-area${frozen ? ' is-frozen' : ''}`}>
+            <p className="swipe-hint">← → seç · ↑ kilitle</p>
             <OptionStrip
               options={options}
               selected={selected}

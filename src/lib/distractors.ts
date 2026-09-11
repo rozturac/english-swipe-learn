@@ -9,17 +9,26 @@ export type Register =
   | 'clarification'
   | 'intro-bio'
   | 'offer-help'
+  | 'idiom'
   | 'jargon'
   | 'general'
 
+/** Idioms must never mix with functional small-talk / floor-management phrases. */
+const IDIOM_MARK =
+  /\b(small world|that'?s a coincidence|break the ice|we have that in common|I can relate|small talk|bear with my English|dünya küçük|buzları erit|ne tesadüf|ortak yan|hoşbeş)\b/i
+
 const REGISTER_RULES: { tag: Register; re: RegExp }[] = [
+  {
+    tag: 'idiom',
+    re: IDIOM_MARK,
+  },
   {
     tag: 'jargon',
     re: /\b(air cover|bar raiser|bench strength|align upward|backchannel|absorb the noise|commit vs stretch|reorg|escalation|promo|perf |OKR|KPI|headcount|bandwidth|synerg|leverage|unblock|ship it|tech debt|on-?call|pager|SLA|runbook|Uber teknik|üstten koruma)\b/i,
   },
   {
     tag: 'turn-permission',
-    re: /\b(go ahead|go on|feel free|whenever you'?re ready|my door is always open|consider it handled|ping me|shout if|buyur|devam ed)\b/i,
+    re: /\b(go ahead|go on|over to you|whenever you'?re ready|buyur|söz sende|pardon,? devam|devam ed)\b/i,
   },
   {
     tag: 'farewell',
@@ -27,15 +36,15 @@ const REGISTER_RULES: { tag: Register; re: RegExp }[] = [
   },
   {
     tag: 'greeting',
-    re: /\b(nice to (finally )?meet|great to put a face|I'?ve heard a lot|likewise|same here|tanışmak|isme bir yüz|same here|benzer şekilde)\b/i,
+    re: /\b(nice to (finally )?meet|great to put a face|I'?ve heard a lot|likewise|same here|tanışmak|isme bir yüz)\b/i,
   },
   {
     tag: 'clarification',
-    re: /\b(repeat|say that again|didn'?t catch|cut out|breaking up|hear me|talked over|sorry,? go on|tekrarlay|ses kesildi|duyabiliyor|anlamadım)\b/i,
+    re: /\b(repeat|say that again|didn'?t catch|cut out|breaking up|hear me|talked over|tekrarlay|ses kesildi|duyabiliyor|anlamadım)\b/i,
   },
   {
     tag: 'smalltalk',
-    re: /\b(weekend|weather|how'?s your week|any plans|time off|PTO|settling in|how have you been|small world|coincidence|hafta sonu|hava nasıl|izin|dünya küçük)\b/i,
+    re: /\b(weekend|weather|how'?s your week|any plans|time off|PTO|settling in|how have you been|hafta sonu|hava nasıl|izin)\b/i,
   },
   {
     tag: 'intro-bio',
@@ -43,7 +52,7 @@ const REGISTER_RULES: { tag: Register; re: RegExp }[] = [
   },
   {
     tag: 'offer-help',
-    re: /\b(shout if you need|feel free to ping|my door|who else should|what should I be reading|yardım|ihtiyacınız)\b/i,
+    re: /\b(shout if you need|feel free to ping|feel free|my door|who else should|what should I be reading|consider it handled|ping me|yardım|ihtiyacınız)\b/i,
   },
 ]
 
@@ -55,16 +64,59 @@ const THEME_GROUPS: string[][] = [
   ['Defter (genel kelime)', 'Genel (düşük öncelik)', 'Okuma metinleri'],
 ]
 
+/** Dialogue families that must stay in-family when enough peers exist. */
+export const DIALOGUE_FAMILIES = new Set<Register>([
+  'turn-permission',
+  'farewell',
+  'greeting',
+  'smalltalk',
+  'clarification',
+  'intro-bio',
+  'offer-help',
+  'idiom',
+])
+
+const RELATED_FAMILY: Record<Register, Register[]> = {
+  'turn-permission': ['offer-help', 'clarification'],
+  'offer-help': ['turn-permission'],
+  farewell: ['greeting'],
+  greeting: ['farewell', 'intro-bio'],
+  clarification: ['turn-permission'],
+  smalltalk: ['greeting'],
+  'intro-bio': ['greeting', 'smalltalk'],
+  idiom: [],
+  jargon: [],
+  general: [],
+}
+
+function phraseOf(item: VocabItem): string {
+  return `${item.en} ${item.tr}`
+}
+
 function haystack(item: VocabItem): string {
   return `${item.en} ${item.tr} ${item.ex} ${item.exTr}`
 }
 
+export function isIdiomItem(item: VocabItem): boolean {
+  return (
+    IDIOM_MARK.test(item.en) ||
+    IDIOM_MARK.test(item.tr) ||
+    IDIOM_MARK.test(item.exTr) ||
+    detectRegister(item) === 'idiom'
+  )
+}
+
 export function detectRegister(item: VocabItem): Register {
+  const phrase = phraseOf(item)
+  for (const rule of REGISTER_RULES) {
+    if (rule.re.test(phrase) || rule.re.test(item.en)) return rule.tag
+  }
+  // Example sentences can mention unrelated jargon — don't let that leak.
   const h = haystack(item)
   for (const rule of REGISTER_RULES) {
-    if (rule.re.test(h) || rule.re.test(item.en)) return rule.tag
+    if (rule.tag === 'jargon') continue
+    if (rule.re.test(h)) return rule.tag
   }
-  // Short colloquial meeting phrases → treat as turn/smalltalk-ish general
   if (item.t === 'Tanışma ve sohbet' && item.en.split(/\s+/).length <= 4) {
     return 'general'
   }
@@ -113,10 +165,15 @@ function lenClose(a: string, b: string): number {
   return Math.abs(a.length - b.length)
 }
 
+function relatedTo(regT: Register, regC: Register): boolean {
+  if (regT === regC) return true
+  return RELATED_FAMILY[regT]?.includes(regC) ?? false
+}
+
 /**
  * Higher = better distractor. Prefers same theme, same register,
  * similar length, overlapping vocabulary; heavily penalizes jargon
- * against non-jargon conversational targets.
+ * and unrelated idioms against conversational targets.
  */
 export function distractorScore(target: VocabItem, cand: VocabItem): number {
   const regT = detectRegister(target)
@@ -127,19 +184,19 @@ export function distractorScore(target: VocabItem, cand: VocabItem): number {
   else if (themesRelated(cand.t, target.t)) score += 45
   else score -= 25
 
-  if (regT === regC) score += 100
-  else if (regT !== 'jargon' && regC === 'jargon') score -= 140
+  if (regT === regC) score += 140
+  else if (relatedTo(regT, regC)) score += 40
+  else if (regT !== 'jargon' && regC === 'jargon') score -= 160
   else if (regT === 'jargon' && regC !== 'jargon') score -= 50
+  else if (regT !== 'idiom' && regC === 'idiom') score -= 200
+  else if (regT === 'idiom' && regC !== 'idiom') score -= 160
   else score -= 35
 
-  // Length proximity (exTr)
   const ld = lenClose(cand.exTr, target.exTr)
   score += Math.max(0, 40 - ld)
 
-  // Difficulty proximity
   score += Math.max(0, 12 - Math.abs(cand.d - target.d) * 3)
 
-  // Vocabulary / function overlap on EN + TR gloss
   const ov =
     overlapScore(target.en, cand.en) * 0.55 +
     overlapScore(`${target.tr} ${target.ex}`, `${cand.tr} ${cand.ex}`) * 0.25 +
@@ -149,10 +206,28 @@ export function distractorScore(target: VocabItem, cand: VocabItem): number {
   return score
 }
 
+function hardReject(cand: VocabItem, opts: {
+  idiomOk: boolean
+  jargonOk: boolean
+  familyOnly: boolean
+  regT: Register
+}): boolean {
+  const regC = detectRegister(cand)
+  if (!opts.idiomOk && (regC === 'idiom' || isIdiomItem(cand))) return true
+  if (opts.regT === 'idiom' && regC !== 'idiom' && !isIdiomItem(cand)) return true
+  if (!opts.jargonOk && regC === 'jargon') return true
+  if (opts.familyOnly && !relatedTo(opts.regT, regC) && regC !== opts.regT) {
+    return true
+  }
+  return false
+}
+
 /**
  * Pick the two best distractor items (deterministic order by score).
- * Hard rule: never pick jargon distractors for a non-jargon target when
- * enough same-theme non-jargon alternatives exist.
+ * Hard rules:
+ *  - Idioms never mix with functional dialogue (go ahead ≠ dünya küçük).
+ *  - Small-talk / dialogue families stay in-family when peers exist.
+ *  - Jargon never leaks onto non-jargon conversational targets.
  */
 export function pickDistractorItems(
   item: VocabItem,
@@ -165,33 +240,54 @@ export function pickDistractorItems(
   )
 
   const sameTheme = base.filter((x) => x.t === item.t)
-  const sameThemeNonJargon = sameTheme.filter(
-    (x) => detectRegister(x) !== 'jargon',
-  )
   const sameReg = base.filter((x) => detectRegister(x) === regT)
+  const sameThemeSameReg = sameTheme.filter((x) => detectRegister(x) === regT)
+  const relatedFamily = base.filter((x) => relatedTo(regT, detectRegister(x)))
   const related = base.filter(
     (x) => x.t !== item.t && themesRelated(x.t, item.t),
   )
 
-  const forbidJargon =
-    regT !== 'jargon' && sameThemeNonJargon.length >= 2
+  const isDialogue = DIALOGUE_FAMILIES.has(regT)
+  const idiomTarget = regT === 'idiom' || isIdiomItem(item)
+  const familyPool = sameReg.length >= 2 ? sameReg : [...sameReg, ...relatedFamily]
+  const familyOnly = isDialogue && familyPool.filter(
+    (x, i, a) => a.findIndex((y) => y.en === x.en) === i,
+  ).length >= 2
 
-  const tiers: VocabItem[][] = []
-  if (regT !== 'general') {
-    tiers.push(sameTheme.filter((x) => detectRegister(x) === regT))
+  const jargonOk = regT === 'jargon'
+  const idiomOk = idiomTarget
+
+  const filter = (cands: VocabItem[]) =>
+    cands.filter(
+      (c) =>
+        !hardReject(c, { idiomOk, jargonOk, familyOnly, regT }),
+    )
+
+  const tiers: VocabItem[][] = [
+    filter(sameThemeSameReg),
+    filter(sameReg),
+    filter(relatedFamily.filter((x) => x.t === item.t)),
+    filter(relatedFamily),
+    filter(sameTheme),
+    filter(related),
+    filter(base),
+  ]
+
+  // Last-resort: drop family-only, still never mix idioms / jargon.
+  if (!idiomOk || !jargonOk) {
+    tiers.push(
+      base.filter(
+        (c) =>
+          !hardReject(c, {
+            idiomOk,
+            jargonOk,
+            familyOnly: false,
+            regT,
+          }),
+      ),
+    )
   }
-  if (forbidJargon) {
-    tiers.push(sameThemeNonJargon)
-  }
-  tiers.push(sameTheme)
-  tiers.push(sameReg.filter((x) => themesRelated(x.t, item.t)))
-  tiers.push(related)
-  if (!forbidJargon) {
-    tiers.push(base)
-  } else {
-    tiers.push(base.filter((x) => detectRegister(x) !== 'jargon'))
-    tiers.push(base) // last resort
-  }
+  tiers.push(base)
 
   const picked: VocabItem[] = []
   const usedTr = new Set<string>([correct])
@@ -204,7 +300,8 @@ export function pickDistractorItems(
       if (picked.length >= 2) break
       if (usedTr.has(c.exTr)) continue
       if ([...usedTr].some((u) => similarText(u, c.exTr))) continue
-      if (forbidJargon && detectRegister(c) === 'jargon') continue
+      if (!idiomOk && isIdiomItem(c)) continue
+      if (!jargonOk && detectRegister(c) === 'jargon') continue
       picked.push(c)
       usedTr.add(c.exTr)
     }
@@ -215,11 +312,11 @@ export function pickDistractorItems(
     takeFrom(tier)
   }
 
-  // Absolute fallback
   if (picked.length < 2) {
     for (const c of base) {
       if (picked.length >= 2) break
       if (usedTr.has(c.exTr)) continue
+      if (!idiomOk && isIdiomItem(c)) continue
       picked.push(c)
       usedTr.add(c.exTr)
     }
