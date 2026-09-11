@@ -5,16 +5,18 @@ type Props = {
   selected: number
   revealCorrect?: number | null
   dragX?: number
+  frozen?: boolean
 }
 
-const CARD_RATIO = 0.78
-const GAP_PX = 12
+const CARD_RATIO = 0.8
+const GAP_PX = 10
 
 export function OptionStrip({
   options,
   selected,
   revealCorrect = null,
   dragX = 0,
+  frozen = false,
 }: Props) {
   const viewportRef = useRef<HTMLDivElement>(null)
   const [vw, setVw] = useState(360)
@@ -34,16 +36,17 @@ export function OptionStrip({
   const cardW = Math.round(vw * CARD_RATIO)
   const sidePad = Math.round((vw - cardW) / 2)
   const step = cardW + GAP_PX
-  const nudge = Math.max(-32, Math.min(32, dragX * 0.14))
+  const nudge = frozen ? 0 : Math.max(-28, Math.min(28, dragX * 0.12))
   const tx = -selected * step + nudge
 
   return (
-    <div className="option-viewport" ref={viewportRef}>
+    <div className={`option-viewport${frozen ? ' is-frozen' : ''}`} ref={viewportRef}>
       <div
         className="option-strip"
         style={{
           paddingLeft: sidePad,
           transform: `translate3d(${tx}px, 0, 0)`,
+          transition: frozen ? 'none' : undefined,
         }}
       >
         {options.map((text, i) => {
@@ -59,6 +62,7 @@ export function OptionStrip({
                 isSel ? 'is-selected' : 'is-side',
                 isReveal ? 'is-reveal' : '',
                 isWrongSel ? 'is-wrong' : '',
+                frozen ? 'is-locked' : '',
               ]
                 .filter(Boolean)
                 .join(' ')}

@@ -28,4 +28,5 @@ Vite + React + TypeScript · GitHub Pages (`base: /english-swipe-learn/`)
 npm install
 npm run dev
 npm run build
+npm run check:distractors
 ```

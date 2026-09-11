@@ -20,6 +20,7 @@ const vocab = vocabRaw as VocabItem[]
 const TIMER_OPTIONS = [0, 3, 5, 8, 10] as const
 type TimerSec = (typeof TIMER_OPTIONS)[number]
 const TIMER_KEY = 'esl-timer-sec'
+const COACH_KEY = 'esl-coach-v1'
 
 function loadTimerPref(): TimerSec {
   try {
@@ -33,6 +34,22 @@ function loadTimerPref(): TimerSec {
 function saveTimerPref(sec: TimerSec) {
   try {
     localStorage.setItem(TIMER_KEY, String(sec))
+  } catch {
+    /* ignore */
+  }
+}
+
+function loadCoachSeen(): boolean {
+  try {
+    return localStorage.getItem(COACH_KEY) === '1'
+  } catch {
+    return false
+  }
+}
+
+function saveCoachSeen() {
+  try {
+    localStorage.setItem(COACH_KEY, '1')
   } catch {
     /* ignore */
   }
@@ -57,6 +74,7 @@ export default function App() {
   const [timerSec, setTimerSec] = useState<TimerSec>(loadTimerPref)
   const [remain, setRemain] = useState<number | null>(null)
   const [score, setScore] = useState({ ok: 0, wrong: 0 })
+  const [showCoach, setShowCoach] = useState(() => !loadCoachSeen())
   const advanceTimer = useRef<number | null>(null)
   const doneRef = useRef(0)
   const lockingRef = useRef(false)
@@ -86,6 +104,11 @@ export default function App() {
     }
   }, [])
 
+  const dismissCoach = useCallback(() => {
+    saveCoachSeen()
+    setShowCoach(false)
+  }, [])
+
   const startNewSession = useCallback(() => {
     const p = loadProgress()
     setProgress(p)
@@ -99,6 +122,8 @@ export default function App() {
     lockingRef.current = false
     setLocking(false)
     setRemain(null)
+    setDragX(0)
+    setDragY(0)
   }, [])
 
   const goNext = useCallback((wasCorrect: boolean, item: VocabItem) => {
@@ -114,19 +139,19 @@ export default function App() {
       setLocking(false)
       setQueue([])
       setRemain(null)
+      setDragX(0)
+      setDragY(0)
       return
     }
 
     setQueue((q) => {
       const rest = q.slice(1)
       if (!wasCorrect) return requeueWrong(rest, item)
-      // High streak → rarely resurface this session
       const entry = loadProgress()[item.en]
       const streak = entry?.streak ?? 0
       if (streak >= 3 && Math.random() < 0.12) {
         return [...rest, item]
       }
-      // Ensure queue doesn't empty early: pad from fresh pick if needed
       if (rest.length === 0) {
         const filler = pickSession(vocab, loadProgress()).filter(
           (x) => x.en !== item.en,
@@ -148,6 +173,9 @@ export default function App() {
       if (!current || lockingRef.current || options.length !== 3) return
       lockingRef.current = true
       setLocking(true)
+      setDragX(0)
+      setDragY(0)
+      setRemain(0)
       const ok = !forceWrong && selected === correctIndex
       setProgress((p) => recordAnswer(p, current.en, ok))
       setScore((s) =>
@@ -210,8 +238,9 @@ export default function App() {
   const swipe = useSwipe(
     { onLeft, onRight, onUp: lockAnswer },
     {
-      disabled: locking || !current,
+      disabled: locking || !current || showCoach,
       onDrag: (dx, dy) => {
+        if (lockingRef.current) return
         setDragX(dx)
         setDragY(dy)
       },
@@ -224,6 +253,13 @@ export default function App() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (showCoach) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          dismissCoach()
+        }
+        return
+      }
       if (locking || !current) return
       if (e.key === 'ArrowLeft') onLeft()
       else if (e.key === 'ArrowRight') onRight()
@@ -234,31 +270,42 @@ export default function App() {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [locking, current, onLeft, onRight, lockAnswer])
+  }, [locking, current, onLeft, onRight, lockAnswer, showCoach, dismissCoach])
 
   const chooseTimer = (sec: TimerSec) => {
     setTimerSec(sec)
     saveTimerPref(sec)
   }
 
-  const progressText = `${Math.min(doneCount, SESSION_LEN)} / ${SESSION_LEN} cümle`
+  const progressText = `${Math.min(doneCount, SESSION_LEN)} / ${SESSION_LEN}`
   const flashClass =
     flash === 'correct' ? 'flash-correct' : flash === 'wrong' ? 'flash-wrong' : ''
-  const liftY = locking ? 0 : Math.max(-48, Math.min(0, dragY * 0.28))
+  const frozen = locking || flash !== 'none'
+  const liftY = frozen ? 0 : Math.max(-40, Math.min(0, dragY * 0.22))
+  const stripDrag = frozen ? 0 : dragX
   const remainPct =
-    timerSec > 0 && remain !== null ? Math.max(0, Math.min(100, (remain / timerSec) * 100)) : 0
-  const remainUrgent = remain !== null && remain <= 2
+    timerSec > 0 && remain !== null
+      ? Math.max(0, Math.min(100, (remain / timerSec) * 100))
+      : 0
+  const remainUrgent = remain !== null && remain <= 2 && !frozen
 
   const stopBubble = {
     onPointerDown: (e: PointerEvent) => e.stopPropagation(),
     onClick: (e: MouseEvent) => e.stopPropagation(),
   }
 
+  const accuracy =
+    score.ok + score.wrong > 0
+      ? Math.round((score.ok / (score.ok + score.wrong)) * 100)
+      : 0
+
   return (
-    <div className={`app ${flashClass}`} {...swipe}>
+    <div className={`app ${flashClass}${frozen ? ' is-frozen' : ''}`} {...swipe}>
+      <div className="flash-veil" aria-hidden />
+
       <header className="topbar">
         <div className="topbar-left">
-          <div className="progress">{progressText}</div>
+          <div className="progress">{progressText} <span className="progress-label">cümle</span></div>
           <div
             className="session-score"
             aria-label={`Bildin ${score.ok}, Bilemedin ${score.wrong}`}
@@ -306,6 +353,15 @@ export default function App() {
             >
               Yeni oturum
             </button>
+            <button
+              type="button"
+              onClick={() => {
+                setShowMenu(false)
+                setShowCoach(true)
+              }}
+            >
+              İpuçlarını göster
+            </button>
           </div>
         )}
       </header>
@@ -324,37 +380,49 @@ export default function App() {
         ))}
         {remain !== null && !sessionOver && (
           <span
-            className={`timer-count ${remainUrgent ? 'urgent' : ''}`}
+            className={`timer-count ${remainUrgent ? 'urgent' : ''} ${frozen && remain <= 0 ? 'timed-out' : ''}`}
             aria-live="polite"
           >
-            {remain.toFixed(1)}
+            {frozen && remain <= 0 ? '0.0' : remain.toFixed(1)}
           </span>
         )}
       </div>
       {timerSec > 0 && remain !== null && !sessionOver && (
         <div className="timer-bar" aria-hidden>
           <div
-            className={`timer-bar-fill ${remainUrgent ? 'urgent' : ''}`}
-            style={{ width: `${remainPct}%` }}
+            className={`timer-bar-fill ${remainUrgent || (frozen && remain <= 0) ? 'urgent' : ''}`}
+            style={{ width: `${frozen && remain <= 0 ? 0 : remainPct}%` }}
           />
         </div>
       )}
 
       {sessionOver || !current ? (
         <div className="session-end">
-          <h1>Oturum bitti</h1>
-          <p>{SESSION_LEN} cümle tamamlandı.</p>
-          <p className="session-score-final">
-            <span className="score-ok">✓ {score.ok}</span>
-            <span className="score-sep">·</span>
-            <span className="score-bad">✗ {score.wrong}</span>
-          </p>
-          <button type="button" className="primary" onClick={startNewSession}>
-            Tekrar
-          </button>
+          <div className="session-end-card">
+            <p className="session-end-kicker">Oturum tamam</p>
+            <h1>Tebrikler</h1>
+            <p className="session-end-sub">{SESSION_LEN} cümle bitti.</p>
+            <div className="session-end-stats">
+              <div className="stat-pill ok">
+                <span className="stat-num">✓ {score.ok}</span>
+                <span className="stat-label">doğru</span>
+              </div>
+              <div className="stat-pill bad">
+                <span className="stat-num">✗ {score.wrong}</span>
+                <span className="stat-label">yanlış</span>
+              </div>
+              <div className="stat-pill acc">
+                <span className="stat-num">{accuracy}%</span>
+                <span className="stat-label">isabet</span>
+              </div>
+            </div>
+            <button type="button" className="primary" onClick={startNewSession}>
+              Tekrar oyna
+            </button>
+          </div>
         </div>
       ) : (
-        <>
+        <div className="play-stage">
           <section
             className="en-area"
             style={{ transform: `translate3d(0, ${liftY}px, 0)` }}
@@ -363,18 +431,49 @@ export default function App() {
             <p className="theme-chip">{current.t}</p>
           </section>
 
-          <section className="tr-area">
-            <p className="swipe-hint" aria-hidden>
-              ← → seç · ↑ kilitle
-            </p>
+          <section className={`tr-area${frozen ? ' is-frozen' : ''}`}>
+            {!showCoach && (
+              <p className="swipe-hint" aria-hidden>
+                ← → seç · ↑ kilitle
+              </p>
+            )}
             <OptionStrip
               options={options}
               selected={selected}
               revealCorrect={revealCorrect}
-              dragX={dragX}
+              dragX={stripDrag}
+              frozen={frozen}
             />
           </section>
-        </>
+        </div>
+      )}
+
+      {showCoach && current && (
+        <div
+          className="coach-overlay"
+          role="dialog"
+          aria-label="Nasıl oynanır"
+          onPointerDown={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="coach-card">
+            <p className="coach-title">Nasıl oynanır</p>
+            <ul className="coach-list">
+              <li>
+                <span className="coach-key">← →</span> Türkçe seçeneği kaydır
+              </li>
+              <li>
+                <span className="coach-key">↑</span> Cevabı kilitle
+              </li>
+              <li>
+                <span className="coach-key">⏱</span> Süre dolarsa yanlış sayılır
+              </li>
+            </ul>
+            <button type="button" className="primary coach-cta" onClick={dismissCoach}>
+              Anladım
+            </button>
+          </div>
+        </div>
       )}
     </div>
   )
