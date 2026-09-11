@@ -331,11 +331,15 @@ export default function App() {
       <div className="cosmos" aria-hidden>
         <span className="nebula" />
         <span className="orb orb-lg" />
+        <span className="orb orb-flare" />
         <span className="orb orb-sm" />
         <span className="orb orb-mid" />
         <span className="star star-a" />
         <span className="star star-b" />
         <span className="star star-c" />
+        <span className="star star-d" />
+        <span className="star star-e" />
+        <span className="cosmos-vignette" />
       </div>
       <div className="flash-veil" aria-hidden />
 
