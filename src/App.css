@@ -23,6 +23,16 @@
   --space-5: 20px;
   --border: rgba(255, 255, 255, 0.07);
   --border-strong: rgba(255, 255, 255, 0.12);
+  --neon-grad: linear-gradient(
+    90deg,
+    #ff00ee 0%,
+    #ff2eb8 18%,
+    #c084fc 42%,
+    #38bdf8 72%,
+    #00ccff 100%
+  );
+  --neon-mag: #ff2eb8;
+  --neon-cyan: #22d3ee;
   --spring: cubic-bezier(0.22, 1.2, 0.36, 1);
   --spring-soft: cubic-bezier(0.34, 1.3, 0.64, 1);
   --reel-out: cubic-bezier(0.16, 0.78, 0.24, 1);
@@ -87,8 +97,8 @@ body,
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 72% 58% at 50% 42%, transparent 28%, rgba(4, 2, 12, 0.52) 100%),
-    linear-gradient(180deg, rgba(5, 4, 10, 0.28) 0%, transparent 16%, transparent 70%, rgba(5, 4, 10, 0.55) 100%);
+    radial-gradient(ellipse 78% 62% at 50% 40%, transparent 34%, rgba(4, 2, 12, 0.42) 100%),
+    linear-gradient(180deg, rgba(5, 4, 10, 0.22) 0%, transparent 14%, transparent 72%, rgba(5, 4, 10, 0.48) 100%);
   pointer-events: none;
 }
 
@@ -169,21 +179,23 @@ body,
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  padding: 2px var(--space-3) 6px;
+  gap: 6px;
+  padding: 8px var(--space-3) 8px;
+  margin: 0 var(--space-4);
   flex-shrink: 0;
   position: relative;
   z-index: 4;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .timer-chip {
-  background: rgba(18, 16, 28, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(12, 10, 20, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   color: #9aa3b5;
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  padding: 5px 10px;
+  padding: 5px 11px;
   min-height: 28px;
   min-width: 34px;
   border-radius: var(--radius-pill);
@@ -197,12 +209,12 @@ body,
 }
 
 .timer-chip.on {
-  background: #3b82f6;
-  border-color: #3b82f6;
-  color: #ffffff;
+  background: rgba(10, 14, 28, 0.88);
+  border-color: #67e8f9;
+  color: #f8fafc;
   box-shadow:
-    0 2px 8px rgba(59, 130, 246, 0.45),
-    0 0 14px rgba(59, 130, 246, 0.28);
+    0 0 6px rgba(103, 232, 249, 0.55),
+    0 0 14px rgba(34, 211, 238, 0.28);
 }
 
 .timer-count {
@@ -296,8 +308,8 @@ body,
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 12px;
-  padding: 12px 0 4px;
+  gap: 18px;
+  padding: 18px 0 6px;
   will-change: transform, opacity;
 }
 
@@ -371,22 +383,21 @@ body,
 
 .en-highlight {
   display: inline;
-  padding: 0.12em 0.58em 0.16em;
+  padding: 0.1em 0.55em 0.14em;
   margin: 0 0.06em;
   border-radius: 999px;
   color: #fff;
   font-weight: 650;
-  border: 3px solid transparent;
+  border: 2px solid #22d3ee;
   /* Keep the full target phrase as one pill — never split across lines */
   white-space: nowrap;
-  background:
-    linear-gradient(#0a0814, #0a0814) padding-box,
-    linear-gradient(118deg, #ff3dc8 0%, #f472b6 22%, #67e8f9 62%, #22d3ee 100%) border-box;
+  background: rgba(5, 4, 10, 0.88);
   box-shadow:
-    0 0 12px rgba(255, 61, 200, 0.55),
-    0 0 28px rgba(255, 77, 206, 0.4),
-    0 0 40px rgba(34, 211, 238, 0.4),
-    0 0 64px rgba(103, 232, 249, 0.22);
+    0 0 6px rgba(34, 211, 238, 0.85),
+    0 0 14px rgba(34, 211, 238, 0.55),
+    0 0 28px rgba(103, 232, 249, 0.35),
+    0 0 42px rgba(34, 211, 238, 0.18),
+    inset 0 0 10px rgba(34, 211, 238, 0.12);
 }
 
 
@@ -423,7 +434,7 @@ body,
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding: 18px 0 6px;
+  padding: 28px 0 14px;
   /* Soft edge fade only — keep side cards peeking */
   mask-image: linear-gradient(90deg, transparent 0%, #000 1.5%, #000 98.5%, transparent 100%);
   -webkit-mask-image: linear-gradient(
@@ -449,55 +460,99 @@ body,
 .option-card {
   position: relative;
   flex: 0 0 auto;
-  background: var(--card-side);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  background: rgba(5, 4, 10, 0.82);
+  border: 1px solid transparent;
+  border-radius: 36px;
   padding: 26px 20px;
   min-height: 132px;
   display: flex;
   align-items: center;
   justify-content: center;
   transform: scale(0.9);
-  opacity: 0.55;
+  opacity: 0.62;
+  box-shadow:
+    0 0 10px rgba(255, 0, 220, 0.12),
+    0 0 18px rgba(0, 180, 255, 0.1);
   transition:
     transform 0.48s var(--spring-soft),
     opacity 0.35s ease,
     background 0.3s ease,
-    box-shadow 0.35s ease;
+    box-shadow 0.35s ease,
+    border-color 0.3s ease;
   will-change: transform, opacity;
+}
+
+/* thin neon stroke on every card so side peeks show magenta/cyan edges */
+.option-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: var(--neon-grad);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.55;
+  filter: brightness(0.95) saturate(1.05);
 }
 
 .option-card.is-selected {
   transform: scale(1);
   opacity: 1;
-  background: #0c0b14;
+  background: rgba(5, 4, 10, 0.92);
   border-color: transparent;
+  border-radius: 40px;
   box-shadow:
-    0 20px 56px rgba(0, 0, 0, 0.6),
-    0 0 22px rgba(255, 61, 200, 0.45),
-    0 0 48px rgba(255, 77, 206, 0.35),
-    0 0 72px rgba(34, 211, 238, 0.35),
-    0 0 110px rgba(34, 211, 238, 0.18);
+    /* thick magenta→cyan double-line bloom (ref-frame) */
+    0 0 4px rgba(255, 255, 255, 0.35),
+    0 0 12px rgba(255, 0, 220, 0.85),
+    0 0 28px rgba(255, 46, 184, 0.65),
+    0 0 48px rgba(168, 85, 247, 0.4),
+    0 0 72px rgba(0, 170, 255, 0.5),
+    0 0 110px rgba(0, 204, 255, 0.28),
+    0 16px 44px rgba(0, 0, 0, 0.65),
+    inset 0 0 14px rgba(255, 0, 220, 0.22),
+    inset 0 0 28px rgba(0, 170, 255, 0.16),
+    inset 0 0 2px rgba(255, 255, 255, 0.18);
   z-index: 2;
 }
 
 .option-card.is-selected::before {
+  /* outer neon stroke */
+  padding: 3.5px;
+  opacity: 1;
+  filter: brightness(1.4) saturate(1.25);
+}
+
+.option-card.is-selected::after {
   content: '';
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 3.75px;
-  background: linear-gradient(115deg, #ff3dc8 0%, #f472b6 28%, #67e8f9 66%, #22d3ee 100%);
+  inset: 3.5px;
+  border-radius: calc(40px - 3.5px);
+  padding: 1.25px;
+  background: var(--neon-grad);
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
   mask-composite: exclude;
   pointer-events: none;
+  filter: brightness(1.55) saturate(1.1);
+  opacity: 0.95;
 }
 
 .option-card.is-side {
-  filter: saturate(0.65) brightness(0.9);
+  filter: saturate(0.85) brightness(0.88);
 }
 
 .option-card.is-reveal {
@@ -514,6 +569,12 @@ body,
 .option-card.is-reveal::before {
   background: linear-gradient(100deg, #34d399, #6ee7b7);
 }
+
+.option-card.is-reveal::after,
+.option-card.is-wrong::after {
+  display: none;
+}
+
 
 .option-card.is-wrong {
   box-shadow:
