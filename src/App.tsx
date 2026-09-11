@@ -75,6 +75,7 @@ export default function App() {
   const [remain, setRemain] = useState<number | null>(null)
   const [score, setScore] = useState({ ok: 0, wrong: 0 })
   const [showCoach, setShowCoach] = useState(() => !loadCoachSeen())
+  const [exitUp, setExitUp] = useState(false)
   const advanceTimer = useRef<number | null>(null)
   const doneRef = useRef(0)
   const lockingRef = useRef(false)
@@ -90,6 +91,7 @@ export default function App() {
     setFlash('none')
     lockingRef.current = false
     setLocking(false)
+    setExitUp(false)
     setDragX(0)
     setDragY(0)
   }, [])
@@ -121,6 +123,7 @@ export default function App() {
     setRevealCorrect(null)
     lockingRef.current = false
     setLocking(false)
+    setExitUp(false)
     setRemain(null)
     setDragX(0)
     setDragY(0)
@@ -137,6 +140,7 @@ export default function App() {
       setRevealCorrect(null)
       lockingRef.current = false
       setLocking(false)
+      setExitUp(false)
       setQueue([])
       setRemain(null)
       setDragX(0)
@@ -164,6 +168,7 @@ export default function App() {
     setRevealCorrect(null)
     lockingRef.current = false
     setLocking(false)
+    setExitUp(false)
     setDragX(0)
     setDragY(0)
   }, [])
@@ -175,7 +180,9 @@ export default function App() {
       setLocking(true)
       setDragX(0)
       setDragY(0)
-      setRemain(0)
+      // Never freeze on a selectable 0.0 — clear timer + Reels-style fly-up
+      setRemain(null)
+      setExitUp(true)
       const ok = !forceWrong && selected === correctIndex
       setProgress((p) => recordAnswer(p, current.en, ok))
       setScore((s) =>
@@ -187,13 +194,15 @@ export default function App() {
         setFlash('correct')
         advanceTimer.current = window.setTimeout(() => {
           goNext(true, current)
-        }, 420)
+        }, 380)
       } else {
         setFlash('wrong')
         setRevealCorrect(correctIndex)
+        // Timeout: snappy Reels advance; manual wrong: brief correct-TR glance
+        const delay = forceWrong ? 520 : 780
         advanceTimer.current = window.setTimeout(() => {
           goNext(false, current)
-        }, 1100)
+        }, delay)
       }
     },
     [current, options.length, selected, correctIndex, goNext],
@@ -216,11 +225,13 @@ export default function App() {
     setRemain(timerSec)
     const id = window.setInterval(() => {
       const left = Math.max(0, totalMs - (performance.now() - started))
-      setRemain(left / 1000)
       if (left <= 0) {
         window.clearInterval(id)
+        // resolveAnswer clears remain + starts Reels fly-up — never paint 0.0
         resolveRef.current(true)
+        return
       }
+      setRemain(left / 1000)
     }, 50)
     return () => window.clearInterval(id)
   }, [current?.en, doneCount, timerSec, sessionOver, locking])
@@ -280,7 +291,7 @@ export default function App() {
   const progressText = `${Math.min(doneCount, SESSION_LEN)} / ${SESSION_LEN}`
   const flashClass =
     flash === 'correct' ? 'flash-correct' : flash === 'wrong' ? 'flash-wrong' : ''
-  const frozen = locking || flash !== 'none'
+  const frozen = locking || flash !== 'none' || exitUp
   const liftY = frozen ? 0 : Math.max(-40, Math.min(0, dragY * 0.22))
   const stripDrag = frozen ? 0 : dragX
   const remainPct =
@@ -300,12 +311,12 @@ export default function App() {
       : 0
 
   return (
-    <div className={`app ${flashClass}${frozen ? ' is-frozen' : ''}`} {...swipe}>
+    <div className={`app ${flashClass}${frozen ? ' is-frozen' : ''}${exitUp ? ' is-exit-up' : ''}`} {...swipe}>
       <div className="flash-veil" aria-hidden />
 
       <header className="topbar">
         <div className="topbar-left">
-          <div className="progress">{progressText} <span className="progress-label">cümle</span></div>
+          <div className="progress">{progressText}</div>
           <div
             className="session-score"
             aria-label={`Bildin ${score.ok}, Bilemedin ${score.wrong}`}
@@ -378,20 +389,20 @@ export default function App() {
             {sec === 0 ? 'Off' : `${sec}s`}
           </button>
         ))}
-        {remain !== null && !sessionOver && (
+        {remain !== null && !sessionOver && !exitUp && (
           <span
-            className={`timer-count ${remainUrgent ? 'urgent' : ''} ${frozen && remain <= 0 ? 'timed-out' : ''}`}
+            className={`timer-count ${remainUrgent ? 'urgent' : ''}`}
             aria-live="polite"
           >
-            {frozen && remain <= 0 ? '0.0' : remain.toFixed(1)}
+            {remain.toFixed(1)}
           </span>
         )}
       </div>
-      {timerSec > 0 && remain !== null && !sessionOver && (
+      {timerSec > 0 && remain !== null && !sessionOver && !exitUp && (
         <div className="timer-bar" aria-hidden>
           <div
-            className={`timer-bar-fill ${remainUrgent || (frozen && remain <= 0) ? 'urgent' : ''}`}
-            style={{ width: `${frozen && remain <= 0 ? 0 : remainPct}%` }}
+            className={`timer-bar-fill ${remainUrgent ? 'urgent' : ''}`}
+            style={{ width: `${remainPct}%` }}
           />
         </div>
       )}
@@ -422,21 +433,16 @@ export default function App() {
           </div>
         </div>
       ) : (
-        <div className="play-stage">
+        <div className={`play-stage${exitUp ? ' is-exit-up' : ''}`}>
           <section
             className="en-area"
-            style={{ transform: `translate3d(0, ${liftY}px, 0)` }}
+            style={exitUp ? undefined : { transform: `translate3d(0, ${liftY}px, 0)` }}
           >
             <EnglishSentence ex={current.ex} en={current.en} />
             <p className="theme-chip">{current.t}</p>
           </section>
 
           <section className={`tr-area${frozen ? ' is-frozen' : ''}`}>
-            {!showCoach && (
-              <p className="swipe-hint" aria-hidden>
-                ← → seç · ↑ kilitle
-              </p>
-            )}
             <OptionStrip
               options={options}
               selected={selected}
@@ -466,7 +472,7 @@ export default function App() {
                 <span className="coach-key">↑</span> Cevabı kilitle
               </li>
               <li>
-                <span className="coach-key">⏱</span> Süre dolarsa yanlış sayılır
+                <span className="coach-key">⏱</span> Süre dolarsa yukarı kayar · yanlış
               </li>
             </ul>
             <button type="button" className="primary coach-cta" onClick={dismissCoach}>

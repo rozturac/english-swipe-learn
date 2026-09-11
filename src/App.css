@@ -114,7 +114,7 @@ body,
 }
 
 .progress {
-  font-size: 0.84rem;
+  font-size: 0.8rem;
   color: var(--muted);
   letter-spacing: 0.02em;
   font-weight: 600;
@@ -155,23 +155,23 @@ body,
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 0 var(--space-3) 6px;
+  gap: 5px;
+  padding: 0 var(--space-3) 4px;
   flex-shrink: 0;
   position: relative;
   z-index: 4;
 }
 
 .timer-chip {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border);
-  color: var(--muted);
-  font-size: 0.75rem;
-  font-weight: 650;
+  color: var(--muted-2);
+  font-size: 0.7rem;
+  font-weight: 600;
   letter-spacing: 0.02em;
-  padding: 7px 11px;
-  min-height: 34px;
-  min-width: 40px;
+  padding: 5px 9px;
+  min-height: 28px;
+  min-width: 34px;
   border-radius: var(--radius-pill);
   cursor: pointer;
   line-height: 1.1;
@@ -281,6 +281,30 @@ body,
   justify-content: center;
   gap: 10px;
   padding-top: 4px;
+  will-change: transform, opacity;
+}
+
+/* Instagram Reels / TikTok-style upward swipe-away on lock / timeout */
+.play-stage.is-exit-up {
+  animation: reel-exit-up 0.48s cubic-bezier(0.22, 0.82, 0.28, 1) forwards;
+  pointer-events: none;
+}
+
+.app.is-exit-up .timer-row,
+.app.is-exit-up .timer-bar {
+  opacity: 0.35;
+  transition: opacity 0.2s ease;
+}
+
+@keyframes reel-exit-up {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, -118%, 0) scale(0.96);
+    opacity: 0;
+  }
 }
 
 .en-area {
@@ -317,22 +341,23 @@ body,
 }
 
 .theme-chip {
-  margin: 10px auto 0;
+  margin: 8px auto 0;
   display: inline-flex;
   align-self: center;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  color: var(--muted);
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--muted-2);
+  background: transparent;
+  border: none;
   border-radius: var(--radius-pill);
-  padding: 4px 10px;
+  padding: 0;
   text-align: center;
   max-width: 90%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  opacity: 0.75;
 }
 
 .tr-area {
@@ -456,9 +481,9 @@ body,
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  margin-top: 12px;
-  min-height: 14px;
+  gap: 7px;
+  margin-top: 10px;
+  min-height: 10px;
 }
 
 .dot {
@@ -676,6 +701,19 @@ body,
 
   .play-stage {
     gap: 14px;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .play-stage.is-exit-up {
+    animation: reel-exit-fade 0.28s ease forwards;
+  }
+
+  @keyframes reel-exit-fade {
+    to {
+      opacity: 0;
+    }
   }
 }
 
