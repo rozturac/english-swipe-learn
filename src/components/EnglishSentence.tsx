@@ -3,10 +3,9 @@ import { splitHighlight } from '../lib/highlight'
 type Props = {
   ex: string
   en: string
-  onListen?: () => void
 }
 
-export function EnglishSentence({ ex, en, onListen }: Props) {
+export function EnglishSentence({ ex, en }: Props) {
   const parts = splitHighlight(ex, en)
 
   return (
@@ -22,21 +21,6 @@ export function EnglishSentence({ ex, en, onListen }: Props) {
           ex
         )}
       </p>
-      {onListen && (
-        <button
-          type="button"
-          className="listen-btn"
-          onClick={(e) => {
-            e.stopPropagation()
-            onListen()
-          }}
-          aria-label="Dinle"
-          title="Dinle"
-        >
-          <span aria-hidden>🔊</span>
-          <span className="listen-label">Dinle</span>
-        </button>
-      )}
     </div>
   )
 }

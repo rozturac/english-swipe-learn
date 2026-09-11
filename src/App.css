@@ -68,11 +68,110 @@ body,
   flex-shrink: 0;
 }
 
+.topbar-left {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  min-width: 0;
+}
+
 .progress {
   font-size: 0.85rem;
   color: var(--muted);
   letter-spacing: 0.02em;
   font-weight: 500;
+}
+
+.session-score,
+.session-score-final {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.session-score-final {
+  font-size: 1rem;
+  margin-top: 4px;
+}
+
+.score-ok {
+  color: var(--green);
+}
+
+.score-bad {
+  color: var(--red);
+}
+
+.score-sep {
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.timer-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 14px 6px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 4;
+}
+
+.timer-chip {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  cursor: pointer;
+  line-height: 1.2;
+}
+
+.timer-chip.on {
+  background: var(--accent-soft);
+  border-color: rgba(125, 211, 252, 0.4);
+  color: var(--accent);
+}
+
+.timer-count {
+  min-width: 2.4em;
+  margin-left: 4px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  text-align: right;
+}
+
+.timer-count.urgent {
+  color: var(--red);
+}
+
+.timer-bar {
+  height: 2px;
+  margin: 0 16px 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.timer-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: inherit;
+}
+
+.timer-bar-fill.urgent {
+  background: var(--red);
 }
 
 .menu-btn {
@@ -155,33 +254,6 @@ body,
   font-weight: 600;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
-}
-
-.listen-btn {
-  margin-top: 14px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--muted);
-  font-size: 0.78rem;
-  padding: 6px 12px;
-  border-radius: 999px;
-  cursor: pointer;
-  opacity: 0.75;
-  transition:
-    opacity 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.listen-btn:active {
-  opacity: 1;
-  border-color: var(--accent);
-}
-
-.listen-label {
-  font-weight: 500;
 }
 
 .theme-chip {
