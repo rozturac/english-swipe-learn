@@ -1,0 +1,4 @@
+/* base resets live mainly in App.css; keep minimal global */
+html {
+  color-scheme: dark;
+}
