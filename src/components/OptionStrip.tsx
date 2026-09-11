@@ -8,8 +8,8 @@ type Props = {
   frozen?: boolean
 }
 
-const CARD_RATIO = 0.78
-const GAP_PX = 12
+const CARD_RATIO = 0.82
+const GAP_PX = 14
 
 export function OptionStrip({
   options,

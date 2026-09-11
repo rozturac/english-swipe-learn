@@ -339,6 +339,10 @@ export default function App() {
         <span className="star star-c" />
         <span className="star star-d" />
         <span className="star star-e" />
+        <span className="star star-f" />
+        <span className="star star-g" />
+        <span className="star star-h" />
+        <span className="star star-i" />
         <span className="cosmos-vignette" />
       </div>
       <div className="flash-veil" aria-hidden />
@@ -468,11 +472,9 @@ export default function App() {
             style={exitUp ? undefined : { transform: `translate3d(0, ${liftY}px, 0)` }}
           >
             <EnglishSentence ex={current.ex} en={current.en} />
-            <p className="theme-chip">{current.t}</p>
           </section>
 
           <section className={`tr-area${frozen ? ' is-frozen' : ''}`}>
-            <p className="swipe-hint">← → seç · ↑ kilitle</p>
             <OptionStrip
               options={options}
               selected={selected}
