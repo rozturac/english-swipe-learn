@@ -329,20 +329,7 @@ export default function App() {
   return (
     <div className={`app ${flashClass}${frozen ? ' is-frozen' : ''}${exitUp ? ' is-exit-up' : ''}`} {...swipe}>
       <div className="cosmos" aria-hidden>
-        <span className="nebula" />
-        <span className="orb orb-lg" />
-        <span className="orb orb-flare" />
-        <span className="orb orb-sm" />
-        <span className="orb orb-mid" />
-        <span className="star star-a" />
-        <span className="star star-b" />
-        <span className="star star-c" />
-        <span className="star star-d" />
-        <span className="star star-e" />
-        <span className="star star-f" />
-        <span className="star star-g" />
-        <span className="star star-h" />
-        <span className="star star-i" />
+        <span className="cosmos-photo" />
         <span className="cosmos-vignette" />
       </div>
       <div className="flash-veil" aria-hidden />

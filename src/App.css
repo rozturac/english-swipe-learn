@@ -62,133 +62,34 @@ body,
   padding: calc(8px + var(--safe-t)) 0 calc(10px + var(--safe-b));
   position: relative;
   overflow: hidden;
-  background: var(--bg);
+  background: transparent;
   touch-action: none;
 }
 
-/* Cosmic field — richer purple/pink nebula + soft planet orbs */
+/* Photo cosmos — full-screen cover + soft readability scrim */
 .cosmos {
   position: absolute;
   inset: 0;
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse 120% 80% at 50% 100%, #0a0618 0%, transparent 55%),
-    linear-gradient(180deg, #070510 0%, #05040a 45%, #08061a 100%);
+  background: #05040a;
 }
 
-.nebula {
+.cosmos-photo {
   position: absolute;
-  inset: -22%;
+  inset: 0;
   background:
-    radial-gradient(ellipse 58% 46% at 82% 48%, rgba(130, 60, 220, 0.55), transparent 70%),
-    radial-gradient(ellipse 52% 42% at 18% 40%, rgba(255, 70, 190, 0.38), transparent 68%),
-    radial-gradient(ellipse 72% 54% at 48% 60%, rgba(80, 35, 160, 0.36), transparent 74%),
-    radial-gradient(ellipse 44% 32% at 56% 26%, rgba(110, 50, 200, 0.28), transparent 72%),
-    radial-gradient(ellipse 38% 28% at 10% 70%, rgba(200, 45, 150, 0.2), transparent 70%),
-    radial-gradient(ellipse 30% 22% at 70% 72%, rgba(60, 120, 220, 0.12), transparent 70%);
-  filter: saturate(1.35) brightness(1.08);
+    url('/english-swipe-learn/bg-cosmos.jpg') center / cover no-repeat;
 }
 
 .cosmos-vignette {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 70% 55% at 50% 42%, transparent 35%, rgba(4, 2, 12, 0.55) 100%),
-    linear-gradient(180deg, rgba(5, 4, 10, 0.15) 0%, transparent 18%, transparent 72%, rgba(5, 4, 10, 0.45) 100%);
+    radial-gradient(ellipse 72% 58% at 50% 42%, transparent 28%, rgba(4, 2, 12, 0.52) 100%),
+    linear-gradient(180deg, rgba(5, 4, 10, 0.28) 0%, transparent 16%, transparent 70%, rgba(5, 4, 10, 0.55) 100%);
   pointer-events: none;
-}
-
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  will-change: transform;
-}
-
-.orb-lg {
-  width: min(360px, 88vw);
-  height: min(360px, 88vw);
-  right: -96px;
-  top: 30%;
-  background:
-    radial-gradient(circle at 34% 32%, #7a48c8 0%, #4a2488 30%, #221048 58%, #0c0718 86%, transparent 100%);
-  box-shadow:
-    0 0 110px 36px rgba(130, 70, 220, 0.38),
-    0 0 190px 70px rgba(100, 45, 180, 0.22),
-    inset -30px -36px 60px rgba(0, 0, 0, 0.5),
-    inset 20px 16px 44px rgba(190, 130, 255, 0.16);
-  opacity: 0.96;
-  filter: blur(1.2px);
-  animation: orb-drift 22s ease-in-out infinite;
-}
-
-.orb-flare {
-  width: 150px;
-  height: 150px;
-  left: 4%;
-  top: 38%;
-  background:
-    radial-gradient(circle, rgba(255, 200, 240, 1) 0%, rgba(255, 90, 210, 0.7) 26%, rgba(200, 50, 170, 0.28) 52%, transparent 74%);
-  filter: blur(1.5px);
-  box-shadow:
-    0 0 55px 18px rgba(255, 100, 210, 0.5),
-    0 0 110px 42px rgba(220, 60, 180, 0.28);
-  opacity: 0.95;
-  animation: star-pulse 5.6s ease-in-out infinite;
-}
-
-.orb-sm {
-  width: 16px;
-  height: 16px;
-  left: 24%;
-  top: 48%;
-  background: radial-gradient(circle, #ff8ae0 0%, #ff4dce 45%, transparent 74%);
-  filter: blur(0.4px);
-  box-shadow: 0 0 20px 6px rgba(255, 80, 200, 0.55);
-  opacity: 0.9;
-  animation: star-pulse 4.8s ease-in-out infinite;
-}
-
-.orb-mid {
-  width: 10px;
-  height: 10px;
-  right: 16%;
-  top: 30%;
-  background: radial-gradient(circle, #f5e8ff 0%, #c4b5fd 55%, transparent 75%);
-  box-shadow: 0 0 16px 4px rgba(167, 139, 250, 0.5);
-  opacity: 0.8;
-  animation: star-pulse 6.2s ease-in-out infinite 0.8s;
-}
-
-.star {
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: #fce7f3;
-  box-shadow: 0 0 10px 2px rgba(244, 114, 182, 0.55);
-  opacity: 0.65;
-}
-
-.star-a { left: 14%; top: 54%; animation: star-pulse 5.4s ease-in-out infinite 0.3s; }
-.star-b { right: 26%; top: 56%; width: 2px; height: 2px; animation: star-pulse 7s ease-in-out infinite 1.1s; }
-.star-c { left: 58%; top: 36%; width: 2px; height: 2px; opacity: 0.5; animation: star-pulse 6s ease-in-out infinite 1.6s; }
-.star-d { left: 42%; top: 22%; width: 2px; height: 2px; opacity: 0.45; animation: star-pulse 5.8s ease-in-out infinite 0.5s; }
-.star-e { right: 12%; top: 68%; width: 2px; height: 2px; opacity: 0.4; animation: star-pulse 6.5s ease-in-out infinite 1.4s; }
-.star-f { left: 72%; top: 18%; width: 2px; height: 2px; opacity: 0.55; animation: star-pulse 5.2s ease-in-out infinite 0.9s; }
-.star-g { left: 8%; top: 28%; width: 2px; height: 2px; opacity: 0.5; animation: star-pulse 6.8s ease-in-out infinite 1.8s; }
-.star-h { right: 38%; top: 74%; width: 3px; height: 3px; opacity: 0.45; animation: star-pulse 7.2s ease-in-out infinite 0.4s; }
-.star-i { left: 36%; top: 62%; width: 2px; height: 2px; opacity: 0.4; animation: star-pulse 5.9s ease-in-out infinite 2.1s; }
-
-@keyframes orb-drift {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(-10px, -14px, 0); }
-}
-
-@keyframes star-pulse {
-  0%, 100% { opacity: 0.35; transform: scale(1); }
-  50% { opacity: 0.9; transform: scale(1.25); }
 }
 
 .flash-veil {
@@ -446,8 +347,7 @@ body,
   height: 140%;
   transform: translate(-50%, -50%);
   background:
-    radial-gradient(ellipse 70% 55% at 50% 50%, rgba(8, 6, 18, 0.55) 0%, rgba(8, 6, 18, 0.22) 45%, transparent 72%),
-    radial-gradient(ellipse 55% 40% at 50% 48%, rgba(110, 50, 190, 0.16), transparent 70%);
+    radial-gradient(ellipse 70% 55% at 50% 50%, rgba(5, 4, 12, 0.62) 0%, rgba(5, 4, 12, 0.28) 48%, transparent 74%);
   pointer-events: none;
   z-index: -1;
 }
@@ -497,6 +397,21 @@ body,
   justify-content: flex-end;
   padding-bottom: 8px;
   min-height: 0;
+  position: relative;
+}
+
+.tr-area::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -4%;
+  width: 110%;
+  height: 130%;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(ellipse 65% 70% at 50% 55%, rgba(5, 4, 12, 0.58) 0%, rgba(5, 4, 12, 0.22) 50%, transparent 76%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .tr-area.is-frozen .option-strip {
@@ -857,14 +772,6 @@ body,
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .orb-lg,
-  .orb-sm,
-  .orb-mid,
-  .orb-flare,
-  .star {
-    animation: none;
-  }
-
   .play-stage.is-exit-up {
     animation: reel-exit-fade 0.4s ease forwards;
   }
@@ -881,6 +788,4 @@ body,
     min-height: 100px;
     padding: 16px 14px;
   }
-  .orb-lg { width: min(250px, 70vw); height: min(250px, 70vw); }
-  .orb-flare { width: 110px; height: 110px; }
 }
