@@ -108,33 +108,81 @@ export function OptionStrip({
         })}
       </div>
       <div className="swipe-hint" aria-hidden>
-        <svg viewBox="0 0 200 20" fill="none">
+        <svg
+          className="swipe-hint-arrow"
+          viewBox="0 0 240 32"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          overflow="visible"
+        >
           <defs>
-            <linearGradient id="swipeGrad" x1="0" y1="0" x2="200" y2="0">
-              <stop stopColor="#D18CFF" />
-              <stop offset="1" stopColor="#4DD8FF" />
+            <linearGradient
+              id="swipeHintGlow"
+              x1="8"
+              y1="16"
+              x2="232"
+              y2="16"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop offset="0%" stopColor="#FF7AD9" />
+              <stop offset="42%" stopColor="#F0E6FF" />
+              <stop offset="100%" stopColor="#5EC8FF" />
             </linearGradient>
+            <filter
+              id="swipeHintSoft"
+              x="-25%"
+              y="-160%"
+              width="150%"
+              height="420%"
+              colorInterpolationFilters="sRGB"
+            >
+              <feGaussianBlur in="SourceGraphic" stdDeviation="4.2" />
+            </filter>
+            <filter
+              id="swipeHintMid"
+              x="-18%"
+              y="-120%"
+              width="136%"
+              height="340%"
+              colorInterpolationFilters="sRGB"
+            >
+              <feGaussianBlur in="SourceGraphic" stdDeviation="2.1" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
           </defs>
+          {/* Outer soft neon halo — magenta → cyan */}
           <path
-            d="M18 10 H182"
-            stroke="url(#swipeGrad)"
-            strokeWidth="2.2"
+            d="M24 7 L10 16 L24 25 M10 16 H230 M216 7 L230 16 L216 25"
+            stroke="url(#swipeHintGlow)"
+            strokeWidth="3.2"
             strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.55"
+            filter="url(#swipeHintSoft)"
           />
+          {/* Mid glow tube */}
           <path
-            d="M16 10 L28 3 M16 10 L28 17"
-            stroke="url(#swipeGrad)"
-            strokeWidth="2.2"
+            d="M24 7 L10 16 L24 25 M10 16 H230 M216 7 L230 16 L216 25"
+            stroke="url(#swipeHintGlow)"
+            strokeWidth="2.15"
             strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.9"
+            filter="url(#swipeHintMid)"
           />
+          {/* Bright near-white core */}
           <path
-            d="M184 10 L172 3 M184 10 L172 17"
-            stroke="url(#swipeGrad)"
-            strokeWidth="2.2"
+            d="M24 7 L10 16 L24 25 M10 16 H230 M216 7 L230 16 L216 25"
+            stroke="#F8FBFF"
+            strokeWidth="1.35"
             strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
-        <span>SWIP<span className="swipe-e">E</span></span>
+        <span className="swipe-hint-label">SWIPE</span>
       </div>
     </div>
   )

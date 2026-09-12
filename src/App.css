@@ -584,32 +584,42 @@ body,
   font-weight: 400;
 }
 
-/* Bottom SWIPE hint — Verba prototype */
+/* Bottom SWIPE hint — continuous neon ↔ + SWIPE (ref-swipe-hint) */
 .swipe-hint {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   margin-top: 22px;
   pointer-events: none;
+  user-select: none;
 }
 
-.swipe-hint svg {
-  width: 168px;
-  height: 18px;
+.swipe-hint-arrow {
+  width: min(82%, 292px);
+  height: auto;
+  display: block;
+  overflow: visible;
+  /* Extra soft left/right neon bloom beyond SVG filters */
+  filter:
+    drop-shadow(-6px 0 5px rgba(255, 110, 200, 0.28))
+    drop-shadow(6px 0 5px rgba(80, 200, 255, 0.28));
 }
 
-.swipe-hint span {
+.swipe-hint-label {
+  margin: 0;
   font-size: 11px;
-  letter-spacing: 0.42em;
-  color: #c5c8dc;
+  line-height: 1;
+  letter-spacing: 0.4em;
+  padding-left: 0.4em; /* optical center with letter-spacing */
+  color: #f4f6ff;
   font-weight: 500;
-  padding-left: 0.42em; /* optical center with letter-spacing */
-}
-
-.swipe-hint .swipe-e {
-  color: #a8d4ff;
-  letter-spacing: 0.42em;
+  font-family: inherit;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 4px rgba(255, 255, 255, 0.75),
+    0 0 8px rgba(170, 210, 255, 0.55),
+    0 0 16px rgba(120, 190, 255, 0.35);
 }
 
 .session-end {
