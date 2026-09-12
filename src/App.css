@@ -237,10 +237,69 @@ body,
   flex-shrink: 0;
 }
 
-/* Below hairline: EN + TR + hint (instant swap; flash veil only here) */
+/* Below hairline: overflow-hidden dual-page Reels viewport (EN + TR + SWIPE) */
+.reel-viewport {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  z-index: 0;
+}
+
+.reel-page {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.reel-page:not(.is-exiting):not(.is-entering) {
+  transform: translate3d(0, 0, 0);
+  z-index: 1;
+}
+
+/* Next below-line content enters from BELOW (translateY 100% → 0) */
+.reel-page.is-entering {
+  z-index: 1;
+  animation: reel-page-enter 0.45s var(--reel-out) both;
+}
+
+/* Current below-line content exits UP off-screen — kept mounted for full flight */
+.reel-page.is-exiting {
+  z-index: 2;
+  pointer-events: none;
+  animation: reel-page-exit 0.45s var(--reel-out) forwards;
+}
+
+@keyframes reel-page-enter {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes reel-page-exit {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+/* Play stage fills each reel page (flash veil only here — chrome stays fixed) */
 .play-stage {
   flex: 1;
   min-height: 0;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -779,6 +838,26 @@ body,
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .reel-page.is-entering {
+    animation: reel-page-enter-fade 0.3s ease both;
+  }
+
+  .reel-page.is-exiting {
+    animation: reel-page-exit-fade 0.3s ease forwards;
+  }
+
+  @keyframes reel-page-enter-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes reel-page-exit-fade {
+    to { opacity: 0; }
   }
 }
 

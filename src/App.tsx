@@ -21,7 +21,9 @@ type TimerSec = (typeof TIMER_OPTIONS)[number]
 const TIMER_KEY = 'esl-timer-sec'
 const COACH_KEY = 'esl-coach-v1'
 
-/** Brief feedback before content below the hairline swaps. */
+/** Below-hairline Reels translate — keep in sync with CSS (~450ms). */
+const REEL_MS = 450
+/** Brief feedback before the below-line content turns. */
 const FEEDBACK_OK_MS = 200
 const FEEDBACK_TIMEOUT_MS = 280
 const FEEDBACK_WRONG_MS = 420
@@ -64,6 +66,76 @@ function saveCoachSeen() {
   }
 }
 
+/** Snapshot of below-hairline play content for the exiting reel page. */
+type PageSnap = {
+  id: string
+  item: VocabItem
+  options: string[]
+  selected: number
+  correctIndex: number
+  revealCorrect: number | null
+  flash: FlashKind
+}
+
+type PlayPaneProps = {
+  item: VocabItem
+  options: string[]
+  selected: number
+  revealCorrect: number | null
+  flash: FlashKind
+  frozen: boolean
+  stripDrag: number
+  dragging: boolean
+  liftY: number
+  onStripStep: (step: number) => void
+  /** Stable key for OptionStrip remount per sentence (not mid-exit). */
+  stripKey: string
+}
+
+/** EN + TR + SWIPE only — lives inside the sliding reel page. */
+function PlayPane({
+  item,
+  options,
+  selected,
+  revealCorrect,
+  flash,
+  frozen,
+  stripDrag,
+  dragging,
+  liftY,
+  onStripStep,
+  stripKey,
+}: PlayPaneProps) {
+  const flashClass =
+    flash === 'correct' ? 'flash-correct' : flash === 'wrong' ? 'flash-wrong' : ''
+
+  return (
+    <div className={`play-stage ${flashClass}`}>
+      <div className="flash-veil" aria-hidden />
+
+      <section
+        className="en-area"
+        style={frozen ? undefined : { transform: `translate3d(0, ${liftY}px, 0)` }}
+      >
+        <EnglishSentence ex={item.ex} en={item.en} category={item.t} />
+      </section>
+
+      <section className={`tr-area${frozen ? ' is-frozen' : ''}`}>
+        <OptionStrip
+          key={stripKey}
+          options={options}
+          selected={selected}
+          revealCorrect={revealCorrect}
+          dragX={stripDrag}
+          dragging={dragging}
+          frozen={frozen}
+          onStep={onStripStep}
+        />
+      </section>
+    </div>
+  )
+}
+
 export default function App() {
   const [, setProgress] = useState<ProgressMap>(() => loadProgress())
   const [queue, setQueue] = useState<VocabItem[]>(() =>
@@ -84,11 +156,16 @@ export default function App() {
   const [remain, setRemain] = useState<number | null>(null)
   const [score, setScore] = useState({ ok: 0, wrong: 0 })
   const [showCoach, setShowCoach] = useState(() => !loadCoachSeen())
+  /** Snapshot of the below-line page sliding UP — kept mounted for the full exit. */
+  const [exiting, setExiting] = useState<PageSnap | null>(null)
   const advanceTimer = useRef<number | null>(null)
+  const reelClearTimer = useRef<number | null>(null)
   const doneRef = useRef(0)
   const lockingRef = useRef(false)
+  const snapIdRef = useRef(0)
 
   const current = !sessionOver ? (queue[0] ?? null) : null
+  const reeling = exiting !== null
 
   const builtForEn = useRef<string | null>(null)
 
@@ -119,6 +196,7 @@ export default function App() {
   useEffect(() => {
     return () => {
       if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
+      if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
     }
   }, [])
 
@@ -127,8 +205,16 @@ export default function App() {
     setShowCoach(false)
   }, [])
 
+  const clearExiting = useCallback(() => {
+    setExiting(null)
+    lockingRef.current = false
+    setLocking(false)
+  }, [])
+
   const startNewSession = useCallback(() => {
     if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
+    if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
+    setExiting(null)
     const p = loadProgress()
     setProgress(p)
     const next = pickSession(vocab, p)
@@ -161,8 +247,7 @@ export default function App() {
       setSessionOver(true)
       setFlash('none')
       setRevealCorrect(null)
-      lockingRef.current = false
-      setLocking(false)
+      // Stay locked until exiting page finishes sliding up
       setQueue([])
       setRemain(null)
       setDragX(0)
@@ -193,14 +278,13 @@ export default function App() {
       return nextQueue
     })
 
-    // Instant swap below the hairline — rebuild in the same turn.
+    // Rebuild in the same turn as queue advance so first paint is settled (no TR jitter).
+    // Keep locked until reel exit finishes.
     const head = nextQueue[0]
-    if (head) rebuildOptions(head)
+    if (head) rebuildOptions(head, false)
     else {
       setFlash('none')
       setRevealCorrect(null)
-      lockingRef.current = false
-      setLocking(false)
       setDragX(0)
       setDragY(0)
       setDragging(false)
@@ -209,7 +293,7 @@ export default function App() {
 
   const resolveAnswer = useCallback(
     (forceWrong = false) => {
-      if (!current || lockingRef.current) return
+      if (!current || lockingRef.current || exiting) return
       if (!forceWrong && options.length !== 3) return
       lockingRef.current = true
       setLocking(true)
@@ -231,6 +315,9 @@ export default function App() {
       if (nextReveal !== null) setRevealCorrect(nextReveal)
 
       const item = current
+      const snapOptions = options
+      const snapSelected = selected
+      const snapCorrect = correctIndex
       const delay = ok
         ? FEEDBACK_OK_MS
         : forceWrong
@@ -239,10 +326,34 @@ export default function App() {
 
       if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
       advanceTimer.current = window.setTimeout(() => {
+        snapIdRef.current += 1
+        // Keep exiting page mounted for the full translateY — do NOT remount mid-flight.
+        setExiting({
+          id: `${item.en}-${snapIdRef.current}`,
+          item,
+          options: snapOptions,
+          selected: snapSelected,
+          correctIndex: snapCorrect,
+          revealCorrect: nextReveal,
+          flash: nextFlash,
+        })
         goNext(ok, item)
+        if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
+        reelClearTimer.current = window.setTimeout(() => {
+          clearExiting()
+        }, REEL_MS)
       }, delay)
     },
-    [current, options, selected, correctIndex, score, goNext],
+    [
+      current,
+      exiting,
+      options,
+      selected,
+      correctIndex,
+      score,
+      goNext,
+      clearExiting,
+    ],
   )
 
   const resolveRef = useRef(resolveAnswer)
@@ -253,7 +364,7 @@ export default function App() {
   }, [resolveAnswer])
 
   useEffect(() => {
-    if (!current || sessionOver || locking || timerSec === 0 || showCoach) {
+    if (!current || sessionOver || locking || reeling || timerSec === 0 || showCoach) {
       if (timerSec === 0 || !current || sessionOver || showCoach) setRemain(null)
       return
     }
@@ -281,24 +392,24 @@ export default function App() {
       window.clearInterval(id)
       window.clearTimeout(to)
     }
-  }, [current?.en, doneCount, timerSec, sessionOver, locking, showCoach])
+  }, [current?.en, doneCount, timerSec, sessionOver, locking, reeling, showCoach])
 
   const selectPrev = useCallback(() => {
-    if (locking) return
+    if (locking || reeling) return
     setSelected((s) => wrapIndex(s - 1, 3))
-  }, [locking])
+  }, [locking, reeling])
 
   const selectNext = useCallback(() => {
-    if (locking) return
+    if (locking || reeling) return
     setSelected((s) => wrapIndex(s + 1, 3))
-  }, [locking])
+  }, [locking, reeling])
 
   const onHorizontal = useCallback(
     (deltaIndexes: number) => {
-      if (locking || !deltaIndexes) return
+      if (locking || reeling || !deltaIndexes) return
       setSelected((s) => wrapIndex(s + deltaIndexes, 3))
     },
-    [locking],
+    [locking, reeling],
   )
 
   const stepRef = useRef(360 * 0.93 + 14)
@@ -309,14 +420,14 @@ export default function App() {
   const swipe = useSwipe(
     { onHorizontal, onUp: lockAnswer },
     {
-      disabled: locking || !current || showCoach,
+      disabled: locking || reeling || !current || showCoach,
       getStep: () => stepRef.current,
       onDragStart: () => {
-        if (lockingRef.current) return
+        if (lockingRef.current || exiting) return
         setDragging(true)
       },
       onDrag: (dx, dy) => {
-        if (lockingRef.current) return
+        if (lockingRef.current || exiting) return
         setDragX(dx)
         setDragY(dy)
       },
@@ -337,7 +448,7 @@ export default function App() {
         }
         return
       }
-      if (locking || !current) return
+      if (locking || reeling || !current) return
       if (e.key === 'ArrowLeft') selectPrev()
       else if (e.key === 'ArrowRight') selectNext()
       else if (e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
@@ -347,19 +458,28 @@ export default function App() {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [locking, current, selectPrev, selectNext, lockAnswer, showCoach, dismissCoach])
+  }, [
+    locking,
+    reeling,
+    current,
+    selectPrev,
+    selectNext,
+    lockAnswer,
+    showCoach,
+    dismissCoach,
+  ])
 
   const chooseTimer = (sec: TimerSec) => {
     setTimerSec(sec)
     saveTimerPref(sec)
   }
 
-  const frozen = locking || flash !== 'none'
+  const frozen = locking || flash !== 'none' || reeling
   const liftY = frozen ? 0 : Math.max(-40, Math.min(0, dragY * 0.22))
   const stripDrag = frozen ? 0 : dragX
   const remainUrgent = remain !== null && remain <= 2 && !frozen
   const showRemain =
-    remain !== null && remain > 0.12 && !sessionOver && !locking
+    remain !== null && remain > 0.12 && !sessionOver && !reeling && !locking
 
   const stopBubble = {
     onPointerDown: (e: PointerEvent) => e.stopPropagation(),
@@ -372,8 +492,7 @@ export default function App() {
       : 0
 
   const progressText = `${Math.min(doneCount, SESSION_LEN)} / ${SESSION_LEN} cümle`
-  const flashClass =
-    flash === 'correct' ? 'flash-correct' : flash === 'wrong' ? 'flash-wrong' : ''
+  const showSessionEnd = sessionOver && !exiting
 
   return (
     <>
@@ -381,8 +500,8 @@ export default function App() {
         <span className="cosmos-photo" />
         <span className="cosmos-vignette" />
       </div>
-      <div className={`app${frozen ? ' is-frozen' : ''}`} {...swipe}>
-        {/* FIXED chrome — stays put while content below the hairline swaps */}
+      <div className={`app${frozen ? ' is-frozen' : ''}${reeling ? ' is-reeling' : ''}`} {...swipe}>
+        {/* FIXED chrome — never translates with the Reels page turn */}
         <header className="topbar">
           <div className="progress-row">
             <div className="progress">{progressText}</div>
@@ -421,8 +540,8 @@ export default function App() {
         </div>
         <div className="top-rule" aria-hidden />
 
-        {/* BELOW the hairline — instant content swap (no Reels page animation) */}
-        {sessionOver || !current ? (
+        {/* BELOW the hairline — dual-page Reels (EN + TR + SWIPE only) */}
+        {showSessionEnd || (!current && !exiting) ? (
           <div className="session-end">
             <div className="session-end-card">
               <p className="session-end-kicker">Oturum tamam</p>
@@ -448,28 +567,44 @@ export default function App() {
             </div>
           </div>
         ) : (
-          <div className={`play-stage ${flashClass}`}>
-            <div className="flash-veil" aria-hidden />
-
-            <section
-              className="en-area"
-              style={frozen ? undefined : { transform: `translate3d(0, ${liftY}px, 0)` }}
-            >
-              <EnglishSentence ex={current.ex} en={current.en} category={current.t} />
-            </section>
-
-            <section className={`tr-area${frozen ? ' is-frozen' : ''}`}>
-              <OptionStrip
-                key={current.en}
-                options={options}
-                selected={selected}
-                revealCorrect={revealCorrect}
-                dragX={stripDrag}
-                dragging={dragging}
-                frozen={frozen}
-                onStep={onStripStep}
-              />
-            </section>
+          <div className="reel-viewport">
+            {exiting && (
+              <div className="reel-page is-exiting" key={`exit-${exiting.id}`}>
+                <PlayPane
+                  item={exiting.item}
+                  options={exiting.options}
+                  selected={exiting.selected}
+                  revealCorrect={exiting.revealCorrect}
+                  flash={exiting.flash}
+                  frozen
+                  stripDrag={0}
+                  dragging={false}
+                  liftY={0}
+                  onStripStep={onStripStep}
+                  stripKey={`exit-${exiting.id}`}
+                />
+              </div>
+            )}
+            {current && (
+              <div
+                className={`reel-page${reeling ? ' is-entering' : ''}`}
+                key={`live-${current.en}`}
+              >
+                <PlayPane
+                  item={current}
+                  options={options}
+                  selected={selected}
+                  revealCorrect={revealCorrect}
+                  flash={reeling ? 'none' : flash}
+                  frozen={frozen}
+                  stripDrag={stripDrag}
+                  dragging={dragging}
+                  liftY={liftY}
+                  onStripStep={onStripStep}
+                  stripKey={current.en}
+                />
+              </div>
+            )}
           </div>
         )}
 
