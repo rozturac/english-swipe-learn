@@ -28,3 +28,8 @@ scripts/.tmp-check
 
 # Local design mockups (large, not needed in git)
 design-refs/
+
+# Local Figma design refs (large; CSS recreation used instead)
+public/design/
+# Unoptimized zip background — ship compressed jpg/webp only
+public/bg-cosmos.png
