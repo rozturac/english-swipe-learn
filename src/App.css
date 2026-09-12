@@ -13,7 +13,7 @@
   --glow-start: #c77aff;
   --glow-mid: #7a7aff;
   --glow-end: #40e0ff;
-  --card-fill: rgba(10, 10, 24, 0.72);
+  --card-fill: rgba(10, 10, 24, 0.5);
   --card-stroke-start: #db85ff;
   --card-stroke-end: #4dd8ff;
   --accent: #40e0ff;
@@ -270,8 +270,8 @@ body,
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  gap: 18px;
-  padding: 8px 0 0;
+  gap: 28px;
+  padding: 12px 0 2px;
   will-change: transform, opacity;
 }
 
@@ -307,7 +307,7 @@ body,
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 8px 0 0;
+  padding: 8px 0 16px;
   transition: transform 0.4s var(--spring);
   will-change: transform;
   position: relative;
@@ -375,7 +375,7 @@ body,
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding-bottom: 0;
+  padding-bottom: 4px;
   min-height: 0;
   position: relative;
 }
@@ -402,7 +402,7 @@ body,
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding: 12px 0 0;
+  padding: 4px 0 0;
   mask-image: linear-gradient(90deg, transparent 0%, #000 1.5%, #000 98.5%, transparent 100%);
   -webkit-mask-image: linear-gradient(
     90deg,
@@ -433,8 +433,9 @@ body,
   position: relative;
   flex: 0 0 auto;
   border-radius: var(--radius-card);
-  min-height: 168px;
-  padding: 28px 22px;
+  aspect-ratio: 2 / 1;
+  min-height: 128px;
+  padding: 18px 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -443,7 +444,7 @@ body,
   opacity: 0.55;
   border: 1.35px solid transparent;
   background-image:
-    linear-gradient(rgba(10, 10, 24, 0.72), rgba(10, 10, 24, 0.72)),
+    linear-gradient(var(--card-fill), var(--card-fill)),
     linear-gradient(105deg, #db85ff, #7a7aff 45%, #4dd8ff);
   background-origin: border-box;
   background-clip: padding-box, border-box;
@@ -465,7 +466,7 @@ body,
   z-index: 2;
   border: none;
   border-radius: var(--radius-card);
-  background-image: linear-gradient(rgba(6, 6, 14, 0.8), rgba(6, 6, 14, 0.8));
+  background-image: linear-gradient(rgba(6, 6, 14, 0.5), rgba(6, 6, 14, 0.5));
   background-origin: padding-box;
   background-clip: padding-box;
   box-shadow:
@@ -589,7 +590,7 @@ body,
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  margin-top: 18px;
+  margin-top: 22px;
   pointer-events: none;
 }
 
@@ -823,10 +824,11 @@ body,
   }
   .en-area { padding-top: 2px; }
   .en-category { margin-top: 14px; }
-  .play-stage { padding-top: 4px; gap: 12px; }
+  .play-stage { padding-top: 4px; gap: 18px; }
+  .en-area { padding-bottom: 8px; }
   .option-card {
-    min-height: 120px;
-    padding: 18px 16px;
+    min-height: 100px;
+    padding: 14px 16px;
   }
-  .swipe-hint { margin-top: 12px; }
+  .swipe-hint { margin-top: 14px; }
 }

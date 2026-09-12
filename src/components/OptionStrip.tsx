@@ -10,7 +10,7 @@ type Props = {
   onStep?: (step: number) => void
 }
 
-const CARD_RATIO = 0.82
+const CARD_RATIO = 0.88
 const GAP_PX = 14
 
 /** Card pitch used by carousel snap (width + gap). */
