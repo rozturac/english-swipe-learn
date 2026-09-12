@@ -458,14 +458,66 @@ body,
   will-change: transform, opacity;
 }
 
+/* Selected: double thin magenta→cyan neon frame (CSS only, soft bloom) */
 .option-card.is-selected {
   transform: scale(1);
   opacity: 1;
-  border-width: 1.5px;
-  box-shadow:
-    0 0 22px rgba(140, 90, 255, 0.16),
-    0 0 20px rgba(70, 190, 255, 0.1);
   z-index: 2;
+  border: none;
+  border-radius: 26px;
+  background-image: linear-gradient(rgba(10, 10, 24, 0.72), rgba(10, 10, 24, 0.72));
+  background-origin: padding-box;
+  background-clip: padding-box;
+  box-shadow:
+    0 0 10px rgba(219, 133, 255, 0.2),
+    0 0 10px rgba(64, 224, 255, 0.16),
+    0 0 22px rgba(199, 122, 255, 0.1),
+    0 0 22px rgba(77, 216, 255, 0.08);
+}
+
+.option-card.is-selected::before,
+.option-card.is-selected::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    #db85ff 0%,
+    #c77aff 32%,
+    #40e0ff 68%,
+    #4dd8ff 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+/* Outer concentric stroke */
+.option-card.is-selected::before {
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.35px;
+  z-index: 0;
+  filter:
+    drop-shadow(0 0 2.5px rgba(219, 133, 255, 0.4))
+    drop-shadow(0 0 5px rgba(64, 224, 255, 0.22));
+}
+
+/* Inner concentric stroke — gap ≈ stroke weight */
+.option-card.is-selected::after {
+  inset: 5px;
+  border-radius: 21px;
+  padding: 1.15px;
+  z-index: 0;
+  opacity: 0.95;
+  filter:
+    drop-shadow(0 0 2px rgba(219, 133, 255, 0.3))
+    drop-shadow(0 0 4px rgba(64, 224, 255, 0.18));
 }
 
 .option-card.is-side {
@@ -477,7 +529,9 @@ body,
 }
 
 .option-card.is-reveal {
-  border-color: transparent;
+  border: 1.35px solid transparent;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
   background-image:
     linear-gradient(#0e1a16, #0e1a16),
     linear-gradient(100deg, #34d399, #6ee7b7);
@@ -490,6 +544,9 @@ body,
 }
 
 .option-card.is-wrong {
+  border: 1.35px solid transparent;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
   background-image:
     linear-gradient(rgba(24, 10, 14, 0.85), rgba(24, 10, 14, 0.85)),
     linear-gradient(100deg, #fb7185, #f87171);
@@ -498,11 +555,28 @@ body,
     0 0 24px rgba(250, 107, 122, 0.12);
 }
 
+/* Reveal/wrong: drop neon double frame so state colors stay readable */
+.option-card.is-selected.is-reveal::before,
+.option-card.is-selected.is-reveal::after,
+.option-card.is-selected.is-wrong::before,
+.option-card.is-selected.is-wrong::after {
+  content: none;
+  display: none;
+  filter: none;
+}
+
+.option-card.is-selected.is-reveal,
+.option-card.is-selected.is-wrong {
+  border-radius: 26px;
+}
+
 .option-card.is-locked.is-selected:not(.is-reveal):not(.is-wrong) {
   transform: scale(1);
 }
 
 .option-text {
+  position: relative;
+  z-index: 1;
   margin: 0;
   text-align: center;
   font-size: 17px;
