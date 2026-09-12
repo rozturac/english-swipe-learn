@@ -361,7 +361,7 @@ export default function App() {
       <div className="flash-veil" aria-hidden />
 
       <header className="topbar">
-        <div className="topbar-left">
+        <div className="progress-row">
           <div className="progress">{progressText}</div>
           <div
             className="session-score"
@@ -369,7 +369,7 @@ export default function App() {
           >
             <span className="score-ok">✓ {score.ok}</span>
             <span className="score-sep">·</span>
-            <span className="score-bad">✗ {score.wrong}</span>
+            <span className="score-bad">× {score.wrong}</span>
           </div>
         </div>
         <button
@@ -444,6 +444,7 @@ export default function App() {
           </span>
         )}
       </div>
+      <div className="top-rule" aria-hidden />
       {timerSec > 0 && showRemain && (
         <div className="timer-bar" aria-hidden>
           <div
@@ -484,7 +485,7 @@ export default function App() {
             className="en-area"
             style={exitUp ? undefined : { transform: `translate3d(0, ${liftY}px, 0)` }}
           >
-            <EnglishSentence ex={current.ex} en={current.en} />
+            <EnglishSentence ex={current.ex} en={current.en} category={current.t} />
           </section>
 
           <section className={`tr-area${frozen ? ' is-frozen' : ''}`}>

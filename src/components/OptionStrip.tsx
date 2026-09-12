@@ -107,10 +107,34 @@ export function OptionStrip({
           )
         })}
       </div>
-      <div className="option-dots" aria-hidden>
-        {options.map((_, i) => (
-          <span key={i} className={i === selected ? 'dot on' : 'dot'} />
-        ))}
+      <div className="swipe-hint" aria-hidden>
+        <svg viewBox="0 0 200 20" fill="none">
+          <defs>
+            <linearGradient id="swipeGrad" x1="0" y1="0" x2="200" y2="0">
+              <stop stopColor="#D18CFF" />
+              <stop offset="1" stopColor="#4DD8FF" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M18 10 H182"
+            stroke="url(#swipeGrad)"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+          />
+          <path
+            d="M16 10 L28 3 M16 10 L28 17"
+            stroke="url(#swipeGrad)"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+          />
+          <path
+            d="M184 10 L172 3 M184 10 L172 17"
+            stroke="url(#swipeGrad)"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+          />
+        </svg>
+        <span>SWIPE</span>
       </div>
     </div>
   )

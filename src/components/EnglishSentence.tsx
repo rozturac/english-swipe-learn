@@ -3,9 +3,10 @@ import { splitHighlight } from '../lib/highlight'
 type Props = {
   ex: string
   en: string
+  category?: string
 }
 
-export function EnglishSentence({ ex, en }: Props) {
+export function EnglishSentence({ ex, en, category }: Props) {
   const parts = splitHighlight(ex, en)
 
   return (
@@ -21,6 +22,7 @@ export function EnglishSentence({ ex, en }: Props) {
           ex
         )}
       </p>
+      {category ? <div className="en-category">{category}</div> : null}
     </div>
   )
 }
