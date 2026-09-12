@@ -15,11 +15,16 @@ type DragState = {
 /**
  * Touch + pointer swipe. L/R horizontal selection; UP to lock.
  * Down swipe is intentionally ignored.
+ *
+ * Drag lifecycle: onDragStart → onDrag(dx,dy) → finish(commit) → onDragEnd.
+ * finish runs before onDragEnd so selected + drag clear batch in one frame
+ * (smooth settle instead of snap-back then jump).
  */
 export function useSwipe(
   handlers: SwipeHandlers,
   opts?: {
     disabled?: boolean
+    onDragStart?: () => void
     onDrag?: (dx: number, dy: number) => void
     onDragEnd?: () => void
   },
@@ -42,6 +47,7 @@ export function useSwipe(
     start.current = { x: e.clientX, y: e.clientY }
     drag.current = { x: 0, y: 0, active: true }
     ;(e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId)
+    optsRef.current?.onDragStart?.()
   }, [])
 
   const onPointerMove = useCallback((e: ReactPointerEvent) => {
@@ -75,8 +81,10 @@ export function useSwipe(
       const dy = e.clientY - start.current.y
       start.current = null
       drag.current = { x: 0, y: 0, active: false }
-      optsRef.current?.onDragEnd?.()
+      // Commit selection first, then clear drag — React 18 batches both
+      // so the strip settles from finger position → new index in one paint.
       finish(dx, dy)
+      optsRef.current?.onDragEnd?.()
     },
     [finish],
   )

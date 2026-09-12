@@ -73,6 +73,7 @@ export default function App() {
   const [revealCorrect, setRevealCorrect] = useState<number | null>(null)
   const [dragX, setDragX] = useState(0)
   const [dragY, setDragY] = useState(0)
+  const [dragging, setDragging] = useState(false)
   const [locking, setLocking] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
   const [sessionOver, setSessionOver] = useState(false)
@@ -99,6 +100,7 @@ export default function App() {
     setExitUp(false)
     setDragX(0)
     setDragY(0)
+    setDragging(false)
   }, [])
 
   useEffect(() => {
@@ -132,6 +134,7 @@ export default function App() {
     setRemain(null)
     setDragX(0)
     setDragY(0)
+    setDragging(false)
   }, [])
 
   const goNext = useCallback((wasCorrect: boolean, item: VocabItem) => {
@@ -150,6 +153,7 @@ export default function App() {
       setRemain(null)
       setDragX(0)
       setDragY(0)
+      setDragging(false)
       return
     }
 
@@ -176,6 +180,7 @@ export default function App() {
     setExitUp(false)
     setDragX(0)
     setDragY(0)
+    setDragging(false)
   }, [])
 
   const resolveAnswer = useCallback(
@@ -186,6 +191,7 @@ export default function App() {
       setLocking(true)
       setDragX(0)
       setDragY(0)
+      setDragging(false)
       // Never freeze on a selectable 0.0 — clear timer + Reels fly-up
       setRemain(null)
       setExitUp(true)
@@ -265,12 +271,18 @@ export default function App() {
     { onLeft, onRight, onUp: lockAnswer },
     {
       disabled: locking || !current || showCoach,
+      onDragStart: () => {
+        if (lockingRef.current) return
+        setDragging(true)
+      },
       onDrag: (dx, dy) => {
         if (lockingRef.current) return
         setDragX(dx)
         setDragY(dy)
       },
       onDragEnd: () => {
+        // Batched with any setSelected from finish() → one settle paint
+        setDragging(false)
         setDragX(0)
         setDragY(0)
       },
@@ -467,6 +479,7 @@ export default function App() {
               selected={selected}
               revealCorrect={revealCorrect}
               dragX={stripDrag}
+              dragging={dragging}
               frozen={frozen}
             />
           </section>

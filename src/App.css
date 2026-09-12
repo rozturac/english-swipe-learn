@@ -466,8 +466,13 @@ body,
 .option-strip {
   display: flex;
   width: max-content;
-  transition: transform 0.48s var(--spring);
+  /* Settle / keyboard / cancel — Reels-like ease (~0.45s) */
+  transition: transform 0.45s var(--reel-out);
   will-change: transform;
+}
+
+.option-strip.is-dragging {
+  transition: none;
 }
 
 .option-card {

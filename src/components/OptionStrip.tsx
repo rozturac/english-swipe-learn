@@ -5,17 +5,35 @@ type Props = {
   selected: number
   revealCorrect?: number | null
   dragX?: number
+  dragging?: boolean
   frozen?: boolean
 }
 
 const CARD_RATIO = 0.82
 const GAP_PX = 14
 
+/** iOS-like rubber band past the first/last card. */
+function edgeRubber(
+  dx: number,
+  selected: number,
+  last: number,
+  dim: number,
+): number {
+  if (dim <= 0) return dx
+  if (selected <= 0 && dx > 0) return dx / (1 + dx / dim)
+  if (selected >= last && dx < 0) {
+    const a = -dx
+    return -a / (1 + a / dim)
+  }
+  return dx
+}
+
 export function OptionStrip({
   options,
   selected,
   revealCorrect = null,
   dragX = 0,
+  dragging = false,
   frozen = false,
 }: Props) {
   const viewportRef = useRef<HTMLDivElement>(null)
@@ -36,17 +54,20 @@ export function OptionStrip({
   const cardW = Math.round(vw * CARD_RATIO)
   const sidePad = Math.round((vw - cardW) / 2)
   const step = cardW + GAP_PX
-  const nudge = frozen ? 0 : Math.max(-28, Math.min(28, dragX * 0.12))
-  const tx = -selected * step + nudge
+  const last = Math.max(0, options.length - 1)
+  // ~1:1 finger follow while dragging; rubber-band only past ends
+  const follow = frozen ? 0 : edgeRubber(dragX, selected, last, cardW)
+  const tx = -selected * step + follow
 
   return (
     <div className={`option-viewport${frozen ? ' is-frozen' : ''}`} ref={viewportRef}>
       <div
-        className="option-strip"
+        className={`option-strip${dragging && !frozen ? ' is-dragging' : ''}`}
         style={{
           paddingLeft: sidePad,
           transform: `translate3d(${tx}px, 0, 0)`,
-          transition: frozen ? 'none' : undefined,
+          // Inline wins over stylesheet while finger is down / locked
+          transition: frozen || dragging ? 'none' : undefined,
         }}
       >
         {options.map((text, i) => {
