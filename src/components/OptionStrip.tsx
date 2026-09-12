@@ -31,6 +31,12 @@ export function OptionStrip({
   const viewportRef = useRef<HTMLDivElement>(null)
   const [vw, setVw] = useState(360)
   const prevSelected = useRef(selected)
+  // First paint after remount: no strip transition (Reels frame slides; TR is settled)
+  const [skipTransition, setSkipTransition] = useState(true)
+  useLayoutEffect(() => {
+    if (!skipTransition) return
+    setSkipTransition(false)
+  }, [skipTransition])
 
   useLayoutEffect(() => {
     const el = viewportRef.current
@@ -95,7 +101,8 @@ export function OptionStrip({
           paddingLeft: sidePad,
           transform: `translate3d(${tx}px, 0, 0)`,
           // Inline wins over stylesheet while finger is down / locked / wrap jump
-          transition: frozen || dragging || isWrapJump ? 'none' : undefined,
+          transition:
+            skipTransition || frozen || dragging || isWrapJump ? 'none' : undefined,
         }}
       >
         {cards.map(({ text, realIndex, key }) => {
@@ -105,6 +112,7 @@ export function OptionStrip({
           const isReveal = !isClone && revealCorrect !== null && realIndex === revealCorrect
           const isWrongSel =
             revealCorrect !== null && isSel && selected !== revealCorrect
+          const showFrame = isSel && revealCorrect === null
           return (
             <div
               key={key}
@@ -119,6 +127,20 @@ export function OptionStrip({
                 .join(' ')}
               style={{ width: cardW, marginRight: GAP_PX }}
             >
+              {showFrame && (
+                <picture>
+                  <source
+                    srcSet="/english-swipe-learn/card-frame.webp"
+                    type="image/webp"
+                  />
+                  <img
+                    className="card-frame-img"
+                    src="/english-swipe-learn/card-frame.png"
+                    alt=""
+                    aria-hidden
+                  />
+                </picture>
+              )}
               <p className="option-text" lang="tr">
                 {text}
               </p>

@@ -273,9 +273,11 @@ body,
   gap: 28px;
   padding: 12px 0 2px;
   will-change: transform, opacity;
+  /* New sentence arrives from below — framed card unit slides like Reels */
+  animation: reel-enter-up 0.58s var(--reel-out) both;
 }
 
-/* Reels-style upward swipe — slow ease-out, not a snap */
+/* Reels-style upward swipe — whole EN+TR frame exits */
 .play-stage.is-exit-up {
   animation: reel-exit-up 0.64s var(--reel-out) forwards;
   pointer-events: none;
@@ -285,6 +287,20 @@ body,
 .app.is-exit-up .top-rule {
   opacity: 0.28;
   transition: opacity 0.32s ease;
+}
+
+@keyframes reel-enter-up {
+  0% {
+    transform: translate3d(0, 108%, 0) scale(0.98);
+    opacity: 0;
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
 }
 
 @keyframes reel-exit-up {
@@ -461,13 +477,14 @@ body,
   will-change: transform, opacity;
 }
 
-/* Selected: v2 double thin parallel magenta→cyan neon (CSS only) */
+/* Selected: 1:1 neon frame asset (card-frame) over glass fill ~0.5 */
 .option-card.is-selected {
   transform: scale(1);
   opacity: 1;
   z-index: 2;
   border: none;
   border-radius: var(--radius-card);
+  overflow: hidden;
   background-image: linear-gradient(rgba(6, 6, 14, 0.5), rgba(6, 6, 14, 0.5));
   background-origin: padding-box;
   background-clip: padding-box;
@@ -478,47 +495,16 @@ body,
     0 0 32px rgba(90, 210, 255, 0.06);
 }
 
-.option-card.is-selected::before,
-.option-card.is-selected::after {
-  content: '';
+/* Frame asset — real white→alpha PNG/WebP; neon rim only, no plate */
+.card-frame-img {
   position: absolute;
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    #efd2ff 0%,
-    #e0c0ff 28%,
-    #b8e4ff 72%,
-    #c4f2ff 100%
-  );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-}
-
-/* Outer concentric stroke — soft even bloom stays outside the gap */
-.option-card.is-selected::before {
   inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  z-index: 0;
   border-radius: inherit;
-  padding: 1.15px;
-  z-index: 0;
-  filter:
-    drop-shadow(-1px 0 2.5px rgba(214, 160, 255, 0.32))
-    drop-shadow(1px 0 2.5px rgba(120, 220, 255, 0.26));
-}
-
-/* Inner concentric stroke — ~6px dark gap, no inner bloom (not fused) */
-.option-card.is-selected::after {
-  inset: 7px;
-  border-radius: calc(var(--radius-card) - 7px);
-  padding: 1.05px;
-  z-index: 0;
-  opacity: 0.9;
-  filter: none;
 }
 
 .option-card.is-side {
@@ -556,19 +542,11 @@ body,
     0 0 24px rgba(250, 107, 122, 0.12);
 }
 
-/* Reveal/wrong: drop neon double frame so state colors stay readable */
-.option-card.is-selected.is-reveal::before,
-.option-card.is-selected.is-reveal::after,
-.option-card.is-selected.is-wrong::before,
-.option-card.is-selected.is-wrong::after {
-  content: none;
-  display: none;
-  filter: none;
-}
-
+/* Reveal/wrong: no frame asset (not rendered); keep state colors readable */
 .option-card.is-selected.is-reveal,
 .option-card.is-selected.is-wrong {
   border-radius: var(--radius-card);
+  overflow: hidden;
 }
 
 .option-card.is-locked.is-selected:not(.is-reveal):not(.is-wrong) {
@@ -801,8 +779,17 @@ body,
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .play-stage {
+    animation: reel-enter-fade 0.35s ease both;
+  }
+
   .play-stage.is-exit-up {
     animation: reel-exit-fade 0.4s ease forwards;
+  }
+
+  @keyframes reel-enter-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
   @keyframes reel-exit-fade {

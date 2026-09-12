@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type MouseEvent, type PointerEvent } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type MouseEvent, type PointerEvent } from 'react'
 import vocabRaw from './data/vocab.json'
 import { EnglishSentence } from './components/EnglishSentence'
 import { OptionStrip } from './components/OptionStrip'
@@ -26,7 +26,7 @@ function wrapIndex(i: number, n: number): number {
   return ((i % n) + n) % n
 }
 
-/** Reels-style exit: keep in sync with CSS reel-exit-up (~640ms ease-out). */
+/** Reels frame slide: keep in sync with CSS reel-exit-up (~640ms). Enter is on remount. */
 const EXIT_OK_MS = 620
 const EXIT_TIMEOUT_MS = 680
 const EXIT_WRONG_MS = 820
@@ -91,6 +91,8 @@ export default function App() {
 
   const current = !sessionOver ? (queue[0] ?? null) : null
 
+  const builtForEn = useRef<string | null>(null)
+
   const rebuildOptions = useCallback((item: VocabItem) => {
     const { options: opts, correctIndex: ci } = buildOptions(item, vocab)
     setOptions(opts)
@@ -104,10 +106,14 @@ export default function App() {
     setDragX(0)
     setDragY(0)
     setDragging(false)
+    builtForEn.current = item.en
   }, [])
 
-  useEffect(() => {
-    if (current) rebuildOptions(current)
+  // Safety net (initial mount / session restart): settle options before paint
+  useLayoutEffect(() => {
+    if (current && builtForEn.current !== current.en) {
+      rebuildOptions(current)
+    }
   }, [current, rebuildOptions])
 
   useEffect(() => {
@@ -124,21 +130,27 @@ export default function App() {
   const startNewSession = useCallback(() => {
     const p = loadProgress()
     setProgress(p)
-    setQueue(pickSession(vocab, p))
+    const next = pickSession(vocab, p)
+    setQueue(next)
     setDoneCount(0)
     doneRef.current = 0
     setScore({ ok: 0, wrong: 0 })
     setSessionOver(false)
-    setFlash('none')
-    setRevealCorrect(null)
-    lockingRef.current = false
-    setLocking(false)
-    setExitUp(false)
     setRemain(null)
-    setDragX(0)
-    setDragY(0)
-    setDragging(false)
-  }, [])
+    const head = next[0]
+    if (head) rebuildOptions(head)
+    else {
+      setFlash('none')
+      setRevealCorrect(null)
+      lockingRef.current = false
+      setLocking(false)
+      setExitUp(false)
+      setDragX(0)
+      setDragY(0)
+      setDragging(false)
+      builtForEn.current = null
+    }
+  }, [rebuildOptions])
 
   const goNext = useCallback((wasCorrect: boolean, item: VocabItem) => {
     const nextDone = doneRef.current + 1
@@ -157,34 +169,45 @@ export default function App() {
       setDragX(0)
       setDragY(0)
       setDragging(false)
+      builtForEn.current = null
       return
     }
 
+    let nextQueue: VocabItem[] = []
     setQueue((q) => {
       const rest = q.slice(1)
-      if (!wasCorrect) return requeueWrong(rest, item)
-      const entry = loadProgress()[item.en]
-      const streak = entry?.streak ?? 0
-      if (streak >= 3 && Math.random() < 0.12) {
-        return [...rest, item]
+      if (!wasCorrect) nextQueue = requeueWrong(rest, item)
+      else {
+        const entry = loadProgress()[item.en]
+        const streak = entry?.streak ?? 0
+        if (streak >= 3 && Math.random() < 0.12) {
+          nextQueue = [...rest, item]
+        } else if (rest.length === 0) {
+          const filler = pickSession(vocab, loadProgress()).filter(
+            (x) => x.en !== item.en,
+          )
+          nextQueue = filler.slice(0, 3)
+        } else {
+          nextQueue = rest
+        }
       }
-      if (rest.length === 0) {
-        const filler = pickSession(vocab, loadProgress()).filter(
-          (x) => x.en !== item.en,
-        )
-        return filler.slice(0, 3)
-      }
-      return rest
+      return nextQueue
     })
-    setFlash('none')
-    setRevealCorrect(null)
-    lockingRef.current = false
-    setLocking(false)
-    setExitUp(false)
-    setDragX(0)
-    setDragY(0)
-    setDragging(false)
-  }, [])
+
+    // Rebuild in the same turn as queue advance so first paint is settled (no TR jitter)
+    const head = nextQueue[0]
+    if (head) rebuildOptions(head)
+    else {
+      setFlash('none')
+      setRevealCorrect(null)
+      lockingRef.current = false
+      setLocking(false)
+      setExitUp(false)
+      setDragX(0)
+      setDragY(0)
+      setDragging(false)
+    }
+  }, [rebuildOptions])
 
   const resolveAnswer = useCallback(
     (forceWrong = false) => {
@@ -423,7 +446,10 @@ export default function App() {
           </div>
         </div>
       ) : (
-        <div className={`play-stage${exitUp ? ' is-exit-up' : ''}`}>
+        <div
+          key={current.en}
+          className={`play-stage${exitUp ? ' is-exit-up' : ''}`}
+        >
           <section
             className="en-area"
             style={exitUp ? undefined : { transform: `translate3d(0, ${liftY}px, 0)` }}
@@ -432,7 +458,9 @@ export default function App() {
           </section>
 
           <section className={`tr-area${frozen ? ' is-frozen' : ''}`}>
+            {/* key remount: transform jumps to final selected with transition:none (no strip jitter) */}
             <OptionStrip
+              key={current.en}
               options={options}
               selected={selected}
               revealCorrect={revealCorrect}
