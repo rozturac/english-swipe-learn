@@ -112,7 +112,6 @@ export function OptionStrip({
           const isReveal = !isClone && revealCorrect !== null && realIndex === revealCorrect
           const isWrongSel =
             revealCorrect !== null && isSel && selected !== revealCorrect
-          const showFrame = isSel && revealCorrect === null
           return (
             <div
               key={key}
@@ -127,20 +126,6 @@ export function OptionStrip({
                 .join(' ')}
               style={{ width: cardW, marginRight: GAP_PX }}
             >
-              {showFrame && (
-                <picture>
-                  <source
-                    srcSet="/english-swipe-learn/card-frame.webp"
-                    type="image/webp"
-                  />
-                  <img
-                    className="card-frame-img"
-                    src="/english-swipe-learn/card-frame.png"
-                    alt=""
-                    aria-hidden
-                  />
-                </picture>
-              )}
               <p className="option-text" lang="tr">
                 {text}
               </p>
