@@ -100,6 +100,20 @@ export function OptionStrip({
                 .join(' ')}
               style={{ width: cardW, marginRight: GAP_PX }}
             >
+              {isSel && revealCorrect === null && (
+                <picture>
+                  <source
+                    srcSet="/english-swipe-learn/card-frame.webp"
+                    type="image/webp"
+                  />
+                  <img
+                    className="card-frame-img"
+                    src="/english-swipe-learn/card-frame.png"
+                    alt=""
+                    aria-hidden
+                  />
+                </picture>
+              )}
               <p className="option-text" lang="tr">
                 {text}
               </p>
