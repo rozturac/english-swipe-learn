@@ -7,10 +7,16 @@ type Props = {
   dragX?: number
   dragging?: boolean
   frozen?: boolean
+  onStep?: (step: number) => void
 }
 
 const CARD_RATIO = 0.82
 const GAP_PX = 14
+
+/** Card pitch used by carousel snap (width + gap). */
+function optionStep(viewportWidth: number): number {
+  return Math.round(viewportWidth * CARD_RATIO) + GAP_PX
+}
 
 /** iOS-like rubber band past the first/last card. */
 function edgeRubber(
@@ -35,6 +41,7 @@ export function OptionStrip({
   dragX = 0,
   dragging = false,
   frozen = false,
+  onStep,
 }: Props) {
   const viewportRef = useRef<HTMLDivElement>(null)
   const [vw, setVw] = useState(360)
@@ -53,8 +60,12 @@ export function OptionStrip({
 
   const cardW = Math.round(vw * CARD_RATIO)
   const sidePad = Math.round((vw - cardW) / 2)
-  const step = cardW + GAP_PX
+  const step = optionStep(vw)
   const last = Math.max(0, options.length - 1)
+
+  useLayoutEffect(() => {
+    onStep?.(step)
+  }, [step, onStep])
   // ~1:1 finger follow while dragging; rubber-band only past ends
   const follow = frozen ? 0 : edgeRubber(dragX, selected, last, cardW)
   const tx = -selected * step + follow

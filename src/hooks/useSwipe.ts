@@ -1,8 +1,8 @@
 import { useCallback, useRef, type PointerEvent as ReactPointerEvent } from 'react'
 
 type SwipeHandlers = {
-  onLeft: () => void
-  onRight: () => void
+  /** Index delta: +1 next card, -1 previous. Carousel-matched, not screen-edge named. */
+  onHorizontal: (deltaIndexes: number) => void
   onUp: () => void
 }
 
@@ -10,6 +10,26 @@ type DragState = {
   x: number
   y: number
   active: boolean
+}
+
+const THRESH_Y = 56
+const UP_DOMINANCE = 1.15
+/** Only ignore L/R if vertical is clearly larger — slow horizontal still commits. */
+const VERT_STEAL = 1.6
+const SNAP_RATIO = 0.28
+
+/**
+ * Nearest-card snap for the option carousel.
+ * tx = -selected*step + dragX, so finger LEFT (dx<0) brings the NEXT card in:
+ * deltaIndexes = round(-dx / step). Commit at least one step past 28% of a card.
+ */
+export function snapIndexDelta(dx: number, step: number): number {
+  if (step <= 0 || dx === 0) return 0
+  const raw = -dx / step
+  const nearest = Math.round(raw)
+  if (nearest !== 0) return nearest
+  if (Math.abs(dx) > step * SNAP_RATIO) return dx < 0 ? 1 : -1
+  return 0
 }
 
 /**
@@ -27,6 +47,8 @@ export function useSwipe(
     onDragStart?: () => void
     onDrag?: (dx: number, dy: number) => void
     onDragEnd?: () => void
+    /** Card pitch (width + gap). Falls back to full-viewport estimate. */
+    getStep?: () => number
   },
 ) {
   const start = useRef<{ x: number; y: number } | null>(null)
@@ -36,10 +58,6 @@ export function useSwipe(
   handlersRef.current = handlers
   const optsRef = useRef(opts)
   optsRef.current = opts
-
-  const THRESH_X = 48
-  const THRESH_Y = 56
-  const DOMINANCE = 1.15
 
   const onPointerDown = useCallback((e: ReactPointerEvent) => {
     if (optsRef.current?.disabled) return
@@ -62,15 +80,21 @@ export function useSwipe(
     if (locked.current) return
     const ax = Math.abs(dx)
     const ay = Math.abs(dy)
-    if (dy < -THRESH_Y && ay > ax * DOMINANCE) {
+
+    // UP lock / Reels exit — keep vertical dominance so L/R does not steal it.
+    if (dy < -THRESH_Y && ay > ax * UP_DOMINANCE) {
       locked.current = true
       handlersRef.current.onUp()
       return
     }
-    if (ax > THRESH_X && ax > ay * DOMINANCE) {
+
+    const vw = typeof window !== 'undefined' ? window.innerWidth : 360
+    const step = optsRef.current?.getStep?.() ?? Math.round(vw * 0.82) + 14
+    const delta = snapIndexDelta(dx, step)
+    // Soft vertical guard: commit slow L/R even with some finger drift.
+    if (delta !== 0 && ay <= ax * VERT_STEAL) {
       locked.current = true
-      if (dx < 0) handlersRef.current.onLeft()
-      else handlersRef.current.onRight()
+      handlersRef.current.onHorizontal(delta)
     }
   }, [])
 

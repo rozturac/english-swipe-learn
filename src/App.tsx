@@ -257,20 +257,34 @@ export default function App() {
     }
   }, [current?.en, doneCount, timerSec, sessionOver, locking, showCoach])
 
-  const onLeft = useCallback(() => {
+  const selectPrev = useCallback(() => {
     if (locking) return
     setSelected((s) => Math.max(0, s - 1))
   }, [locking])
 
-  const onRight = useCallback(() => {
+  const selectNext = useCallback(() => {
     if (locking) return
     setSelected((s) => Math.min(2, s + 1))
   }, [locking])
 
+  const onHorizontal = useCallback(
+    (deltaIndexes: number) => {
+      if (locking || !deltaIndexes) return
+      setSelected((s) => Math.max(0, Math.min(2, s + deltaIndexes)))
+    },
+    [locking],
+  )
+
+  const stepRef = useRef(360 * 0.82 + 14)
+  const onStripStep = useCallback((step: number) => {
+    stepRef.current = step
+  }, [])
+
   const swipe = useSwipe(
-    { onLeft, onRight, onUp: lockAnswer },
+    { onHorizontal, onUp: lockAnswer },
     {
       disabled: locking || !current || showCoach,
+      getStep: () => stepRef.current,
       onDragStart: () => {
         if (lockingRef.current) return
         setDragging(true)
@@ -299,8 +313,8 @@ export default function App() {
         return
       }
       if (locking || !current) return
-      if (e.key === 'ArrowLeft') onLeft()
-      else if (e.key === 'ArrowRight') onRight()
+      if (e.key === 'ArrowLeft') selectPrev()
+      else if (e.key === 'ArrowRight') selectNext()
       else if (e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
         e.preventDefault()
         lockAnswer()
@@ -308,7 +322,7 @@ export default function App() {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [locking, current, onLeft, onRight, lockAnswer, showCoach, dismissCoach])
+  }, [locking, current, selectPrev, selectNext, lockAnswer, showCoach, dismissCoach])
 
   const chooseTimer = (sec: TimerSec) => {
     setTimerSec(sec)
@@ -481,6 +495,7 @@ export default function App() {
               dragX={stripDrag}
               dragging={dragging}
               frozen={frozen}
+              onStep={onStripStep}
             />
           </section>
         </div>
