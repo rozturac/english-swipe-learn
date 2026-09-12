@@ -108,81 +108,14 @@ export function OptionStrip({
         })}
       </div>
       <div className="swipe-hint" aria-hidden>
-        <svg
-          className="swipe-hint-arrow"
-          viewBox="0 0 240 32"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          overflow="visible"
-        >
-          <defs>
-            <linearGradient
-              id="swipeHintGlow"
-              x1="8"
-              y1="16"
-              x2="232"
-              y2="16"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop offset="0%" stopColor="#FF7AD9" />
-              <stop offset="42%" stopColor="#F0E6FF" />
-              <stop offset="100%" stopColor="#5EC8FF" />
-            </linearGradient>
-            <filter
-              id="swipeHintSoft"
-              x="-25%"
-              y="-160%"
-              width="150%"
-              height="420%"
-              colorInterpolationFilters="sRGB"
-            >
-              <feGaussianBlur in="SourceGraphic" stdDeviation="4.2" />
-            </filter>
-            <filter
-              id="swipeHintMid"
-              x="-18%"
-              y="-120%"
-              width="136%"
-              height="340%"
-              colorInterpolationFilters="sRGB"
-            >
-              <feGaussianBlur in="SourceGraphic" stdDeviation="2.1" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-          {/* Outer soft neon halo — magenta → cyan */}
-          <path
-            d="M24 7 L10 16 L24 25 M10 16 H230 M216 7 L230 16 L216 25"
-            stroke="url(#swipeHintGlow)"
-            strokeWidth="3.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            opacity="0.55"
-            filter="url(#swipeHintSoft)"
+        <picture>
+          <source srcSet="/english-swipe-learn/swipe-hint.webp" type="image/webp" />
+          <img
+            className="swipe-hint-img"
+            src="/english-swipe-learn/swipe-hint.png"
+            alt=""
           />
-          {/* Mid glow tube */}
-          <path
-            d="M24 7 L10 16 L24 25 M10 16 H230 M216 7 L230 16 L216 25"
-            stroke="url(#swipeHintGlow)"
-            strokeWidth="2.15"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            opacity="0.9"
-            filter="url(#swipeHintMid)"
-          />
-          {/* Bright near-white core */}
-          <path
-            d="M24 7 L10 16 L24 25 M10 16 H230 M216 7 L230 16 L216 25"
-            stroke="#F8FBFF"
-            strokeWidth="1.35"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-        <span className="swipe-hint-label">SWIPE</span>
+        </picture>
       </div>
     </div>
   )
