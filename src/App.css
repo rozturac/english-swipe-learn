@@ -20,7 +20,7 @@
   --accent-soft: rgba(64, 224, 255, 0.14);
   --radius-sm: 10px;
   --radius-md: 16px;
-  --radius-card: 26px;
+  --radius-card: 30px;
   --radius-pill: 999px;
   --space-1: 4px;
   --space-2: 8px;
@@ -34,6 +34,8 @@
   --reel-out: cubic-bezier(0.16, 0.78, 0.24, 1);
   --safe-b: env(safe-area-inset-bottom, 0px);
   --safe-t: env(safe-area-inset-top, 0px);
+  --safe-l: env(safe-area-inset-left, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
 }
 
 * {
@@ -67,11 +69,9 @@ body,
   min-height: 100%;
   min-height: 100dvh;
   height: 100dvh;
-  max-width: 390px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  padding: calc(52px + var(--safe-t)) 22px calc(28px + var(--safe-b));
+  padding: calc(52px + var(--safe-t)) max(12px, calc(var(--safe-r) + 8px)) calc(28px + var(--safe-b)) max(12px, calc(var(--safe-l) + 8px));
   position: relative;
   overflow: hidden;
   background: transparent;
@@ -79,7 +79,7 @@ body,
   z-index: 1;
 }
 
-/* Photo cosmos — full viewport cover (not clipped to 390px phone column) */
+/* Photo cosmos — full viewport cover */
 .cosmos {
   position: fixed;
   inset: 0;
@@ -432,7 +432,7 @@ body,
 .option-card {
   position: relative;
   flex: 0 0 auto;
-  border-radius: 26px;
+  border-radius: var(--radius-card);
   min-height: 168px;
   padding: 28px 22px;
   display: flex;
@@ -458,21 +458,21 @@ body,
   will-change: transform, opacity;
 }
 
-/* Selected: double thin magenta→cyan neon frame (CSS only, soft bloom) */
+/* Selected: v2 double thin parallel magenta→cyan neon (CSS only) */
 .option-card.is-selected {
   transform: scale(1);
   opacity: 1;
   z-index: 2;
   border: none;
-  border-radius: 26px;
-  background-image: linear-gradient(rgba(10, 10, 24, 0.72), rgba(10, 10, 24, 0.72));
+  border-radius: var(--radius-card);
+  background-image: linear-gradient(rgba(6, 6, 14, 0.8), rgba(6, 6, 14, 0.8));
   background-origin: padding-box;
   background-clip: padding-box;
   box-shadow:
-    0 0 10px rgba(219, 133, 255, 0.2),
-    0 0 10px rgba(64, 224, 255, 0.16),
-    0 0 22px rgba(199, 122, 255, 0.1),
-    0 0 22px rgba(77, 216, 255, 0.08);
+    -3px 0 16px rgba(196, 140, 255, 0.16),
+    3px 0 16px rgba(100, 210, 255, 0.14),
+    0 0 32px rgba(170, 140, 255, 0.07),
+    0 0 32px rgba(90, 210, 255, 0.06);
 }
 
 .option-card.is-selected::before,
@@ -482,10 +482,10 @@ body,
   pointer-events: none;
   background: linear-gradient(
     90deg,
-    #db85ff 0%,
-    #c77aff 32%,
-    #40e0ff 68%,
-    #4dd8ff 100%
+    #efd2ff 0%,
+    #e0c0ff 28%,
+    #b8e4ff 72%,
+    #c4f2ff 100%
   );
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
@@ -497,27 +497,25 @@ body,
   mask-composite: exclude;
 }
 
-/* Outer concentric stroke */
+/* Outer concentric stroke — soft even bloom stays outside the gap */
 .option-card.is-selected::before {
   inset: 0;
   border-radius: inherit;
-  padding: 1.35px;
-  z-index: 0;
-  filter:
-    drop-shadow(0 0 2.5px rgba(219, 133, 255, 0.4))
-    drop-shadow(0 0 5px rgba(64, 224, 255, 0.22));
-}
-
-/* Inner concentric stroke — gap ≈ stroke weight */
-.option-card.is-selected::after {
-  inset: 5px;
-  border-radius: 21px;
   padding: 1.15px;
   z-index: 0;
-  opacity: 0.95;
   filter:
-    drop-shadow(0 0 2px rgba(219, 133, 255, 0.3))
-    drop-shadow(0 0 4px rgba(64, 224, 255, 0.18));
+    drop-shadow(-1px 0 2.5px rgba(214, 160, 255, 0.32))
+    drop-shadow(1px 0 2.5px rgba(120, 220, 255, 0.26));
+}
+
+/* Inner concentric stroke — ~6px dark gap, no inner bloom (not fused) */
+.option-card.is-selected::after {
+  inset: 7px;
+  border-radius: calc(var(--radius-card) - 7px);
+  padding: 1.05px;
+  z-index: 0;
+  opacity: 0.9;
+  filter: none;
 }
 
 .option-card.is-side {
@@ -567,7 +565,7 @@ body,
 
 .option-card.is-selected.is-reveal,
 .option-card.is-selected.is-wrong {
-  border-radius: 26px;
+  border-radius: var(--radius-card);
 }
 
 .option-card.is-locked.is-selected:not(.is-reveal):not(.is-wrong) {
@@ -805,14 +803,6 @@ body,
   to {
     opacity: 1;
     transform: none;
-  }
-}
-
-@media (min-width: 640px) {
-  .app {
-    max-width: 390px;
-    border-left: 1px solid rgba(255, 255, 255, 0.04);
-    border-right: 1px solid rgba(255, 255, 255, 0.04);
   }
 }
 
