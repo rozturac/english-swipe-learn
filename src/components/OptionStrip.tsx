@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type TransitionEvent } from 'react'
 
 type Props = {
   options: string[]
@@ -30,12 +30,23 @@ export function OptionStrip({
 }: Props) {
   const viewportRef = useRef<HTMLDivElement>(null)
   const [vw, setVw] = useState(360)
+  const n = options.length
+  const hasLoop = n > 1
+
   const prevSelected = useRef(selected)
-  // First paint after remount: no strip transition (instant sentence swap)
+  const selectedRef = useRef(selected)
+  selectedRef.current = selected
+  const settlingWrap = useRef(false)
+  // Visual strip index (includes leading/trailing clones when looping)
+  const [visualIdx, setVisualIdx] = useState(() => (n > 1 ? selected + 1 : selected))
+  // Skip CSS transition: first paint, silent wrap reindex, drag interrupt
   const [skipTransition, setSkipTransition] = useState(true)
+
   useLayoutEffect(() => {
     if (!skipTransition) return
-    setSkipTransition(false)
+    // Paint one frame with transition:none (silent wrap reindex), then re-enable
+    const id = requestAnimationFrame(() => setSkipTransition(false))
+    return () => cancelAnimationFrame(id)
   }, [skipTransition])
 
   useLayoutEffect(() => {
@@ -50,7 +61,6 @@ export function OptionStrip({
     return () => ro.disconnect()
   }, [])
 
-  const n = options.length
   const cardW = Math.round(vw * CARD_RATIO)
   const sidePad = Math.round((vw - cardW) / 2)
   const step = optionStep(vw)
@@ -59,19 +69,62 @@ export function OptionStrip({
     onStep?.(step)
   }, [step, onStep])
 
-  // Detect wrap on this render (prev still old) so first paint skips CSS fly-through.
-  const dist = Math.abs(selected - prevSelected.current)
-  const isWrapJump = n > 1 && dist > Math.floor(n / 2)
+  // Interrupt mid-wrap settle if a new drag starts — snap to real index silently
   useLayoutEffect(() => {
+    if (!dragging || !settlingWrap.current) return
+    settlingWrap.current = false
+    setSkipTransition(true)
+    setVisualIdx(hasLoop ? selected + 1 : selected)
+  }, [dragging, selected, hasLoop])
+
+  // Selected change: normal settle, or animate onto clone then silent reindex
+  useLayoutEffect(() => {
+    const prev = prevSelected.current
+    if (prev === selected) return
+
+    const dist = Math.abs(selected - prev)
+    const isWrap = hasLoop && dist > Math.floor(n / 2)
+
+    if (isWrap) {
+      // Forward wrap (e.g. 2→0): settle onto trailing clone; backward (0→2): leading clone
+      const forward = selected < prev
+      const cloneIdx = forward ? n + 1 : 0
+      settlingWrap.current = true
+      setSkipTransition(false)
+      setVisualIdx(cloneIdx)
+    } else {
+      settlingWrap.current = false
+      setSkipTransition(false)
+      setVisualIdx(hasLoop ? selected + 1 : selected)
+    }
     prevSelected.current = selected
-  }, [selected])
+  }, [selected, hasLoop, n])
+
+  const finishWrapReindex = () => {
+    if (!settlingWrap.current) return
+    settlingWrap.current = false
+    const real = selectedRef.current
+    setSkipTransition(true)
+    setVisualIdx(hasLoop ? real + 1 : real)
+  }
+
+  const onStripTransitionEnd = (e: TransitionEvent<HTMLDivElement>) => {
+    if (e.target !== e.currentTarget) return
+    if (e.propertyName !== 'transform') return
+    finishWrapReindex()
+  }
+
+  // Safety: if transitionend is skipped (tab background, reduced motion), still reindex
+  useEffect(() => {
+    if (visualIdx !== 0 && !(hasLoop && visualIdx === n + 1)) return
+    if (!settlingWrap.current) return
+    const t = window.setTimeout(() => finishWrapReindex(), 750)
+    return () => window.clearTimeout(t)
+  }, [visualIdx, hasLoop, n])
 
   // Free follow — no edge rubber; infinite L/R
   const follow = frozen ? 0 : dragX
-  // Clone strip: [last, ...options, first] so drag past ends previews wrap
-  const hasLoop = n > 1
-  const visualSelected = hasLoop ? selected + 1 : selected
-  const tx = -visualSelected * step + follow
+  const tx = -visualIdx * step + follow
 
   const cards: { text: string; realIndex: number; key: string }[] = []
   if (hasLoop) {
@@ -93,25 +146,28 @@ export function OptionStrip({
     })
   }
 
+  const noTransition = skipTransition || frozen || (dragging && !frozen)
+
   return (
     <div className={`option-viewport${frozen ? ' is-frozen' : ''}`} ref={viewportRef}>
       <div
-        className={`option-strip${dragging && !frozen ? ' is-dragging' : ''}${isWrapJump ? ' is-wrap-jump' : ''}`}
+        className={`option-strip${dragging && !frozen ? ' is-dragging' : ''}`}
         style={{
           paddingLeft: sidePad,
           transform: `translate3d(${tx}px, 0, 0)`,
-          // Inline wins over stylesheet while finger is down / locked / wrap jump
-          transition:
-            skipTransition || frozen || dragging || isWrapJump ? 'none' : undefined,
+          // Inline wins over stylesheet while finger is down / locked / silent reindex
+          transition: noTransition ? 'none' : undefined,
         }}
+        onTransitionEnd={onStripTransitionEnd}
       >
-        {cards.map(({ text, realIndex, key }) => {
+        {cards.map(({ text, realIndex, key }, i) => {
           const isClone = key.startsWith('clone')
-          // Only the real (middle) copy gets selected chrome — clones are off-edge previews
-          const isSel = !isClone && realIndex === selected
+          // Chrome follows the visually centered card (clone during wrap settle)
+          const isSel = i === visualIdx
+          // Correct answer highlight only on the real copy (side card OK when wrong)
           const isReveal = !isClone && revealCorrect !== null && realIndex === revealCorrect
           const isWrongSel =
-            revealCorrect !== null && isSel && selected !== revealCorrect
+            revealCorrect !== null && isSel && realIndex !== revealCorrect
           const showFrame = isSel && revealCorrect === null
           return (
             <div
