@@ -31,7 +31,7 @@ export function OptionStrip({
   const viewportRef = useRef<HTMLDivElement>(null)
   const [vw, setVw] = useState(360)
   const prevSelected = useRef(selected)
-  // First paint after remount: no strip transition (Reels frame slides; TR is settled)
+  // First paint after remount: no strip transition (instant sentence swap)
   const [skipTransition, setSkipTransition] = useState(true)
   useLayoutEffect(() => {
     if (!skipTransition) return

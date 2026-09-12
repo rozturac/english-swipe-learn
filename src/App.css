@@ -132,50 +132,6 @@ body,
   z-index: 1;
 }
 
-/* Per-page flash veil (lives inside each reel page) */
-.reel-page-inner {
-  position: relative;
-  z-index: 0;
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.reel-page-inner > *:not(.flash-veil) {
-  position: relative;
-  z-index: 1;
-}
-
-.reel-page-inner .flash-veil {
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  opacity: 0;
-  transition: opacity 0.28s ease;
-  background: transparent;
-}
-
-.reel-page-inner.flash-correct .flash-veil {
-  opacity: 1;
-  background: radial-gradient(
-    ellipse at 50% 42%,
-    rgba(124, 235, 159, 0.2),
-    transparent 58%
-  );
-}
-
-.reel-page-inner.flash-wrong .flash-veil {
-  opacity: 1;
-  background: radial-gradient(
-    ellipse at 50% 42%,
-    rgba(250, 107, 122, 0.22),
-    transparent 58%
-  );
-}
-
 .topbar {
   display: flex;
   align-items: flex-start;
@@ -281,62 +237,7 @@ body,
   flex-shrink: 0;
 }
 
-.reel-viewport {
-  flex: 1;
-  min-height: 0;
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-}
-
-.reel-page {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  will-change: transform;
-  backface-visibility: hidden;
-}
-
-/* Current page resting / after enter */
-.reel-page:not(.is-exiting):not(.is-entering) {
-  transform: translate3d(0, 0, 0);
-  z-index: 1;
-}
-
-/* Next page enters from BELOW (translateY 100% → 0) */
-.reel-page.is-entering {
-  z-index: 1;
-  animation: reel-page-enter 0.45s var(--reel-out) both;
-}
-
-/* Current page exits UP off-screen — kept mounted for full flight */
-.reel-page.is-exiting {
-  z-index: 2;
-  pointer-events: none;
-  animation: reel-page-exit 0.45s var(--reel-out) forwards;
-}
-
-@keyframes reel-page-enter {
-  from {
-    transform: translate3d(0, 100%, 0);
-  }
-  to {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes reel-page-exit {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(0, -100%, 0);
-  }
-}
-
+/* Below hairline: EN + TR + hint (instant swap; flash veil only here) */
 .play-stage {
   flex: 1;
   min-height: 0;
@@ -345,6 +246,41 @@ body,
   justify-content: flex-end;
   gap: 28px;
   padding: 12px 0 2px;
+  position: relative;
+  z-index: 0;
+}
+
+.play-stage > *:not(.flash-veil) {
+  position: relative;
+  z-index: 1;
+}
+
+.play-stage .flash-veil {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+  background: transparent;
+}
+
+.play-stage.flash-correct .flash-veil {
+  opacity: 1;
+  background: radial-gradient(
+    ellipse at 50% 42%,
+    rgba(124, 235, 159, 0.2),
+    transparent 58%
+  );
+}
+
+.play-stage.flash-wrong .flash-veil {
+  opacity: 1;
+  background: radial-gradient(
+    ellipse at 50% 42%,
+    rgba(250, 107, 122, 0.22),
+    transparent 58%
+  );
 }
 
 .en-area {
@@ -843,25 +779,6 @@ body,
   to {
     opacity: 1;
     transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reel-page.is-entering {
-    animation: reel-page-enter-fade 0.3s ease both;
-  }
-
-  .reel-page.is-exiting {
-    animation: reel-page-exit-fade 0.3s ease forwards;
-  }
-
-  @keyframes reel-page-enter-fade {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @keyframes reel-page-exit-fade {
-    to { opacity: 0; }
   }
 }
 
