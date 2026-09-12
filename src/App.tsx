@@ -24,9 +24,11 @@ const COACH_KEY = 'esl-coach-v1'
 /** Below-hairline Reels translate — keep in sync with CSS (~450ms). */
 const REEL_MS = 450
 /** Brief feedback before the below-line content turns. */
-const FEEDBACK_OK_MS = 200
-const FEEDBACK_TIMEOUT_MS = 280
-const FEEDBACK_WRONG_MS = 420
+const FEEDBACK_OK_MS = 220
+/** Wrong/timeout: brief red on card, then green correct readable hold. */
+const FEEDBACK_LEARN_RED_MS = 280
+const FEEDBACK_LEARN_GREEN_MS = 1000
+const GHOST_KEY = 'esl-ghost-v1'
 
 function wrapIndex(i: number, n: number): number {
   if (n <= 0) return 0
@@ -66,6 +68,30 @@ function saveCoachSeen() {
   }
 }
 
+function loadGhostSeen(): boolean {
+  try {
+    return localStorage.getItem(GHOST_KEY) === '1'
+  } catch {
+    return false
+  }
+}
+
+function saveGhostSeen() {
+  try {
+    localStorage.setItem(GHOST_KEY, '1')
+  } catch {
+    /* ignore */
+  }
+}
+
+function prefersReducedMotion(): boolean {
+  try {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  } catch {
+    return false
+  }
+}
+
 /** Snapshot of below-hairline play content for the exiting reel page. */
 type PageSnap = {
   id: string
@@ -90,9 +116,10 @@ type PlayPaneProps = {
   onStripStep: (step: number) => void
   /** Stable key for OptionStrip remount per sentence (not mid-exit). */
   stripKey: string
+  showGhost?: boolean
 }
 
-/** EN + TR + SWIPE only — lives inside the sliding reel page. */
+/** EN + TR + jest hint — lives inside the sliding reel page. */
 function PlayPane({
   item,
   options,
@@ -105,9 +132,10 @@ function PlayPane({
   liftY,
   onStripStep,
   stripKey,
+  showGhost = false,
 }: PlayPaneProps) {
-  const flashClass =
-    flash === 'correct' ? 'flash-correct' : flash === 'wrong' ? 'flash-wrong' : ''
+  // Correct may keep a soft veil; wrong/timeout flash is card-only (cosmos stays still).
+  const flashClass = flash === 'correct' ? 'flash-correct' : ''
 
   return (
     <div className={`play-stage ${flashClass}`}>
@@ -130,6 +158,8 @@ function PlayPane({
           dragging={dragging}
           frozen={frozen}
           onStep={onStripStep}
+          wrongFlash={flash === 'wrong'}
+          showGhost={showGhost}
         />
       </section>
     </div>
@@ -155,14 +185,24 @@ export default function App() {
   const [timerSec, setTimerSec] = useState<TimerSec>(loadTimerPref)
   const [remain, setRemain] = useState<number | null>(null)
   const [score, setScore] = useState({ ok: 0, wrong: 0 })
+  const [missed, setMissed] = useState<VocabItem[]>([])
+  const [sessionLen, setSessionLen] = useState(SESSION_LEN)
   const [showCoach, setShowCoach] = useState(() => !loadCoachSeen())
+  const [showGhost, setShowGhost] = useState(
+    () => !loadGhostSeen() && !prefersReducedMotion(),
+  )
   /** Snapshot of the below-line page sliding UP — kept mounted for the full exit. */
   const [exiting, setExiting] = useState<PageSnap | null>(null)
   const advanceTimer = useRef<number | null>(null)
+  const learnTimer = useRef<number | null>(null)
   const reelClearTimer = useRef<number | null>(null)
   const doneRef = useRef(0)
   const lockingRef = useRef(false)
   const snapIdRef = useRef(0)
+  /** Session-wide exTr used as correct or distractor. */
+  const usedExTrRef = useRef<Set<string>>(new Set())
+  const sessionLenRef = useRef(SESSION_LEN)
+  const selectedRef = useRef(0)
 
   const current = !sessionOver ? (queue[0] ?? null) : null
   const reeling = exiting !== null
@@ -170,10 +210,14 @@ export default function App() {
   const builtForEn = useRef<string | null>(null)
 
   const rebuildOptions = useCallback((item: VocabItem, unlock = true) => {
-    const { options: opts, correctIndex: ci } = buildOptions(item, vocab)
+    const used = usedExTrRef.current
+    const { options: opts, correctIndex: ci } = buildOptions(item, vocab, used)
+    for (const o of opts) used.add(o)
     setOptions(opts)
     setCorrectIndex(ci)
-    setSelected(Math.floor(Math.random() * 3))
+    const sel = Math.floor(Math.random() * 3)
+    selectedRef.current = sel
+    setSelected(sel)
     setRevealCorrect(null)
     setFlash('none')
     if (unlock) {
@@ -196,6 +240,7 @@ export default function App() {
   useEffect(() => {
     return () => {
       if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
+      if (learnTimer.current) window.clearTimeout(learnTimer.current)
       if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
     }
   }, [])
@@ -205,49 +250,88 @@ export default function App() {
     setShowCoach(false)
   }, [])
 
+  const dismissGhost = useCallback(() => {
+    saveGhostSeen()
+    setShowGhost(false)
+  }, [])
+
+  useEffect(() => {
+    if (!showGhost || showCoach) return
+    const t = window.setTimeout(() => dismissGhost(), 4200)
+    return () => window.clearTimeout(t)
+  }, [showGhost, showCoach, dismissGhost])
+
   const clearExiting = useCallback(() => {
     setExiting(null)
     lockingRef.current = false
     setLocking(false)
   }, [])
 
+  const beginSession = useCallback(
+    (next: VocabItem[]) => {
+      if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
+      if (learnTimer.current) window.clearTimeout(learnTimer.current)
+      if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
+      setExiting(null)
+      usedExTrRef.current = new Set()
+      sessionLenRef.current = Math.max(1, next.length)
+      setSessionLen(sessionLenRef.current)
+      setQueue(next)
+      setDoneCount(0)
+      doneRef.current = 0
+      setScore({ ok: 0, wrong: 0 })
+      setMissed([])
+      setSessionOver(false)
+      setRemain(null)
+      const head = next[0]
+      if (head) rebuildOptions(head)
+      else {
+        setFlash('none')
+        setRevealCorrect(null)
+        lockingRef.current = false
+        setLocking(false)
+        setDragX(0)
+        setDragY(0)
+        setDragging(false)
+        builtForEn.current = null
+      }
+    },
+    [rebuildOptions],
+  )
+
   const startNewSession = useCallback(() => {
-    if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
-    if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
-    setExiting(null)
     const p = loadProgress()
     setProgress(p)
-    const next = pickSession(vocab, p)
-    setQueue(next)
-    setDoneCount(0)
-    doneRef.current = 0
-    setScore({ ok: 0, wrong: 0 })
-    setSessionOver(false)
-    setRemain(null)
-    const head = next[0]
-    if (head) rebuildOptions(head)
-    else {
-      setFlash('none')
-      setRevealCorrect(null)
-      lockingRef.current = false
-      setLocking(false)
-      setDragX(0)
-      setDragY(0)
-      setDragging(false)
-      builtForEn.current = null
+    beginSession(pickSession(vocab, p))
+  }, [beginSession])
+
+  const startRetryMissed = useCallback(() => {
+    if (missed.length === 0) {
+      startNewSession()
+      return
     }
-  }, [rebuildOptions])
+    // Dedupe by en, keep order
+    const seen = new Set<string>()
+    const mini: VocabItem[] = []
+    for (const m of missed) {
+      if (seen.has(m.en)) continue
+      seen.add(m.en)
+      mini.push(m)
+    }
+    setProgress(loadProgress())
+    beginSession(mini)
+  }, [missed, beginSession, startNewSession])
 
   const goNext = useCallback((wasCorrect: boolean, item: VocabItem) => {
     const nextDone = doneRef.current + 1
     doneRef.current = nextDone
     setDoneCount(nextDone)
 
-    if (nextDone >= SESSION_LEN) {
+    if (nextDone >= sessionLenRef.current) {
       setSessionOver(true)
       setFlash('none')
       setRevealCorrect(null)
-      // Stay locked until exiting page finishes sliding up
+      // Stay locked until exiting page finishes sliding up — then results card.
       setQueue([])
       setRemain(null)
       setDragX(0)
@@ -268,7 +352,7 @@ export default function App() {
           nextQueue = [...rest, item]
         } else if (rest.length === 0) {
           const filler = pickSession(vocab, loadProgress()).filter(
-            (x) => x.en !== item.en,
+            (x) => x.en !== item.en && !usedExTrRef.current.has(x.exTr),
           )
           nextQueue = filler.slice(0, 3)
         } else {
@@ -301,48 +385,76 @@ export default function App() {
       setDragY(0)
       setDragging(false)
       setRemain(null)
+      dismissGhost()
 
       const ok = !forceWrong && options.length === 3 && selected === correctIndex
       const nextScore = ok
         ? { ok: score.ok + 1, wrong: score.wrong }
         : { ok: score.ok, wrong: score.wrong + 1 }
       const nextReveal = ok ? null : options.length === 3 ? correctIndex : null
-      const nextFlash: FlashKind = ok ? 'correct' : 'wrong'
 
       setProgress((p) => recordAnswer(p, current.en, ok))
       setScore(nextScore)
-      setFlash(nextFlash)
-      if (nextReveal !== null) setRevealCorrect(nextReveal)
+      if (!ok) {
+        setMissed((m) => (m.some((x) => x.en === current.en) ? m : [...m, current]))
+      }
 
       const item = current
       const snapOptions = options
-      const snapSelected = selected
       const snapCorrect = correctIndex
-      const delay = ok
-        ? FEEDBACK_OK_MS
-        : forceWrong
-          ? FEEDBACK_TIMEOUT_MS
-          : FEEDBACK_WRONG_MS
 
       if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
-      advanceTimer.current = window.setTimeout(() => {
+      if (learnTimer.current) window.clearTimeout(learnTimer.current)
+
+      const finishAdvance = (exitSelected: number, exitFlash: FlashKind, exitReveal: number | null) => {
+        const willEnd = doneRef.current + 1 >= sessionLenRef.current
+        if (willEnd) {
+          // 8/8 (or mini-set end) → results card directly; no empty cosmos + hint frame.
+          goNext(ok, item)
+          setExiting(null)
+          setFlash('none')
+          setRevealCorrect(null)
+          lockingRef.current = false
+          setLocking(false)
+          return
+        }
         snapIdRef.current += 1
-        // Keep exiting page mounted for the full translateY — do NOT remount mid-flight.
         setExiting({
           id: `${item.en}-${snapIdRef.current}`,
           item,
           options: snapOptions,
-          selected: snapSelected,
+          selected: exitSelected,
           correctIndex: snapCorrect,
-          revealCorrect: nextReveal,
-          flash: nextFlash,
+          revealCorrect: exitReveal,
+          flash: exitFlash,
         })
         goNext(ok, item)
         if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
         reelClearTimer.current = window.setTimeout(() => {
           clearExiting()
         }, REEL_MS)
-      }, delay)
+      }
+
+      if (ok) {
+        setFlash('correct')
+        setRevealCorrect(null)
+        advanceTimer.current = window.setTimeout(() => {
+          finishAdvance(selected, 'correct', null)
+        }, FEEDBACK_OK_MS)
+      } else {
+        // Card-only red flash (no scene veil), then center GREEN correct ≥800ms.
+        setFlash('wrong')
+        if (nextReveal !== null) setRevealCorrect(nextReveal)
+        learnTimer.current = window.setTimeout(() => {
+          selectedRef.current = snapCorrect
+          setSelected(snapCorrect)
+          setFlash('none')
+          if (nextReveal !== null) setRevealCorrect(nextReveal)
+        }, FEEDBACK_LEARN_RED_MS)
+        advanceTimer.current = window.setTimeout(() => {
+          finishAdvance(snapCorrect, 'none', nextReveal)
+        }, FEEDBACK_LEARN_RED_MS + FEEDBACK_LEARN_GREEN_MS)
+      }
     },
     [
       current,
@@ -353,6 +465,7 @@ export default function App() {
       score,
       goNext,
       clearExiting,
+      dismissGhost,
     ],
   )
 
@@ -396,18 +509,30 @@ export default function App() {
 
   const selectPrev = useCallback(() => {
     if (locking || reeling) return
-    setSelected((s) => wrapIndex(s - 1, 3))
+    setSelected((s) => {
+      const n = wrapIndex(s - 1, 3)
+      selectedRef.current = n
+      return n
+    })
   }, [locking, reeling])
 
   const selectNext = useCallback(() => {
     if (locking || reeling) return
-    setSelected((s) => wrapIndex(s + 1, 3))
+    setSelected((s) => {
+      const n = wrapIndex(s + 1, 3)
+      selectedRef.current = n
+      return n
+    })
   }, [locking, reeling])
 
   const onHorizontal = useCallback(
     (deltaIndexes: number) => {
       if (locking || reeling || !deltaIndexes) return
-      setSelected((s) => wrapIndex(s + deltaIndexes, 3))
+      setSelected((s) => {
+        const n = wrapIndex(s + deltaIndexes, 3)
+        selectedRef.current = n
+        return n
+      })
     },
     [locking, reeling],
   )
@@ -424,6 +549,7 @@ export default function App() {
       getStep: () => stepRef.current,
       onDragStart: () => {
         if (lockingRef.current || exiting) return
+        dismissGhost()
         setDragging(true)
       },
       onDrag: (dx, dy) => {
@@ -491,7 +617,7 @@ export default function App() {
       ? Math.round((score.ok / (score.ok + score.wrong)) * 100)
       : 0
 
-  const progressText = `${Math.min(doneCount, SESSION_LEN)} / ${SESSION_LEN} cümle`
+  const progressText = `${Math.min(doneCount, sessionLen)} / ${sessionLen} cümle`
   const showSessionEnd = sessionOver && !exiting
 
   return (
@@ -526,7 +652,7 @@ export default function App() {
               aria-pressed={timerSec === sec}
               tabIndex={frozen ? -1 : 0}
             >
-              {sec === 0 ? 'Off' : `${sec}s`}
+              {sec === 0 ? 'Off' : sec === 3 ? 'Hızlı' : `${sec}s`}
             </button>
           ))}
           {showRemain && remain !== null && (
@@ -545,8 +671,14 @@ export default function App() {
           <div className="session-end">
             <div className="session-end-card">
               <p className="session-end-kicker">Oturum tamam</p>
-              <h1>Tebrikler</h1>
-              <p className="session-end-sub">{SESSION_LEN} cümle bitti.</p>
+              <h1>
+                {accuracy >= 75
+                  ? 'Tebrikler'
+                  : `Oturum bitti — ${score.wrong} kalıp kaçtı`}
+              </h1>
+              <p className="session-end-sub">
+                {sessionLen} cümle · %{accuracy} isabet
+              </p>
               <div className="session-end-stats">
                 <div className="stat-pill ok">
                   <span className="stat-num">✓ {score.ok}</span>
@@ -561,8 +693,12 @@ export default function App() {
                   <span className="stat-label">isabet</span>
                 </div>
               </div>
-              <button type="button" className="primary" onClick={startNewSession}>
-                Tekrar oyna
+              <button
+                type="button"
+                className="primary"
+                onClick={missed.length > 0 ? startRetryMissed : startNewSession}
+              >
+                {missed.length > 0 ? 'Yanlışları tekrarla' : 'Tekrar oyna'}
               </button>
             </div>
           </div>
@@ -582,6 +718,7 @@ export default function App() {
                   liftY={0}
                   onStripStep={onStripStep}
                   stripKey={`exit-${exiting.id}`}
+                  showGhost={false}
                 />
               </div>
             )}
@@ -602,6 +739,7 @@ export default function App() {
                   liftY={liftY}
                   onStripStep={onStripStep}
                   stripKey={current.en}
+                  showGhost={showGhost && !showCoach && !reeling && !locking}
                 />
               </div>
             )}
@@ -620,13 +758,13 @@ export default function App() {
               <p className="coach-title">Nasıl oynanır</p>
               <ul className="coach-list">
                 <li>
-                  <span className="coach-key">← →</span> Türkçe seçeneği kaydır
+                  <span className="coach-key">↔</span> seç
                 </li>
                 <li>
-                  <span className="coach-key">↑</span> Cevabı kilitle
+                  <span className="coach-key">↑</span> kilitle
                 </li>
                 <li>
-                  <span className="coach-key">⏱</span> Süre dolarsa yukarı kayar · yanlış
+                  <span className="coach-key">⏱</span> süre dolarsa · yanlış
                 </li>
               </ul>
               <button type="button" className="primary coach-cta" onClick={dismissCoach}>

@@ -8,6 +8,10 @@ type Props = {
   dragging?: boolean
   frozen?: boolean
   onStep?: (step: number) => void
+  /** Card-only wrong flash (no scene veil). */
+  wrongFlash?: boolean
+  /** One-shot ghost gesture on first card. */
+  showGhost?: boolean
 }
 
 /** Wider / more landscape selected card — mock is longer horizontally. */
@@ -27,6 +31,8 @@ export function OptionStrip({
   dragging = false,
   frozen = false,
   onStep,
+  wrongFlash = false,
+  showGhost = false,
 }: Props) {
   const viewportRef = useRef<HTMLDivElement>(null)
   const [vw, setVw] = useState(360)
@@ -167,7 +173,9 @@ export function OptionStrip({
           // Correct answer highlight only on the real copy (side card OK when wrong)
           const isReveal = !isClone && revealCorrect !== null && realIndex === revealCorrect
           const isWrongSel =
-            revealCorrect !== null && isSel && realIndex !== revealCorrect
+            (wrongFlash || revealCorrect !== null) &&
+            isSel &&
+            (revealCorrect === null || realIndex !== revealCorrect)
           return (
             <div
               key={key}
@@ -176,6 +184,7 @@ export function OptionStrip({
                 isSel ? 'is-selected' : 'is-side',
                 isReveal ? 'is-reveal' : '',
                 isWrongSel ? 'is-wrong' : '',
+                wrongFlash && isWrongSel ? 'is-wrong-flash' : '',
                 frozen ? 'is-locked' : '',
               ]
                 .filter(Boolean)
@@ -189,15 +198,39 @@ export function OptionStrip({
           )
         })}
       </div>
-      <div className="swipe-hint" aria-hidden>
-        <picture>
-          <source srcSet="/english-swipe-learn/swipe-hint.webp" type="image/webp" />
-          <img
-            className="swipe-hint-img"
-            src="/english-swipe-learn/swipe-hint.png"
-            alt=""
-          />
-        </picture>
+
+      <div className="option-chrome" aria-hidden>
+        <div className="pager-dots" role="presentation">
+          {[0, 1, 2].map((i) => (
+            <span
+              key={i}
+              className={`pager-dot${i === selected ? ' is-on' : ''}`}
+            />
+          ))}
+        </div>
+        <p className="jest-hint">
+          <span className="jest-part">
+            <span className="jest-ico" aria-hidden>
+              ↔
+            </span>{' '}
+            seç
+          </span>
+          <span className="jest-sep" aria-hidden>
+            ·
+          </span>
+          <span className="jest-part">
+            <span className="jest-ico" aria-hidden>
+              ↑
+            </span>{' '}
+            kilitle
+          </span>
+        </p>
+        {showGhost ? (
+          <div className="ghost-gesture" aria-hidden>
+            <span className="ghost-hand">👆</span>
+            <span className="ghost-arrows">↔ ↑</span>
+          </div>
+        ) : null}
       </div>
     </div>
   )

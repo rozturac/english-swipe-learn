@@ -99,9 +99,9 @@
     "d": 1,
     "t": "Tanışma ve sohbet",
     "en": "great to put a face to the name",
-    "tr": "ismin yüzüyle buluşmasına sevindim",
+    "tr": "sonunda yüz yüze gelmek güzel",
     "ex": "We've emailed for months; it's great to put a face to the name.",
-    "exTr": "Aylardır e-posta gönderdik; isme bir yüz koymak harika."
+    "exTr": "Aylardır yazışıyorduk; ismi yüzle eşlemek güzel."
   },
   {
     "d": 1,
@@ -109,7 +109,7 @@
     "en": "have a good one",
     "tr": "iyi günler, kolay gelsin",
     "ex": "I'm heading out — have a good one!",
-    "exTr": "Ben çıkıyorum - iyi eğlenceler!"
+    "exTr": "Ben çıkıyorum — iyi günler, kolay gelsin!"
   },
   {
     "d": 1,
@@ -165,7 +165,7 @@
     "en": "I can relate",
     "tr": "anlıyorum, ben de yaşadım",
     "ex": "When she described the onboarding chaos, I said I can relate.",
-    "exTr": "İlk katılım kaosunu anlattığında, ilişki kurabileceğimi söyledim."
+    "exTr": "İşe alım kaosunu anlatınca “anlıyorum, ben de yaşadım” dedim."
   },
   {
     "d": 2,
@@ -181,7 +181,7 @@
     "en": "I think we talked over each other",
     "tr": "galiba aynı anda konuştuk",
     "ex": "Hold on — I think we talked over each other for a second.",
-    "exTr": "Durun - sanırım bir anlığına birbirimiz hakkında konuştuk."
+    "exTr": "Dur bir saniye — galiba bir an aynı anda konuştuk."
   },
   {
     "d": 2,
@@ -301,7 +301,7 @@
     "en": "likewise",
     "tr": "ben de, karşılıklı",
     "ex": "Great meeting you — likewise, hope we collaborate soon.",
-    "exTr": "Büyük toplantı sizi – aynı şekilde, yakında işbirliği yaptığımızı umuyoruz."
+    "exTr": "Tanıştığımıza memnun oldum — ben de, umarım yakında birlikte çalışırız."
   },
   {
     "d": 2,
@@ -333,7 +333,7 @@
     "en": "nice to finally meet you",
     "tr": "sonunda tanıştığımıza sevindim",
     "ex": "After so many Slack threads, nice to finally meet you.",
-    "exTr": "O kadar çok Slack ipliklerinden sonra, sonunda tanıştığımıza sevindim."
+    "exTr": "Bu kadar Slack mesajlaşmasından sonra sonunda tanıştığımıza sevindim."
   },
   {
     "d": 3,
@@ -349,7 +349,7 @@
     "en": "same here",
     "tr": "ben de öyle",
     "ex": "She said the quarter felt long; I replied same here.",
-    "exTr": "O çeyrekin uzun hissettiğini söyledi; Ben de burada aynı cevabı verdim."
+    "exTr": "Çeyrek uzun geldi dedi; ben de öyle, dedim."
   },
   {
     "d": 3,
@@ -357,7 +357,7 @@
     "en": "shout if you need anything",
     "tr": "bir şey lazım olursa seslen",
     "ex": "I'm around all afternoon — shout if you need anything.",
-    "exTr": "Bütün öğleden sonrayım - bir şeye ihtiyacınız varsa haykırın."
+    "exTr": "Bütün öğleden sonra buradayım — bir şeye ihtiyacın olursa seslen."
   },
   {
     "d": 3,
@@ -389,7 +389,7 @@
     "en": "sorry, I didn't catch that",
     "tr": "kusura bakma, anlayamadım",
     "ex": "The audio glitched; sorry, I didn't catch that.",
-    "exTr": "Ses aksanı; Üzgünüm, bunu yakalamadım."
+    "exTr": "Ses bozuldu; kusura bakma, anlayamadım."
   },
   {
     "d": 3,
@@ -397,7 +397,7 @@
     "en": "sorry, you cut out",
     "tr": "kusura bakma, sesin kesildi",
     "ex": "You disappeared for a moment — sorry, you cut out.",
-    "exTr": "Bir an için ortadan kayboldunuz - üzgünüz, kestin."
+    "exTr": "Bir an ortadan kayboldun — kusura bakma, sesin kesildi."
   },
   {
     "d": 3,
@@ -509,19 +509,19 @@
     "en": "you're breaking up",
     "tr": "sesin kopuk kopuk geliyor",
     "ex": "I can only hear every other word — you're breaking up.",
-    "exTr": "Sadece diğer her kelimeyi duyabiliyorum – kırıyorsunuz."
+    "exTr": "Kelimelerin yarısını duyuyorum — sesin kopuk kopuk geliyor."
   },
   {
     "d": 4,
-    "t": "Tanışma ve sohbet",
+    "t": "EM ↔ Sr EM",
     "en": "absorb the noise",
     "tr": "gürültüyü üstlenmek",
     "ex": "A good manager can absorb the noise so the team stays focused.",
-    "exTr": "İyi bir yönetici gürültüyü absorbe edebilir, böylece takım odaklanmış kalır."
+    "exTr": "İyi bir yönetici gürültüyü üstlenir, ekip odakta kalır."
   },
   {
     "d": 4,
-    "t": "Tanışma ve sohbet",
+    "t": "EM ↔ Sr EM",
     "en": "air cover for the team",
     "tr": "ekip için üstten koruma",
     "ex": "She provided air cover for the team during the reorg.",
@@ -529,51 +529,51 @@
   },
   {
     "d": 4,
-    "t": "Tanışma ve sohbet",
+    "t": "EM ↔ Sr EM",
     "en": "align upward",
     "tr": "yukarıya doğru hizalanmak",
     "ex": "Before we commit, we need to align upward with the director.",
-    "exTr": "İş yapmadan önce, yönetmenle uyumlulaştırmamız gerekiyor."
+    "exTr": "Taahhüt etmeden önce direktörle yukarı hizalanmamız lazım."
   },
   {
     "d": 4,
-    "t": "Tanışma ve sohbet",
+    "t": "EM ↔ Sr EM",
     "en": "backchannel",
     "tr": "gayriresmî kanal, kulis",
     "ex": "Let's not decide this in a backchannel; bring it to the group.",
-    "exTr": "Bunu arka kanalda karar verme; onu gruba getir."
+    "exTr": "Bunu kulis kanalında kararlaştırmayalım; gruba getirelim."
   },
   {
     "d": 4,
-    "t": "Tanışma ve sohbet",
+    "t": "EM ↔ Sr EM",
     "en": "bar raiser",
     "tr": "standart koruyucu mülakatçı",
     "ex": "A bar raiser joined the interview to protect the hiring bar.",
-    "exTr": "Bir standart koruyucu mülakatçı zamr, işe yarayan barı korumak için röportaja katıldı."
+    "exTr": "İşe alım barını korumak için bir bar raiser mülakata katıldı."
   },
   {
     "d": 4,
-    "t": "Tanışma ve sohbet",
+    "t": "EM ↔ Sr EM",
     "en": "bench strength",
     "tr": "yedek gücü, derinlik",
     "ex": "We're hiring to build bench strength on the platform team.",
-    "exTr": "Platform ekibinde yedek gücü, derinlik inşa etmeye çalışıyoruz."
+    "exTr": "Platform ekibinde yedek güç / derinlik için işe alıyoruz."
   },
   {
     "d": 4,
-    "t": "Tanışma ve sohbet",
+    "t": "EM ↔ Sr EM",
     "en": "commit vs stretch goals",
     "tr": "taahhüt / hedeflenen ekstra",
     "ex": "Let's separate commit vs stretch goals for the OKRs.",
-    "exTr": "TamamRs için ayrı taahhüt ve geniş hedefler."
+    "exTr": "OKR’ler için taahhüt ile stretch hedefleri ayıralım."
   },
   {
     "d": 4,
-    "t": "Tanışma ve sohbet",
+    "t": "EM ↔ Sr EM",
     "en": "consider it handled",
     "tr": "hallolmuş bil",
     "ex": "Leave the vendor escalation to me — consider it handled.",
-    "exTr": "Satıcı bana escalation bırak - ele alındığını düşünün."
+    "exTr": "Satıcı escalation’ını bana bırak — hallolmuş bil."
   },
   {
     "d": 4,
@@ -1022,8 +1022,8 @@
     "t": "EM ↔ Sr EM",
     "en": "anything you need from me",
     "tr": "benden bir şey lazım mı",
-    "ex": "We still need clarity on anything you need from me before kickoff.",
-    "exTr": "Hala tekme başlamadan önce benden bir şey lazım mıe açıklık ihtiyacımız var."
+    "ex": "Before we kick off — anything you need from me?",
+    "exTr": "Başlamadan önce — benden bir şeye ihtiyacın var mı?"
   },
   {
     "d": 7,
@@ -1568,8 +1568,8 @@
     "t": "1o1 ve yeni rol",
     "en": "over to you",
     "tr": "söz sende",
-    "ex": "We still need clarity on over to you before kickoff.",
-    "exTr": "Hala tekme yapmadan önce size açıklığa ihtiyacımız var."
+    "ex": "I've shared my notes — over to you.",
+    "exTr": "Notlarımı paylaştım — söz sende."
   },
   {
     "d": 10,
@@ -2017,8 +2017,8 @@
     "t": "1o1 ve yeni rol",
     "en": "chronological order",
     "tr": "kronolojik sıra",
-    "ex": "We still need clarity on chronological order before kickoff.",
-    "exTr": "Hala tekme yapmadan önce kronolojik sıra hakkında netliğe ihtiyacımız var."
+    "ex": "Please put the incidents in chronological order.",
+    "exTr": "Lütfen olayları kronolojik sıraya koy."
   },
   {
     "d": 13,
@@ -2298,7 +2298,7 @@
     "tr": "ısrarcılık, yılmazlık",
     "ex": "Persistence on the partner thread finally unblocked legal.",
     "morph": "persistence ← persist + -ence",
-    "exTr": "Ortak iplik üzerinde sürekli engellenmemiş yasal."
+    "exTr": "Partner thread’inde ısrar etmek sonunda legal’i açtı."
   },
   {
     "d": 15,
@@ -2599,7 +2599,7 @@
     "en": "TIL",
     "tr": "bugün öğrendim",
     "ex": "TIL you can filter Slack threads by reaction.",
-    "exTr": "bugün öğrendim, Slack ipliklerini reaksiyonla filtreleyebilirsiniz."
+    "exTr": "Bugün öğrendim: Slack thread’lerini reaksiyona göre filtreleyebiliyorsunuz."
   },
   {
     "d": 17,
@@ -2771,8 +2771,8 @@
     "t": "Günlük iş dili",
     "en": "fair enough",
     "tr": "haklısın, kabul",
-    "ex": "We still need clarity on fair enough before kickoff.",
-    "exTr": "Hala tekme yapmadan önce yeterince açıklığa ihtiyacımız var."
+    "ex": "If bandwidth is tight this week, fair enough — we'll slip it.",
+    "exTr": "Bu hafta kapasite darsa, haklısın — erteleriz."
   },
   {
     "d": 18,
@@ -2795,8 +2795,8 @@
     "t": "Günlük iş dili",
     "en": "gut feel",
     "tr": "içgüdüsel his",
-    "ex": "We still need clarity on gut feel before kickoff.",
-    "exTr": "Hala tekme yapmadan önce bağırsak hissetme konusunda netliğe ihtiyacımız var."
+    "ex": "I don't have hard data yet, but my gut feel is we should wait.",
+    "exTr": "Henüz net verim yok ama içgüdüsel hissim beklememiz."
   },
   {
     "d": 18,
@@ -2883,8 +2883,8 @@
     "t": "Günlük iş dili",
     "en": "north star",
     "tr": "asıl hedef, pusula metriği",
-    "ex": "We still need clarity on north star before kickoff.",
-    "exTr": "Hala tekme yapmadan önce kuzey yıldızda netliğe ihtiyacımız var."
+    "ex": "Retention is our north star for this quarter.",
+    "exTr": "Bu çeyrek için asıl hedefimiz (north star) elde tutma."
   },
   {
     "d": 18,
@@ -3229,7 +3229,7 @@
     "en": "blackout",
     "tr": "kapanma, erişime kapatma",
     "ex": "There's a deploy blackout during the holiday weekend.",
-    "exTr": "Tatil hafta sonu boyunca karaout var."
+    "exTr": "Tatil hafta sonu boyunca deploy kesintisi (blackout) var."
   },
   {
     "d": 20,
@@ -3389,7 +3389,7 @@
     "en": "convo",
     "tr": "konuşma",
     "ex": "Quick convo in Slack beats another meeting.",
-    "exTr": "Slack'deki hızlı konvoy başka bir toplantıyı yendi."
+    "exTr": "Slack'teki hızlı bir sohbet, başka bir toplantıyı yener."
   },
   {
     "d": 21,
@@ -4762,8 +4762,8 @@
     "t": "Uber teknik dili",
     "en": "excellence",
     "tr": "mükemmellik, üstün nitelik",
-    "ex": "We still need clarity on excellence before kickoff.",
-    "exTr": "Hala tekme yapmadan önce mükemmellik konusunda netliğe ihtiyacımız var."
+    "ex": "We hire for excellence, not just headcount.",
+    "exTr": "Sadece kadro için değil, mükemmellik için işe alıyoruz."
   },
   {
     "d": 30,
@@ -6069,8 +6069,8 @@
     "t": "Değerlendirme dili",
     "en": "spec (specification)",
     "tr": "şartname, teknik tanım",
-    "ex": "We still need clarity on spec before kickoff.",
-    "exTr": "Hala tekme yapmadan önce spec üzerinde netliğe ihtiyacımız var."
+    "ex": "Can you review the spec before kickoff tomorrow?",
+    "exTr": "Yarın başlamadan önce spec’e bakar mısın?"
   },
   {
     "d": 38,
@@ -6199,7 +6199,7 @@
     "en": "Argue",
     "tr": "tartışmak",
     "ex": "Let's not Argue in public threads — hop on a call.",
-    "exTr": "Halk ipliklerinde tartışmakyalım - bir çağrıda bulun."
+    "exTr": "Herkese açık thread’lerde tartışmayalım — bir çağrıya geçelim."
   },
   {
     "d": 39,

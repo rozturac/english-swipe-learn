@@ -36,7 +36,7 @@ const REGISTER_RULES: { tag: Register; re: RegExp }[] = [
   },
   {
     tag: 'greeting',
-    re: /\b(nice to (finally )?meet|great to put a face|I'?ve heard a lot|likewise|same here|tanışmak|isme bir yüz)\b/i,
+    re: /\b(nice to (finally )?meet|great to put a face|I'?ve heard a lot|likewise|same here|tanışmak|yüz yüze|ismi yüzle|isme bir yüz)\b/i,
   },
   {
     tag: 'clarification',
@@ -232,11 +232,16 @@ function hardReject(cand: VocabItem, opts: {
 export function pickDistractorItems(
   item: VocabItem,
   pool: VocabItem[],
+  /** Session-wide texts already used as correct or distractor. */
+  usedTexts: ReadonlySet<string> = new Set(),
 ): VocabItem[] {
   const correct = item.exTr
   const regT = detectRegister(item)
+  const blocked = new Set<string>([...usedTexts, correct])
+  const isBlocked = (tr: string) =>
+    blocked.has(tr) || [...blocked].some((u) => similarText(u, tr))
   const base = pool.filter(
-    (x) => x.en !== item.en && x.exTr !== correct && !similarText(x.exTr, correct),
+    (x) => x.en !== item.en && !isBlocked(x.exTr),
   )
 
   const sameTheme = base.filter((x) => x.t === item.t)
@@ -290,7 +295,7 @@ export function pickDistractorItems(
   tiers.push(base)
 
   const picked: VocabItem[] = []
-  const usedTr = new Set<string>([correct])
+  const usedTr = new Set<string>(blocked)
 
   const takeFrom = (cands: VocabItem[]) => {
     const ranked = [...cands].sort(
@@ -339,9 +344,10 @@ export function pickDistractorItems(
 export function buildOptions(
   item: VocabItem,
   pool: VocabItem[],
+  usedTexts: ReadonlySet<string> = new Set(),
 ): { options: string[]; correctIndex: number } {
   const correct = item.exTr
-  const distractors = pickDistractorItems(item, pool).map((x) => x.exTr)
+  const distractors = pickDistractorItems(item, pool, usedTexts).map((x) => x.exTr)
   const options = [correct, distractors[0], distractors[1]]
   for (let i = options.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))

@@ -30,27 +30,36 @@ function score(item: VocabItem, p: ProgressEntry | undefined, now: number): numb
   return wrongBoost - streakPenalty + due + (item.d <= 2 ? 15 : 0)
 }
 
-/** Build a ~8 item session: weakest / due first, then shuffle within priority bands. */
+/** Build a ~8 item session: weakest / due first, unique exTr, shuffle within bands. */
 export function pickSession(vocab: VocabItem[], progress: ProgressMap): VocabItem[] {
   const now = Date.now()
   const ranked = [...vocab]
     .map((item) => ({ item, s: score(item, progress[item.en], now) }))
     .sort((a, b) => b.s - a.s)
 
-  const take = ranked.slice(0, Math.min(SESSION_SIZE * 3, ranked.length))
+  const take = ranked.slice(0, Math.min(SESSION_SIZE * 4, ranked.length))
   const weak = take.slice(0, SESSION_SIZE)
   const rest = take.slice(SESSION_SIZE)
   for (let i = weak.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
     ;[weak[i], weak[j]] = [weak[j], weak[i]]
   }
-  let chosen = weak.map((x) => x.item)
-  if (chosen.length < SESSION_SIZE) {
-    for (const r of rest) {
-      if (chosen.length >= SESSION_SIZE) break
-      chosen.push(r.item)
-    }
+
+  const usedTr = new Set<string>()
+  const chosen: VocabItem[] = []
+  const tryAdd = (item: VocabItem) => {
+    if (chosen.length >= SESSION_SIZE) return
+    if (usedTr.has(item.exTr)) return
+    usedTr.add(item.exTr)
+    chosen.push(item)
   }
+  for (const x of weak) tryAdd(x.item)
+  for (const r of rest) tryAdd(r.item)
+  // Last resort: fill from remaining ranked if still short
+  if (chosen.length < SESSION_SIZE) {
+    for (const r of ranked) tryAdd(r.item)
+  }
+
   const mid = Math.ceil(chosen.length / 2)
   const head = chosen.slice(0, mid)
   const tail = chosen.slice(mid)

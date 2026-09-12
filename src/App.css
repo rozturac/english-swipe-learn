@@ -336,12 +336,9 @@ body,
 }
 
 .play-stage.flash-wrong .flash-veil {
-  opacity: 1;
-  background: radial-gradient(
-    ellipse at 50% 42%,
-    rgba(250, 107, 122, 0.22),
-    transparent 58%
-  );
+  /* Wrong/timeout: card-only flash — cosmos must not blink */
+  opacity: 0;
+  background: transparent;
 }
 
 .en-area {
@@ -392,26 +389,23 @@ body,
     0 2px 18px rgba(0, 0, 0, 0.4);
 }
 
-/* EN phrase chip — phrase-chip-go-ahead mock; wraps DOWN (no 9-slice asset) */
+/* EN phrase — single soft pill / underline in flow (no multi neon shards) */
 .en-highlight {
   display: inline;
-  padding: 5px 12px;
-  margin: 0 0 0 6px;
-  transform: translateY(-1px);
-  border-radius: var(--radius-pill);
-  border: 1.5px solid transparent;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
+  padding: 1px 6px 2px;
+  margin: 0 1px;
+  border-radius: 6px;
+  border: none;
   color: #fff;
   font-weight: 500;
-  /* Near-black fill + thin magenta→cyan stroke (SVG #0F1224 / #C77AFF→#40E0FF) */
-  background:
-    linear-gradient(rgba(15, 18, 36, 0.88), rgba(15, 18, 36, 0.88)) padding-box,
-    linear-gradient(100deg, #c77aff, #8c8cff 50%, #40e0ff) border-box;
-  box-shadow:
-    -2px 0 10px rgba(199, 122, 255, 0.22),
-    2px 0 10px rgba(64, 224, 255, 0.18),
-    0 0 16px rgba(160, 110, 255, 0.2);
+  background: rgba(64, 224, 255, 0.14);
+  box-shadow: none;
+  text-decoration: underline;
+  text-decoration-color: rgba(64, 224, 255, 0.55);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  box-decoration-break: unset;
+  -webkit-box-decoration-break: unset;
 }
 
 .en-category {
@@ -606,6 +600,16 @@ body,
     0 0 24px rgba(250, 107, 122, 0.12);
 }
 
+.option-card.is-wrong-flash {
+  animation: card-wrong-pulse 0.28s ease;
+}
+
+@keyframes card-wrong-pulse {
+  0% { filter: brightness(1); }
+  40% { filter: brightness(1.18); }
+  100% { filter: brightness(1); }
+}
+
 /* Reveal/wrong: drop neon double frame so state colors stay readable */
 .option-card.is-selected.is-reveal::before,
 .option-card.is-selected.is-reveal::after,
@@ -637,22 +641,104 @@ body,
   font-weight: 400;
 }
 
-/* Bottom SWIPE hint — asset 1:1 with ref-swipe-hint (neon ↔ + SWIPE) */
-.swipe-hint {
+/* Jest model — persistent L/R + UP hint + 3 pager dots (no SWIPE billboard) */
+.option-chrome {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 22px;
+  gap: 10px;
+  margin-top: 16px;
   pointer-events: none;
   user-select: none;
+  position: relative;
 }
 
-.swipe-hint-img {
-  width: min(70vw, 260px);
-  height: auto;
-  display: block;
-  /* Real alpha PNG/WebP — neon only, no black plate over nebula */
-  pointer-events: none;
+.pager-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.pager-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(180, 182, 196, 0.28);
+  border: 1px solid rgba(210, 210, 230, 0.22);
+  transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.pager-dot.is-on {
+  background: linear-gradient(120deg, #c77aff, #40e0ff);
+  border-color: transparent;
+  box-shadow:
+    0 0 8px rgba(199, 122, 255, 0.45),
+    0 0 8px rgba(64, 224, 255, 0.35);
+  transform: scale(1.12);
+}
+
+.jest-hint {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--meta);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+}
+
+.jest-part {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.jest-ico {
+  color: #c4f2ff;
+  font-size: 15px;
+  line-height: 1;
+  text-shadow:
+    0 0 8px rgba(64, 224, 255, 0.45),
+    0 0 8px rgba(199, 122, 255, 0.25);
+}
+
+.jest-sep {
+  opacity: 0.45;
+  color: var(--muted-2);
+}
+
+.ghost-gesture {
+  position: absolute;
+  top: -8px;
+  right: 12%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  animation: ghost-nudge 1.8s var(--settle) 0.2s 2 both;
+  opacity: 0.85;
+}
+
+.ghost-hand {
+  font-size: 22px;
+  filter: drop-shadow(0 0 8px rgba(64, 224, 255, 0.35));
+}
+
+.ghost-arrows {
+  font-size: 12px;
+  color: #c4f2ff;
+  letter-spacing: 0.08em;
+}
+
+@keyframes ghost-nudge {
+  0% { opacity: 0; transform: translate(6px, 4px); }
+  20% { opacity: 0.9; }
+  50% { transform: translate(-8px, -10px); }
+  80% { opacity: 0.75; }
+  100% { opacity: 0; transform: translate(0, -14px); }
 }
 
 .session-end {
@@ -710,6 +796,7 @@ body,
 }
 
 .session-end h1 {
+  max-width: 20em;
   margin: 0;
   font-size: 1.85rem;
   font-weight: 700;
@@ -868,6 +955,11 @@ body,
   @keyframes reel-page-exit-fade {
     to { opacity: 0; }
   }
+
+  .ghost-gesture,
+  .option-card.is-wrong-flash {
+    animation: none !important;
+  }
 }
 
 @media (max-height: 700px) {
@@ -883,5 +975,5 @@ body,
     min-height: 100px;
     padding: 14px 16px;
   }
-  .swipe-hint { margin-top: 14px; }
+  .option-chrome { margin-top: 10px; }
 }

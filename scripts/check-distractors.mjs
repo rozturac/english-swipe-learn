@@ -166,11 +166,75 @@ if (sweepFail) {
   console.log(`  ✓ ${tani.length} items clean`)
 }
 
+
+// Banned MT / junk substrings must not appear in live pool texts
+console.log('\n=== Banned MT substrings ===')
+const BANNED = [
+  /iplik/i,
+  /\bkestin\b/i,
+  /tekme/i,
+  /haykır/i,
+  /Bütün öğleden sonrayım/i,
+  /konvoy/i,
+  /karaout/i,
+]
+let banFail = 0
+for (const item of vocab) {
+  const blob = `${item.tr} ${item.exTr}`
+  for (const re of BANNED) {
+    if (re.test(blob)) {
+      banFail++
+      console.error(`  ✗ ${item.en}: matched ${re} in "${blob}"`)
+    }
+  }
+}
+if (banFail) {
+  failed += banFail
+} else {
+  console.log('  ✓ no banned substrings in tr/exTr')
+}
+
+// Session uniqueness: correct + distractor exTr all distinct within a built session
+console.log('\n=== Session exTr uniqueness ===')
+let uniqFail = 0
+for (let trial = 0; trial < 12; trial++) {
+  // Deterministic-ish: take every Nth item as a session seed set
+  const seed = vocab.filter((_, i) => (i + trial) % 17 === 0).slice(0, 8)
+  if (seed.length < 8) {
+    const more = vocab.slice(trial * 3, trial * 3 + 8)
+    while (seed.length < 8 && more.length) seed.push(more.shift())
+  }
+  const used = new Set()
+  const allTexts = []
+  for (const item of seed) {
+    if (used.has(item.exTr)) {
+      // skip duplicate corrects in this synthetic set
+      continue
+    }
+    const { options } = buildOptions(item, vocab, used)
+    for (const o of options) {
+      allTexts.push(o)
+      used.add(o)
+    }
+  }
+  const set = new Set(allTexts)
+  if (set.size !== allTexts.length) {
+    uniqFail++
+    console.error(`  ✗ trial ${trial}: duplicate exTr in session options`)
+  }
+}
+if (uniqFail) {
+  failed += uniqFail
+} else {
+  console.log('  ✓ buildOptions respects usedTexts across session cards')
+}
+
 try {
   rmSync(tmp, { recursive: true, force: true })
 } catch {
   /* ignore */
 }
+
 
 if (failed) {
   console.error(`\n${failed} check(s) failed`)
