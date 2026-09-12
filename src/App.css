@@ -390,22 +390,25 @@ body,
     0 2px 18px rgba(0, 0, 0, 0.4);
 }
 
-/* EN phrase chip — wraps DOWN when long; short phrases stay one neon chip */
+/* EN phrase chip — CSS-match phrase-chip mock; wraps DOWN (no 9-slice asset) */
 .en-highlight {
   display: inline;
   padding: 5px 12px;
   margin: 0 0 0 6px;
   transform: translateY(-1px);
   border-radius: var(--radius-pill);
-  border: 1.5px solid transparent;
+  border: 1px solid transparent;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
   color: #fff;
   font-weight: 500;
   background:
-    linear-gradient(rgba(18, 16, 36, 0.55), rgba(14, 14, 30, 0.5)) padding-box,
-    linear-gradient(100deg, #c77aff, #7a7aff 50%, #40e0ff) border-box;
-  box-shadow: 0 0 14px rgba(160, 110, 255, 0.22);
+    linear-gradient(rgba(8, 8, 16, 0.85), rgba(8, 8, 16, 0.85)) padding-box,
+    linear-gradient(100deg, #d6a0ff, #9aa8ff 48%, #5ad4ff) border-box;
+  box-shadow:
+    -2px 0 8px rgba(200, 130, 255, 0.14),
+    2px 0 8px rgba(80, 200, 255, 0.12),
+    0 0 10px rgba(160, 140, 255, 0.1);
 }
 
 .en-category {
@@ -506,13 +509,14 @@ body,
   will-change: transform, opacity;
 }
 
-/* Selected: v2 double thin parallel magenta→cyan neon (CSS only) */
+/* Selected: 1:1 neon frame asset (card-frame, black→alpha) over glass fill */
 .option-card.is-selected {
   transform: scale(1);
   opacity: 1;
   z-index: 2;
   border: none;
   border-radius: var(--radius-card);
+  overflow: hidden;
   background-image: linear-gradient(rgba(6, 6, 14, 0.5), rgba(6, 6, 14, 0.5));
   background-origin: padding-box;
   background-clip: padding-box;
@@ -523,47 +527,17 @@ body,
     0 0 32px rgba(90, 210, 255, 0.06);
 }
 
-.option-card.is-selected::before,
-.option-card.is-selected::after {
-  content: '';
+/* Frame asset — alpha PNG/WebP (black keyed out); neon rim only, no plate */
+.card-frame-img {
   position: absolute;
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    #efd2ff 0%,
-    #e0c0ff 28%,
-    #b8e4ff 72%,
-    #c4f2ff 100%
-  );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-}
-
-/* Outer concentric stroke — soft even bloom stays outside the gap */
-.option-card.is-selected::before {
   inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  z-index: 0;
   border-radius: inherit;
-  padding: 1.15px;
-  z-index: 0;
-  filter:
-    drop-shadow(-1px 0 2.5px rgba(214, 160, 255, 0.32))
-    drop-shadow(1px 0 2.5px rgba(120, 220, 255, 0.26));
-}
-
-/* Inner concentric stroke — ~6px dark gap, no inner bloom (not fused) */
-.option-card.is-selected::after {
-  inset: 7px;
-  border-radius: calc(var(--radius-card) - 7px);
-  padding: 1.05px;
-  z-index: 0;
-  opacity: 0.9;
-  filter: none;
+  mix-blend-mode: screen;
 }
 
 .option-card.is-side {
@@ -601,19 +575,11 @@ body,
     0 0 24px rgba(250, 107, 122, 0.12);
 }
 
-/* Reveal/wrong: drop neon double frame so state colors stay readable */
-.option-card.is-selected.is-reveal::before,
-.option-card.is-selected.is-reveal::after,
-.option-card.is-selected.is-wrong::before,
-.option-card.is-selected.is-wrong::after {
-  content: none;
-  display: none;
-  filter: none;
-}
-
+/* Reveal/wrong: no frame asset (not rendered); keep state colors readable */
 .option-card.is-selected.is-reveal,
 .option-card.is-selected.is-wrong {
   border-radius: var(--radius-card);
+  overflow: hidden;
 }
 
 .option-card.is-locked.is-selected:not(.is-reveal):not(.is-wrong) {
