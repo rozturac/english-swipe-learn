@@ -45,8 +45,11 @@ html,
 body,
 #root {
   margin: 0;
+  width: 100%;
   height: 100%;
-  background: var(--bg);
+  min-height: 100%;
+  min-height: 100dvh;
+  background: var(--bg2);
   color: var(--text);
   font-family:
     Inter,
@@ -62,6 +65,7 @@ body,
 
 .app {
   min-height: 100%;
+  min-height: 100dvh;
   height: 100dvh;
   max-width: 390px;
   margin: 0 auto;
@@ -72,12 +76,17 @@ body,
   overflow: hidden;
   background: transparent;
   touch-action: none;
+  z-index: 1;
 }
 
-/* Photo cosmos — full-screen cover + soft readability scrim */
+/* Photo cosmos — full viewport cover (not clipped to 390px phone column) */
 .cosmos {
-  position: absolute;
+  position: fixed;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  min-height: 100dvh;
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
@@ -87,17 +96,30 @@ body,
 .cosmos-photo {
   position: absolute;
   inset: 0;
-  background: url('/english-swipe-learn/bg-cosmos.jpg') center / cover no-repeat;
-  background: image-set(
-      url('/english-swipe-learn/bg-cosmos.webp') type('image/webp'),
-      url('/english-swipe-learn/bg-cosmos.jpg') type('image/jpeg')
-    )
-    center / cover no-repeat;
+  width: 100%;
+  height: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  background-color: #05040c;
+  background-image: url('/english-swipe-learn/bg-cosmos.jpg');
+  background-image: -webkit-image-set(
+    url('/english-swipe-learn/bg-cosmos.webp') type('image/webp'),
+    url('/english-swipe-learn/bg-cosmos.jpg') type('image/jpeg')
+  );
+  background-image: image-set(
+    url('/english-swipe-learn/bg-cosmos.webp') type('image/webp'),
+    url('/english-swipe-learn/bg-cosmos.jpg') type('image/jpeg')
+  );
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .cosmos-vignette {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   background:
     radial-gradient(ellipse 78% 62% at 50% 40%, transparent 34%, rgba(4, 2, 12, 0.42) 100%),
     linear-gradient(180deg, rgba(5, 4, 12, 0.22) 0%, transparent 14%, transparent 72%, rgba(5, 4, 12, 0.48) 100%);
@@ -132,7 +154,7 @@ body,
   );
 }
 
-.app > *:not(.flash-veil):not(.cosmos) {
+.app > *:not(.flash-veil) {
   position: relative;
   z-index: 1;
 }
@@ -168,16 +190,16 @@ body,
 .session-score-final {
   font-size: 13.5px;
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   font-variant-numeric: tabular-nums;
 }
 
 .score-ok { color: var(--success); }
 .score-bad { color: var(--danger); }
-.score-sep { color: var(--muted-2); opacity: 0.9; }
+.score-sep { color: var(--muted-2); opacity: 0.85; font-weight: 500; }
 
 .timer-row {
   display: flex;
@@ -242,79 +264,6 @@ body,
   flex-shrink: 0;
 }
 
-.timer-bar {
-  height: 2px;
-  margin-top: 6px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius-pill);
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.timer-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--glow-start), var(--glow-end));
-  border-radius: inherit;
-  transition: width 0.05s linear;
-}
-
-.timer-bar-fill.urgent {
-  background: var(--danger);
-}
-
-.menu-btn {
-  background: transparent;
-  border: none;
-  color: var(--muted);
-  font-size: 1.25rem;
-  line-height: 1;
-  padding: 4px 6px;
-  margin: -4px -6px 0 0;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.menu-btn:active {
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.menu-pop {
-  position: absolute;
-  top: 28px;
-  right: 0;
-  background: #12101c;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 168px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
-  animation: pop-in 0.28s var(--spring);
-  z-index: 20;
-}
-
-.menu-pop button {
-  background: rgba(255, 255, 255, 0.04);
-  border: none;
-  color: var(--text);
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  text-align: left;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-family: inherit;
-}
-
-.menu-hint {
-  margin: 0 0 4px;
-  font-size: 0.75rem;
-  color: var(--muted);
-  padding: 0 4px;
-}
-
 .play-stage {
   flex: 1;
   min-height: 0;
@@ -333,7 +282,6 @@ body,
 }
 
 .app.is-exit-up .timer-row,
-.app.is-exit-up .timer-bar,
 .app.is-exit-up .top-rule {
   opacity: 0.28;
   transition: opacity 0.32s ease;
@@ -397,7 +345,7 @@ body,
     0 2px 18px rgba(0, 0, 0, 0.4);
 }
 
-/* EN phrase chip — Verba .phrase recipe */
+/* EN phrase chip — Verba .phrase (soft bloom, light fill) */
 .en-highlight {
   display: inline-flex;
   padding: 5px 12px;
@@ -409,9 +357,9 @@ body,
   color: #fff;
   font-weight: 500;
   background:
-    linear-gradient(rgba(12, 14, 28, 0.82), rgba(12, 14, 28, 0.82)) padding-box,
-    linear-gradient(100deg, var(--glow-start), var(--glow-mid) 50%, var(--glow-end)) border-box;
-  box-shadow: 0 0 18px rgba(160, 110, 255, 0.28);
+    linear-gradient(rgba(18, 16, 36, 0.55), rgba(14, 14, 30, 0.5)) padding-box,
+    linear-gradient(100deg, #c77aff, #7a7aff 50%, #40e0ff) border-box;
+  box-shadow: 0 0 14px rgba(160, 110, 255, 0.22);
 }
 
 .en-category {
@@ -480,11 +428,11 @@ body,
   transition: none;
 }
 
-/* TR card — simple rounded glass (NOT old HUD) */
+/* TR card — cooler glass stroke (prototype .card) */
 .option-card {
   position: relative;
   flex: 0 0 auto;
-  border-radius: var(--radius-card);
+  border-radius: 26px;
   min-height: 168px;
   padding: 28px 22px;
   display: flex;
@@ -493,15 +441,15 @@ body,
   text-align: center;
   transform: scale(0.92);
   opacity: 0.55;
-  border: 1.6px solid transparent;
+  border: 1.35px solid transparent;
   background-image:
-    linear-gradient(var(--card-fill), var(--card-fill)),
-    linear-gradient(105deg, var(--card-stroke-start), var(--glow-mid) 45%, var(--card-stroke-end));
+    linear-gradient(rgba(10, 10, 24, 0.72), rgba(10, 10, 24, 0.72)),
+    linear-gradient(105deg, #db85ff, #7a7aff 45%, #4dd8ff);
   background-origin: border-box;
   background-clip: padding-box, border-box;
   box-shadow:
-    0 0 18px rgba(140, 90, 255, 0.1),
-    0 0 18px rgba(70, 190, 255, 0.06);
+    0 0 16px rgba(140, 90, 255, 0.08),
+    0 0 16px rgba(70, 190, 255, 0.05);
   transition:
     transform 0.48s var(--spring-soft),
     opacity 0.35s ease,
@@ -513,9 +461,10 @@ body,
 .option-card.is-selected {
   transform: scale(1);
   opacity: 1;
+  border-width: 1.5px;
   box-shadow:
-    0 0 28px rgba(140, 90, 255, 0.18),
-    0 0 28px rgba(70, 190, 255, 0.12);
+    0 0 22px rgba(140, 90, 255, 0.16),
+    0 0 20px rgba(70, 190, 255, 0.1);
   z-index: 2;
 }
 
@@ -583,6 +532,11 @@ body,
   color: #c5c8dc;
   font-weight: 500;
   padding-left: 0.42em; /* optical center with letter-spacing */
+}
+
+.swipe-hint .swipe-e {
+  color: #a8d4ff;
+  letter-spacing: 0.42em;
 }
 
 .session-end {

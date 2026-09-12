@@ -10,7 +10,6 @@ import {
   pickSession,
   recordAnswer,
   requeueWrong,
-  resetProgress,
 } from './lib/progress'
 import type { FlashKind, ProgressMap, VocabItem } from './types'
 import './App.css'
@@ -75,7 +74,6 @@ export default function App() {
   const [dragY, setDragY] = useState(0)
   const [dragging, setDragging] = useState(false)
   const [locking, setLocking] = useState(false)
-  const [showMenu, setShowMenu] = useState(false)
   const [sessionOver, setSessionOver] = useState(false)
   const [timerSec, setTimerSec] = useState<TimerSec>(loadTimerPref)
   const [remain, setRemain] = useState<number | null>(null)
@@ -335,10 +333,6 @@ export default function App() {
   const frozen = locking || flash !== 'none' || exitUp
   const liftY = frozen ? 0 : Math.max(-40, Math.min(0, dragY * 0.22))
   const stripDrag = frozen ? 0 : dragX
-  const remainPct =
-    timerSec > 0 && remain !== null
-      ? Math.max(0, Math.min(100, (remain / timerSec) * 100))
-      : 0
   const remainUrgent = remain !== null && remain <= 2 && !frozen
   const showRemain = remain !== null && remain > 0.12 && !sessionOver && !exitUp
 
@@ -353,11 +347,12 @@ export default function App() {
       : 0
 
   return (
-    <div className={`app ${flashClass}${frozen ? ' is-frozen' : ''}${exitUp ? ' is-exit-up' : ''}`} {...swipe}>
+    <>
       <div className="cosmos" aria-hidden>
         <span className="cosmos-photo" />
         <span className="cosmos-vignette" />
       </div>
+      <div className={`app ${flashClass}${frozen ? ' is-frozen' : ''}${exitUp ? ' is-exit-up' : ''}`} {...swipe}>
       <div className="flash-veil" aria-hidden />
 
       <header className="topbar">
@@ -372,55 +367,6 @@ export default function App() {
             <span className="score-bad">× {score.wrong}</span>
           </div>
         </div>
-        <button
-          type="button"
-          className="menu-btn"
-          aria-label="Detay"
-          onClick={(e) => {
-            e.stopPropagation()
-            setShowMenu((v) => !v)
-          }}
-          onPointerDown={(e) => e.stopPropagation()}
-        >
-          ···
-        </button>
-        {showMenu && (
-          <div
-            className="menu-pop"
-            onClick={(e) => e.stopPropagation()}
-            onPointerDown={(e) => e.stopPropagation()}
-          >
-            <p className="menu-hint">Kaydır: ← → seç · ↑ onayla</p>
-            <button
-              type="button"
-              onClick={() => {
-                resetProgress()
-                setShowMenu(false)
-                startNewSession()
-              }}
-            >
-              Sıfırla
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setShowMenu(false)
-                startNewSession()
-              }}
-            >
-              Yeni oturum
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setShowMenu(false)
-                setShowCoach(true)
-              }}
-            >
-              İpuçlarını göster
-            </button>
-          </div>
-        )}
       </header>
 
       <div className="timer-row" {...stopBubble}>
@@ -445,14 +391,6 @@ export default function App() {
         )}
       </div>
       <div className="top-rule" aria-hidden />
-      {timerSec > 0 && showRemain && (
-        <div className="timer-bar" aria-hidden>
-          <div
-            className={`timer-bar-fill ${remainUrgent ? 'urgent' : ''}`}
-            style={{ width: `${remainPct}%` }}
-          />
-        </div>
-      )}
 
       {sessionOver || !current ? (
         <div className="session-end">
@@ -530,5 +468,6 @@ export default function App() {
         </div>
       )}
     </div>
+    </>
   )
 }

@@ -134,7 +134,7 @@ export function OptionStrip({
             strokeLinecap="round"
           />
         </svg>
-        <span>SWIPE</span>
+        <span>SWIP<span className="swipe-e">E</span></span>
       </div>
     </div>
   )
