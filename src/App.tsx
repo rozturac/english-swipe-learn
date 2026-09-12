@@ -21,6 +21,11 @@ type TimerSec = (typeof TIMER_OPTIONS)[number]
 const TIMER_KEY = 'esl-timer-sec'
 const COACH_KEY = 'esl-coach-v1'
 
+function wrapIndex(i: number, n: number): number {
+  if (n <= 0) return 0
+  return ((i % n) + n) % n
+}
+
 /** Reels-style exit: keep in sync with CSS reel-exit-up (~640ms ease-out). */
 const EXIT_OK_MS = 620
 const EXIT_TIMEOUT_MS = 680
@@ -257,23 +262,23 @@ export default function App() {
 
   const selectPrev = useCallback(() => {
     if (locking) return
-    setSelected((s) => Math.max(0, s - 1))
+    setSelected((s) => wrapIndex(s - 1, 3))
   }, [locking])
 
   const selectNext = useCallback(() => {
     if (locking) return
-    setSelected((s) => Math.min(2, s + 1))
+    setSelected((s) => wrapIndex(s + 1, 3))
   }, [locking])
 
   const onHorizontal = useCallback(
     (deltaIndexes: number) => {
       if (locking || !deltaIndexes) return
-      setSelected((s) => Math.max(0, Math.min(2, s + deltaIndexes)))
+      setSelected((s) => wrapIndex(s + deltaIndexes, 3))
     },
     [locking],
   )
 
-  const stepRef = useRef(360 * 0.82 + 14)
+  const stepRef = useRef(360 * 0.93 + 14)
   const onStripStep = useCallback((step: number) => {
     stepRef.current = step
   }, [])

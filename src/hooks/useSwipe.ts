@@ -89,7 +89,7 @@ export function useSwipe(
     }
 
     const vw = typeof window !== 'undefined' ? window.innerWidth : 360
-    const step = optsRef.current?.getStep?.() ?? Math.round(vw * 0.82) + 14
+    const step = optsRef.current?.getStep?.() ?? Math.round(vw * 0.93) + 14
     const delta = snapIndexDelta(dx, step)
     // Soft vertical guard: commit slow L/R even with some finger drift.
     if (delta !== 0 && ay <= ax * VERT_STEAL) {
