@@ -29,7 +29,7 @@
     "en": "bear with my English",
     "tr": "İngilizcemi idare et",
     "ex": "I might mix up a few words, so please bear with my English.",
-    "exTr": "Birkaç kelimeyi karıştırabilirim, İngilizcemi idare et."
+    "exTr": "Birkaç kelimeyi karıştırabilirim, lütfen İngilizcemi idare et."
   },
   {
     "d": 1,
@@ -165,7 +165,7 @@
     "en": "I can relate",
     "tr": "anlıyorum, ben de yaşadım",
     "ex": "When she described the onboarding chaos, I said I can relate.",
-    "exTr": "İşe alım kaosunu anlatınca “anlıyorum, ben de yaşadım” dedim."
+    "exTr": "Oryantasyon kaosunu anlatınca “anlıyorum, ben de yaşadım” dedim."
   },
   {
     "d": 2,
@@ -227,9 +227,9 @@
     "d": 2,
     "t": "Günlük konuşma",
     "en": "I'm keen to...",
-    "tr": "... konusunda istekliyim",
+    "tr": "... isterim / hevesliyim",
     "ex": "I'm keen to learn more about the local food scene.",
-    "exTr": "Yerel yemek sahnesini daha çok öğrenmeye istekliyim."
+    "exTr": "Yerel yemek sahnesini daha çok öğrenmek isterim."
   },
   {
     "d": 2,
@@ -404,8 +404,8 @@
     "t": "Günlük konuşma",
     "en": "talk soon",
     "tr": "yakında görüşürüz",
-    "ex": "Talk soon!",
-    "exTr": "Yakında görüşürüz!"
+    "ex": "Let's finalize the draft tomorrow. Talk soon!",
+    "exTr": "Taslağı yarın netleştirelim. Yakında görüşürüz!"
   },
   {
     "d": 3,
