@@ -26,8 +26,10 @@ type TimerSec = (typeof TIMER_OPTIONS)[number]
 const TIMER_KEY = 'esl-timer-sec'
 const COACH_KEY = 'esl-coach-v1'
 
-/** Below-hairline Reels translate — keep in sync with CSS (~450ms). */
+/** Below-hairline Reels translate — keep in sync with CSS (~450ms correct). */
 const REEL_MS = 450
+/** Wrong/timeout → next: longer, gentler Reels exit/enter. Sync with CSS. */
+const REEL_WRONG_MS = 800
 /** Brief feedback before the below-line content turns. */
 const FEEDBACK_OK_MS = 220
 /** Wrong/timeout: brief red on card, then green correct readable hold. */
@@ -127,6 +129,8 @@ type PageSnap = {
   correctIndex: number
   revealCorrect: number | null
   flash: FlashKind
+  /** Slower Reels turn after a wrong lock / timeout reveal. */
+  gentle?: boolean
 }
 
 type PlayPaneProps = {
@@ -515,12 +519,15 @@ export default function App() {
           correctIndex: snapCorrect,
           revealCorrect: exitReveal,
           flash: exitFlash,
+          gentle: !ok,
         })
         goNext(ok, item)
         if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
+        // Reduced motion stays a short fade — do not force the slow slide.
+        const reelMs = prefersReducedMotion() ? REEL_MS : ok ? REEL_MS : REEL_WRONG_MS
         reelClearTimer.current = window.setTimeout(() => {
           clearExiting()
-        }, REEL_MS)
+        }, reelMs)
       }
 
       if (ok) {
@@ -826,7 +833,10 @@ export default function App() {
         ) : (
           <div className="reel-viewport">
             {exiting && (
-              <div className="reel-page is-exiting" key={`exit-${exiting.id}`}>
+              <div
+                className={`reel-page is-exiting${exiting.gentle ? ' is-gentle' : ''}`}
+                key={`exit-${exiting.id}`}
+              >
                 <PlayPane
                   item={exiting.item}
                   options={exiting.options}
@@ -845,7 +855,7 @@ export default function App() {
             )}
             {current && (
               <div
-                className={`reel-page${reeling ? ' is-entering' : ''}`}
+                className={`reel-page${reeling ? ' is-entering' : ''}${exiting?.gentle ? ' is-gentle' : ''}`}
                 key={`live-${current.en}`}
               >
                 <PlayPane

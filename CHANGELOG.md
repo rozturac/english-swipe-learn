@@ -1,3 +1,9 @@
+## Mechanics — slower Reels slide after wrong
+
+- Wrong lock / timeout+reveal → next: Reels exit/enter 800ms with soft cubic-bezier (success stays 450ms)
+- prefers-reduced-motion: still a short fade, not a forced slow slide
+- Timers, scoring, L/R swipe, Doğru cevap dwell (2200ms) unchanged
+
 ## Translator committee — annoy deck + work-scene retag
 
 - `annoy`: t Genel → İş İngilizcesi; pings → ping'ler (not bildirimleri); rahatsız eder kept
