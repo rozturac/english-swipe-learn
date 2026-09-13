@@ -132,7 +132,7 @@
     "t": "Günlük konuşma",
     "en": "how long have you been with Uber?",
     "tr": "Uber'de ne kadardır çalışıyorsun?",
-    "ex": "Over coffee she asked, how long have you been with Uber?",
+    "ex": "Over coffee she asked, \"How long have you been with Uber?\"",
     "exTr": "Kahvede sordu: Uber'de ne kadardır çalışıyorsun?"
   },
   {
@@ -172,7 +172,7 @@
     "t": "Günlük konuşma",
     "en": "I come from a background in...",
     "tr": "geçmişim ... alanında",
-    "ex": "I come from a background in... payments and distributed systems.",
+    "ex": "I come from a background in payments and distributed systems.",
     "exTr": "Geçmişim ödemeler ve dağıtık sistemler alanında."
   },
   {
@@ -188,7 +188,7 @@
     "t": "Günlük konuşma",
     "en": "I'll follow up with...",
     "tr": "... ile takip edeceğim",
-    "ex": "After the call I'll follow up with... the vendor on pricing.",
+    "ex": "After the call I'll follow up with the vendor on pricing.",
     "exTr": "Görüşmeden sonra fiyat konusunda satıcıyla takip edeceğim."
   },
   {
@@ -212,7 +212,7 @@
     "t": "Günlük konuşma",
     "en": "I'm based in...",
     "tr": "...'dayım, ... merkezliyim",
-    "ex": "I'm based in... Istanbul near the old ferry stop.",
+    "ex": "I'm based in Istanbul near the old ferry stop.",
     "exTr": "İstanbul'dayım, eski iskele durağının yakınında."
   },
   {
@@ -220,7 +220,7 @@
     "t": "Günlük konuşma",
     "en": "I'm into...",
     "tr": "... ile ilgileniyorum",
-    "ex": "I'm into... cooking and long weekend morning runs.",
+    "ex": "I'm into cooking and long weekend morning runs.",
     "exTr": "Yemek yapmak ve uzun hafta sonu sabah koşularıyla ilgileniyorum."
   },
   {
@@ -228,7 +228,7 @@
     "t": "Günlük konuşma",
     "en": "I'm keen to...",
     "tr": "... konusunda istekliyim",
-    "ex": "I'm keen to... learn more about the local food scene.",
+    "ex": "I'm keen to learn more about the local food scene.",
     "exTr": "Yerel yemek sahnesini daha çok öğrenmeye istekliyim."
   },
   {
@@ -236,7 +236,7 @@
     "t": "Günlük konuşma",
     "en": "I'm looking forward to...",
     "tr": "... için sabırsızlanıyorum",
-    "ex": "I'm looking forward to... meeting the Dublin team next month.",
+    "ex": "I'm looking forward to meeting the Dublin team next month.",
     "exTr": "Önümüzdeki ay Dublin ekibiyle buluşmak için sabırsızlanıyorum."
   },
   {
@@ -276,7 +276,7 @@
     "t": "Günlük konuşma",
     "en": "I've spent the last X years...",
     "tr": "son X yılı ... geçirdim",
-    "ex": "I've spent the last X years... building consumer apps.",
+    "ex": "I've spent the last X years building consumer apps.",
     "exTr": "Son X yılı tüketici uygulamaları geliştirerek geçirdim."
   },
   {
@@ -308,7 +308,7 @@
     "t": "Günlük konuşma",
     "en": "most recently I was working on...",
     "tr": "en son ... üzerinde çalışıyordum",
-    "ex": "Most recently I was working on... the driver ranking service.",
+    "ex": "Most recently I was working on the driver ranking service.",
     "exTr": "En son sürücü sıralama servisi üzerinde çalışıyordum."
   },
   {
@@ -316,7 +316,7 @@
     "t": "Günlük konuşma",
     "en": "my background is in...",
     "tr": "geçmişim ... alanında",
-    "ex": "My background is in... distributed systems and ML.",
+    "ex": "My background is in distributed systems and ML.",
     "exTr": "Geçmişim dağıtık sistemler ve ML alanında."
   },
   {
@@ -340,7 +340,7 @@
     "t": "Günlük konuşma",
     "en": "outside of work I...",
     "tr": "iş dışında ...",
-    "ex": "Outside of work I... cook a lot and run on weekends.",
+    "ex": "Outside of work I cook a lot and run on weekends.",
     "exTr": "İş dışında çok yemek yaparım, hafta sonları koşarım."
   },
   {
@@ -404,15 +404,15 @@
     "t": "Günlük konuşma",
     "en": "talk soon",
     "tr": "yakında görüşürüz",
-    "ex": "Let's finalize the draft tomorrow. Talk soon after that.",
-    "exTr": "Taslağı yarın netleştirelim. Ondan sonra yakında görüşürüz."
+    "ex": "Talk soon!",
+    "exTr": "Yakında görüşürüz!"
   },
   {
     "d": 3,
     "t": "Günlük konuşma",
     "en": "tell me about your journey here",
     "tr": "buraya nasıl geldiğini, kariyer yolculuğunu anlatır mısın",
-    "ex": "In the interview she asked, tell me about your journey here.",
+    "ex": "In the interview she asked, \"Tell me about your journey here.\"",
     "exTr": "Görüşmede sordu: buraya nasıl geldiğini, kariyer yolculuğunu anlatır mısın?"
   },
   {
@@ -444,7 +444,7 @@
     "t": "Günlük konuşma",
     "en": "what do you enjoy most about the role?",
     "tr": "rolde en çok neyi seviyorsun?",
-    "ex": "In the hallway chat she asked, what do you enjoy most about the role?",
+    "ex": "In the hallway chat she asked, \"What do you enjoy most about the role?\"",
     "exTr": "Koridorda sordu: Rolde en çok neyi seviyorsun?"
   },
   {
@@ -452,7 +452,7 @@
     "t": "Günlük konuşma",
     "en": "what do you get up to outside of work?",
     "tr": "iş dışında ne yaparsın?",
-    "ex": "Over coffee she asked, what do you get up to outside of work?",
+    "ex": "Over coffee she asked, \"What do you get up to outside of work?\"",
     "exTr": "Kahvede sordu: İş dışında ne yaparsın?"
   },
   {
@@ -468,7 +468,7 @@
     "t": "Günlük konuşma",
     "en": "what drew me to this team is...",
     "tr": "beni bu ekibe çeken şey...",
-    "ex": "What drew me to this team is... the ownership culture.",
+    "ex": "What drew me to this team is the ownership culture.",
     "exTr": "Beni bu ekibe çeken şey sahiplenme kültürü."
   },
   {
@@ -484,7 +484,7 @@
     "t": "Günlük konuşma",
     "en": "what's the team culture like?",
     "tr": "ekip kültürü nasıl?",
-    "ex": "In the interview she asked, what's the team culture like?",
+    "ex": "In the interview she asked, \"What's the team culture like?\"",
     "exTr": "Görüşmede sordu: Ekip kültürü nasıl?"
   },
   {

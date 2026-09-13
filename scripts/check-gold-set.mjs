@@ -48,7 +48,13 @@ for (const item of gold) {
 
     const en = String(item.en).toLowerCase()
     const ex = String(item.ex ?? '').toLowerCase()
-    assert(ex.includes(en), `en not in ex for "${item.en}"`)
+    // Stem cards keep trailing ... in `en` but fluent `ex` fills the blank.
+    // Mirror highlight soft-strip of trailing punctuation / ellipsis dots.
+    const enSoft = en.replace(/[?.!,;:]+$/g, '').trim()
+    assert(
+      ex.includes(en) || (enSoft.length > 0 && ex.includes(enSoft)),
+      `en not in ex for "${item.en}"`,
+    )
 
     const exTr = String(item.exTr ?? '').trim()
     assert(exTr.length > 0, `empty exTr for ${item.en}`)
