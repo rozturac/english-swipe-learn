@@ -1,3 +1,11 @@
+## Translator committee — annoy deck + work-scene retag
+
+- `annoy`: t Genel → İş İngilizcesi; pings → ping'ler (not bildirimleri); rahatsız eder kept
+- Moved clear Slack/meeting/sprint/on-call/code-review work scenes Genel → İş: annoy, arrogant, betrayal, constantly, cruel, dull, hit me up, reveal, warmest, yawn, frighten, independence
+- Kept academic/general in Genel but de-Slack'd: it can be argued that, What is it to me/you; fixed look up sense (dictionary, not stakeholders)
+- frighten MT cleaned; reveal launch date + tr dedupe; journey-here career fix already on main
+- No add/delete; d/en unchanged; 1221 count
+
 ## Translator committee — journey + Günlük sense pass
 
 - Fixed `tell me about your journey here` (career journey, not physical arrival; said/asked ↔ sordu aligned)

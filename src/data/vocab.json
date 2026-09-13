@@ -6163,11 +6163,11 @@
   },
   {
     "d": 38,
-    "t": "Genel",
+    "t": "İş İngilizcesi",
     "en": "annoy",
     "tr": "rahatsız etmek",
     "ex": "Constant Slack pings annoy people more than a short meeting.",
-    "exTr": "Sürekli Slack bildirimleri insanları kısa bir toplantıdan daha çok rahatsız eder."
+    "exTr": "Sürekli Slack ping'leri insanları kısa bir toplantıdan daha çok rahatsız eder."
   },
   {
     "d": 39,
@@ -6203,7 +6203,7 @@
   },
   {
     "d": 39,
-    "t": "Genel",
+    "t": "İş İngilizcesi",
     "en": "arrogant",
     "tr": "kendini beğenmiş",
     "ex": "An arrogant tone in code review kills collaboration.",
@@ -6301,7 +6301,7 @@
   },
   {
     "d": 39,
-    "t": "Genel",
+    "t": "İş İngilizcesi",
     "en": "betrayal",
     "tr": "ihanet",
     "ex": "Leaking a private one-on-one feels like a betrayal of trust.",
@@ -6519,7 +6519,7 @@
   },
   {
     "d": 41,
-    "t": "Genel",
+    "t": "İş İngilizcesi",
     "en": "constantly",
     "tr": "sürekli olarak",
     "ex": "The pager was constantly buzzing during last night.",
@@ -6592,7 +6592,7 @@
   },
   {
     "d": 41,
-    "t": "Genel",
+    "t": "İş İngilizcesi",
     "en": "cruel",
     "tr": "zalim",
     "ex": "That comment felt cruel in a one-on-one setting.",
@@ -6736,7 +6736,7 @@
   },
   {
     "d": 42,
-    "t": "Genel",
+    "t": "İş İngilizcesi",
     "en": "dull",
     "tr": "sıkıcı",
     "ex": "The meeting felt dull until the demo started.",
@@ -7123,7 +7123,7 @@
   },
   {
     "d": 45,
-    "t": "Genel",
+    "t": "İş İngilizcesi",
     "en": "hit me up",
     "tr": "bana yaz",
     "ex": "When you are free later, hit me up on Slack.",
@@ -7287,9 +7287,9 @@
     "d": 46,
     "t": "Genel",
     "en": "it can be argued that",
-    "tr": "şu şekilde ele alınabilir",
-    "ex": "I wrote in Slack: it can be argued that.",
-    "exTr": "Slack'de yazdım: bunu tartışılabilir."
+    "tr": "ileri sürülebilir ki",
+    "ex": "In the essay I wrote, it can be argued that both sides have merit.",
+    "exTr": "Denemede yazdım: her iki tarafın da haklı olduğu ileri sürülebilir."
   },
   {
     "d": 46,
@@ -7351,9 +7351,9 @@
     "d": 46,
     "t": "Genel",
     "en": "look up",
-    "tr": "bakmak",
-    "ex": "Can we look up this with the stakeholders?",
-    "exTr": "Bunu paydaşlarla bakabilir miyiz?"
+    "tr": "(sözlükte) bakmak, aramak",
+    "ex": "I had to look up that word before class.",
+    "exTr": "Dersten önce o kelimeye bakmam gerekti."
   },
   {
     "d": 46,
@@ -7870,11 +7870,11 @@
   },
   {
     "d": 50,
-    "t": "Genel",
+    "t": "İş İngilizcesi",
     "en": "reveal",
-    "tr": "açığa çıkarmak / açığa çıkarmak, ortaya koymak",
+    "tr": "açığa çıkarmak, ortaya koymak",
     "ex": "Don't reveal the launch date outside the team.",
-    "exTr": "Takımın dışındaki başlangıç tarihini açığa çıkarma."
+    "exTr": "Lansman tarihini takım dışında açıklama."
   },
   {
     "d": 50,
@@ -8499,7 +8499,7 @@
   },
   {
     "d": 54,
-    "t": "Genel",
+    "t": "İş İngilizcesi",
     "en": "warmest",
     "tr": "en sıcak",
     "ex": "Please send my warmest thanks to the on-call crew.",
@@ -8526,16 +8526,16 @@
     "t": "Genel",
     "en": "What is it to me",
     "tr": "bana ne",
-    "ex": "I wrote in Slack: What is it to me.",
-    "exTr": "Slack'de yazdım: Benim için ne."
+    "ex": "He asked why I care; I said, What is it to me.",
+    "exTr": "Neden umursadığımı sordu; bana ne, dedim."
   },
   {
     "d": 54,
     "t": "Genel",
     "en": "What is it to you",
     "tr": "sana ne",
-    "ex": "I wrote in Slack: What is it to you.",
-    "exTr": "Slack'de yazdım: Sizin için ne."
+    "ex": "She snapped back, What is it to you.",
+    "exTr": "Sertçe karşılık verdi: sana ne."
   },
   {
     "d": 54,
@@ -8563,7 +8563,7 @@
   },
   {
     "d": 55,
-    "t": "Genel",
+    "t": "İş İngilizcesi",
     "en": "yawn",
     "tr": "esnemek",
     "ex": "I tried not to yawn during the long meeting.",
@@ -8783,11 +8783,11 @@
   },
   {
     "d": 55,
-    "t": "Genel",
+    "t": "İş İngilizcesi",
     "en": "frighten",
     "tr": "korkutmak",
     "ex": "Loud pages can frighten new on-calls at 3 a.m.",
-    "exTr": "Loud sayfaları 3 a.m'de yeni çağrıları korkutabilir."
+    "exTr": "Yüksek sesli pager'lar gece üçte yeni on-call'ları korkutabilir."
   },
   {
     "d": 55,
@@ -8865,7 +8865,7 @@
   },
   {
     "d": 56,
-    "t": "Genel",
+    "t": "İş İngilizcesi",
     "en": "independence",
     "tr": "bağımsızlık",
     "ex": "Feature flags give us independence between risky deploys.",
