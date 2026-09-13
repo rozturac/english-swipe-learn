@@ -33,3 +33,7 @@ design-refs/
 public/design/
 # Unoptimized zip background — ship compressed jpg/webp only
 public/bg-cosmos.png
+
+# Root shadow copies — Translator must use src/data/ only
+/vocab.json
+/gold-set.json
