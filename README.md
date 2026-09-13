@@ -15,13 +15,7 @@ Turkish speakers recognizing **work English** (meeting / Slack / 1:1) — not Du
 
 ## Deck picker
 
-Before each main session (and after **Tekrar oyna**): 3 chips — preference in `localStorage` key `esl-deck` (default **Tanışma ve sohbet**).
-
-- Tanışma ve sohbet
-- Slack / ekip yazışması
-- 1o1 ve yeni rol
-
-Session pool is **only** the selected `item.t` (8 cards, unique `en`). Okuma / Defter / Genel are not in the picker. Results show which deck. Picker sits after the coach overlay and does not block play gestures.
+Three decks (`İş İngilizcesi` · `Günlük konuşma` · `Genel`): pre-session chips, `localStorage` `esl-deck` (default **Günlük konuşma**); pool = selected `t`, 8 unique `en`; results show deck name; legacy prefs migrate to the nearest new deck.
 
 ## Timer & score
 

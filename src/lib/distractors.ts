@@ -123,7 +123,7 @@ export function detectRegister(item: VocabItem): Register {
     if (rule.tag === 'jargon') continue
     if (rule.re.test(h)) return rule.tag
   }
-  if (item.t === 'Tanışma ve sohbet' && item.en.split(/\s+/).length <= 4) {
+  if (item.t === 'Günlük konuşma' && item.en.split(/\s+/).length <= 4) {
     return 'general'
   }
   return 'general'

@@ -144,9 +144,9 @@ try {
   console.error('  ✗', e.message)
 }
 
-// Sweep every Tanışma item — functional phrases must not get idioms
-console.log('\n=== Tanışma sweep (no idiom leak on functional phrases) ===')
-const tani = vocab.filter((x) => x.t === 'Tanışma ve sohbet')
+// Sweep every Günlük konuşma item — functional phrases must not get idioms
+console.log('\n=== Günlük konuşma sweep (no idiom leak on functional phrases) ===')
+const tani = vocab.filter((x) => x.t === 'Günlük konuşma')
 let sweepFail = 0
 for (const item of tani) {
   const reg = detectRegister(item)
@@ -232,7 +232,7 @@ if (uniqFail) {
 
 // Open decks: distractors must share t + readable Turkish
 console.log('\n=== Open-deck same-t + readable distractors ===')
-const OPEN = ['Tanışma ve sohbet', 'Slack / ekip yazışması', '1o1 ve yeni rol']
+const OPEN = ['İş İngilizcesi', 'Günlük konuşma', 'Genel']
 const { isReadableExTr } = mod
 let openFail = 0
 for (const theme of OPEN) {

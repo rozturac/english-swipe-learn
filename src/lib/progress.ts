@@ -14,20 +14,39 @@ export const SESSION_LEN = SESSION_SIZE
 
 /** Open decks for the picker (exact `t` values in vocab.json). */
 export const OPEN_DECKS = [
-  'Tanışma ve sohbet',
-  'Slack / ekip yazışması',
-  '1o1 ve yeni rol',
+  'İş İngilizcesi',
+  'Günlük konuşma',
+  'Genel',
 ] as const
 
 export type OpenDeck = (typeof OPEN_DECKS)[number]
 
 export const DECK_KEY = 'esl-deck'
-export const DEFAULT_DECK: OpenDeck = 'Tanışma ve sohbet'
+export const DEFAULT_DECK: OpenDeck = 'Günlük konuşma'
 
 export const DECK_SHORT: Record<OpenDeck, string> = {
-  'Tanışma ve sohbet': 'Tanışma',
-  'Slack / ekip yazışması': 'Slack',
-  '1o1 ve yeni rol': '1o1',
+  'İş İngilizcesi': 'İş İngilizcesi',
+  'Günlük konuşma': 'Günlük konuşma',
+  'Genel': 'Genel',
+}
+
+/** Map legacy deck ids / old long `t` strings → nearest new deck. */
+const LEGACY_DECK: Record<string, OpenDeck> = {
+  'Tanışma ve sohbet': 'Günlük konuşma',
+  'Slack / ekip yazışması': 'İş İngilizcesi',
+  '1o1 ve yeni rol': 'İş İngilizcesi',
+  'EM ↔ Sr EM': 'İş İngilizcesi',
+  'Perf & promo dili': 'İş İngilizcesi',
+  'Değerlendirme dili': 'İş İngilizcesi',
+  'Günlük iş dili': 'İş İngilizcesi',
+  'Uber teknik dili': 'İş İngilizcesi',
+  'Kalıp ve kısaltma': 'İş İngilizcesi',
+  'Defter (genel kelime)': 'Genel',
+  'Okuma metinleri': 'Genel',
+  'Genel (düşük öncelik)': 'Genel',
+  Tanışma: 'Günlük konuşma',
+  Slack: 'İş İngilizcesi',
+  '1o1': 'İş İngilizcesi',
 }
 
 export function isOpenDeck(t: string): t is OpenDeck {
@@ -37,7 +56,17 @@ export function isOpenDeck(t: string): t is OpenDeck {
 export function loadDeckPref(): OpenDeck {
   try {
     const v = localStorage.getItem(DECK_KEY) ?? DEFAULT_DECK
-    return isOpenDeck(v) ? v : DEFAULT_DECK
+    if (isOpenDeck(v)) return v
+    const migrated = LEGACY_DECK[v]
+    if (migrated) {
+      try {
+        localStorage.setItem(DECK_KEY, migrated)
+      } catch {
+        /* ignore */
+      }
+      return migrated
+    }
+    return DEFAULT_DECK
   } catch {
     return DEFAULT_DECK
   }
