@@ -1,5 +1,14 @@
 # Changelog
 
+## Vocab surgery — pass 2
+
+- Touched: 182 (same 1221 order; no add/delete; `d`/`t`/`en` unchanged)
+- Genel rewritten: 145 (nests/MT/time-glue/sense; home/road/food/city; no museum/bridge)
+- İş polished: 10 idiom cards changed (+ P0 verifies still exact); skip-level fixed; leftover nests cleared
+- sen/siz fixes: 11 (İş → siz/we; Günlük left sen)
+- Staff sense: Staff mühendis retained on influence without authority / manage sideways; my skip → bir üst yönetici
+- Hard bans held: no dashes; race=yarış; pad=bloknot; elder=büyükler
+
 ## Vocab surgery — all 1221 items
 
 - Touched: 560 (label-cleaned `en` where needed; rewrote failing `tr`/`ex`/`exTr`)

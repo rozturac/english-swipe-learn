@@ -171,9 +171,9 @@
     "d": 2,
     "t": "Günlük konuşma",
     "en": "I come from a background in...",
-    "tr": "...kökenli/geçmişliyim",
-    "ex": "In interviews I usually say I come from a background in...",
-    "exTr": "Görüşmelerde genelde derim: geçmişim … alanında."
+    "tr": "geçmişim ... alanında",
+    "ex": "I come from a background in... payments and distributed systems.",
+    "exTr": "Geçmişim ödemeler ve dağıtık sistemler alanında."
   },
   {
     "d": 2,
@@ -187,9 +187,9 @@
     "d": 2,
     "t": "Günlük konuşma",
     "en": "I'll follow up with...",
-    "tr": "...konusunda sana döneceğim",
+    "tr": "... ile takip edeceğim",
     "ex": "After the call I'll follow up with... the vendor on pricing.",
-    "exTr": "Görüşmeden sonra satıcıya fiyat için döneceğim."
+    "exTr": "Görüşmeden sonra fiyat için satıcıya döneceğim."
   },
   {
     "d": 2,
@@ -211,25 +211,25 @@
     "d": 2,
     "t": "Günlük konuşma",
     "en": "I'm based in...",
-    "tr": "...merkezliyim, ...te yaşıyorum",
-    "ex": "You'll hear I'm based in... in real conversations.",
-    "exTr": "Ben … merkezliyim / …'te yaşıyorum."
+    "tr": "...'de yaşıyorum",
+    "ex": "I'm based in... Istanbul near the old ferry stop.",
+    "exTr": "İstanbul’da, eski iskele durağının yakınında oturuyorum."
   },
   {
     "d": 2,
     "t": "Günlük konuşma",
     "en": "I'm into...",
-    "tr": "...ile ilgileniyorum, ...seviyorum",
-    "ex": "On the way home I thought about I'm into... again.",
-    "exTr": "Eve giderken yine ...ile ilgileniyorum, ...seviyorum diye düşündüm."
+    "tr": "... ile ilgileniyorum",
+    "ex": "I'm into... cooking and long weekend morning runs.",
+    "exTr": "Yemek yapmak ve uzun hafta sonu sabah koşuları ilgimi çekiyor."
   },
   {
     "d": 2,
     "t": "Günlük konuşma",
     "en": "I'm keen to...",
-    "tr": "...konusunda istekliyim",
-    "ex": "You'll hear I'm keen to... in real conversations.",
-    "exTr": "… konusunda istekliyim."
+    "tr": "... konusunda istekliyim",
+    "ex": "I'm keen to... learn more about the local food scene.",
+    "exTr": "Yerel yemek sahnesini daha çok öğrenmeye istekliyim."
   },
   {
     "d": 2,
@@ -468,8 +468,8 @@
     "t": "Günlük konuşma",
     "en": "what drew me to this team is...",
     "tr": "beni bu ekibe çeken şey...",
-    "ex": "In intros I often say, \"what drew me to this team is...\"",
-    "exTr": "Beni bu ekibe çeken şey…."
+    "ex": "What drew me to this team is... the ownership culture.",
+    "exTr": "Beni bu ekibe çeken şey sahiplenme kültürü."
   },
   {
     "d": 3,
@@ -630,7 +630,7 @@
     "en": "forcing function",
     "tr": "zorlayıcı etken",
     "ex": "The external launch date is a forcing function for scope cuts.",
-    "exTr": "Dış lansman tarihi kapsam kesmek için zorlayıcı etken."
+    "exTr": "Dış lansman tarihi, kapsam kesmek için bir zorlayıcı etken."
   },
   {
     "d": 4,
@@ -684,17 +684,17 @@
     "d": 5,
     "t": "İş İngilizcesi",
     "en": "I'd like to align before I take it to...",
-    "tr": "...e götürmeden önce seninle hizalanmak isterim",
-    "ex": "You'll hear I'd like to align before I take it to... in real conversations.",
-    "exTr": "...e götürmeden önce seninle hizalanmak isterim gerçek konuşmalarda."
+    "tr": "...e götürmeden önce hizalanmak isterim",
+    "ex": "I'd like to align before I take it to... the steering group.",
+    "exTr": "Yönlendirme grubuna götürmeden önce hizalanmak isterim."
   },
   {
     "d": 5,
     "t": "İş İngilizcesi",
     "en": "I'll keep you posted",
-    "tr": "seni haberdar edeceğim",
+    "tr": "sizi haberdar edeceğim",
     "ex": "The vendor is still reviewing numbers; I'll keep you posted.",
-    "exTr": "Satıcı hala sayıları gözden geçiriyor; seni haberdar edeceğim."
+    "exTr": "Tedarikçi hâlâ rakamları inceliyor; sizi haberdar edeceğim."
   },
   {
     "d": 5,
@@ -709,14 +709,14 @@
     "t": "İş İngilizcesi",
     "en": "IC track vs management track",
     "tr": "uzman yolu / yöneticilik yolu",
-    "ex": "She is choosing between the IC track and the management track.",
-    "exTr": "Uzman yolu ile yöneticilik yolu arasında seçim yapıyor."
+    "ex": "She is choosing between IC track vs management track this year.",
+    "exTr": "Bu yıl uzman yolu ile yöneticilik yolu arasında seçim yapıyor."
   },
   {
     "d": 5,
     "t": "İş İngilizcesi",
     "en": "influence without authority",
-    "tr": "yetkin olmadan etkilemek",
+    "tr": "yetki olmadan etkilemek",
     "ex": "Staff engineers must influence without authority across teams.",
     "exTr": "Staff mühendisler yetkisi olmadan da diğer ekipleri etkilemek zorunda."
   },
@@ -740,25 +740,25 @@
     "d": 5,
     "t": "İş İngilizcesi",
     "en": "my skip",
-    "tr": "yöneticimin yöneticisi",
+    "tr": "bir üst yönetici",
     "ex": "If this keeps blocking us, escalate to my skip.",
-    "exTr": "Bu bizi tıkamaya devam ederse skip'ime, yani bir üst yöneticime çıkar."
+    "exTr": "Bu bizi tıkamaya devam ederse bir üst yöneticime, skip'ime çıkarın."
   },
   {
     "d": 5,
     "t": "İş İngilizcesi",
     "en": "offer out",
-    "tr": "teklif gönderildi",
+    "tr": "teklifi göndermek",
     "ex": "We finally got the offer out to the senior candidate.",
-    "exTr": "Sonunda teklifi üst düzey adaya aldık."
+    "exTr": "Sonunda kıdemli adaya teklifi gönderdik."
   },
   {
     "d": 5,
     "t": "İş İngilizcesi",
     "en": "open req",
     "tr": "açık pozisyon",
-    "ex": "Our EM wants us to open req and report back.",
-    "exTr": "EM'miz geri dönüp rapor etmemizi istiyor."
+    "ex": "We still have one open req on the payments team.",
+    "exTr": "Ödemeler ekibinde hâlâ bir açık pozisyonumuz var."
   },
   {
     "d": 5,
@@ -772,17 +772,17 @@
     "d": 5,
     "t": "İş İngilizcesi",
     "en": "partner team",
-    "tr": "iş ortağı ekip",
+    "tr": "komşu ekip, iş ortağı ekip",
     "ex": "Sync with the partner team before changing the shared API.",
-    "exTr": "Paylaşılan API'yi değiştirmeden önce ortak ekiple senkronize edin."
+    "exTr": "Paylaşılan API'yi değiştirmeden önce komşu ekiple senkron olun."
   },
   {
     "d": 5,
     "t": "İş İngilizcesi",
     "en": "performance concern",
-    "tr": "performans endişesi",
+    "tr": "performans kaygısı",
     "ex": "I need to document a performance concern before the review.",
-    "exTr": "İncelemeden önce bir performans endişesi belgelemem gerekiyor."
+    "exTr": "Değerlendirmeden önce bir performans kaygısını belgelemem gerekiyor."
   },
   {
     "d": 5,
@@ -790,7 +790,7 @@
     "en": "PIP",
     "tr": "performans iyileştirme planı",
     "ex": "HR and I aligned on a 60-day PIP with clear weekly goals.",
-    "exTr": "HR ve 60 günlük performans iyileştirme planı'e açık haftalık hedeflerle uyumluyum."
+    "exTr": "İK ile 60 günlük bir PIP üzerinde, net haftalık hedeflerle anlaştık."
   },
   {
     "d": 5,
@@ -798,7 +798,7 @@
     "en": "planning cycle",
     "tr": "planlama dönemi",
     "ex": "This landed mid planning cycle, so it slips to next quarter.",
-    "exTr": "Bu orta planlama döngüsüne çıktı, bu yüzden sonraki çeyrekte kayıyor."
+    "exTr": "Bu iş planlama döneminin ortasına denk geldi, bu yüzden sonraki çeyreğe kayıyor."
   },
   {
     "d": 6,
@@ -1143,8 +1143,8 @@
     "t": "İş İngilizcesi",
     "en": "do we have appetite for...",
     "tr": "...için iştahımız var mı",
-    "ex": "In the meeting someone mentioned do we have appetite for... before we moved on.",
-    "exTr": "Toplantıda ilerlemadan önce biri ...için iştahımız var mı dedi."
+    "ex": "Do we have appetite for... another migration this quarter?",
+    "exTr": "Bu çeyrek başka bir migrasyon için iştahımız var mı?"
   },
   {
     "d": 8,
@@ -1287,9 +1287,9 @@
     "d": 9,
     "t": "İş İngilizcesi",
     "en": "how would you have handled it?",
-    "tr": "sen olsan nasıl yapardın?",
+    "tr": "siz olsanız nasıl ele alırdınız?",
     "ex": "Before we started: how would you have handled it?",
-    "exTr": "Başlamadan önce: sen olsan nasıl ele alırdın?"
+    "exTr": "Başlamadan önce: siz olsanız nasıl ele alırdınız?"
   },
   {
     "d": 9,
@@ -1303,9 +1303,9 @@
     "d": 9,
     "t": "İş İngilizcesi",
     "en": "I could use your support on...",
-    "tr": "şu konuda desteğine ihtiyacım var",
-    "ex": "In intros I often say, \"I could use your support on...\"",
-    "exTr": "Şu konuda desteğine ihtiyacım var."
+    "tr": "şu konuda desteğinize ihtiyacım var",
+    "ex": "I could use your support on... the billing migration next week.",
+    "exTr": "Gelecek haftaki faturalama migrasyonunda desteğinize ihtiyacım var."
   },
   {
     "d": 9,
@@ -1327,17 +1327,17 @@
     "d": 9,
     "t": "İş İngilizcesi",
     "en": "I hear you",
-    "tr": "anlıyorum",
+    "tr": "sizi anlıyorum",
     "ex": "I hear you on the risk, and I still want a smaller pilot.",
-    "exTr": "Risk konusunda seni anlıyorum, yine de daha küçük bir pilot istiyorum."
+    "exTr": "Risk konusunda sizi anlıyorum, yine de daha küçük bir pilot istiyorum."
   },
   {
     "d": 9,
     "t": "İş İngilizcesi",
     "en": "I may be wrong here, but...",
     "tr": "yanılıyor olabilirim ama",
-    "ex": "In intros I often say, \"I may be wrong here, but...\"",
-    "exTr": "Burada yanılıyor olabilirim, ama…."
+    "ex": "I may be wrong here, but... the spike started after the deploy.",
+    "exTr": "Yanılıyor olabilirim ama sıçrama deploy’dan sonra başladı."
   },
   {
     "d": 9,
@@ -1359,17 +1359,17 @@
     "d": 9,
     "t": "İş İngilizcesi",
     "en": "I'll come back to you on that",
-    "tr": "bu konuya sana döneceğim",
+    "tr": "bu konuya size döneceğim",
     "ex": "I need to check with legal first; I'll come back to you on that.",
-    "exTr": "İlk önce yasal olarak kontrol etmem gerekiyor; bu konuya sana döneceğim."
+    "exTr": "Önce hukuka danışmam gerekiyor; bu konuya size döneceğim."
   },
   {
     "d": 9,
     "t": "İş İngilizcesi",
     "en": "I'll hand it over to...",
-    "tr": "sözü ...e bırakıyorum",
-    "ex": "In intros I often say, \"I'll hand it over to...\"",
-    "exTr": "Sözü …’e bırakıyorum."
+    "tr": "sözü ...'e bırakıyorum",
+    "ex": "I'll hand it over to... Mira for the metrics section.",
+    "exTr": "Metrikler bölümü için sözü Mira’ya bırakıyorum."
   },
   {
     "d": 9,
@@ -1471,9 +1471,9 @@
     "d": 10,
     "t": "İş İngilizcesi",
     "en": "let me play that back to you",
-    "tr": "anladığımı tekrar edeyim",
+    "tr": "anladığımı size tekrar edeyim",
     "ex": "Let me play that back to you to confirm I heard it right.",
-    "exTr": "Bunu doğru duyduğumu doğrulamak için sana geri dönelim."
+    "exTr": "Doğru duyduğumu teyit etmek için anladığımı size tekrar edeyim."
   },
   {
     "d": 10,
@@ -1887,9 +1887,9 @@
     "d": 12,
     "t": "İş İngilizcesi",
     "en": "what would you do differently?",
-    "tr": "sen ne farklı yapardın?",
+    "tr": "siz ne farklı yapardınız?",
     "ex": "Before we started: what would you do differently?",
-    "exTr": "Başlamadan önce: sen ne farklı yapardın?"
+    "exTr": "Başlamadan önce: siz ne farklı yapardınız?"
   },
   {
     "d": 12,
@@ -1904,8 +1904,8 @@
     "t": "İş İngilizcesi",
     "en": "what's the bar for...",
     "tr": "...için standart nedir",
-    "ex": "In intros I often say, \"what's the bar for...\"",
-    "exTr": "… için bar / standart nedir?"
+    "ex": "What's the bar for... promoting to senior this cycle?",
+    "exTr": "Bu dönemde senior’a yükselmek için standart nedir?"
   },
   {
     "d": 12,
@@ -1943,9 +1943,9 @@
     "d": 13,
     "t": "İş İngilizcesi",
     "en": "your call",
-    "tr": "senin kararın",
+    "tr": "sizin kararınız",
     "ex": "I laid out the options. From here it is your call.",
-    "exTr": "Seçenekleri koydum. Bundan sonrası senin kararın."
+    "exTr": "Seçenekleri koydum. Bundan sonrası sizin kararınız."
   },
   {
     "d": 13,
@@ -2502,8 +2502,8 @@
     "t": "İş İngilizcesi",
     "en": "happy to...",
     "tr": "seve seve ...yaparım",
-    "ex": "She paused the deck and asked, happy to...",
-    "exTr": "Güverteyi durakladı ve sordu, seve seve...yaparım."
+    "ex": "Happy to... walk through the runbook after standup.",
+    "exTr": "Ayaküstü toplantıdan sonra runbook’u birlikte gezmeye hazırım."
   },
   {
     "d": 16,
@@ -2511,7 +2511,7 @@
     "en": "I might be missing context",
     "tr": "bağlamı kaçırıyor olabilirim",
     "ex": "Before I disagree, I might be missing context. Can you share the thread?",
-    "exTr": "Katılmadan önce bağlamı kaçırıyor olabilirim. Konuyu paylaşır mısın?"
+    "exTr": "Katılmadan önce bağlamı kaçırıyor olabilirim. Konuyu paylaşır mısınız?"
   },
   {
     "d": 16,
@@ -2613,9 +2613,9 @@
     "d": 17,
     "t": "İş İngilizcesi",
     "en": "when you get a chance",
-    "tr": "fırsat bulduğunda",
+    "tr": "fırsat bulduğunuzda",
     "ex": "Could you review the doc when you get a chance?",
-    "exTr": "Fırsat bulunca dokümana bakar mısın?"
+    "exTr": "Fırsat bulunca dokümana bakar mısınız?"
   },
   {
     "d": 17,
@@ -3012,9 +3012,9 @@
     "d": 19,
     "t": "İş İngilizcesi",
     "en": "skip-level",
-    "tr": "yöneticinin yöneticisiyle görüşme",
+    "tr": "bir üst yöneticiyle görüşme",
     "ex": "I have a skip-level with the director next Thursday.",
-    "exTr": "Ertesi Perşembe günü yönetmenle bir at seviyesim var."
+    "exTr": "Gelecek Perşembe direktörle bir skip-level görüşmem var."
   },
   {
     "d": 19,
@@ -3558,10 +3558,10 @@
     "d": 22,
     "t": "İş İngilizcesi",
     "en": "feasibility",
-    "tr": "yapılabilirlik, uygulanabilirlik",
+    "tr": "yapılabilirlik",
     "ex": "Do a one-week feasibility check before staffing it.",
     "morph": "feasibility ← feasible + -ity",
-    "exTr": "Personel almadan önce bir haftalık yapılabilirlik, uygulanabilirlik kontrolü yapın."
+    "exTr": "Kadro açmadan önce bir haftalık yapılabilirlik kontrolü yapın."
   },
   {
     "d": 22,
@@ -4093,9 +4093,9 @@
     "d": 26,
     "t": "İş İngilizcesi",
     "en": "spec",
-    "tr": "teknik olarak tanımlamak",
-    "ex": "Please spec this before Friday in the meeting.",
-    "exTr": "Lütfen bunu Cumadan önce keşfedin toplantıda."
+    "tr": "şartname, teknik tanım",
+    "ex": "Can you review the spec before kickoff tomorrow?",
+    "exTr": "Yarın başlamadan önce spec’e bakar mısınız?"
   },
   {
     "d": 26,
@@ -4955,8 +4955,8 @@
     "t": "İş İngilizcesi",
     "en": "indicator",
     "tr": "gösterge",
-    "ex": "I bought an indicator at the market this morning.",
-    "exTr": "Bu sabah pazarda bir gösterge aldım."
+    "ex": "Latency is the main indicator we watch during launch.",
+    "exTr": "Lansmanda izlediğimiz ana gösterge gecikme."
   },
   {
     "d": 31,
@@ -6070,7 +6070,7 @@
     "en": "spec",
     "tr": "şartname, teknik tanım",
     "ex": "Can you review the spec before kickoff tomorrow?",
-    "exTr": "Yarın başlamadan önce spec’e bakar mısın?"
+    "exTr": "Yarın başlamadan önce spec’e bakar mısınız?"
   },
   {
     "d": 38,
@@ -6157,33 +6157,33 @@
     "d": 38,
     "t": "Genel",
     "en": "amazing",
-    "tr": "şaşırtıcı",
-    "ex": "The rooftop view at sunset was amazing today.",
-    "exTr": "Gün batımıdaki çatı manzarası şaşırtıcıydı bugün."
+    "tr": "harika, inanılmaz",
+    "ex": "The rooftop view at sunset was amazing after dinner.",
+    "exTr": "Akşam yemeğinden sonra gün batımındaki çatı manzarası harikaydı."
   },
   {
     "d": 38,
     "t": "Genel",
     "en": "annoy",
-    "tr": "kızdırmak",
+    "tr": "rahatsız etmek",
     "ex": "Constant Slack pings annoy people more than a short meeting.",
-    "exTr": "Constant Slack pings insanları kısa bir toplantıdan daha rahatsız ediyor."
+    "exTr": "Sürekli Slack bildirimleri insanları kısa bir toplantıdan daha çok rahatsız eder."
   },
   {
     "d": 39,
     "t": "Genel",
     "en": "annual",
     "tr": "yıllık",
-    "ex": "Our annual planning week starts next Monday today.",
-    "exTr": "Yıllık planlama haftamız önümüzdeki Pazartesi başlıyor bugün."
+    "ex": "Our annual planning week starts next Monday morning.",
+    "exTr": "Yıllık planlama haftamız önümüzdeki Pazartesi sabahı başlıyor."
   },
   {
     "d": 39,
     "t": "Genel",
     "en": "appear",
-    "tr": "ortaya çıkmak",
-    "ex": "Warnings appear when latency crosses 200ms this morning.",
-    "exTr": "Uyarılar, geçncy 200ms geçtiğinde görünür bu sabah."
+    "tr": "ortaya çıkmak, görünmek",
+    "ex": "Warnings appear when latency crosses 200ms on dashboards.",
+    "exTr": "Panolarda gecikme 200 ms’yi geçince uyarılar görünür."
   },
   {
     "d": 39,
@@ -6213,9 +6213,9 @@
     "d": 39,
     "t": "Genel",
     "en": "attract",
-    "tr": "cezbetmek",
-    "ex": "Clear docs attract better external contributors this morning.",
-    "exTr": "Clear docs daha iyi dış katkıda bulunur bu sabah."
+    "tr": "cezbetmek, çekmek",
+    "ex": "Clear docs attract better external contributors over time.",
+    "exTr": "Net dokümanlar zamanla daha iyi dış katkıçılar çeker."
   },
   {
     "d": 39,
@@ -6230,17 +6230,17 @@
     "t": "Genel",
     "en": "authoritarianism",
     "tr": "otoriterlik",
-    "ex": "The novel explores authoritarianism in everyday offices today.",
+    "ex": "The novel explores authoritarianism in everyday office life.",
     "morph": "authoritarianism ← authority + -arian + -ism",
-    "exTr": "Roman, günlük ofislerde otoriterizmi araştırıyor bugün."
+    "exTr": "Roman günlük ofis hayatında otoriterliği irdeliyor."
   },
   {
     "d": 39,
     "t": "Genel",
     "en": "avoid",
     "tr": "kaçınmak",
-    "ex": "Avoid merging on Fridays when on-call is thin.",
-    "exTr": "Cuma günleri, on-call ince olduğunda para kazanmaktan kaçının."
+    "ex": "Please avoid rushing merges on busy Friday afternoons.",
+    "exTr": "Yoğun Cuma öğleden sonraları acele merge’lerden lütfen kaçının."
   },
   {
     "d": 39,
@@ -6279,8 +6279,8 @@
     "t": "Genel",
     "en": "beg the question",
     "tr": "şu soruyu akla getirmek",
-    "ex": "On the way home I thought about beg the question again.",
-    "exTr": "Eve giderken yine şu soruyu akla getirmek diye düşündüm."
+    "ex": "That delay does beg the question why we skipped the dry run.",
+    "exTr": "O gecikme, provayı neden attığımız sorusunu akla getiriyor."
   },
   {
     "d": 39,
@@ -6295,17 +6295,17 @@
     "d": 39,
     "t": "Genel",
     "en": "bet",
-    "tr": "iddia, bahis",
+    "tr": "iddia etmek, bahse girmek",
     "ex": "I'd bet the outage started with the config push.",
-    "exTr": "Outage'in yapılandırma ile başladığına bahsetdim."
+    "exTr": "Kesintinin yapılandırma gönderimiyle başladığına bahse girerim."
   },
   {
     "d": 39,
     "t": "Genel",
     "en": "betrayal",
     "tr": "ihanet",
-    "ex": "Leaking a private 1:1 feels like a betrayal of trust.",
-    "exTr": "Özel bir 1:1'i yükseltmek güven ihaneti gibi hissediyor."
+    "ex": "Leaking a private one-on-one feels like a betrayal of trust.",
+    "exTr": "Özel bir bire bir konuşmayı sızdırmak güvene ihanet gibi."
   },
   {
     "d": 39,
@@ -6320,8 +6320,8 @@
     "t": "Genel",
     "en": "bless you",
     "tr": "çok yaşa",
-    "ex": "I learned about bless you during the trip.",
-    "exTr": "Seyahat sırasında sizi kutsamayı öğrendim."
+    "ex": "She sneezed twice on the bus, and a stranger said bless you.",
+    "exTr": "Otobüste iki kez hapşırınca bir yabancı çok yaşa dedi."
   },
   {
     "d": 39,
@@ -6344,16 +6344,16 @@
     "t": "Genel",
     "en": "breach of trust",
     "tr": "güven ihlali",
-    "ex": "I learned about breach of trust during the trip.",
-    "exTr": "Seyahat sırasında güven ihlali öğrendim."
+    "ex": "Sharing that private note felt like a breach of trust.",
+    "exTr": "O özel notu paylaşmak bir güven ihlali gibi geldi."
   },
   {
     "d": 40,
     "t": "Genel",
     "en": "bribery",
     "tr": "rüşvet",
-    "ex": "The case involved bribery of local inspectors today.",
-    "exTr": "Durum yerel denetçilerin rüşveti içeriyordu bugün."
+    "ex": "The case involved bribery of local building inspectors.",
+    "exTr": "Davada yerel yapı denetçilerine rüşvet vardı."
   },
   {
     "d": 40,
@@ -6399,50 +6399,50 @@
     "d": 40,
     "t": "Genel",
     "en": "charged",
-    "tr": "para üstü",
-    "ex": "The air felt charged before the thunderstorm today.",
-    "exTr": "Hava fırtınadan önce suçlandı bugün."
+    "tr": "yüklü, gerilimli",
+    "ex": "The air felt charged before the summer thunderstorm.",
+    "exTr": "Yaz fırtınasından önce hava gerilimliydi."
   },
   {
     "d": 40,
     "t": "Genel",
     "en": "charity",
-    "tr": "bağış",
-    "ex": "We donated leftover swag to a local charity.",
+    "tr": "hayır kurumu, bağış",
+    "ex": "We donated leftover jackets to a local charity.",
     "morph": "charity ← … + -ity",
-    "exTr": "Solover'i yerel bir hayırseverliğe bağışladık."
+    "exTr": "Artan montları yerel bir hayır kurumuna bağışladık."
   },
   {
     "d": 40,
     "t": "Genel",
     "en": "charming",
-    "tr": "çekici",
-    "ex": "The old town square is charming at dusk.",
-    "exTr": "Eski şehir meydanı dusk'da büyüleyici."
+    "tr": "çekici, sevimli",
+    "ex": "The old town square looks charming at dusk.",
+    "exTr": "Eski şehir meydanı alacakaranlıkta çok sevimli duruyor."
   },
   {
     "d": 40,
     "t": "Genel",
     "en": "chatty",
     "tr": "konuşkan",
-    "ex": "The chatty cab driver knew every shortcut today.",
-    "exTr": "Konuşkan cab sürücüsü her kısayolu biliyordu bugün."
+    "ex": "The chatty cab driver knew every downtown shortcut.",
+    "exTr": "Konuşkan taksi şoförü merkezdeki her kısayolu biliyordu."
   },
   {
     "d": 40,
     "t": "Genel",
     "en": "cheater",
-    "tr": "kandırıcı",
-    "ex": "Nobody wants a cheater on a take-home exam.",
-    "exTr": "Kimse bir çek sınavında kandırıcı yapmak istemez."
+    "tr": "hilebaz, kopyacı",
+    "ex": "Nobody wants a cheater in a closed-book exam.",
+    "exTr": "Kapalı kitap sınavında kimse hilebaz istemez."
   },
   {
     "d": 40,
     "t": "Genel",
     "en": "cherry blossom",
-    "tr": "kiraz ağacı",
-    "ex": "I bought a cherry blossom at the market this morning.",
-    "exTr": "Bu sabah piyasada bir kiraz çiçek satın aldım."
+    "tr": "kiraz çiçeği",
+    "ex": "Pink cherry blossom petals covered the park path.",
+    "exTr": "Pembe kiraz çiçeği yaprakları park yolunu kapladı."
   },
   {
     "d": 40,
@@ -6457,24 +6457,24 @@
     "t": "Genel",
     "en": "coast",
     "tr": "kıyı",
-    "ex": "We drove along the coast until sunset today.",
-    "exTr": "Gün batıya kadar sahil boyunca sürdük bugün."
+    "ex": "We drove along the coast until sunset last Sunday.",
+    "exTr": "Geçen Pazar gün batımına kadar kıyı boyunca gittik."
   },
   {
     "d": 40,
     "t": "Genel",
     "en": "coin the term",
     "tr": "terimi ortaya atmak",
-    "ex": "If you coin the term too quickly, details slip.",
-    "exTr": "Eğer terimi ortaya atmak çok hızlı bir şekilde icat ederseniz, detaylar kayır."
+    "ex": "She helped coin the term for that messy workflow.",
+    "exTr": "O karmaşık iş akışı için terimi ortaya atmaya yardım etti."
   },
   {
     "d": 40,
     "t": "Genel",
     "en": "collective panic",
     "tr": "kitlesel panik",
-    "ex": "I learned about collective panic during the trip.",
-    "exTr": "Seyahat sırasında kitlesel panik öğrendim."
+    "ex": "A delayed train announcement caused collective panic on the platform.",
+    "exTr": "Geciken tren anonsu peronda kitlesel paniğe yol açtı."
   },
   {
     "d": 41,
@@ -6482,24 +6482,24 @@
     "en": "compulsory",
     "tr": "zorunlu",
     "ex": "Helmets are compulsory on the warehouse floor today.",
-    "exTr": "Helmets depo zemininde zorunludur bugün."
+    "exTr": "Depo zemininde kask bugün zorunludur."
   },
   {
     "d": 41,
     "t": "Genel",
     "en": "confuse",
-    "tr": "kafa karıştırmak",
-    "ex": "Similar button labels confuse new users this morning.",
-    "exTr": "Benzer düğme etiketleri yeni kullanıcıları karıştırıyor bu sabah."
+    "tr": "şaşırtmak, karıştırmak",
+    "ex": "Similar button labels confuse new users in onboarding.",
+    "exTr": "Benzer düğme etiketleri oryantasyonda yeni kullanıcıları karıştırır."
   },
   {
     "d": 41,
     "t": "Genel",
     "en": "consciousness",
     "tr": "bilinç",
-    "ex": "Meditation practice sharpened her consciousness of stress today.",
+    "ex": "Meditation sharpened her consciousness of daily work stress.",
     "morph": "consciousness ← conscious + -ness",
-    "exTr": "Meditasyon pratiği, stres bilincini keskinleştirdi bugün."
+    "exTr": "Meditasyon günlük iş stresi bilincini keskinleştirdi."
   },
   {
     "d": 41,
@@ -6522,25 +6522,25 @@
     "t": "Genel",
     "en": "constantly",
     "tr": "sürekli olarak",
-    "ex": "The pager was constantly buzzing last night today.",
-    "exTr": "Sayfacı geçen gece sürekli uğulmuştu bugün."
+    "ex": "The pager was constantly buzzing during last night.",
+    "exTr": "Dün gece boyunca çağrı cihazı sürekli ötüyordu."
   },
   {
     "d": 41,
     "t": "Genel",
     "en": "contradictory",
     "tr": "çelişkili",
-    "ex": "Those two dashboards show contradictory error rates today.",
+    "ex": "Those two dashboards show contradictory error rates still.",
     "morph": "contradictory ← contra- + dict",
-    "exTr": "Bu iki pano çelişkili hata oranları gösteriyor bugün."
+    "exTr": "Bu iki pano hâlâ çelişkili hata oranları gösteriyor."
   },
   {
     "d": 41,
     "t": "Genel",
     "en": "coordinated",
-    "tr": "eşgüdümlü, uyumlu",
-    "ex": "A coordinated rollback saved the release this morning.",
-    "exTr": "Koordineli bir rollback serbest bırakılmasını kurtardı bu sabah."
+    "tr": "koordineli",
+    "ex": "A coordinated rollback saved the release last night.",
+    "exTr": "Dün gece koordineli bir geri alma sürümü kurtardı."
   },
   {
     "d": 41,
@@ -6578,17 +6578,17 @@
     "d": 41,
     "t": "Genel",
     "en": "creep",
-    "tr": "sürünmek",
-    "ex": "Scope creep turned a week of work into a month.",
-    "exTr": "Kapsam sürünmek bir haftaya bir ay içinde iş verdi."
+    "tr": "sinsi büyüme, kapsam şişmesi",
+    "ex": "Scope creep turned a one-week task into a month.",
+    "exTr": "Kapsam şişmesi bir haftalık işi bir aya çıkardı."
   },
   {
     "d": 41,
     "t": "Genel",
     "en": "crops",
-    "tr": "mahsül",
-    "ex": "Drought damaged the crops across the valley today.",
-    "exTr": "D, vadideki mahsül hasarlı etti bugün."
+    "tr": "mahsul, ekin",
+    "ex": "Drought damaged the crops across the whole valley.",
+    "exTr": "Kuraklık tüm vadideki mahsule zarar verdi."
   },
   {
     "d": 41,
@@ -6603,8 +6603,8 @@
     "t": "Genel",
     "en": "dawn",
     "tr": "şafak",
-    "ex": "We left the campsite at dawn this morning.",
-    "exTr": "Kampı şafakta bıraktık bu sabah."
+    "ex": "We left the campsite at dawn with packed bags.",
+    "exTr": "Toplanmış çantalarla kamp alanından şafakta ayrıldık."
   },
   {
     "d": 41,
@@ -6627,16 +6627,16 @@
     "t": "Genel",
     "en": "demand",
     "tr": "talep, istek",
-    "ex": "Classroom debate kept returning to demand this morning.",
-    "exTr": "Sınıf tartışması talep etmeye geri döndü bu sabah."
+    "ex": "Weekend demand for taxis jumped after the concert.",
+    "exTr": "Konserten sonra hafta sonu taksi talebi arttı."
   },
   {
     "d": 41,
     "t": "Genel",
     "en": "deteriorated",
-    "tr": "bozulma, yıpranış",
-    "ex": "That felt deteriorated in the moment this morning.",
-    "exTr": "Şu anda kötü hissettim bu sabah."
+    "tr": "bozulmuş, kötüleşmiş",
+    "ex": "The road surface deteriorated after the heavy rain.",
+    "exTr": "Şiddetli yağmurdan sonra yol yüzeyi bozuldu."
   },
   {
     "d": 42,
@@ -6651,8 +6651,8 @@
     "t": "Genel",
     "en": "discrepancy",
     "tr": "tutarsızlık, uyuşmazlık",
-    "ex": "They repaired the discrepancy before winter this morning.",
-    "exTr": "Kışdan önce tutarsızlık, uyuşmazlıkrepancy tamir ettiler bu sabah."
+    "ex": "We found a discrepancy between the receipt and the bill.",
+    "exTr": "Fiş ile hesap arasında bir tutarsızlık bulduk."
   },
   {
     "d": 42,
@@ -6675,16 +6675,16 @@
     "t": "Genel",
     "en": "disgusting",
     "tr": "iğrenç",
-    "ex": "The plan is ambitious but disgusting this morning.",
-    "exTr": "Plan hırslı ama iğrenç bu sabah."
+    "ex": "The leftovers in the fridge smelled disgusting today.",
+    "exTr": "Buzdolabındaki artanlar bugün iğrenç kokuyordu."
   },
   {
     "d": 42,
     "t": "Genel",
     "en": "dismissal",
-    "tr": "işten çıkarma",
-    "ex": "The weather turned dismissal by late afternoon today.",
-    "exTr": "Hava geç öğleden sonra işten çıkarma bugün."
+    "tr": "işten çıkarma; umursamazlık",
+    "ex": "His casual dismissal of the complaint upset the team.",
+    "exTr": "Şikâyeti umursamazca geçiştirmesi ekibi üzdü."
   },
   {
     "d": 42,
@@ -6706,9 +6706,9 @@
     "d": 42,
     "t": "Genel",
     "en": "dramatically",
-    "tr": "anıden",
-    "ex": "He smiled dramatically and changed the subject today.",
-    "exTr": "O dramatik bir şekilde gülümsedi ve konuyu değiştirdi bugün."
+    "tr": "dramatik biçimde",
+    "ex": "He smiled dramatically and then changed the subject.",
+    "exTr": "Dramatik bir şekilde gülümsedi ve sonra konuyu değiştirdi."
   },
   {
     "d": 42,
@@ -6770,9 +6770,9 @@
     "d": 42,
     "t": "Genel",
     "en": "embarrassed",
-    "tr": "utanmak",
-    "ex": "If you embarrassed too quickly, details slip today.",
-    "exTr": "Çok hızlı bir şekilde utanırsanız, detaylar kayır bugün."
+    "tr": "utanmış",
+    "ex": "I felt embarrassed when my phone rang in the quiet cafe.",
+    "exTr": "Sessiz kafede telefonum çalınca utandım."
   },
   {
     "d": 42,
@@ -6787,8 +6787,8 @@
     "t": "Genel",
     "en": "encircling",
     "tr": "çevreleyen",
-    "ex": "Classroom debate kept returning to encircling this morning.",
-    "exTr": "Sınıf tartışması baskıya geri döndü bu sabah."
+    "ex": "Traffic was encircling the square after the match.",
+    "exTr": "Maçtan sonra trafik meydanı çevreliyordu."
   },
   {
     "d": 43,
@@ -6836,16 +6836,16 @@
     "t": "Genel",
     "en": "essentially",
     "tr": "aslında, esasen",
-    "ex": "The story ends essentially, almost too soon today.",
-    "exTr": "Hikaye aslında neredeyse çok yakında sona eriyor bugün."
+    "ex": "The recipe is essentially flour, water, and salt.",
+    "exTr": "Tarif esasen un, su ve tuz."
   },
   {
     "d": 43,
     "t": "Genel",
     "en": "eternal",
     "tr": "sonsuz",
-    "ex": "He stayed eternal even when plans changed today.",
-    "exTr": "Planlar değiştiğinde bile sonsuz kaldı bugün."
+    "ex": "The wait for the late bus felt eternal.",
+    "exTr": "Geç otobüsü beklemek sonsuz gibi geldi."
   },
   {
     "d": 43,
@@ -6869,17 +6869,17 @@
     "t": "Genel",
     "en": "exhibition",
     "tr": "sergi",
-    "ex": "I bought an exhibition at the market this morning.",
+    "ex": "We spent Sunday afternoon at a photography exhibition.",
     "morph": "exhibition ← … + -tion",
-    "exTr": "Bu sabah piyasada bir sergi aldım."
+    "exTr": "Pazar öğleden sonrayı bir fotoğraf sergisinde geçirdik."
   },
   {
     "d": 43,
     "t": "Genel",
     "en": "extravagant",
     "tr": "savurgan",
-    "ex": "He stayed extravagant even when plans changed today.",
-    "exTr": "Planlar değiştiğinde bile savurgan kaldı bugün."
+    "ex": "Ordering three desserts felt a bit extravagant tonight.",
+    "exTr": "Bu gece üç tatlı sipariş etmek biraz savurganca geldi."
   },
   {
     "d": 43,
@@ -6942,16 +6942,16 @@
     "t": "Genel",
     "en": "free spirit",
     "tr": "özgür ruhlu kişi",
-    "ex": "People still misunderstand free spirit online this morning.",
-    "exTr": "İnsanlar hala online özgür ruhu yanlış anlıyorlar bu sabah."
+    "ex": "She is a free spirit who changes cities every few years.",
+    "exTr": "Her birkaç yılda şehir değiştiren özgür ruhlu biri."
   },
   {
     "d": 44,
     "t": "Genel",
     "en": "fuse",
-    "tr": "elektrik sigortası",
+    "tr": "sigorta; kaynaşmak",
     "ex": "The old fuse blew when we plugged in the heater.",
-    "exTr": "Eski füzyon, ısıtıcıya karıştığımızda patladı."
+    "exTr": "Isıtıcıyı prize takınca eski sigorta attı."
   },
   {
     "d": 44,
@@ -6974,8 +6974,8 @@
     "t": "Genel",
     "en": "generous",
     "tr": "cömert",
-    "ex": "Their offer was generous compared with the market.",
-    "exTr": "Teklifleri piyasa ile kıyaslandı."
+    "ex": "The tip was generous after such friendly service.",
+    "exTr": "Bu kadar sıcak bir servisten sonra bahşiş cömertti."
   },
   {
     "d": 44,
@@ -6989,9 +6989,9 @@
     "d": 44,
     "t": "Genel",
     "en": "Get on well",
-    "tr": "iyi anlaşmak / iyi geçinmek",
-    "ex": "It takes practice to Get on well without sounding rude.",
-    "exTr": "Kaba olmadan iyi almak için pratik alır."
+    "tr": "iyi anlaşmak",
+    "ex": "Get on well with neighbors? I do on this street.",
+    "exTr": "Komşularla iyi anlaşmak mı? Bu sokakta öyleyim."
   },
   {
     "d": 44,
@@ -7005,9 +7005,9 @@
     "d": 44,
     "t": "Genel",
     "en": "giant",
-    "tr": "dev gibi büyük",
-    "ex": "What a giant view from the hill today!",
-    "exTr": "Tepeden dev bir manzara ne bugün!"
+    "tr": "dev",
+    "ex": "A giant truck blocked the narrow side street.",
+    "exTr": "Dev bir kamyon dar ara sokağı kapadı."
   },
   {
     "d": 44,
@@ -7022,24 +7022,24 @@
     "t": "Genel",
     "en": "gradually",
     "tr": "yavaş yavaş",
-    "ex": "The lights flickered gradually in the storm today.",
-    "exTr": "Işıklar fırtınada yavaş yavaş yavaşladı bugün."
+    "ex": "The noise from the street gradually faded after midnight.",
+    "exTr": "Sokaktaki gürültü gece yarısından sonra yavaş yavaş azaldı."
   },
   {
     "d": 44,
     "t": "Genel",
     "en": "grain of sand",
     "tr": "kum tanesi",
-    "ex": "I learned about grain of sand during the trip.",
-    "exTr": "Seyahat sırasında kum tahıl öğrendim."
+    "ex": "A grain of sand scratched the camera lens.",
+    "exTr": "Bir kum tanesi kamera lensini çizdi."
   },
   {
     "d": 44,
     "t": "Genel",
     "en": "greed",
-    "tr": "hırs, aç gözlü / aç gözlü",
-    "ex": "That felt greed in the moment this morning.",
-    "exTr": "Şu anda açgözlülüğü hissetti bu sabah."
+    "tr": "açgözlülük",
+    "ex": "Taking the last slice without asking felt like greed.",
+    "exTr": "Sormadan son dilimi almak açgözlülük gibi geldi."
   },
   {
     "d": 44,
@@ -7054,8 +7054,8 @@
     "t": "Genel",
     "en": "habitual",
     "tr": "alışkanlık hâline gelmiş",
-    "ex": "Their apartment is small but habitual this morning.",
-    "exTr": "Daireleri küçük ama alışkanlık hâline gelmişlı bu sabah."
+    "ex": "Checking the stove twice is habitual for her.",
+    "exTr": "Ocağı iki kez kontrol etmek onda alışkanlık hâline gelmiş."
   },
   {
     "d": 44,
@@ -7085,9 +7085,9 @@
     "d": 44,
     "t": "Genel",
     "en": "harmful",
-    "tr": "zararlı, sağlıksız",
-    "ex": "I like how harmful that café feels at night.",
-    "exTr": "Kafein gece ne kadar zararlı olduğunu severim."
+    "tr": "zararlı",
+    "ex": "Too much caffeine late at night can be harmful.",
+    "exTr": "Gece geç saatlerde fazla kafein zararlı olabilir."
   },
   {
     "d": 44,
@@ -7134,8 +7134,8 @@
     "t": "Genel",
     "en": "household chores",
     "tr": "ev işleri",
-    "ex": "People still misunderstand household chores online this morning.",
-    "exTr": "İnsanlar hala online ev işleri yanlış anlıyorlar bu sabah."
+    "ex": "We split the household chores every Sunday morning.",
+    "exTr": "Her Pazar sabahı ev işlerini paylaşıyoruz."
   },
   {
     "d": 45,
@@ -7150,17 +7150,17 @@
     "t": "Genel",
     "en": "illness",
     "tr": "hastalık",
-    "ex": "Kids asked what an illness was for today.",
+    "ex": "A mild illness kept her home from work on Monday.",
     "morph": "illness ← … + -ness",
-    "exTr": "Çocuklar bir hastalığın ne için olduğunu sordu bugün."
+    "exTr": "Hafif bir hastalık onu Pazartesi işe gitmekten alıkoydu."
   },
   {
     "d": 45,
     "t": "Genel",
     "en": "immediately",
     "tr": "hemen",
-    "ex": "The lights flickered immediately in the storm today.",
-    "exTr": "Işıklar hemen fırtınaya sürüklendi bugün."
+    "ex": "Call me immediately if the door lock sticks again.",
+    "exTr": "Kapı kilidi yine takılırsa beni hemen ara."
   },
   {
     "d": 45,
@@ -7175,16 +7175,16 @@
     "t": "Genel",
     "en": "impatient",
     "tr": "sabırsız",
-    "ex": "The weather turned impatient by late afternoon today.",
-    "exTr": "Hava öğleden sonra sabırsızlandı bugün."
+    "ex": "The impatient driver honked at every red light.",
+    "exTr": "Sabırsız sürücü her kırmızı ışıkta korna çaldı."
   },
   {
     "d": 45,
     "t": "Genel",
     "en": "impulsive",
-    "tr": "düşünmeden hareket eden insan / itici",
-    "ex": "He stayed impulsive even when plans changed today.",
-    "exTr": "Planlar değiştiğinde bile şüpheli kaldı bugün."
+    "tr": "düşünmeden hareket eden",
+    "ex": "An impulsive snack run emptied my wallet again.",
+    "exTr": "Düşünmeden yaptığım atıştırmalık turu cüzdanımı yine boşalttı."
   },
   {
     "d": 45,
@@ -7223,25 +7223,25 @@
     "t": "Genel",
     "en": "insatiability",
     "tr": "doyumsuzluk",
-    "ex": "Classroom debate kept returning to insatiability this morning.",
+    "ex": "His insatiability for snacks emptied the kitchen cupboard.",
     "morph": "insatiability ← … + -ity",
-    "exTr": "Sınıf tartışması, doyumsuzluk'e geri döndü bu sabah."
+    "exTr": "Atıştırmalığa doyumsuzluğu mutfak dolabını boşalttı."
   },
   {
     "d": 46,
     "t": "Genel",
     "en": "insincere",
     "tr": "samimiyetsiz",
-    "ex": "Classroom debate kept returning to insincere this morning.",
-    "exTr": "Sınıf tartışması, samimiyetsiz geri döndü bu sabah."
+    "ex": "That apology sounded insincere after the long argument.",
+    "exTr": "Uzun tartışmadan sonra o özür samimiyetsiz geldi."
   },
   {
     "d": 46,
     "t": "Genel",
     "en": "instinct",
-    "tr": "iç güdü",
-    "ex": "Classroom debate kept returning to instinct this morning.",
-    "exTr": "Sınıf tartışma içgüdüye geri döndü bu sabah."
+    "tr": "içgüdü",
+    "ex": "My instinct said take the quieter side street.",
+    "exTr": "İçgüdüm daha sessiz ara sokağı seç demişti."
   },
   {
     "d": 46,
@@ -7256,8 +7256,8 @@
     "t": "Genel",
     "en": "invaders",
     "tr": "işgalciler",
-    "ex": "They repaired the invaders before winter this morning.",
-    "exTr": "Kıştan önce işgalleri tamir ettiler bu sabah."
+    "ex": "Ant invaders found the sugar on the kitchen counter.",
+    "exTr": "Karınca işgalcileri mutfak tezgâhındaki şekeri buldu."
   },
   {
     "d": 46,
@@ -7279,9 +7279,9 @@
     "d": 46,
     "t": "Genel",
     "en": "irritating",
-    "tr": "rahatsız etmek",
-    "ex": "If you irritating too quickly, details slip today.",
-    "exTr": "Çok hızlı bir şekilde sinirleniyorsanız, ayrıntılar kayıyor bugün."
+    "tr": "sinir bozucu",
+    "ex": "The dripping faucet was irritating all night long.",
+    "exTr": "Damlayan musluk bütün gece boyunca sinir bozucuydu."
   },
   {
     "d": 46,
@@ -7312,8 +7312,8 @@
     "t": "Genel",
     "en": "keen on",
     "tr": "düşkün olmak",
-    "ex": "I'll keen on the update before standup today.",
-    "exTr": "Ayaklanmadan önce güncellemeye düşkün olmak olacağım bugün."
+    "ex": "I am keen on trying the new bakery on our street.",
+    "exTr": "Sokağımızdaki yeni fırını denemeye düşkünüm."
   },
   {
     "d": 46,
@@ -7336,8 +7336,8 @@
     "t": "Genel",
     "en": "look after",
     "tr": "bakmak, ilgilenmek",
-    "ex": "If you look after too quickly, details slip.",
-    "exTr": "Çok hızlı bir şekilde bakarsanız, detaylar kayıyor."
+    "ex": "Can you look after my plants while I travel?",
+    "exTr": "Seyahat ederken bitkilerime bakabilir misin?"
   },
   {
     "d": 46,
@@ -7359,25 +7359,25 @@
     "d": 46,
     "t": "Genel",
     "en": "louder",
-    "tr": "yüksek ses",
-    "ex": "Their apartment is small but louder this morning.",
-    "exTr": "Onların daire küçük ama yüksek ses bu sabah."
+    "tr": "daha yüksek sesli",
+    "ex": "The neighbors got louder after ten last night.",
+    "exTr": "Dün gece komşular onda sonra daha yüksek sesli oldu."
   },
   {
     "d": 46,
     "t": "Genel",
     "en": "low light",
     "tr": "düşük ışık",
-    "ex": "I learned about low light during the trip.",
-    "exTr": "Seyahat sırasında düşük ışık öğrendim."
+    "ex": "Low light made the kitchen photos look grainy.",
+    "exTr": "Düşük ışık mutfak fotoğraflarını grenli gösterdi."
   },
   {
     "d": 46,
     "t": "Genel",
     "en": "lowland",
     "tr": "ova, alçak arazi",
-    "ex": "Fog settled over the lowland before sunrise today.",
-    "exTr": "Gün doğmadan ovaya sis çöktü bugün."
+    "ex": "Fog settled over the lowland just before sunrise.",
+    "exTr": "Tam gün doğmadan ovaya sis çöktü."
   },
   {
     "d": 46,
@@ -7392,8 +7392,8 @@
     "t": "Genel",
     "en": "manufacturers",
     "tr": "üreticiler",
-    "ex": "Local manufacturers delayed shipments after the storm today.",
-    "exTr": "Yerel üreticiler fırtınadan sonra sevkiyatı geciktirdi bugün."
+    "ex": "Local manufacturers delayed shipments after the big storm.",
+    "exTr": "Yerel üreticiler büyük fırtınadan sonra sevkiyatı geciktirdi."
   },
   {
     "d": 47,
@@ -7448,17 +7448,17 @@
     "t": "Genel",
     "en": "miscommunication",
     "tr": "yanlış anlaşılma",
-    "ex": "I bought a miscommunication at the market this morning.",
+    "ex": "A small miscommunication sent us to the wrong cafe.",
     "morph": "miscommunication ← … + -tion",
-    "exTr": "Bu sabah piyasada yanlış bir iletişim satın aldım."
+    "exTr": "Küçük bir yanlış anlaşılma bizi yanlış kafeye götürdü."
   },
   {
     "d": 47,
     "t": "Genel",
     "en": "miserable",
-    "tr": "yoksul, dertli / dertli, yoksun, mutsuz",
-    "ex": "He stayed miserable even when plans changed today.",
-    "exTr": "Planlar değiştiğinde bile sefil kaldı bugün."
+    "tr": "mutsuz, berbat",
+    "ex": "I felt miserable waiting in the rain without a coat.",
+    "exTr": "Montsuz yağmurda beklerken berbat hissettim."
   },
   {
     "d": 47,
@@ -7513,9 +7513,9 @@
     "d": 47,
     "t": "Genel",
     "en": "neatly",
-    "tr": "düzgünce, tam olarak",
-    "ex": "She folded the shirts neatly before packing today.",
-    "exTr": "Ambalajtan önce gömlekleri katladı bugün."
+    "tr": "düzgünce",
+    "ex": "She folded the shirts neatly before packing her bag.",
+    "exTr": "Çantasını toplamadan önce gömlekleri düzgünce katladı."
   },
   {
     "d": 48,
@@ -7538,8 +7538,8 @@
     "t": "Genel",
     "en": "novel",
     "tr": "roman",
-    "ex": "I bought a novel at the market this morning.",
-    "exTr": "Bu sabah pazarda bir roman satın aldım."
+    "ex": "I bought a novel for the train ride home.",
+    "exTr": "Eve tren yolculuğu için bir roman aldım."
   },
   {
     "d": 48,
@@ -7569,9 +7569,9 @@
     "d": 48,
     "t": "Genel",
     "en": "nurse",
-    "tr": "hemşire; emzirmek, bakmak",
-    "ex": "Learning to nurse well changed my routine today.",
-    "exTr": "Hemşireyi öğrenmek rutinimi iyi değiştirdi bugün."
+    "tr": "hemşire; bakmak",
+    "ex": "The nurse checked my temperature at the clinic.",
+    "exTr": "Hemşire klinikte ateşimi ölçtü."
   },
   {
     "d": 48,
@@ -7620,7 +7620,7 @@
     "en": "pad",
     "tr": "bloknot",
     "ex": "I wrote the number on a pad by the phone.",
-    "exTr": "Numarayı telefonun yanındaki bloğa yazdım."
+    "exTr": "Numarayı telefonun yanındaki bloknota yazdım."
   },
   {
     "d": 48,
@@ -7699,10 +7699,10 @@
     "d": 49,
     "t": "Genel",
     "en": "preciousness",
-    "tr": "değer biçilmez",
-    "ex": "Classroom debate kept returning to preciousness this morning.",
+    "tr": "kıymetlilik",
+    "ex": "He talked about the preciousness of quiet mornings at home.",
     "morph": "preciousness ← … + -ness",
-    "exTr": "Sınıf tartışması değerliliğe geri döndü bu sabah."
+    "exTr": "Evde sessiz sabahların kıymetliliğinden bahsetti."
   },
   {
     "d": 49,
@@ -7742,17 +7742,17 @@
     "d": 49,
     "t": "Genel",
     "en": "prone",
-    "tr": "meğilli olmak",
-    "ex": "On weekends I barely prone at all today.",
-    "exTr": "Haftasonlarında neredeyse her şeye meğilli olmakyim bugün."
+    "tr": "eğilimli",
+    "ex": "I am prone to forgetting keys when I rush.",
+    "exTr": "Acele edince anahtarları unutmaya eğilimliyim."
   },
   {
     "d": 49,
     "t": "Genel",
     "en": "publicise",
-    "tr": "halka duyurmak",
-    "ex": "On weekends I barely publicise at all today.",
-    "exTr": "Hafta sonlarımda, her şeyde zar zor durumdayım bugün."
+    "tr": "duyurmak",
+    "ex": "They will publicise the street market on Friday.",
+    "exTr": "Cuma günü sokak pazarını duyuracaklar."
   },
   {
     "d": 49,
@@ -7784,8 +7784,8 @@
     "t": "Genel",
     "en": "race",
     "tr": "yarış",
-    "ex": "I packed a book about the race for the flight.",
-    "exTr": "Uçuşa yarış hakkında bir kitap aldım."
+    "ex": "The kids watched the race from the sidewalk.",
+    "exTr": "Çocuklar yarışı kaldırımdan izledi."
   },
   {
     "d": 49,
@@ -7808,8 +7808,8 @@
     "t": "Genel",
     "en": "rebellion",
     "tr": "isyan",
-    "ex": "The history podcast covered a short-lived rebellion today.",
-    "exTr": "Tarih podcast’i kısa süren bir isyanı anlattı bugün."
+    "ex": "The history podcast covered a short-lived rebellion downtown.",
+    "exTr": "Tarih podcast’i merkezdeki kısa süren bir isyanı anlattı."
   },
   {
     "d": 49,
@@ -7823,9 +7823,9 @@
     "d": 49,
     "t": "Genel",
     "en": "refuse",
-    "tr": "reddetmek / red etmek",
-    "ex": "On weekends I barely refuse at all today.",
-    "exTr": "Haftasonlarında neredeyse hepsini reddetmek / red etmekiyorum bugün."
+    "tr": "reddetmek",
+    "ex": "I had to refuse a second slice of cake.",
+    "exTr": "İkinci dilim pastayı reddetmek zorunda kaldım."
   },
   {
     "d": 49,
@@ -7839,17 +7839,17 @@
     "d": 50,
     "t": "Genel",
     "en": "reliance",
-    "tr": "bağımlılık",
-    "ex": "I bought a reliance at the market this morning.",
-    "exTr": "Bu sabah pazara güvendim."
+    "tr": "güvenme, bağımlılık",
+    "ex": "Our reliance on one grocery store became clear during the storm.",
+    "exTr": "Fırtınada tek markete olan güvenimiz belli oldu."
   },
   {
     "d": 50,
     "t": "Genel",
     "en": "remain",
-    "tr": "geride kalmak",
-    "ex": "Please don't remain when you're frustrated this morning.",
-    "exTr": "Lütfen hayal kırıklığına uğradığınızda kalmayın bu sabah."
+    "tr": "kalmak, geride kalmak",
+    "ex": "A few seats remain near the window on the bus.",
+    "exTr": "Otobüste pencereye yakın birkaç koltuk kaldı."
   },
   {
     "d": 50,
@@ -7904,18 +7904,18 @@
     "d": 50,
     "t": "Genel",
     "en": "sanitation",
-    "tr": "belediye hizmetleri",
-    "ex": "Better sanitation cut illness in the camp today.",
+    "tr": "temizlik, hijyen",
+    "ex": "Better sanitation cut illness in the summer camp.",
     "morph": "sanitation ← … + -tion",
-    "exTr": "Daha iyi belediye hizmetleri kamptaki hastalığı kesti bugün."
+    "exTr": "Daha iyi hijyen yaz kampındaki hastalıkları azalttı."
   },
   {
     "d": 50,
     "t": "Genel",
     "en": "sarcastic",
-    "tr": "zorbalama",
-    "ex": "His sarcastic comment didn't help the retro today.",
-    "exTr": "Onun zorbalama yorumu retro'ye yardımcı olmadı bugün."
+    "tr": "alaycı",
+    "ex": "His sarcastic comment did not help the conversation.",
+    "exTr": "Alaycı yorumu sohbete yardımcı olmadı."
   },
   {
     "d": 50,
@@ -8028,8 +8028,8 @@
     "t": "Genel",
     "en": "sight",
     "tr": "görüntü, manzara",
-    "ex": "The bridge at night is a beautiful sight from the bus.",
-    "exTr": "Gece köprü otobüsten güzel bir manzara."
+    "ex": "The ferry at night is a beautiful sight from the bus.",
+    "exTr": "Gece feribot otobüsten güzel bir manzara."
   },
   {
     "d": 51,
@@ -8044,8 +8044,8 @@
     "t": "Genel",
     "en": "significantly",
     "tr": "önemli ölçüde",
-    "ex": "The story ends significantly, almost too soon today.",
-    "exTr": "Hikaye önemli ölçüde sona eriyor, neredeyse çok yakında bugün."
+    "ex": "Traffic eased significantly after nine on quiet weeknights.",
+    "exTr": "Sakin hafta içi geceleri dokuzdan sonra trafik önemli ölçüde rahatladı."
   },
   {
     "d": 51,
@@ -8067,9 +8067,9 @@
     "d": 51,
     "t": "Genel",
     "en": "so many times",
-    "tr": "çok kez",
-    "ex": "I learned about so many times during the trip.",
-    "exTr": "Seyahat sırasında çok kez öğrendim."
+    "tr": "defalarca",
+    "ex": "I have told that story so many times at dinner.",
+    "exTr": "O hikâyeyi akşam yemeğinde defalarca anlattım."
   },
   {
     "d": 51,
@@ -8107,9 +8107,9 @@
     "d": 51,
     "t": "Genel",
     "en": "spoiled",
-    "tr": "şımarık",
-    "ex": "Classroom debate kept returning to spoiled this morning.",
-    "exTr": "Sınıf tartışması şımartıldı bu sabah."
+    "tr": "şımarık; bozulmuş",
+    "ex": "The milk smelled spoiled after two days open.",
+    "exTr": "Açıldıktan iki gün sonra süt bozulmuş kokuyordu."
   },
   {
     "d": 51,
@@ -8131,9 +8131,9 @@
     "d": 51,
     "t": "Genel",
     "en": "stoicism",
-    "tr": "stoacılık; metanet, sabırla katlanma",
-    "ex": "He leans on stoicism when incidents get chaotic.",
-    "exTr": "Olaylar kaotik olduğunda stoicism'e eğilir."
+    "tr": "metanet, stoacılık",
+    "ex": "He leans on stoicism when the day gets chaotic.",
+    "exTr": "Gün kaoslaşınca metanete yaslanıyor."
   },
   {
     "d": 52,
@@ -8187,25 +8187,25 @@
     "d": 52,
     "t": "Genel",
     "en": "supper",
-    "tr": "geç yenen yemek",
-    "ex": "We should supper together this afternoon this morning.",
-    "exTr": "Bu öğleden sonra birlikte yemek yemeliyiz bu sabah."
+    "tr": "akşam yemeği",
+    "ex": "We should have supper together this evening at home.",
+    "exTr": "Bu akşam evde birlikte yemek yemeliyiz."
   },
   {
     "d": 52,
     "t": "Genel",
     "en": "supply",
-    "tr": "beslemek, arz, sağlamak, miktar",
-    "ex": "On weekends I barely supply at all today.",
-    "exTr": "Haftasonlarında, her şeyde zar zor tedarik ediyorum bugün."
+    "tr": "tedarik, sağlamak",
+    "ex": "The corner shop could not supply fresh bread today.",
+    "exTr": "Köşe bakkalı bugün taze ekmek sağlayamadı."
   },
   {
     "d": 52,
     "t": "Genel",
     "en": "swell",
-    "tr": "şişirmek",
-    "ex": "He tends to swell when the room gets quiet.",
-    "exTr": "Oda sessiz olduğunda şişirmek'e eğilimlidir."
+    "tr": "şişmek",
+    "ex": "My ankle began to swell after the long walk.",
+    "exTr": "Uzun yürüyüşten sonra bileğim şişmeye başladı."
   },
   {
     "d": 52,
@@ -8236,8 +8236,8 @@
     "t": "Genel",
     "en": "tenant",
     "tr": "kiracı",
-    "ex": "The trail got tenant after the rain today.",
-    "exTr": "Yol yağmurdan sonra kiracı aldı bugün."
+    "ex": "The new tenant moved in above us last week.",
+    "exTr": "Yeni kiracı geçen hafta üstümüze taşındı."
   },
   {
     "d": 52,
@@ -8252,16 +8252,16 @@
     "t": "Genel",
     "en": "terrain",
     "tr": "arazi",
-    "ex": "Classroom debate kept returning to terrain this morning.",
-    "exTr": "Sınıf tartışması araziye geri döndü bu sabah."
+    "ex": "The trail got rocky as the terrain changed.",
+    "exTr": "Arazi değişince patika taşlıklaştı."
   },
   {
     "d": 52,
     "t": "Genel",
     "en": "terrible",
     "tr": "berbat",
-    "ex": "He stayed terrible even when plans changed today.",
-    "exTr": "Planlar değiştiğinde bile korkunç kaldı bugün."
+    "ex": "The coffee was terrible at that roadside stop.",
+    "exTr": "Yol kenarındaki o durakta kahve berbattı."
   },
   {
     "d": 52,
@@ -8292,8 +8292,8 @@
     "t": "Genel",
     "en": "thrifty",
     "tr": "tutumlu",
-    "ex": "Classroom debate kept returning to thrifty this morning.",
-    "exTr": "Sınıf tartışması tutumlu'ye geri döndü bu sabah."
+    "ex": "A thrifty shopper compared prices before buying rice.",
+    "exTr": "Tutumlu bir alışverişçi pirinç almadan önce fiyatları karşılaştırdı."
   },
   {
     "d": 53,
@@ -8332,24 +8332,24 @@
     "t": "Genel",
     "en": "traffic jam",
     "tr": "trafik sıkışıklığı",
-    "ex": "I learned about traffic jam during the trip.",
-    "exTr": "Seyahat sırasında trafik sıkışıklığı öğrendim."
+    "ex": "A traffic jam near the stadium made us late for dinner.",
+    "exTr": "Stadyum yakınındaki trafik sıkışıklığı yemeğe geç kalmamıza yol açtı."
   },
   {
     "d": 53,
     "t": "Genel",
     "en": "trait",
     "tr": "kişilik özelliği",
-    "ex": "They repaired the trait before winter this morning.",
-    "exTr": "Kışdan önce kanalı tamir ettiler bu sabah."
+    "ex": "Patience is a useful trait in crowded kitchens.",
+    "exTr": "Sabır, kalabalık mutfaklarda yararlı bir kişilik özelliği."
   },
   {
     "d": 53,
     "t": "Genel",
     "en": "translucent",
     "tr": "yarı saydam",
-    "ex": "The weather turned translucent by late afternoon today.",
-    "exTr": "Hava geç öğleden sonra yarı saydam döndü bugün."
+    "ex": "The translucent curtains let soft morning light in.",
+    "exTr": "Yarı saydam perdeler sabahın yumuşak ışığını içeri aldı."
   },
   {
     "d": 53,
@@ -8404,18 +8404,18 @@
     "d": 53,
     "t": "Genel",
     "en": "unavailable",
-    "tr": "tedarik olmayan",
-    "ex": "Their apartment is small but unavailable this morning.",
-    "exTr": "Daireleri küçük ama mevcut değil bu sabah."
+    "tr": "müsait değil, yok",
+    "ex": "That bread is unavailable until the next delivery.",
+    "exTr": "O ekmek bir sonraki teslimata kadar yok."
   },
   {
     "d": 54,
     "t": "Genel",
     "en": "unconsciousness",
-    "tr": "bilinçsiz",
-    "ex": "Kids asked what an unconsciousness was for today.",
+    "tr": "bilinçsizlik",
+    "ex": "He slipped into unconsciousness after the sudden fall.",
     "morph": "unconsciousness ← … + -ness",
-    "exTr": "Çocuklar bilinçsizliğin ne için olduğunu sordu bugün."
+    "exTr": "Ani düşüşten sonra bilinçsizliğe kaydı."
   },
   {
     "d": 54,
@@ -8469,9 +8469,9 @@
     "d": 54,
     "t": "Genel",
     "en": "violent",
-    "tr": "kavgalı",
-    "ex": "Their apartment is small but violent this morning.",
-    "exTr": "Daireleri küçük ama şiddetlidir bu sabah."
+    "tr": "şiddetli",
+    "ex": "A violent storm knocked out power on our street.",
+    "exTr": "Şiddetli bir fırtına sokağımızda elektriği kesti."
   },
   {
     "d": 54,
@@ -8518,8 +8518,8 @@
     "t": "Genel",
     "en": "wet season",
     "tr": "yağmur sezonu",
-    "ex": "People still misunderstand wet season online this morning.",
-    "exTr": "İnsanlar hala online ıslak sezon yanlış anlıyorlar bu sabah."
+    "ex": "Potholes deepen during the wet season in our district.",
+    "exTr": "Semtimizde yağmur sezonunda çukurlar derinleşir."
   },
   {
     "d": 54,
@@ -8549,9 +8549,9 @@
     "d": 54,
     "t": "Genel",
     "en": "wired",
-    "tr": "kodlanmış, doğuştan öyle olan",
-    "ex": "Classroom debate kept returning to wired this morning.",
-    "exTr": "Sınıf tartışması tellere geri döndü bu sabah."
+    "tr": "gergin, aşırı uyanık",
+    "ex": "Too much coffee left me wired before bed.",
+    "exTr": "Fazla kahve yatmadan önce beni aşırı uyanık bıraktı."
   },
   {
     "d": 54,
@@ -8566,24 +8566,24 @@
     "t": "Genel",
     "en": "yawn",
     "tr": "esnemek",
-    "ex": "If you yawn too quickly, details slip today.",
-    "exTr": "Eğer çok hızlı bir şekilde kaybolsanız, detaylar kayır bugün."
+    "ex": "I tried not to yawn during the long meeting.",
+    "exTr": "Uzun toplantıda esnememeye çalıştım."
   },
   {
     "d": 55,
     "t": "Genel",
     "en": "accidentally",
-    "tr": "kazara, yanlışlıkla",
-    "ex": "Rain fell accidentally on the empty street today.",
-    "exTr": "Rain yanlışlıkla boş sokakta düştü bugün."
+    "tr": "yanlışlıkla",
+    "ex": "Rain fell accidentally through the open kitchen window.",
+    "exTr": "Yağmur açık mutfak penceresinden yanlışlıkla içeri girdi."
   },
   {
     "d": 55,
     "t": "Genel",
     "en": "air quality",
     "tr": "hava kalitesi",
-    "ex": "People still misunderstand air quality online this morning.",
-    "exTr": "İnsanlar hala online hava kalitesini yanlış anlıyorlar bu sabah."
+    "ex": "City air quality worsened during the morning commute.",
+    "exTr": "Sabah işe gidişte şehir hava kalitesi kötüleşti."
   },
   {
     "d": 55,
@@ -8655,8 +8655,8 @@
     "t": "Genel",
     "en": "crowded",
     "tr": "kalabalık",
-    "ex": "The subway felt crowded after the concert today.",
-    "exTr": "Metro konserden sonra kalabalık hissetti bugün."
+    "ex": "The subway felt crowded after the evening concert.",
+    "exTr": "Metro akşam konserinden sonra kalabalıktı."
   },
   {
     "d": 55,
@@ -8696,8 +8696,8 @@
     "t": "Genel",
     "en": "droplet",
     "tr": "damlacık",
-    "ex": "A single droplet clung to the glass today.",
-    "exTr": "Cama tek bir damlalet peung bugün."
+    "ex": "A single droplet clung to the kitchen glass.",
+    "exTr": "Mutfak camına tek bir damlacık yapıştı."
   },
   {
     "d": 55,
@@ -8720,18 +8720,18 @@
     "d": 55,
     "t": "Genel",
     "en": "encourage",
-    "tr": "teşvik etmek, cesaretlendirmek",
-    "ex": "Managers should encourage written design debates this morning.",
-    "exTr": "Yöneticiler yazılı tasarım tartışmalarını teşvik etmelidir bu sabah."
+    "tr": "teşvik etmek",
+    "ex": "Managers should encourage written design debates every week.",
+    "exTr": "Yöneticiler her hafta yazılı tasarım tartışmalarını teşvik etmeli."
   },
   {
     "d": 55,
     "t": "Genel",
     "en": "evaporate",
     "tr": "buharlaşmak",
-    "ex": "Morning mist will evaporate by ten this morning.",
+    "ex": "Morning mist will evaporate by ten on clear days.",
     "morph": "evaporate ← e- + vapor",
-    "exTr": "Sabah mist on kişi tarafından tahliye edilecek bu sabah."
+    "exTr": "Açık günlerde sabah sisi ona kadar buharlaşır."
   },
   {
     "d": 55,
@@ -8803,8 +8803,8 @@
     "t": "Genel",
     "en": "genius",
     "tr": "dâhi; dâhice",
-    "ex": "It wasn't genius. Just careful measurement this morning.",
-    "exTr": "Dâhice değildi. Sadece dikkatli ölçüm bu sabah."
+    "ex": "It was not genius. Just careful measurement at home.",
+    "exTr": "Dâhice değildi. Sadece evde dikkatli ölçüm."
   },
   {
     "d": 55,
@@ -8828,16 +8828,16 @@
     "t": "Genel",
     "en": "heart failure",
     "tr": "kalp yetmezliği",
-    "ex": "People still misunderstand heart failure online this morning.",
-    "exTr": "İnsanlar hala kalp yetmezliğini online olarak yanlış anlıyorlar bu sabah."
+    "ex": "The clinic poster explained early signs of heart failure.",
+    "exTr": "Klinik afişi kalp yetmezliğinin erken belirtilerini anlatıyordu."
   },
   {
     "d": 55,
     "t": "Genel",
     "en": "high-class goods",
-    "tr": "lüks ürünler",
-    "ex": "I learned about high-class goods during the trip.",
-    "exTr": "Seyahat sırasında lüks ürünlerı öğrendim."
+    "tr": "üst segment ürünler",
+    "ex": "That boutique sells high-class goods near the square.",
+    "exTr": "O butik meydanın yanında üst segment ürünler satıyor."
   },
   {
     "d": 55,
@@ -8859,18 +8859,18 @@
     "d": 56,
     "t": "Genel",
     "en": "in person",
-    "tr": "şahsen, bizzat",
-    "ex": "My default reply is in person this morning.",
-    "exTr": "Varsayılan cevabım şahsen, bizzat bu sabah."
+    "tr": "şahsen, yüz yüze",
+    "ex": "My default reply is to meet in person when possible.",
+    "exTr": "Mümkünse varsayılan cevabım yüz yüze buluşmak."
   },
   {
     "d": 56,
     "t": "Genel",
     "en": "independence",
     "tr": "bağımsızlık",
-    "ex": "Feature flags give us independence between deploys today.",
+    "ex": "Feature flags give us independence between risky deploys.",
     "morph": "independence ← in- + dependence",
-    "exTr": "Özel bayraklar bizi dağıtmalar arasında bağımsızlığı verir bugün."
+    "exTr": "Özellik bayrakları riskli deploy’lar arasında bağımsızlık sağlar."
   },
   {
     "d": 56,
@@ -8887,7 +8887,7 @@
     "tr": "enfeksiyon",
     "ex": "The clinic treated a mild infection quickly today.",
     "morph": "infection ← infect + -ion",
-    "exTr": "Klinik hızla hafif bir enfeksiyon tedavi etti bugün."
+    "exTr": "Klinik bugün hafif bir enfeksiyonu hızlı tedavi etti."
   },
   {
     "d": 57,
@@ -8895,7 +8895,7 @@
     "en": "invade",
     "tr": "işgal etmek",
     "ex": "Don't invade someone's calendar with last-minute holds today.",
-    "exTr": "Son dakikalarla birisinin takvimini işgal etmeyin bugün."
+    "exTr": "Bugün son dakika bloklarıyla birinin takvimini işgal etmeyin."
   },
   {
     "d": 57,
@@ -8909,18 +8909,18 @@
     "d": 57,
     "t": "Genel",
     "en": "lifelike",
-    "tr": "gerçeğe çok benzeyen, canlı gibi",
-    "ex": "The museum robot looked almost lifelike this morning.",
-    "exTr": "Müze robotu neredeyse gerçeğe çok benzeyen, canlı gibi görünüyordu bu sabah."
+    "tr": "gerçeğe çok benzeyen",
+    "ex": "The shop window mannequin looked almost lifelike at night.",
+    "exTr": "Vitrindeki manken gece neredeyse gerçeğe çok benzeyen duruyordu."
   },
   {
     "d": 57,
     "t": "Genel",
     "en": "literature",
     "tr": "edebiyat",
-    "ex": "She teaches modern literature on Tuesday evenings today.",
+    "ex": "She teaches modern literature on Tuesday evenings downtown.",
     "morph": "literature ← Latin littera",
-    "exTr": "Salı akşamları modern edebiyat öğretir bugün."
+    "exTr": "Salı akşamları merkezde modern edebiyat öğretir."
   },
   {
     "d": 57,
@@ -8951,17 +8951,17 @@
     "t": "Genel",
     "en": "moisture",
     "tr": "nem",
-    "ex": "Too much moisture ruined the cardboard packaging today.",
-    "exTr": "Çok fazla nem karton ambalajı mahvetti bugün."
+    "ex": "Too much moisture ruined the cardboard packaging overnight.",
+    "exTr": "Fazla nem karton ambalajı bir gecede mahvetti."
   },
   {
     "d": 57,
     "t": "Genel",
     "en": "multicultural",
     "tr": "çok kültürlü",
-    "ex": "Istanbul feels multicultural on every street corner today.",
+    "ex": "Istanbul feels multicultural on every busy street corner.",
     "morph": "multicultural ← multi- + cultural",
-    "exTr": "İstanbul her sokak köşesinde çok kültürlü hissediyor bugün."
+    "exTr": "İstanbul her kalabalık sokak köşesinde çok kültürlü hissettiriyor."
   },
   {
     "d": 57,
@@ -8976,8 +8976,8 @@
     "t": "Genel",
     "en": "permanent",
     "tr": "kalıcı",
-    "ex": "Nothing in this prototype is permanent yet today.",
-    "exTr": "Bu prototipde hiçbir şey kalıcı değil bugün."
+    "ex": "Nothing in this prototype is permanent yet, luckily.",
+    "exTr": "Bu prototipte henüz hiçbir şey kalıcı değil, neyse ki."
   },
   {
     "d": 57,
@@ -8999,9 +8999,9 @@
     "d": 57,
     "t": "Genel",
     "en": "prescribe",
-    "tr": "reçete etmek",
-    "ex": "Doctors rarely prescribe antibiotics for a virus today.",
-    "exTr": "Doktorlar nadiren bir virüs için antibiyotik reçete etmek ederler bugün."
+    "tr": "reçete yazmak",
+    "ex": "Doctors rarely prescribe antibiotics for a mild virus.",
+    "exTr": "Doktorlar hafif bir virüs için nadiren antibiyotik yazar."
   },
   {
     "d": 57,
@@ -9023,10 +9023,10 @@
     "d": 57,
     "t": "Genel",
     "en": "recognize",
-    "tr": "tanımak, kabul etmek",
-    "ex": "I didn't recognize her voice on the bridge call.",
+    "tr": "tanımak",
+    "ex": "I did not recognize her voice on the phone call.",
     "morph": "recognize ← recogn + -ize",
-    "exTr": "Onun sesini köprü çağrısıyla tanımadım."
+    "exTr": "Telefondaki sesini tanıyamadım."
   },
   {
     "d": 57,
@@ -9122,17 +9122,17 @@
     "d": 58,
     "t": "Genel",
     "en": "suffer from",
-    "tr": "-den muzdarip olmak",
-    "ex": "Legacy services suffer from missing ownership this morning.",
-    "exTr": "Miras hizmetleri eksik mülkiyetten muzdariptir bu sabah."
+    "tr": "sıkıntısını çekmek",
+    "ex": "Legacy services suffer from missing ownership every quarter.",
+    "exTr": "Eski servisler her çeyrek sahibi belirsizliği yüzünden zorlanıyor."
   },
   {
     "d": 58,
     "t": "Genel",
     "en": "surrounded by",
-    "tr": "ile çevrili",
-    "ex": "She felt surrounded by supportive teammates this morning.",
-    "exTr": "Destekleyici ekip arkadaşlarıyla çevrili hissetti bu sabah."
+    "tr": "... ile çevrili",
+    "ex": "She felt surrounded by supportive teammates at lunch.",
+    "exTr": "Öğle yemeğinde destekleyici ekip arkadaşlarıyla çevrili hissetti."
   },
   {
     "d": 58,
@@ -9162,9 +9162,9 @@
     "d": 58,
     "t": "Genel",
     "en": "teach",
-    "tr": "öğretmek / öğretti",
-    "ex": "Please don't teach / taught when you're frustrated.",
-    "exTr": "Lütfen rahatsız olduğunuzda öğretme / öğretmeyin."
+    "tr": "öğretmek",
+    "ex": "Please do not teach while you are frustrated.",
+    "exTr": "Sinirliyken lütfen öğretme."
   },
   {
     "d": 58,
@@ -9195,8 +9195,8 @@
     "t": "Genel",
     "en": "thoroughly",
     "tr": "iyice, tamamen",
-    "ex": "The lights flickered thoroughly in the storm today.",
-    "exTr": "Işıklar fırtınaya iyice karıştı bugün."
+    "ex": "Wash the strawberries thoroughly before you eat them.",
+    "exTr": "Çilekleri yemeden önce iyice yıka."
   },
   {
     "d": 58,
@@ -9219,8 +9219,8 @@
     "t": "Genel",
     "en": "transport",
     "tr": "ulaşım, taşımacılık",
-    "ex": "People still misunderstand transport online on the way.",
-    "exTr": "İnsanlar hala online taşımayı yanlış anlıyorlar yolda."
+    "ex": "City transport slowed after the heavy rain overnight.",
+    "exTr": "Gece boyunca yağan şiddetli yağmurdan sonra şehir ulaşımı yavaşladı."
   },
   {
     "d": 59,
@@ -9235,8 +9235,8 @@
     "t": "Genel",
     "en": "undoubtedly",
     "tr": "şüphesiz",
-    "ex": "He smiled undoubtedly and changed the subject today.",
-    "exTr": "Şüphesiz gülümsedi ve konuyu değiştirdi bugün."
+    "ex": "He smiled and changed the subject, undoubtedly nervous.",
+    "exTr": "Gülümsedi ve konuyu değiştirdi; şüphesiz gergindi."
   },
   {
     "d": 59,
@@ -9251,8 +9251,8 @@
     "t": "Genel",
     "en": "unless",
     "tr": "-medikçe, olmadıkça",
-    "ex": "The weather turned unless by late afternoon today.",
-    "exTr": "Hava öğleden sonraya kadar döndü bugün."
+    "ex": "Do not leave unless someone locks the door.",
+    "exTr": "Kapıyı biri kilitlemedikçe çıkma."
   },
   {
     "d": 59,
@@ -9267,8 +9267,8 @@
     "t": "Genel",
     "en": "villager",
     "tr": "köylü",
-    "ex": "Their apartment is small but villager this morning.",
-    "exTr": "Onların daire küçük ama köyr bu sabah."
+    "ex": "A villager sold fresh eggs at the weekend market.",
+    "exTr": "Bir köylü hafta sonu pazarında taze yumurta sattı."
   },
   {
     "d": 59,
@@ -9347,24 +9347,24 @@
     "t": "Genel",
     "en": "begging",
     "tr": "yalvarma",
-    "ex": "Stop begging for likes. Ship something useful today.",
-    "exTr": "Beğeni için yalvarmayı bırak. İşe yarar bir şey çıkar bugün."
+    "ex": "Stop begging for likes. Ship something useful instead.",
+    "exTr": "Beğeni için yalvarmayı bırak. Onun yerine işe yarar bir şey çıkar."
   },
   {
     "d": 59,
     "t": "Genel",
     "en": "blizzard",
     "tr": "kar fırtınası",
-    "ex": "The blizzard closed the airport overnight this morning.",
-    "exTr": "Kar fırtınası havaalanı bir gecede kapattı bu sabah."
+    "ex": "The blizzard closed the airport overnight without warning.",
+    "exTr": "Kar fırtınası havaalanını uyarmadan gece boyunca kapattı."
   },
   {
     "d": 59,
     "t": "Genel",
     "en": "bombing",
     "tr": "bombalama",
-    "ex": "The museum exhibit covered the wartime bombing today.",
-    "exTr": "Müze sergisi savaş zamanı bombasını kapladı bugün."
+    "ex": "The history podcast covered the wartime bombing carefully.",
+    "exTr": "Tarih podcast’i savaş zamanı bombalamayı dikkatle anlattı."
   },
   {
     "d": 59,
@@ -9411,8 +9411,8 @@
     "t": "Genel",
     "en": "cigar",
     "tr": "puro",
-    "ex": "Grandfather lit a cigar after Sunday lunch today.",
-    "exTr": "Büyükbaba Pazar öğle yemeğinden sonra bir puro yaktı bugün."
+    "ex": "Grandfather lit a cigar after Sunday lunch outside.",
+    "exTr": "Büyükbaba Pazar öğle yemeğinden sonra dışarıda bir puro yaktı."
   },
   {
     "d": 60,
@@ -9427,9 +9427,9 @@
     "t": "Genel",
     "en": "colonial",
     "tr": "sömürge dönemine ait",
-    "ex": "The museum wing covers the colonial period today.",
+    "ex": "The old stone school dates from the colonial period.",
     "morph": "colonial ← colony + -al",
-    "exTr": "Müze kanadı sömürge dönemi kapsar bugün."
+    "exTr": "Eski taş okul sömürge dönemine ait."
   },
   {
     "d": 60,
@@ -9655,8 +9655,8 @@
     "t": "Genel",
     "en": "mist",
     "tr": "ince sis",
-    "ex": "Morning mist covered the bridge before traffic started.",
-    "exTr": "Trafik başlamadan önce köprüyü sabah sisi kapladı."
+    "ex": "Morning mist covered the ferry before traffic started.",
+    "exTr": "Trafik başlamadan önce feribotu sabah sisi kapladı."
   },
   {
     "d": 61,
@@ -9671,8 +9671,8 @@
     "t": "Genel",
     "en": "mussels",
     "tr": "midye",
-    "ex": "I bought a mussels at the market this morning.",
-    "exTr": "Bu sabah pazarda bir mussel satın aldım."
+    "ex": "We ordered mussels with lemon at the seaside stall.",
+    "exTr": "Sahil tezgâhında limonlu midye sipariş ettik."
   },
   {
     "d": 61,
@@ -9704,7 +9704,7 @@
     "en": "portrait",
     "tr": "portre",
     "ex": "She hung a small portrait above the bookshelf.",
-    "exTr": "Kitaplarhelf'in üzerinde küçük bir portre astı."
+    "exTr": "Kitaplığın üstüne küçük bir portre astı."
   },
   {
     "d": 62,
@@ -9743,8 +9743,8 @@
     "t": "Genel",
     "en": "ribbon",
     "tr": "kurdele",
-    "ex": "Classroom debate kept returning to ribbon this morning.",
-    "exTr": "Sınıf tartışması kurdeleye geri döndü bu sabah."
+    "ex": "She tied a red ribbon around the gift box.",
+    "exTr": "Hediye kutusuna kırmızı bir kurdele bağladı."
   },
   {
     "d": 62,
@@ -9814,9 +9814,9 @@
     "d": 62,
     "t": "Genel",
     "en": "stove",
-    "tr": "soba",
-    "ex": "I bought a stove at the market this morning.",
-    "exTr": "Bu sabah piyasada bir soba aldım."
+    "tr": "soba, ocak",
+    "ex": "I bought a small stove for the winter kitchen.",
+    "exTr": "Kış mutfağı için küçük bir soba aldım."
   },
   {
     "d": 62,
@@ -9887,8 +9887,8 @@
     "t": "Genel",
     "en": "whale",
     "tr": "balina",
-    "ex": "A whale surfaced near the ferry crossing.",
-    "exTr": "Feribot geçişinin yanında bir balina yüzeye çıktı."
+    "ex": "A whale surfaced near the ferry crossing at dawn.",
+    "exTr": "Şafakta feribot geçişinin yanında bir balina yüzeye çıktı."
   },
   {
     "d": 63,
