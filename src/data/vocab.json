@@ -3154,16 +3154,16 @@
     "t": "İş İngilizcesi",
     "en": "AFAIK",
     "tr": "bildiğim kadarıyla",
-    "ex": "AFAIK legal already approved the wording before Friday.",
-    "exTr": "Bildiğim kadarıyla yasal zaten kelimeyi onayladı Cuma’dan önce."
+    "ex": "AFAIK legal already approved the wording.",
+    "exTr": "Bildiğim kadarıyla hukuk ekibi metni zaten onayladı."
   },
   {
     "d": 20,
     "t": "İş İngilizcesi",
     "en": "allowance",
     "tr": "kota, tahsisat, izin verilen miktar",
-    "ex": "Your deploy allowance resets every Monday before Friday.",
-    "exTr": "Dağıtım ücretiniz her Pazartesi sıfırlar Cuma’dan önce."
+    "ex": "Your deploy allowance resets every Monday.",
+    "exTr": "Deploy kotanız her Pazartesi sıfırlanır."
   },
   {
     "d": 20,
@@ -4312,9 +4312,9 @@
     "t": "İş İngilizcesi",
     "en": "accommodation",
     "tr": "uyarlama, kolaylık sağlama; konaklama",
-    "ex": "Finance pushed back on the cost of accommodation.",
+    "ex": "Finance pushed back on the cost of hotel accommodation.",
     "morph": "accommodation ← … + -tion",
-    "exTr": "Finans konaklama maliyetine geri itti."
+    "exTr": "Finans, otel konaklama maliyetine karşı çıktı."
   },
   {
     "d": 27,
@@ -4353,17 +4353,17 @@
     "t": "İş İngilizcesi",
     "en": "alongside",
     "tr": "yanı sıra, ile birlikte",
-    "ex": "Without solid alongside, the timeline won't hold before Friday.",
-    "exTr": "Öte yandan sağlam olmadan, zaman tutmaz Cuma’dan önce."
+    "ex": "We'll ship the API alongside the mobile client.",
+    "exTr": "API’yi mobil istemciyle birlikte yayınlayacağız."
   },
   {
     "d": 27,
     "t": "İş İngilizcesi",
     "en": "ambiguity",
     "tr": "belirsizlik",
-    "ex": "We still need clarity on ambiguity before Friday.",
+    "ex": "We still need to resolve the ambiguity in the requirements.",
     "morph": "ambiguity ← … + -ity",
-    "exTr": "Hala belirsizliğe açıklığa ihtiyacımız var Cuma’dan önce."
+    "exTr": "Gereksinimlerdeki belirsizliği hâlâ çözmemiz gerekiyor."
   },
   {
     "d": 27,
