@@ -61,7 +61,7 @@
     "en": "could you repeat that?",
     "tr": "tekrar eder misin?",
     "ex": "Sorry, the audio cut out — could you repeat that?",
-    "exTr": "Kusura bakmayın, ses kesildi; tekrarlayabilir misiniz?"
+    "exTr": "Kusura bakma, ses kesildi; tekrar eder misin?"
   },
   {
     "d": 1,
@@ -69,7 +69,7 @@
     "en": "could you say that again more slowly?",
     "tr": "biraz daha yavaş tekrar eder misin?",
     "ex": "In Slack standup someone wrote: could you say that again more slowly?",
-    "exTr": "Slack stand-up'ında birisi şunu yazdı: Bunu daha yavaş bir şekilde tekrar söyleyebilir misiniz?"
+    "exTr": "Slack stand-up'ında biri yazdı: Bunu biraz daha yavaş tekrar eder misin?"
   },
   {
     "d": 1,
@@ -85,7 +85,7 @@
     "en": "feel free to ping me anytime",
     "tr": "istediğin zaman yazabilirsin",
     "ex": "If anything is unclear, feel free to ping me anytime.",
-    "exTr": "Herhangi bir şey net değilse, istediğiniz zaman bana ping atmaktan çekinmeyin."
+    "exTr": "Bir şey net değilse istediğin zaman yazman yeterli."
   },
   {
     "d": 1,
@@ -101,7 +101,7 @@
     "en": "great to put a face to the name",
     "tr": "sonunda yüz yüze gelmek güzel",
     "ex": "We've emailed for months; it's great to put a face to the name.",
-    "exTr": "Aylardır yazışıyorduk; ismi yüzle eşlemek güzel."
+    "exTr": "Aylardır yazışıyorduk; sonunda yüz yüze gelmek güzel."
   },
   {
     "d": 1,
@@ -117,7 +117,7 @@
     "en": "how are you finding it so far?",
     "tr": "şu ana kadar nasıl buldun?",
     "ex": "You're three weeks into the role; how are you finding it so far?",
-    "exTr": "Rolün başlamasına üç hafta kaldı; şu ana kadar onu nasıl buldun?"
+    "exTr": "Role üç haftadır geçtin; şu ana kadar nasıl gidiyor?"
   },
   {
     "d": 1,
@@ -125,7 +125,7 @@
     "en": "how have you been settling in?",
     "tr": "yeni role alışabildin mi?",
     "ex": "It's been a busy onboarding week — how have you been settling in?",
-    "exTr": "Yoğun bir işe alım haftasıydı; nasıl alıştınız?"
+    "exTr": "Yoğun bir oryantasyon haftasıydı; yeni role alışabildin mi?"
   },
   {
     "d": 1,
@@ -133,7 +133,7 @@
     "en": "how long have you been with Uber?",
     "tr": "Uber'de ne kadardır çalışıyorsun?",
     "ex": "Over coffee she asked, how long have you been with Uber?",
-    "exTr": "Kahve içerken ne zamandır Uber'de olduğunuzu sordu."
+    "exTr": "Kahvede sordu: Uber'de ne kadardır çalışıyorsun?"
   },
   {
     "d": 1,
@@ -141,7 +141,7 @@
     "en": "how was your weekend?",
     "tr": "hafta sonun nasıldı?",
     "ex": "Monday standup always starts with how was your weekend?",
-    "exTr": "Pazartesi standları her zaman hafta sonunun nasıl geçtiğiyle başlar?"
+    "exTr": "Pazartesi stand-up'ı hep aynı soruyla başlar: hafta sonun nasıldı?"
   },
   {
     "d": 1,
@@ -157,7 +157,7 @@
     "en": "how's your week going?",
     "tr": "haftan nasıl gidiyor?",
     "ex": "Quick check-in before we start: how's your week going?",
-    "exTr": "Başlamadan önce hızlı check-in: haftanız nasıl gidiyor?"
+    "exTr": "Başlamadan hızlı check-in: haftan nasıl gidiyor?"
   },
   {
     "d": 2,
@@ -173,7 +173,7 @@
     "en": "I come from a background in...",
     "tr": "...kökenli/geçmişliyim",
     "ex": "In interviews I usually say I come from a background in...",
-    "exTr": "Röportajlarda genellikle köklü bir geçmişe sahip olduğumu söylerim..."
+    "exTr": "Görüşmelerde genelde derim: geçmişim … alanında."
   },
   {
     "d": 2,
@@ -189,7 +189,7 @@
     "en": "I'll follow up with...",
     "tr": "...konusunda sana döneceğim",
     "ex": "After the call I'll follow up with... the vendor on pricing.",
-    "exTr": "Görüşmeden sonra satıcıyla fiyat konusunda görüşeceğim."
+    "exTr": "Görüşmeden sonra satıcıya fiyat için döneceğim."
   },
   {
     "d": 2,
@@ -213,7 +213,7 @@
     "en": "I'm based in...",
     "tr": "...merkezliyim, ...te yaşıyorum",
     "ex": "You'll hear I'm based in... in real conversations.",
-    "exTr": "Gerçek konuşmalara dayanarak olduğumu duyacaksınız."
+    "exTr": "Ben … merkezliyim / …'te yaşıyorum."
   },
   {
     "d": 2,
@@ -221,7 +221,7 @@
     "en": "I'm into...",
     "tr": "...ile ilgileniyorum, ...seviyorum",
     "ex": "Outside work I'm into... climbing and photography.",
-    "exTr": "Dışarıdaki çalışmam... tırmanma ve fotoğrafçılık."
+    "exTr": "İş dışında tırmanış ve fotoğrafla ilgileniyorum."
   },
   {
     "d": 2,
@@ -229,7 +229,7 @@
     "en": "I'm keen to...",
     "tr": "...konusunda istekliyim",
     "ex": "You'll hear I'm keen to... in real conversations.",
-    "exTr": "Ben istekli olduğumu duyacaksınız... gerçek konuşmalarda."
+    "exTr": "… konusunda istekliyim."
   },
   {
     "d": 2,
@@ -245,7 +245,7 @@
     "en": "I'm on PTO next week",
     "tr": "gelecek hafta izindeyim",
     "ex": "Heads up: I'm on PTO next week.",
-    "exTr": "Heads up: gelecek hafta izindeyim."
+    "exTr": "Not: gelecek hafta izindeyim."
   },
   {
     "d": 2,
@@ -261,7 +261,7 @@
     "en": "I've heard a lot about you",
     "tr": "hakkında çok şey duydum",
     "ex": "Your old teammate said great things — I've heard a lot about you.",
-    "exTr": "Eski takım arkadaşınız harika şeyler söyledi – hakkında çok şey duydum."
+    "exTr": "Eski takım arkadaşın güzel şeyler anlattı — hakkında çok şey duydum."
   },
   {
     "d": 2,
@@ -269,7 +269,7 @@
     "en": "I've just rotated into this team",
     "tr": "bu ekibe yeni geçtim",
     "ex": "Quick intro: I've just rotated into this team.",
-    "exTr": "Hızlı Giriş: Sadece bu takıma dönüyorum."
+    "exTr": "Kısa giriş: bu ekibe yeni geçtim."
   },
   {
     "d": 2,
@@ -285,7 +285,7 @@
     "en": "it was great chatting",
     "tr": "sohbet çok iyiydi",
     "ex": "Thanks again — it was great chatting.",
-    "exTr": "Tekrar teşekkürler - büyük sohbet oldu."
+    "exTr": "Tekrar teşekkürler — sohbet güzeldi."
   },
   {
     "d": 2,
@@ -309,7 +309,7 @@
     "en": "most recently I was working on...",
     "tr": "en son ... üzerinde çalışıyordum",
     "ex": "Most recently I was working on... the driver ranking service.",
-    "exTr": "Son zamanlarda çalışıyordum... sürücü sıralama servisi."
+    "exTr": "En son sürücü sıralama servisi üzerinde çalışıyordum."
   },
   {
     "d": 2,
@@ -317,7 +317,7 @@
     "en": "my background is in...",
     "tr": "geçmişim ... alanında",
     "ex": "My background is in... distributed systems and ML.",
-    "exTr": "Benim geçmişim... dağıtılmış sistemler ve ML."
+    "exTr": "Geçmişim dağıtık sistemler ve ML alanında."
   },
   {
     "d": 3,
@@ -325,7 +325,7 @@
     "en": "my door is always open",
     "tr": "kapım her zaman açık",
     "ex": "If anything feels unclear, my door is always open.",
-    "exTr": "Bir şey belirsiz hissediyorsa, kapım her zaman açık."
+    "exTr": "Bir şey net değilse kapım her zaman açık."
   },
   {
     "d": 3,
@@ -341,7 +341,7 @@
     "en": "outside of work I...",
     "tr": "iş dışında ...",
     "ex": "Outside of work I... cook a lot and run on weekends.",
-    "exTr": "İş dışında ben... çok yemek ve hafta sonları üzerinde koşmak."
+    "exTr": "İş dışında çok yemek yaparım, hafta sonları koşarım."
   },
   {
     "d": 3,
@@ -373,7 +373,7 @@
     "en": "small world",
     "tr": "dünya küçük",
     "ex": "You know my old manager too? small world!",
-    "exTr": "Eski yöneticimi de tanıyor musunuz? dünya küçük!"
+    "exTr": "Eski yöneticimi de tanıyor musun? Dünya küçük!"
   },
   {
     "d": 3,
@@ -413,7 +413,7 @@
     "en": "tell me about your journey here",
     "tr": "buradaki yolculuğunu anlatır mısın",
     "ex": "In the interview she said, tell me about your journey here.",
-    "exTr": "Söylediği röportajda, buraya yolculuk hakkında bana söyleyin."
+    "exTr": "Görüşmede sordu: buraya nasıl geldin, biraz anlatır mısın?"
   },
   {
     "d": 3,
@@ -421,7 +421,7 @@
     "en": "thanks for making the time",
     "tr": "vakit ayırdığın için teşekkürler",
     "ex": "I know calendars are packed — thanks for making the time.",
-    "exTr": "Takvimlerin paketlenmiş olduğunu biliyorum - zamanı yapmak için teşekkürler."
+    "exTr": "Takvimlerin dolu olduğunu biliyorum — vakit ayırdığın için teşekkürler."
   },
   {
     "d": 3,
@@ -429,7 +429,7 @@
     "en": "that's a coincidence",
     "tr": "ne tesadüf",
     "ex": "We both lived in Ankara? that's a coincidence.",
-    "exTr": "İkimiz de Ankara'da yaşadık mı? ne tesadüf."
+    "exTr": "İkimiz de Ankara'da mı yaşamışız? Ne tesadüf."
   },
   {
     "d": 3,
@@ -437,7 +437,7 @@
     "en": "we have that in common",
     "tr": "bu ortak noktamız var",
     "ex": "You also started as an intern? we have that in common.",
-    "exTr": "Bu ortak noktamız var."
+    "exTr": "Sen de stajyer olarak mı başlamıştın? Bu ortak noktamız var."
   },
   {
     "d": 3,
@@ -461,7 +461,7 @@
     "en": "what do you wish you'd known earlier?",
     "tr": "keşke daha önce bilseydim dediğin ne?",
     "ex": "Before we started: what do you wish you'd known earlier?",
-    "exTr": "Başlamadan önce: Daha önce bilmeniz gerekenler?"
+    "exTr": "Keşke daha önce bilseydim dediğin ne?"
   },
   {
     "d": 3,
@@ -493,7 +493,7 @@
     "en": "what's your team responsible for?",
     "tr": "ekibin neyden sorumlu?",
     "ex": "Quick check while you're here: what's your team responsible for?",
-    "exTr": "Buradayken hızlı kontrol: takımınız ne için sorumlu?"
+    "exTr": "Madem buradasın, hızlı soru: ekibin neyden sorumlu?"
   },
   {
     "d": 4,
@@ -1064,7 +1064,7 @@
     "en": "bounce ideas off someone",
     "tr": "biriyle fikir konuşmak",
     "ex": "Can I bounce ideas off someone before the design review?",
-    "exTr": "Tasarım review’undan önce seninle fikir konuşabilir miyim?"
+    "exTr": "Tasarım review'undan önce seninle fikir konuşabilir miyim?"
   },
   {
     "d": 7,
@@ -1072,7 +1072,7 @@
     "en": "buy-in",
     "tr": "destek, onay, benimseme",
     "ex": "We need leadership buy-in before we change the process.",
-    "exTr": "Süreci değiştirmeden önce liderlik satın almaya ihtiyacımız var."
+    "exTr": "Süreci değiştirmeden önce yönetimden onay almamız lazım."
   },
   {
     "d": 7,
@@ -2111,7 +2111,7 @@
     "en": "get traction",
     "tr": "tutmak, ilgi kazanmak",
     "ex": "We agreed to get traction before the next sprint.",
-    "exTr": "Bir sonraki sprint’ten önce işin tutmasını sağlayalım."
+    "exTr": "Bir sonraki sprint'ten önce işin tutmasını sağlayalım."
   },
   {
     "d": 14,
@@ -2551,7 +2551,7 @@
     "en": "my two cents",
     "tr": "benim naçizane görüşüm",
     "ex": "My two cents: we should ship the MVP first.",
-    "exTr": "benim naçizane görüşüm: İlk önce MVP'yi gemilemeliyiz."
+    "exTr": "Naçizane görüşüm: önce MVP'yi çıkarmalıyız."
   },
   {
     "d": 16,
@@ -2559,7 +2559,7 @@
     "en": "off the top of my head",
     "tr": "şu an aklıma geldiği kadarıyla",
     "ex": "Off the top of my head, I'd say we need two more engineers.",
-    "exTr": "Başımın başında, iki mühendise ihtiyacımız olduğunu söylüyorum."
+    "exTr": "Şu an aklıma geldiği kadarıyla iki mühendise daha ihtiyacımız var."
   },
   {
     "d": 16,
@@ -2567,7 +2567,7 @@
     "en": "PSA",
     "tr": "genel duyuru",
     "ex": "PSA: the staging environment will be down tonight.",
-    "exTr": "PAS: Bu gece stilize ortamı düşecek."
+    "exTr": "Duyuru: staging bu gece kapalı olacak."
   },
   {
     "d": 16,
@@ -2575,7 +2575,7 @@
     "en": "PTO",
     "tr": "ücretli izin",
     "ex": "I'll be on PTO next week, so ping Alex for urgencies.",
-    "exTr": "Önümüzdeki hafta ücretli izin'da olacağım, bu yüzden Alex'i urgencies için ping."
+    "exTr": "Önümüzdeki hafta ücretli izindeyim; acil işler için Alex'e yazın."
   },
   {
     "d": 16,
@@ -2583,7 +2583,7 @@
     "en": "push back (on)",
     "tr": "itiraz etmek, karşı çıkmak",
     "ex": "I'm going to push back on that timeline — it's too aggressive.",
-    "exTr": "O zaman çizelgesine geri döneceğim – çok agresif."
+    "exTr": "O takvime itiraz edeceğim — çok agresif."
   },
   {
     "d": 17,
@@ -2607,7 +2607,7 @@
     "en": "to be fair",
     "tr": "hakkını vermek gerekirse",
     "ex": "To be fair, the requirements changed mid-sprint.",
-    "exTr": "hakkını vermek gerekirse için, gereksinimler orta baskıyı değiştirdi."
+    "exTr": "Hakkını vermek gerekirse gereksinimler sprint ortasında değişti."
   },
   {
     "d": 17,
@@ -2615,7 +2615,7 @@
     "en": "when you get a chance",
     "tr": "fırsat bulduğunda",
     "ex": "Could you review the doc when you get a chance?",
-    "exTr": "Bir şans alırken doc'i inceleyebilir misiniz?"
+    "exTr": "Fırsat bulunca dokümana bakar mısın?"
   },
   {
     "d": 17,
@@ -2623,7 +2623,7 @@
     "en": "WIP",
     "tr": "üzerinde çalışılıyor",
     "ex": "Mark the doc WIP so nobody treats numbers as final.",
-    "exTr": "Mark the doc üzerinde çalışılıyor böylece kimse son olarak sayılara uymaz."
+    "exTr": "Dokümanı WIP işaretle, kimse sayıları nihai sanmasın."
   },
   {
     "d": 17,
@@ -2631,7 +2631,7 @@
     "en": "XFN",
     "tr": "birimler arası",
     "ex": "This needs XFN buy-in from ops and support.",
-    "exTr": "Bu, birimler arası'nin af ve destekten satın alması gerekir."
+    "exTr": "Bunun için operasyon ve destekten birimler arası onay lazım."
   },
   {
     "d": 17,
@@ -2639,7 +2639,7 @@
     "en": "a tad",
     "tr": "birazcık",
     "ex": "Let's put a tad on the agenda for Monday.",
-    "exTr": "Pazartesi günü gündemi biraz koyalım."
+    "exTr": "Pazartesi gündemine ufak bir madde ekleyelim."
   },
   {
     "d": 17,
@@ -2648,7 +2648,7 @@
     "tr": "geriye dönük doldurmak; boşalan kadroyu doldurmak",
     "ex": "We'll backfill the empty IC seat after the freeze lifts.",
     "morph": "backfill ← back + fill",
-    "exTr": "Donmuş asansörlerden sonra boş IC koltuğunu dolduracağız."
+    "exTr": "Freeze kalkınca boş IC kadrosunu dolduracağız."
   },
   {
     "d": 17,
@@ -2656,7 +2656,7 @@
     "en": "ballpark",
     "tr": "kabaca tahmin",
     "ex": "Give me a ballpark on cost before I ping finance.",
-    "exTr": "Finans yapmadan önce bana bir toppark verin."
+    "exTr": "Finansa yazmadan önce kaba bir maliyet tahmini ver."
   },
   {
     "d": 17,
@@ -2714,7 +2714,7 @@
     "en": "circle back",
     "tr": "konuya geri dönmek",
     "ex": "Let's circle back once we have the metrics.",
-    "exTr": "Bir zamanlar çember geri dönelim metrikleri var."
+    "exTr": "Metrikler gelince konuya geri dönelim."
   },
   {
     "d": 17,
@@ -3301,7 +3301,7 @@
     "en": "call out",
     "tr": "dile getirmek, işaret etmek",
     "ex": "I want to call out the great work on the latency fix.",
-    "exTr": "Geçin düzeltmesinde büyük çalışmayı aramak istiyorum."
+    "exTr": "Gecikme düzeltmesindeki işi özellikle öne çıkarmak istiyorum."
   },
   {
     "d": 21,

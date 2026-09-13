@@ -53,3 +53,5 @@ npm run dev
 npm run build
 npm run check:distractors
 ```
+
+2026-09-13 öğretmen yaması: 50 exTr.
