@@ -3187,8 +3187,8 @@
     "t": "İş İngilizcesi",
     "en": "arise",
     "tr": "ortaya çıkmak",
-    "ex": "If conflicts arise, escalate early. Don’t wait before Friday.",
-    "exTr": "Çatışmalar çıkarsa erken yükselt. Bekleme Cuma’dan önce."
+    "ex": "If conflicts arise, escalate early. Don't wait.",
+    "exTr": "Çatışmalar ortaya çıkarsa erken yükseltin. Beklemeyin."
   },
   {
     "d": 20,
@@ -3204,8 +3204,8 @@
     "t": "İş İngilizcesi",
     "en": "at short notice",
     "tr": "kısa sürede, son anda",
-    "ex": "Use it like this: at short notice before Friday.",
-    "exTr": "Bunu böyle kullanın: kısa sürede, son anda Cuma’dan önce."
+    "ex": "Sorry to ask at short notice, but can you join the customer call?",
+    "exTr": "Son anda sorduğum için özür dilerim ama müşteri görüşmesine katılabilir misiniz?"
   },
   {
     "d": 20,
@@ -4370,32 +4370,32 @@
     "t": "İş İngilizcesi",
     "en": "anti-pattern",
     "tr": "kötü örüntü, yanlış yaklaşım",
-    "ex": "Hard-coding secrets is a classic anti-pattern before Friday.",
-    "exTr": "Hard-coding sırları klasik bir kötü örüntü, yanlış yaklaşım Cuma’dan önce."
+    "ex": "Hard-coding secrets is a classic anti-pattern.",
+    "exTr": "Sırları koda gömmek klasik bir kötü örüntüdür."
   },
   {
     "d": 28,
     "t": "İş İngilizcesi",
     "en": "arbitrary",
     "tr": "keyfî, rastgele",
-    "ex": "Picking an arbitrary timeout caused flaky tests before Friday.",
-    "exTr": "Keyif bir zaman aralığı almak flaky testlerine neden oldu Cuma’dan önce."
+    "ex": "Picking an arbitrary timeout caused flaky tests.",
+    "exTr": "Keyfî bir timeout seçmek flaky testlere yol açtı."
   },
   {
     "d": 28,
     "t": "İş İngilizcesi",
     "en": "articulate",
     "tr": "açıkça ifade etmek",
-    "ex": "In the retro we said we should articulate.",
-    "exTr": "Arkamızda, sanatçılığa ihtiyacımız olduğunu söylemiştik."
+    "ex": "In the retro we said we should articulate the trade-offs more clearly.",
+    "exTr": "Retro’da trade-off’ları daha açıkça ifade etmemiz gerektiğini söyledik."
   },
   {
     "d": 28,
     "t": "İş İngilizcesi",
     "en": "artifact",
     "tr": "üretilen çıktı, eser",
-    "ex": "Who owns artifact after the reorg before Friday?",
-    "exTr": "Reorg'dan sonra kim üretilen çıktı, eserifact Cuma’dan önce?"
+    "ex": "Who owns this artifact after the reorg?",
+    "exTr": "Reorg’dan sonra bu çıktının sahibi kim?"
   },
   {
     "d": 28,
