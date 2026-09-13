@@ -12,14 +12,23 @@ export const RETRY_SIZE = SESSION_SIZE
 /** @deprecated Prefer SESSION_SIZE — kept for existing imports. */
 export const SESSION_LEN = SESSION_SIZE
 
-/** Open decks for the picker (exact `t` values in vocab.json). */
+/** Open decks (exact `t` values in vocab.json). Genel stays open but experimental. */
 export const OPEN_DECKS = [
-  'İş İngilizcesi',
   'Günlük konuşma',
+  'İş İngilizcesi',
   'Genel',
 ] as const
 
 export type OpenDeck = (typeof OPEN_DECKS)[number]
+
+/** First-session / default picker path — Translator-signed decks only. */
+export const PRIMARY_DECKS: readonly OpenDeck[] = [
+  'Günlük konuşma',
+  'İş İngilizcesi',
+]
+
+/** Power-user secondary chip — not on the default path until signed. */
+export const EXPERIMENTAL_DECKS: readonly OpenDeck[] = ['Genel']
 
 export const DECK_KEY = 'esl-deck'
 export const DEFAULT_DECK: OpenDeck = 'Günlük konuşma'
@@ -27,7 +36,11 @@ export const DEFAULT_DECK: OpenDeck = 'Günlük konuşma'
 export const DECK_SHORT: Record<OpenDeck, string> = {
   'İş İngilizcesi': 'İş İngilizcesi',
   'Günlük konuşma': 'Günlük konuşma',
-  'Genel': 'Genel',
+  'Genel': 'Genel · Deneysel',
+}
+
+export function isExperimentalDeck(d: OpenDeck): boolean {
+  return (EXPERIMENTAL_DECKS as readonly string[]).includes(d)
 }
 
 /** Map legacy deck ids / old long `t` strings → nearest new deck. */

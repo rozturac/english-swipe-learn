@@ -6,7 +6,8 @@ import { useSwipe } from './hooks/useSwipe'
 import { buildOptions } from './lib/distractors'
 import {
   DECK_SHORT,
-  OPEN_DECKS,
+  EXPERIMENTAL_DECKS,
+  PRIMARY_DECKS,
   RETRY_SIZE,
   SESSION_LEN,
   loadDeckPref,
@@ -1068,7 +1069,7 @@ export default function App() {
                 ~3 dk · 8 kalıp · iş İngilizcesi
               </p>
               <div className="deck-chips" role="listbox" aria-label="Deck">
-                {OPEN_DECKS.map((d) => (
+                {PRIMARY_DECKS.map((d) => (
                   <button
                     key={d}
                     type="button"
@@ -1077,7 +1078,23 @@ export default function App() {
                     className={deck === d ? 'deck-chip on' : 'deck-chip'}
                     onClick={() => chooseDeck(d)}
                   >
-                    {d}
+                    {DECK_SHORT[d]}
+                  </button>
+                ))}
+                {EXPERIMENTAL_DECKS.map((d) => (
+                  <button
+                    key={d}
+                    type="button"
+                    role="option"
+                    aria-selected={deck === d}
+                    className={
+                      deck === d
+                        ? 'deck-chip secondary on'
+                        : 'deck-chip secondary'
+                    }
+                    onClick={() => chooseDeck(d)}
+                  >
+                    {DECK_SHORT[d]}
                   </button>
                 ))}
               </div>

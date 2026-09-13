@@ -15,7 +15,7 @@ Turkish speakers recognizing **work English** (meeting / Slack / 1:1) — not Du
 
 ## Deck picker
 
-Three decks (`İş İngilizcesi` · `Günlük konuşma` · `Genel`): pre-session chips, `localStorage` `esl-deck` (default **Günlük konuşma**); pool = selected `t`, 8 unique `en`; results show deck name; legacy prefs migrate to the nearest new deck.
+Primary chips `Günlük konuşma` + `İş İngilizcesi` (default **Günlük konuşma**); `Genel` is a muted secondary **Genel · Deneysel** chip (allowed via `esl-deck`, never the new-user default); pool = selected `t`, 8 unique `en`; results show deck label; legacy prefs migrate.
 
 ## Timer & score
 
