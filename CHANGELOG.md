@@ -1,3 +1,11 @@
+## Translator committee — journey + Günlük sense pass
+
+- Fixed `tell me about your journey here` (career journey, not physical arrival; said/asked ↔ sordu aligned)
+- Günlük ÇEVİRMEN pass: tr↔exTr verb/person/sense align on clear drifts (face-to-name, settling-in how, feel free, into, based in, looking forward space, sorry/pardon, small talk, follow-up, bear-with sen, go ahead)
+- False friend: `hit the ground running` (hit≠vur; retro≠Arkamızda)
+- İş gold idiom locks spot-checked (skip/sunset/socialize/bandwidth/etc. still holding)
+- gold-set.json synced for changed cards; no add/delete; d/t/en unchanged; 1221 count
+
 ## Gold set — 80 cards (committee day 13–14)
 
 - Snapshot: `src/data/gold-set.json` = all 64 Günlük konuşma + 16 İş İngilizcesi (full objects)

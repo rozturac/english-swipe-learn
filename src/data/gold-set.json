@@ -27,9 +27,9 @@
     "d": 1,
     "t": "Günlük konuşma",
     "en": "bear with my English",
-    "tr": "İngilizceme biraz katlanın",
+    "tr": "İngilizceme biraz katlan",
     "ex": "I might mix up a few words, so please bear with my English.",
-    "exTr": "Birkaç kelimeyi karıştırabilirim, İngilizceme biraz katlanın."
+    "exTr": "Birkaç kelimeyi karıştırabilirim, İngilizceme biraz katlan."
   },
   {
     "d": 1,
@@ -83,9 +83,9 @@
     "d": 1,
     "t": "Günlük konuşma",
     "en": "feel free to ping me anytime",
-    "tr": "istediğin zaman yazabilirsin",
+    "tr": "çekinmeden istediğin zaman yazabilirsin",
     "ex": "If anything is unclear, feel free to ping me anytime.",
-    "exTr": "Bir şey net değilse istediğin zaman yazabilirsin."
+    "exTr": "Bir şey net değilse çekinmeden istediğin zaman yazabilirsin."
   },
   {
     "d": 1,
@@ -93,15 +93,15 @@
     "en": "go ahead",
     "tr": "buyur, sen devam et",
     "ex": "I'm done with my update. Go ahead whenever you're ready.",
-    "exTr": "Güncellemem bitti. Hazır olduğunda buyur, devam et."
+    "exTr": "Güncellemem bitti. Hazır olduğunda buyur, sen devam et."
   },
   {
     "d": 1,
     "t": "Günlük konuşma",
     "en": "great to put a face to the name",
-    "tr": "sonunda yüz yüze gelmek güzel",
+    "tr": "ismi bir yüze bağlamak güzel",
     "ex": "We've emailed for months; it's great to put a face to the name.",
-    "exTr": "Aylardır yazışıyorduk; sonunda yüz yüze gelmek güzel."
+    "exTr": "Aylardır yazışıyorduk; sonunda ismi bir yüze bağlamak güzel."
   },
   {
     "d": 1,
@@ -117,15 +117,15 @@
     "en": "how are you finding it so far?",
     "tr": "şu ana kadar nasıl buldun?",
     "ex": "You're three weeks into the role; how are you finding it so far?",
-    "exTr": "Role üç haftadır geçtin; şu ana kadar nasıl buldun?"
+    "exTr": "Üç haftadır bu roldesin; şu ana kadar nasıl buldun?"
   },
   {
     "d": 1,
     "t": "Günlük konuşma",
     "en": "how have you been settling in?",
-    "tr": "yeni role alışabildin mi?",
+    "tr": "yeni role alışman nasıl gidiyor?",
     "ex": "It's been a busy onboarding week. How have you been settling in?",
-    "exTr": "Yoğun bir oryantasyon haftasıydı. Yeni role alışabildin mi?"
+    "exTr": "Yoğun bir oryantasyon haftasıydı. Yeni role alışman nasıl gidiyor?"
   },
   {
     "d": 1,
@@ -189,7 +189,7 @@
     "en": "I'll follow up with...",
     "tr": "... ile takip edeceğim",
     "ex": "After the call I'll follow up with... the vendor on pricing.",
-    "exTr": "Görüşmeden sonra fiyat için satıcıyla takip edeceğim."
+    "exTr": "Görüşmeden sonra fiyat konusunda satıcıyla takip edeceğim."
   },
   {
     "d": 2,
@@ -213,7 +213,7 @@
     "en": "I'm based in...",
     "tr": "...'de yaşıyorum",
     "ex": "I'm based in... Istanbul near the old ferry stop.",
-    "exTr": "İstanbul'da, eski iskele durağının yakınında oturuyorum."
+    "exTr": "İstanbul'da, eski iskele durağının yakınında yaşıyorum."
   },
   {
     "d": 2,
@@ -221,7 +221,7 @@
     "en": "I'm into...",
     "tr": "... ile ilgileniyorum",
     "ex": "I'm into... cooking and long weekend morning runs.",
-    "exTr": "Yemek yapmak ve uzun hafta sonu sabah koşuları ilgimi çekiyor."
+    "exTr": "Yemek yapmak ve uzun hafta sonu sabah koşularıyla ilgileniyorum."
   },
   {
     "d": 2,
@@ -235,7 +235,7 @@
     "d": 2,
     "t": "Günlük konuşma",
     "en": "I'm looking forward to...",
-    "tr": "...için sabırsızlanıyorum",
+    "tr": "... için sabırsızlanıyorum",
     "ex": "I'm looking forward to... meeting the Dublin team next month.",
     "exTr": "Önümüzdeki ay Dublin ekibiyle buluşmak için sabırsızlanıyorum."
   },
@@ -365,7 +365,7 @@
     "en": "small talk",
     "tr": "hoşbeş, havadan sudan konuşma",
     "ex": "I'm still awkward at small talk before meetings.",
-    "exTr": "Toplantılardan önce hoşbeş, havadan sudan konuşmada hâlâ garipim."
+    "exTr": "Toplantılardan önce havadan sudan konuşmada hâlâ garipim."
   },
   {
     "d": 3,
@@ -381,7 +381,7 @@
     "en": "sorry, go on",
     "tr": "pardon, devam et",
     "ex": "I interrupted you there. Sorry, go on with your point.",
-    "exTr": "Sözünü kestim. Üzgünüm, devam et."
+    "exTr": "Sözünü kestim. Pardon, devam et."
   },
   {
     "d": 3,
@@ -411,9 +411,9 @@
     "d": 3,
     "t": "Günlük konuşma",
     "en": "tell me about your journey here",
-    "tr": "buradaki yolculuğunu anlatır mısın",
-    "ex": "In the interview she said, tell me about your journey here.",
-    "exTr": "Görüşmede sordu: buraya nasıl geldin, biraz anlatır mısın?"
+    "tr": "buraya geliş yolculuğunu anlatır mısın",
+    "ex": "In the interview she asked, tell me about your journey here.",
+    "exTr": "Görüşmede sordu: buraya geliş yolculuğunu anlatır mısın?"
   },
   {
     "d": 3,
