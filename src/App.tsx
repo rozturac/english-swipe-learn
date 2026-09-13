@@ -21,7 +21,7 @@ import './App.css'
 
 const vocab = vocabRaw as VocabItem[]
 
-const TIMER_OPTIONS = [0, 6, 5, 8, 10] as const
+const TIMER_OPTIONS = [0, 6, 12, 18] as const
 type TimerSec = (typeof TIMER_OPTIONS)[number]
 const TIMER_KEY = 'esl-timer-sec'
 const COACH_KEY = 'esl-coach-v1'
@@ -40,10 +40,31 @@ function wrapIndex(i: number, n: number): number {
   return ((i % n) + n) % n
 }
 
+function migrateTimerSec(v: number): TimerSec {
+  if ((TIMER_OPTIONS as readonly number[]).includes(v)) return v as TimerSec
+  // Legacy chips 5 / 8 / 10 → nearest new option (or Off if unusable).
+  const legacy = [5, 8, 10]
+  if (!legacy.includes(v) || !Number.isFinite(v) || v <= 0) return 0
+  const candidates = TIMER_OPTIONS.filter((s) => s > 0)
+  let best: TimerSec = candidates[0]
+  let bestDist = Math.abs(v - best)
+  for (const c of candidates) {
+    const d = Math.abs(v - c)
+    if (d < bestDist) {
+      best = c
+      bestDist = d
+    }
+  }
+  return best
+}
+
 function loadTimerPref(): TimerSec {
   try {
-    const v = Number(localStorage.getItem(TIMER_KEY) ?? '0')
-    return (TIMER_OPTIONS as readonly number[]).includes(v) ? (v as TimerSec) : 0
+    const raw = localStorage.getItem(TIMER_KEY)
+    const v = Number(raw ?? '0')
+    const sec = migrateTimerSec(Number.isFinite(v) ? v : 0)
+    if (raw != null && String(sec) !== raw) saveTimerPref(sec)
+    return sec
   } catch {
     return 0
   }

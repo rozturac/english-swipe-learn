@@ -25,7 +25,7 @@ Session pool is **only** the selected `item.t` (8 cards, unique `en`). Okuma / D
 
 ## Timer & score
 
-- Selectable countdown: **Off / Hızlı · 6s / 5s / 8s / 10s** (chips under the top bar). Default is **Off**. Preference is remembered.
+- Selectable countdown: **Off / Hızlı · 6s / 12s / 18s** (chips under the top bar). Default is **Off**. Preference is remembered.
 - If time runs out, the **selected (centered) card is locked** and graded — correct → ✓ + brief green success; wrong → × + “Doğru cevap” reveal — then Reels advances. Off keeps swipe-up lock as primary.
 - “Yanlışları tekrarla” forces timer **Off** for that run, then restores your prior preference.
 - Compact session score in the top bar: **✓ correct · ✗ wrong**. Session size is `SESSION_SIZE` (8).
