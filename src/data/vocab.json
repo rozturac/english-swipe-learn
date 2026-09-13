@@ -630,7 +630,7 @@
     "en": "forcing function",
     "tr": "zorlayıcı etken",
     "ex": "The external launch date is a forcing function for scope cuts.",
-    "exTr": "Dış lansman tarihi, kapsam kesmek için bir zorlayıcı etken."
+    "exTr": "Dış lansman tarihi, kapsamı kesmek için bir zorlayıcı etken."
   },
   {
     "d": 4,
@@ -871,7 +871,7 @@
     "tr": "bile bile düşük hedef koymak",
     "ex": "Sandbagging the forecast this quarter will hurt credibility later.",
     "morph": "sandbagging ← bilerek düşük hedef koymak",
-    "exTr": "Bu çeyrek tahmini bile bile düşük tutmak sonra güveni zedeler."
+    "exTr": "Bu çeyrek tahmini bile bile düşük tutmak sonra güvenilirliği zedeler."
   },
   {
     "d": 6,
@@ -2740,7 +2740,7 @@
     "tr": "kapsamdan çıkarmak",
     "ex": "We had to descope dark mode to hit the date.",
     "morph": "descope ← de- (çıkar) + scope (kapsam)",
-    "exTr": "Tarihi tutturmak için karanlık kipi kapsamdan çıkardık."
+    "exTr": "Tarihi tutturmak için karanlık mod kapsamdan çıkardık."
   },
   {
     "d": 17,
@@ -2764,7 +2764,7 @@
     "en": "dry run",
     "tr": "prova",
     "ex": "Let's do a dry run of the all-hands deck tomorrow.",
-    "exTr": "Yarın tüm ekip sunumunun provasını yapalım."
+    "exTr": "Yarın all-hands sunumunun provasını yapalım."
   },
   {
     "d": 18,
@@ -2788,7 +2788,7 @@
     "en": "good catch",
     "tr": "iyi yakaladınız",
     "ex": "Good catch. That null check would have bitten us.",
-    "exTr": "İyi yakaladınız. O null kontrolü bizi yakardı."
+    "exTr": "İyi yakaladınız. O null kontrolü başımıza bela olurdu."
   },
   {
     "d": 18,
