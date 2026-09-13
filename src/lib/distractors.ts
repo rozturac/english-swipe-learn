@@ -56,14 +56,6 @@ const REGISTER_RULES: { tag: Register; re: RegExp }[] = [
   },
 ]
 
-const THEME_GROUPS: string[][] = [
-  ['Tanışma ve sohbet', 'Günlük iş dili', '1o1 ve yeni rol'],
-  ['Slack / ekip yazışması', 'Günlük iş dili', 'EM ↔ Sr EM'],
-  ['Perf & promo dili', 'Değerlendirme dili', 'EM ↔ Sr EM', '1o1 ve yeni rol'],
-  ['Uber teknik dili', 'Kalıp ve kısaltma'],
-  ['Defter (genel kelime)', 'Genel (düşük öncelik)', 'Okuma metinleri'],
-]
-
 /** Dialogue families that must stay in-family when enough peers exist. */
 export const DIALOGUE_FAMILIES = new Set<Register>([
   'turn-permission',
@@ -88,6 +80,20 @@ const RELATED_FAMILY: Record<Register, Register[]> = {
   jargon: [],
   general: [],
 }
+
+/** Junk / MT debris that must never appear as a live distractor. */
+const JUNK_EXTR = [
+  /ortak olarak var/i,
+  /hayal edebilir miyim/i,
+  /yaşayacağız/i,
+  /hız vermesini/i,
+  /traksiyon/i,
+  /\bIntros I often\b/i,
+  /^[a-zçğıöşü]/, // lowercase sentence start
+  /plakamdan/i,
+  /sunumyi/i,
+  /denemein /i,
+]
 
 function phraseOf(item: VocabItem): string {
   return `${item.en} ${item.tr}`
@@ -121,11 +127,6 @@ export function detectRegister(item: VocabItem): Register {
     return 'general'
   }
   return 'general'
-}
-
-function themesRelated(a: string, b: string): boolean {
-  if (a === b) return true
-  return THEME_GROUPS.some((g) => g.includes(a) && g.includes(b))
 }
 
 function tokens(s: string): Set<string> {
@@ -170,10 +171,24 @@ function relatedTo(regT: Register, regC: Register): boolean {
   return RELATED_FAMILY[regT]?.includes(regC) ?? false
 }
 
+/** Readable Turkish distractor text (sentence case + end punct, no junk). */
+export function isReadableExTr(text: string): boolean {
+  const s = text.trim()
+  if (s.length < 8) return false
+  if (!/^[A-ZÇĞİÖŞÜÂÊÎÔÛ]/.test(s)) return false
+  if (!/[.!?…]$/.test(s)) return false
+  for (const re of JUNK_EXTR) {
+    if (re.test(s)) return false
+  }
+  // Ban obvious English leftovers used as "translation"
+  if (/\b(I'll|I could|What's|Intros)\b/.test(s)) return false
+  return true
+}
+
 /**
- * Higher = better distractor. Prefers same theme, same register,
- * similar length, overlapping vocabulary; heavily penalizes jargon
- * and unrelated idioms against conversational targets.
+ * Higher = better distractor. Prefers same register, similar length,
+ * overlapping vocabulary; heavily penalizes jargon / idiom mix.
+ * Same-theme is a hard gate upstream — scoring assumes same `t`.
  */
 export function distractorScore(target: VocabItem, cand: VocabItem): number {
   const regT = detectRegister(target)
@@ -181,8 +196,7 @@ export function distractorScore(target: VocabItem, cand: VocabItem): number {
   let score = 0
 
   if (cand.t === target.t) score += 120
-  else if (themesRelated(cand.t, target.t)) score += 45
-  else score -= 25
+  else score -= 500 // should be filtered already
 
   if (regT === regC) score += 140
   else if (relatedTo(regT, regC)) score += 40
@@ -203,15 +217,21 @@ export function distractorScore(target: VocabItem, cand: VocabItem): number {
     overlapScore(target.exTr, cand.exTr) * 0.2
   score += ov * 60
 
+  if (isReadableExTr(cand.exTr)) score += 30
+  else score -= 80
+
   return score
 }
 
-function hardReject(cand: VocabItem, opts: {
-  idiomOk: boolean
-  jargonOk: boolean
-  familyOnly: boolean
-  regT: Register
-}): boolean {
+function hardReject(
+  cand: VocabItem,
+  opts: {
+    idiomOk: boolean
+    jargonOk: boolean
+    familyOnly: boolean
+    regT: Register
+  },
+): boolean {
   const regC = detectRegister(cand)
   if (!opts.idiomOk && (regC === 'idiom' || isIdiomItem(cand))) return true
   if (opts.regT === 'idiom' && regC !== 'idiom' && !isIdiomItem(cand)) return true
@@ -225,8 +245,9 @@ function hardReject(cand: VocabItem, opts: {
 /**
  * Pick the two best distractor items (deterministic order by score).
  * Hard rules:
- *  - Idioms never mix with functional dialogue (go ahead ≠ dünya küçük).
- *  - Small-talk / dialogue families stay in-family when peers exist.
+ *  - Distractors MUST share the same theme (`t`) — no other deck/notebook.
+ *  - Idioms never mix with functional dialogue.
+ *  - Prefer readable Turkish (sentence case + end punctuation).
  *  - Jargon never leaks onto non-jargon conversational targets.
  */
 export function pickDistractorItems(
@@ -240,59 +261,45 @@ export function pickDistractorItems(
   const blocked = new Set<string>([...usedTexts, correct])
   const isBlocked = (tr: string) =>
     blocked.has(tr) || [...blocked].some((u) => similarText(u, tr))
-  const base = pool.filter(
-    (x) => x.en !== item.en && !isBlocked(x.exTr),
+
+  // HARD: same theme only — never borrow from other decks / notebook.
+  const sameTheme = pool.filter(
+    (x) => x.t === item.t && x.en !== item.en && !isBlocked(x.exTr),
   )
 
-  const sameTheme = base.filter((x) => x.t === item.t)
-  const sameReg = base.filter((x) => detectRegister(x) === regT)
-  const sameThemeSameReg = sameTheme.filter((x) => detectRegister(x) === regT)
-  const relatedFamily = base.filter((x) => relatedTo(regT, detectRegister(x)))
-  const related = base.filter(
-    (x) => x.t !== item.t && themesRelated(x.t, item.t),
+  const sameReg = sameTheme.filter((x) => detectRegister(x) === regT)
+  const relatedFamily = sameTheme.filter((x) =>
+    relatedTo(regT, detectRegister(x)),
   )
 
   const isDialogue = DIALOGUE_FAMILIES.has(regT)
   const idiomTarget = regT === 'idiom' || isIdiomItem(item)
-  const familyPool = sameReg.length >= 2 ? sameReg : [...sameReg, ...relatedFamily]
-  const familyOnly = isDialogue && familyPool.filter(
-    (x, i, a) => a.findIndex((y) => y.en === x.en) === i,
-  ).length >= 2
+  const familyPool =
+    sameReg.length >= 2 ? sameReg : [...sameReg, ...relatedFamily]
+  const familyOnly =
+    isDialogue &&
+    familyPool.filter((x, i, a) => a.findIndex((y) => y.en === x.en) === i)
+      .length >= 2
 
   const jargonOk = regT === 'jargon'
   const idiomOk = idiomTarget
 
   const filter = (cands: VocabItem[]) =>
     cands.filter(
-      (c) =>
-        !hardReject(c, { idiomOk, jargonOk, familyOnly, regT }),
+      (c) => !hardReject(c, { idiomOk, jargonOk, familyOnly, regT }),
     )
+
+  const readable = (cands: VocabItem[]) => cands.filter((c) => isReadableExTr(c.exTr))
 
   const tiers: VocabItem[][] = [
-    filter(sameThemeSameReg),
-    filter(sameReg),
-    filter(relatedFamily.filter((x) => x.t === item.t)),
+    readable(filter(sameReg)),
+    filter(sameReg), // prefer same register even if punctuation is imperfect
+    readable(filter(relatedFamily)),
+    readable(filter(sameTheme)),
     filter(relatedFamily),
     filter(sameTheme),
-    filter(related),
-    filter(base),
+    sameTheme,
   ]
-
-  // Last-resort: drop family-only, still never mix idioms / jargon.
-  if (!idiomOk || !jargonOk) {
-    tiers.push(
-      base.filter(
-        (c) =>
-          !hardReject(c, {
-            idiomOk,
-            jargonOk,
-            familyOnly: false,
-            regT,
-          }),
-      ),
-    )
-  }
-  tiers.push(base)
 
   const picked: VocabItem[] = []
   const usedTr = new Set<string>(blocked)
@@ -317,16 +324,7 @@ export function pickDistractorItems(
     takeFrom(tier)
   }
 
-  if (picked.length < 2) {
-    for (const c of base) {
-      if (picked.length >= 2) break
-      if (usedTr.has(c.exTr)) continue
-      if (!idiomOk && isIdiomItem(c)) continue
-      picked.push(c)
-      usedTr.add(c.exTr)
-    }
-  }
-
+  // Synthetic last resort stays same theme metadata (never cross-deck).
   while (picked.length < 2) {
     picked.push({
       ...item,

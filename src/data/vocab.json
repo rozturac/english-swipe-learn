@@ -27,9 +27,9 @@
     "d": 1,
     "t": "Tanışma ve sohbet",
     "en": "bear with my English",
-    "tr": "İngilizceme katlan biraz",
+    "tr": "İngilizceme biraz katlan",
     "ex": "I might mix up a few words, so please bear with my English.",
-    "exTr": "Birkaç kelimeyi karıştırabilirim, o yüzden lütfen İngilizceme dikkat edin."
+    "exTr": "Birkaç kelimeyi karıştırabilirim, İngilizceme biraz katlanın."
   },
   {
     "d": 1,
@@ -205,7 +205,7 @@
     "en": "I'll let you go",
     "tr": "seni tutmayayım",
     "ex": "I know you're busy — I'll let you go.",
-    "exTr": "meşgul olduğunuzu biliyorum - seni tutmayayım."
+    "exTr": "Meşgul olduğunu biliyorum — seni daha fazla tutmayayım."
   },
   {
     "d": 2,
@@ -253,7 +253,7 @@
     "en": "I'm three hours ahead of you",
     "tr": "senden üç saat ilerideyim",
     "ex": "For scheduling, remember I'm three hours ahead of you.",
-    "exTr": "zamanlama için, senden üç saat önce olduğumu unutmayın."
+    "exTr": "Zamanlama için, senden üç saat ileride olduğumu unutma."
   },
   {
     "d": 2,
@@ -277,7 +277,7 @@
     "en": "I've spent the last X years...",
     "tr": "son X yılı ... geçirdim",
     "ex": "I've spent the last X years... building consumer apps.",
-    "exTr": "son X yılı... geçirdim tüketici uygulamaları inşa ediyorum."
+    "exTr": "Son X yılı tüketici uygulamaları geliştirerek geçirdim."
   },
   {
     "d": 2,
@@ -381,7 +381,7 @@
     "en": "sorry, go on",
     "tr": "pardon, devam et",
     "ex": "I interrupted — sorry, go on.",
-    "exTr": "- Üzgünüm, devam edin."
+    "exTr": "Üzgünüm, devam et."
   },
   {
     "d": 3,
@@ -435,9 +435,9 @@
     "d": 3,
     "t": "Tanışma ve sohbet",
     "en": "we have that in common",
-    "tr": "bu ortak yanımız",
+    "tr": "bu ortak noktamız var",
     "ex": "You also started as an intern? we have that in common.",
-    "exTr": "Ayrıca bir stajyer olarak da başladınız mı? Bunu ortak olarak var."
+    "exTr": "Bu ortak noktamız var."
   },
   {
     "d": 3,
@@ -445,7 +445,7 @@
     "en": "what do you enjoy most about the role?",
     "tr": "rolde en çok neyi seviyorsun?",
     "ex": "She asked, \"what do you enjoy most about the role?\"",
-    "exTr": "O sordu, \" rolde en çok neyi seviyorsun?\""
+    "exTr": "Rolde en çok neyi seviyorsun?"
   },
   {
     "d": 3,
@@ -453,7 +453,7 @@
     "en": "what do you get up to outside of work?",
     "tr": "iş dışında ne yaparsın?",
     "ex": "She asked, \"what do you get up to outside of work?\"",
-    "exTr": "O sordu, \"iş dışında ne var?\""
+    "exTr": "İş dışında ne yaparsın?"
   },
   {
     "d": 3,
@@ -469,7 +469,7 @@
     "en": "what drew me to this team is...",
     "tr": "beni bu ekibe çeken şey...",
     "ex": "In intros I often say, \"what drew me to this team is...\"",
-    "exTr": "Intros I often, \"beni bu ekibe çeken şey...\""
+    "exTr": "Beni bu ekibe çeken şey…"
   },
   {
     "d": 3,
@@ -485,7 +485,7 @@
     "en": "what's the team culture like?",
     "tr": "ekip kültürü nasıl?",
     "ex": "She asked, \"what's the team culture like?\"",
-    "exTr": "O sordu, \" ekip kültürü nasıl?\""
+    "exTr": "Ekip kültürü nasıl?"
   },
   {
     "d": 4,
@@ -1039,7 +1039,7 @@
     "en": "at a high level",
     "tr": "genel hatlarıyla",
     "ex": "At a high level, the plan has three phases.",
-    "exTr": "genel hatlarıyla, planın üç aşaması vardır."
+    "exTr": "Genel hatlarıyla planın üç aşaması var."
   },
   {
     "d": 7,
@@ -1048,7 +1048,7 @@
     "tr": "personel kaybı, ayrılma oranı",
     "ex": "Attrition on the platform team spiked after the freeze.",
     "morph": "attrition ← Latin atterere (aşındırmak)",
-    "exTr": "Platformda ekip dondurduktan sonra geri çekildi."
+    "exTr": "Freeze sonrası platform ekibinde ayrılma oranı sıçradı."
   },
   {
     "d": 7,
@@ -1062,9 +1062,9 @@
     "d": 7,
     "t": "1o1 ve yeni rol",
     "en": "bounce ideas off someone",
-    "tr": "biriyle fikir alışverişi yapmak",
+    "tr": "biriyle fikir konuşmak",
     "ex": "Can I bounce ideas off someone before the design review?",
-    "exTr": "Tasarım incelemesinden önce birisini hayal edebilir miyim?"
+    "exTr": "Tasarım review’undan önce seninle fikir konuşabilir miyim?"
   },
   {
     "d": 7,
@@ -1144,7 +1144,7 @@
     "en": "do we have appetite for...",
     "tr": "...için istek/iştah var mı",
     "ex": "In everyday conversation you'll hear do we have appetite for....",
-    "exTr": "Günlük sohbette,...için istek/iştah var mı"
+    "exTr": "Bunun için iştahımız / isteğimiz var mı?"
   },
   {
     "d": 8,
@@ -1193,7 +1193,7 @@
     "en": "for context",
     "tr": "bağlam olarak, arka plan olarak",
     "ex": "For context, we already tried this approach last spring.",
-    "exTr": "bağlam için, bu yaklaşımı son ilkbaharda denedik."
+    "exTr": "Bağlam için: bu yaklaşımı geçen ilkbaharda denedik."
   },
   {
     "d": 8,
@@ -1201,7 +1201,7 @@
     "en": "get on the same page",
     "tr": "aynı sayfada olmak, mutabık kalmak",
     "ex": "Before coding, let's get on the same page about scope.",
-    "exTr": "kodlamadan önce, kapsamı hakkında aynı sayfada alalım."
+    "exTr": "Kodlamadan önce kapsamda aynı sayfada olalım."
   },
   {
     "d": 8,
@@ -1305,7 +1305,7 @@
     "en": "I could use your support on...",
     "tr": "şu konuda desteğine ihtiyacım var",
     "ex": "In intros I often say, \"I could use your support on...\"",
-    "exTr": "Intros I often said, \"I could use your support on...\""
+    "exTr": "Şu konuda desteğine ihtiyacım var."
   },
   {
     "d": 9,
@@ -1337,7 +1337,7 @@
     "en": "I may be wrong here, but...",
     "tr": "yanılıyor olabilirim ama",
     "ex": "In intros I often say, \"I may be wrong here, but...\"",
-    "exTr": "Intros I often, \"Burada yanlış olabilirim, ama...\""
+    "exTr": "Burada yanılıyor olabilirim, ama…"
   },
   {
     "d": 9,
@@ -1369,7 +1369,7 @@
     "en": "I'll hand it over to...",
     "tr": "sözü ...e bırakıyorum",
     "ex": "In intros I often say, \"I'll hand it over to...\"",
-    "exTr": "Intros I often, \"I'll hand it over to...\""
+    "exTr": "Sözü …’e bırakıyorum."
   },
   {
     "d": 9,
@@ -1441,7 +1441,7 @@
     "en": "just to make sure I understood",
     "tr": "doğru anladığımdan emin olmak için",
     "ex": "Just to make sure I understood, we are pausing the rollout.",
-    "exTr": "doğru anladığımdan emin olmak için, rollout'u eğiyoruz."
+    "exTr": "Doğru anladığımdan emin olmak için: rollout’u erteliyoruz."
   },
   {
     "d": 10,
@@ -1497,7 +1497,7 @@
     "en": "long story short",
     "tr": "uzun lafın kısası",
     "ex": "Long story short, the migration succeeded with one rollback.",
-    "exTr": "uzun lafın kısası, göç bir geri dönüşle başarılı oldu."
+    "exTr": "Uzun lafın kısası, göç bir geri dönüşle başarılı oldu."
   },
   {
     "d": 10,
@@ -1617,7 +1617,7 @@
     "en": "psychological safety",
     "tr": "psikolojik güven",
     "ex": "Psychological safety dropped after public blame in Slack.",
-    "exTr": "psikolojik güven, Slack'de kamu suçlamasından sonra düştü."
+    "exTr": "Slack’te herkese açık suçlamadan sonra psikolojik güvenlik düştü."
   },
   {
     "d": 11,
@@ -1633,7 +1633,7 @@
     "en": "put a pin in it",
     "tr": "bunu şimdilik askıya alalım",
     "ex": "She offered to put a pin in it so the team could focus.",
-    "exTr": "bunu şimdilik askıya alalım için teklif etti, böylece takım odaklanabiliyordu."
+    "exTr": "Bunu şimdilik askıya alalım ki ekip odaklanabilsin."
   },
   {
     "d": 11,
@@ -1761,7 +1761,7 @@
     "en": "take something off my plate",
     "tr": "işi üzerimden almak",
     "ex": "If you can take something off my plate, that would help a lot.",
-    "exTr": "plakamdan bir şey alabilirseniz, bu çok yardımcı olacaktır."
+    "exTr": "Bu işi üzerimden alabilirsen çok yardımcı olur."
   },
   {
     "d": 11,
@@ -1833,7 +1833,7 @@
     "en": "we're at time",
     "tr": "süremiz doldu",
     "ex": "We're at time — let's park the rest for Thursday.",
-    "exTr": "süremiz doldu - Perşembe günü geri kalanını park edelim."
+    "exTr": "Süremiz doldu — kalanı Perşembe’ye bırakalım."
   },
   {
     "d": 12,
@@ -1841,7 +1841,7 @@
     "en": "we're tracking behind",
     "tr": "planın gerisindeyiz",
     "ex": "She paused the deck and asked, we're tracking behind",
-    "exTr": "Güverteyi durakladı ve sordu, planın gerisindeyiz"
+    "exTr": "Planın gerisindeyiz."
   },
   {
     "d": 12,
@@ -1905,7 +1905,7 @@
     "en": "what's the bar for...",
     "tr": "...için standart nedir",
     "ex": "In intros I often say, \"what's the bar for...\"",
-    "exTr": "Intros I often, \"What's the bar for...\""
+    "exTr": "… için bar / standart nedir?"
   },
   {
     "d": 12,
@@ -1986,7 +1986,7 @@
     "tr": "yeterince",
     "ex": "The runbook doesn't adequately cover regional failovers.",
     "morph": "adequately ← adequate + -ly",
-    "exTr": "runbook yeterli bir şekilde bölgesel başarısızlıkları kapsamaz."
+    "exTr": "Runbook bölgesel kesintileri yeterince kapsamıyor."
   },
   {
     "d": 13,
@@ -2060,7 +2060,7 @@
     "en": "countless",
     "tr": "sayısız",
     "ex": "We've had countless debates about naming; time to decide.",
-    "exTr": "adlandırma hakkında sayısız tartışmamız vardı; karar verme zamanı."
+    "exTr": "Adlandırma hakkında sayısız tartışmamız oldu; karar zamanı."
   },
   {
     "d": 13,
@@ -2109,9 +2109,9 @@
     "d": 14,
     "t": "Perf & promo dili",
     "en": "get traction",
-    "tr": "tutmak, ilgi ve destek kazanmak",
+    "tr": "tutmak, ilgi kazanmak",
     "ex": "We agreed to get traction before the next sprint.",
-    "exTr": "Bir sonraki sprint'ten önce traksiyon almayı kabul ettik."
+    "exTr": "Bir sonraki sprint’ten önce işin tutmasını sağlayalım."
   },
   {
     "d": 14,
@@ -3253,15 +3253,15 @@
     "en": "bring live",
     "tr": "yayına almak",
     "ex": "We'll bring live the new dashboard after freeze.",
-    "exTr": "Donmuş sonra yeni panoyu yaşayacağız."
+    "exTr": "Freeze sonrası yeni panoyu yayına alacağız."
   },
   {
     "d": 21,
     "t": "Slack / ekip yazışması",
     "en": "bring someone up to speed",
-    "tr": "birini bilgilendirmek, yetiştirmek",
+    "tr": "birini bağlama getirmek",
     "ex": "She reminded everyone to bring someone up to speed before cutover.",
-    "exTr": "Herkesi kesmeden önce birine hız vermesini hatırlattı."
+    "exTr": "Cutover öncesi herkesi bağlama getirin."
   },
   {
     "d": 21,
@@ -3333,7 +3333,7 @@
     "en": "clarify / clarification",
     "tr": "açıklığa kavuşturmak / açıklama",
     "ex": "In the retro we said we should clarify / clarification.",
-    "exTr": "retro'de açık / netleştirme yapmamız gerektiğini söylemiştik."
+    "exTr": "Retro’de netleştirmemiz gerektiğini söylemiştik."
   },
   {
     "d": 21,
@@ -3406,7 +3406,7 @@
     "tr": "geçiş anı, sisteme aktarım",
     "ex": "Cutover starts at 02:00; on-call must be awake.",
     "morph": "cutover ← cut + over (geçiş anı)",
-    "exTr": "geçiş anı, sisteme aktarım 02:00'de başlar; on-call uyanık olmalıdır."
+    "exTr": "Cutover 02:00’de başlar; on-call uyanık olmalı."
   },
   {
     "d": 22,
@@ -3414,7 +3414,7 @@
     "en": "deck",
     "tr": "sunum",
     "ex": "Trim the deck to eight slides max.",
-    "exTr": "sunumyi sekiz kaydırın max."
+    "exTr": "Sunumu en fazla sekiz slaytta tut."
   },
   {
     "d": 22,
@@ -3578,7 +3578,7 @@
     "en": "first pass",
     "tr": "ilk tur, ilk deneme",
     "ex": "I underestimated how hard first pass would be.",
-    "exTr": "ilk tur, ilk denemein ne kadar zor olacağını hafife aldım."
+    "exTr": "İlk turun ne kadar zor olacağını hafife aldım."
   },
   {
     "d": 22,

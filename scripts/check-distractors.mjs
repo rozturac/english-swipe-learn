@@ -100,8 +100,8 @@ for (const en of samples) {
     const sameThemePool = vocab.filter(
       (x) => x.t === item.t && x.en !== item.en && x.exTr !== item.exTr,
     )
-    if (sameThemePool.length >= 2 && regT !== 'turn-permission') {
-      assert(themeOk, `expected same-theme distractors for "${en}"`)
+    if (sameThemePool.length >= 2) {
+      assert(themeOk, `expected same-theme distractors for "${en}" (got ${themes.join(',')})`)
     }
     if (
       regT === 'farewell' ||
@@ -227,6 +227,42 @@ if (uniqFail) {
   failed += uniqFail
 } else {
   console.log('  ✓ buildOptions respects usedTexts across session cards')
+}
+
+
+// Open decks: distractors must share t + readable Turkish
+console.log('\n=== Open-deck same-t + readable distractors ===')
+const OPEN = ['Tanışma ve sohbet', 'Slack / ekip yazışması', '1o1 ve yeni rol']
+const { isReadableExTr } = mod
+let openFail = 0
+for (const theme of OPEN) {
+  const items = vocab.filter((x) => x.t === theme)
+  const sample = items.filter((_, i) => i % 5 === 0).slice(0, 16)
+  for (const item of sample.length ? sample : items.slice(0, 8)) {
+    const picks = pickDistractorItems(item, items)
+    for (const p of picks) {
+      if (p.t !== item.t && !String(p.en).includes('·')) {
+        openFail++
+        console.error(`  ✗ cross-deck ${item.en} ← ${p.en} (${p.t})`)
+      }
+      // Synthetic fallbacks end with " ·" — skip readability on those
+      if (String(p.en).includes('·')) continue
+      if (typeof isReadableExTr === 'function' && !isReadableExTr(p.exTr)) {
+        // Soft: warn but only fail on junk patterns
+        if (/ortak olarak var|hayal edebilir miyim|^[a-zçğıöşü]/.test(p.exTr)) {
+          openFail++
+          console.error(`  ✗ junk/unreadable distractor for ${item.en}: ${p.exTr}`)
+        }
+      }
+    }
+    const { options } = buildOptions(item, items)
+    assert(options.length === 3, 'options length')
+  }
+}
+if (openFail) {
+  failed += openFail
+} else {
+  console.log('  ✓ open-deck distractors stay in-theme')
 }
 
 try {

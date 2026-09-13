@@ -5,11 +5,16 @@ import { OptionStrip } from './components/OptionStrip'
 import { useSwipe } from './hooks/useSwipe'
 import { buildOptions } from './lib/distractors'
 import {
+  DECK_SHORT,
+  OPEN_DECKS,
   RETRY_SIZE,
   SESSION_LEN,
+  loadDeckPref,
   loadProgress,
   pickSession,
   recordAnswer,
+  saveDeckPref,
+  type OpenDeck,
 } from './lib/progress'
 import type { FlashKind, ProgressMap, VocabItem } from './types'
 import './App.css'
@@ -169,9 +174,9 @@ function PlayPane({
 
 export default function App() {
   const [, setProgress] = useState<ProgressMap>(() => loadProgress())
-  const [queue, setQueue] = useState<VocabItem[]>(() =>
-    pickSession(vocab, loadProgress()),
-  )
+  const [deck, setDeck] = useState<OpenDeck>(() => loadDeckPref())
+  const [pickingDeck, setPickingDeck] = useState(() => loadCoachSeen())
+  const [queue, setQueue] = useState<VocabItem[]>([])
   const [doneCount, setDoneCount] = useState(0)
   const [selected, setSelected] = useState(0)
   const [options, setOptions] = useState<string[]>([])
@@ -215,10 +220,16 @@ export default function App() {
 
   const builtForEn = useRef<string | null>(null)
 
+  const deckPool = useCallback(
+    (theme: string) => vocab.filter((x) => x.t === theme),
+    [],
+  )
+
   const rebuildOptions = useCallback((item: VocabItem, unlock = true) => {
     usedEnRef.current.add(item.en)
     const used = usedExTrRef.current
-    const { options: opts, correctIndex: ci } = buildOptions(item, vocab, used)
+    const pool = deckPool(item.t)
+    const { options: opts, correctIndex: ci } = buildOptions(item, pool, used)
     for (const o of opts) used.add(o)
     setOptions(opts)
     setCorrectIndex(ci)
@@ -235,7 +246,7 @@ export default function App() {
     setDragY(0)
     setDragging(false)
     builtForEn.current = item.en
-  }, [])
+  }, [deckPool])
 
   // Safety net (initial mount / session restart): settle options before paint
   useLayoutEffect(() => {
@@ -255,6 +266,7 @@ export default function App() {
   const dismissCoach = useCallback(() => {
     saveCoachSeen()
     setShowCoach(false)
+    setPickingDeck(true)
   }, [])
 
   const dismissGhost = useCallback(() => {
@@ -307,7 +319,37 @@ export default function App() {
     [rebuildOptions],
   )
 
-  const startNewSession = useCallback(() => {
+  const startNewSession = useCallback(
+    (theme: OpenDeck = deck) => {
+      if (retryRunRef.current) {
+        const prior = timerBeforeRetryRef.current
+        retryRunRef.current = false
+        timerBeforeRetryRef.current = null
+        if (prior !== null) {
+          setTimerSec(prior)
+          saveTimerPref(prior)
+        }
+      }
+      const p = loadProgress()
+      setProgress(p)
+      setPickingDeck(false)
+      beginSession(
+        pickSession(vocab, p, { theme, preferMissed: true }),
+      )
+    },
+    [beginSession, deck],
+  )
+
+  const chooseDeck = useCallback(
+    (next: OpenDeck) => {
+      setDeck(next)
+      saveDeckPref(next)
+      startNewSession(next)
+    },
+    [startNewSession],
+  )
+
+  const openDeckPicker = useCallback(() => {
     if (retryRunRef.current) {
       const prior = timerBeforeRetryRef.current
       retryRunRef.current = false
@@ -317,10 +359,14 @@ export default function App() {
         saveTimerPref(prior)
       }
     }
-    const p = loadProgress()
-    setProgress(p)
-    beginSession(pickSession(vocab, p))
-  }, [beginSession])
+    setSessionOver(false)
+    setQueue([])
+    setExiting(null)
+    setPickingDeck(true)
+    lockingRef.current = false
+    setLocking(false)
+    builtForEn.current = null
+  }, [])
 
   const startRetryMissed = useCallback(() => {
     if (missed.length === 0) {
@@ -341,6 +387,7 @@ export default function App() {
       retryRunRef.current = true
     }
     setTimerSec(0)
+    setPickingDeck(false)
     setProgress(loadProgress())
     beginSession(mini)
   }, [missed, beginSession, startNewSession, timerSec])
@@ -369,7 +416,7 @@ export default function App() {
       const rest = q.slice(1)
       // Main session stays unique by en — wrongs go to retry CTA, not requeue.
       if (rest.length === 0) {
-        const filler = pickSession(vocab, loadProgress()).filter(
+        const filler = pickSession(vocab, loadProgress(), { theme: deck }).filter(
           (x) => !usedEnRef.current.has(x.en) && !usedExTrRef.current.has(x.exTr),
         )
         nextQueue = filler.slice(0, 3)
@@ -390,7 +437,7 @@ export default function App() {
       setDragY(0)
       setDragging(false)
     }
-  }, [rebuildOptions])
+  }, [rebuildOptions, deck])
 
   const resolveAnswer = useCallback(
     () => {
@@ -496,8 +543,8 @@ export default function App() {
   }, [resolveAnswer])
 
   useEffect(() => {
-    if (!current || sessionOver || locking || reeling || timerSec === 0 || showCoach) {
-      if (timerSec === 0 || !current || sessionOver || showCoach) setRemain(null)
+    if (!current || sessionOver || locking || reeling || timerSec === 0 || showCoach || pickingDeck) {
+      if (timerSec === 0 || !current || sessionOver || showCoach || pickingDeck) setRemain(null)
       return
     }
     const totalMs = timerSec * 1000
@@ -524,7 +571,7 @@ export default function App() {
       window.clearInterval(id)
       window.clearTimeout(to)
     }
-  }, [current?.en, doneCount, timerSec, sessionOver, locking, reeling, showCoach])
+  }, [current?.en, doneCount, timerSec, sessionOver, locking, reeling, showCoach, pickingDeck])
 
   const selectPrev = useCallback(() => {
     if (locking || reeling) return
@@ -564,7 +611,7 @@ export default function App() {
   const swipe = useSwipe(
     { onHorizontal, onUp: lockAnswer },
     {
-      disabled: locking || reeling || !current || showCoach,
+      disabled: locking || reeling || !current || showCoach || pickingDeck,
       getStep: () => stepRef.current,
       onDragStart: () => {
         if (lockingRef.current || exiting) return
@@ -593,7 +640,7 @@ export default function App() {
         }
         return
       }
-      if (locking || reeling || !current) return
+      if (pickingDeck || locking || reeling || !current) return
       if (e.key === 'ArrowLeft') selectPrev()
       else if (e.key === 'ArrowRight') selectNext()
       else if (e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
@@ -611,6 +658,7 @@ export default function App() {
     selectNext,
     lockAnswer,
     showCoach,
+    pickingDeck,
     dismissCoach,
   ])
 
@@ -631,13 +679,14 @@ export default function App() {
     onClick: (e: MouseEvent) => e.stopPropagation(),
   }
 
-  const accuracy =
-    score.ok + score.wrong > 0
-      ? Math.round((score.ok / (score.ok + score.wrong)) * 100)
-      : 0
+  const answered = score.ok + score.wrong
+  const accuracy = answered > 0 ? Math.round((score.ok / answered) * 100) : 0
 
   const progressText = `${Math.min(doneCount, sessionLen)} / ${sessionLen} cümle`
-  const showSessionEnd = sessionOver && !exiting
+  const showSessionEnd = sessionOver && !exiting && !pickingDeck
+  const showPicker = pickingDeck && !showCoach && !showSessionEnd
+  const deckShort = DECK_SHORT[deck] ?? deck
+  const missedPreview = missed.slice(0, 4)
 
   return (
     <>
@@ -686,7 +735,33 @@ export default function App() {
         <div className="top-rule" aria-hidden />
 
         {/* BELOW the hairline — dual-page Reels (EN + TR + SWIPE only) */}
-        {showSessionEnd || (!current && !exiting) ? (
+        {showPicker ? (
+          <div className="session-end deck-picker" {...stopBubble}>
+            <div className="session-end-card">
+              <p className="session-end-kicker">Deck seç</p>
+              <h1>Ne çalışalım?</h1>
+              <p className="session-end-sub">
+                ~3 dk · 8 kalıp · iş İngilizcesi
+              </p>
+              <div className="deck-chips" role="listbox" aria-label="Deck">
+                {OPEN_DECKS.map((d) => (
+                  <button
+                    key={d}
+                    type="button"
+                    role="option"
+                    aria-selected={deck === d}
+                    className={deck === d ? 'deck-chip on' : 'deck-chip'}
+                    onClick={() => chooseDeck(d)}
+                  >
+                    {d}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : showCoach && !current && !exiting ? (
+          <div className="session-end" aria-hidden />
+        ) : showSessionEnd || (!current && !exiting && !showCoach) ? (
           <div className="session-end">
             <div className="session-end-card">
               <p className="session-end-kicker">Oturum tamam</p>
@@ -696,8 +771,14 @@ export default function App() {
                   : `Oturum bitti — ${score.wrong} kalıp kaçtı`}
               </h1>
               <p className="session-end-sub">
-                {sessionLen} cümle · {accuracy}% isabet
+                {deckShort} · {sessionLen} cümle · {accuracy}% isabet
               </p>
+              {missedPreview.length > 0 && (
+                <p className="session-end-missed" title={missed.map((m) => m.en).join(', ')}>
+                  Kaçan: {missedPreview.map((m) => m.en).join(' · ')}
+                  {missed.length > 4 ? '…' : ''}
+                </p>
+              )}
               <div className="session-end-stats">
                 <div className="stat-pill ok">
                   <span className="stat-num">✓ {score.ok}</span>
@@ -715,7 +796,7 @@ export default function App() {
               <button
                 type="button"
                 className="primary"
-                onClick={missed.length > 0 ? startRetryMissed : startNewSession}
+                onClick={missed.length > 0 ? startRetryMissed : openDeckPicker}
               >
                 {missed.length > 0 ? 'Yanlışları tekrarla' : 'Tekrar oyna'}
               </button>
@@ -765,7 +846,7 @@ export default function App() {
           </div>
         )}
 
-        {showCoach && current && (
+        {showCoach && (
           <div
             className="coach-overlay"
             role="dialog"

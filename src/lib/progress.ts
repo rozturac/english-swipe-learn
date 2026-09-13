@@ -1,6 +1,7 @@
 import type { ProgressEntry, ProgressMap, VocabItem } from '../types'
 
 const STORAGE_KEY = 'esl-progress-v1'
+const MISSED_KEY = 'esl-missed-ens'
 
 /** Main session length. */
 export const SESSION_SIZE = 8
@@ -10,6 +11,77 @@ export const CHALLENGE_SIZE = SESSION_SIZE
 export const RETRY_SIZE = SESSION_SIZE
 /** @deprecated Prefer SESSION_SIZE — kept for existing imports. */
 export const SESSION_LEN = SESSION_SIZE
+
+/** Open decks for the picker (exact `t` values in vocab.json). */
+export const OPEN_DECKS = [
+  'Tanışma ve sohbet',
+  'Slack / ekip yazışması',
+  '1o1 ve yeni rol',
+] as const
+
+export type OpenDeck = (typeof OPEN_DECKS)[number]
+
+export const DECK_KEY = 'esl-deck'
+export const DEFAULT_DECK: OpenDeck = 'Tanışma ve sohbet'
+
+export const DECK_SHORT: Record<OpenDeck, string> = {
+  'Tanışma ve sohbet': 'Tanışma',
+  'Slack / ekip yazışması': 'Slack',
+  '1o1 ve yeni rol': '1o1',
+}
+
+export function isOpenDeck(t: string): t is OpenDeck {
+  return (OPEN_DECKS as readonly string[]).includes(t)
+}
+
+export function loadDeckPref(): OpenDeck {
+  try {
+    const v = localStorage.getItem(DECK_KEY) ?? DEFAULT_DECK
+    return isOpenDeck(v) ? v : DEFAULT_DECK
+  } catch {
+    return DEFAULT_DECK
+  }
+}
+
+export function saveDeckPref(deck: OpenDeck): void {
+  try {
+    localStorage.setItem(DECK_KEY, deck)
+  } catch {
+    /* ignore */
+  }
+}
+
+/** Locally remembered wrong `en`s (no backend). */
+export function loadMissedEns(): string[] {
+  try {
+    const raw = localStorage.getItem(MISSED_KEY)
+    if (!raw) return []
+    const arr = JSON.parse(raw) as unknown
+    return Array.isArray(arr) ? arr.filter((x) => typeof x === 'string') : []
+  } catch {
+    return []
+  }
+}
+
+export function rememberMissedEn(en: string): void {
+  try {
+    const cur = loadMissedEns()
+    if (cur.includes(en)) return
+    const next = [en, ...cur].slice(0, 64)
+    localStorage.setItem(MISSED_KEY, JSON.stringify(next))
+  } catch {
+    /* ignore */
+  }
+}
+
+export function forgetMissedEn(en: string): void {
+  try {
+    const next = loadMissedEns().filter((x) => x !== en)
+    localStorage.setItem(MISSED_KEY, JSON.stringify(next))
+  } catch {
+    /* ignore */
+  }
+}
 
 export function loadProgress(): ProgressMap {
   try {
@@ -38,20 +110,27 @@ function score(item: VocabItem, p: ProgressEntry | undefined, now: number): numb
   return wrongBoost - streakPenalty + due + (item.d <= 2 ? 15 : 0)
 }
 
+export type PickSessionOpts = {
+  /** Restrict pool to a single theme (`item.t`). */
+  theme?: string
+  /**
+   * When local missed `en`s exist for this deck, weight ~25–40% of the
+   * next same-deck session from them. Else skip.
+   */
+  preferMissed?: boolean
+}
+
 /** Build a ~SESSION_SIZE item session: weakest / due first, unique by en (+ exTr). */
-export function pickSession(vocab: VocabItem[], progress: ProgressMap): VocabItem[] {
+export function pickSession(
+  vocab: VocabItem[],
+  progress: ProgressMap,
+  opts: PickSessionOpts = {},
+): VocabItem[] {
+  const pool = opts.theme ? vocab.filter((x) => x.t === opts.theme) : vocab
   const now = Date.now()
-  const ranked = [...vocab]
+  const ranked = [...pool]
     .map((item) => ({ item, s: score(item, progress[item.en], now) }))
     .sort((a, b) => b.s - a.s)
-
-  const take = ranked.slice(0, Math.min(SESSION_SIZE * 4, ranked.length))
-  const weak = take.slice(0, SESSION_SIZE)
-  const rest = take.slice(SESSION_SIZE)
-  for (let i = weak.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[weak[i], weak[j]] = [weak[j], weak[i]]
-  }
 
   const usedEn = new Set<string>()
   const usedTr = new Set<string>()
@@ -64,9 +143,38 @@ export function pickSession(vocab: VocabItem[], progress: ProgressMap): VocabIte
     usedTr.add(item.exTr)
     chosen.push(item)
   }
+
+  // P1: weight 25–40% of session from locally stored wrongs in this deck.
+  if (opts.preferMissed && opts.theme) {
+    const missed = loadMissedEns()
+    if (missed.length > 0) {
+      const frac = 0.25 + Math.random() * 0.15 // 25–40%
+      const slot = Math.max(1, Math.min(SESSION_SIZE - 1, Math.round(SESSION_SIZE * frac)))
+      const byEn = new Map(pool.map((x) => [x.en, x]))
+      const missedItems = missed
+        .map((en) => byEn.get(en))
+        .filter((x): x is VocabItem => !!x)
+      for (let i = missedItems.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[missedItems[i], missedItems[j]] = [missedItems[j], missedItems[i]]
+      }
+      for (const m of missedItems) {
+        if (chosen.length >= slot) break
+        tryAdd(m)
+      }
+    }
+  }
+
+  const take = ranked.slice(0, Math.min(SESSION_SIZE * 4, ranked.length))
+  const weak = take.slice(0, SESSION_SIZE)
+  const rest = take.slice(SESSION_SIZE)
+  for (let i = weak.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[weak[i], weak[j]] = [weak[j], weak[i]]
+  }
+
   for (const x of weak) tryAdd(x.item)
   for (const r of rest) tryAdd(r.item)
-  // Last resort: fill from remaining ranked if still short
   if (chosen.length < SESSION_SIZE) {
     for (const r of ranked) tryAdd(r.item)
   }
@@ -99,6 +207,8 @@ export function recordAnswer(
       ? Math.min(3.2, prev.ease + 0.12)
       : Math.max(1.1, prev.ease - 0.35),
   }
+  if (correct) forgetMissedEn(en)
+  else rememberMissedEn(en)
   const map = { ...progress, [en]: next }
   saveProgress(map)
   return map

@@ -71,6 +71,10 @@ body,
   min-height: 100%;
   min-height: 100dvh;
   height: 100dvh;
+  width: 100%;
+  max-width: 430px;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: column;
   padding: calc(52px + var(--safe-t)) max(12px, calc(var(--safe-r) + 8px)) calc(28px + var(--safe-b)) max(12px, calc(var(--safe-l) + 8px));
@@ -774,6 +778,55 @@ body,
   50% { transform: translate(-8px, -10px); }
   80% { opacity: 0.75; }
   100% { opacity: 0; transform: translate(0, -14px); }
+}
+
+
+.deck-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.deck-chip {
+  width: 100%;
+  text-align: left;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border-strong);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.deck-chip:hover {
+  border-color: rgba(167, 139, 250, 0.55);
+  background: rgba(139, 92, 246, 0.12);
+}
+
+.deck-chip.on {
+  border-color: rgba(167, 139, 250, 0.85);
+  background: rgba(139, 92, 246, 0.18);
+  box-shadow: 0 0 24px rgba(139, 92, 246, 0.22);
+}
+
+.session-end-missed {
+  margin: 0;
+  max-width: 100%;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.deck-picker .session-end-card {
+  width: min(100%, 360px);
 }
 
 .session-end {
