@@ -29,12 +29,12 @@ const COACH_KEY = 'esl-coach-v1'
 /** Below-hairline Reels translate — keep in sync with CSS (~450ms correct). */
 const REEL_MS = 450
 /** Wrong/timeout → next: longer, gentler Reels exit/enter. Sync with CSS. */
-const REEL_WRONG_MS = 800
+const REEL_WRONG_MS = 1700
 /** Brief feedback before the below-line content turns. */
 const FEEDBACK_OK_MS = 220
 /** Wrong/timeout: brief red on card, then green correct readable hold. */
 const FEEDBACK_LEARN_RED_MS = 280
-const FEEDBACK_LEARN_GREEN_MS = 2200
+const FEEDBACK_LEARN_GREEN_MS = 3200
 const GHOST_KEY = 'esl-ghost-v1'
 
 function wrapIndex(i: number, n: number): number {
@@ -537,7 +537,7 @@ export default function App() {
           finishAdvance(snapSelected, 'correct', null)
         }, FEEDBACK_OK_MS)
       } else {
-        // × on selected, then teach/reveal (neutral + Doğru cevap) ~2200ms.
+        // × on selected, then teach/reveal (neutral + Doğru cevap) ~3200ms.
         setFlash('wrong')
         if (nextReveal !== null) setRevealCorrect(nextReveal)
         learnTimer.current = window.setTimeout(() => {

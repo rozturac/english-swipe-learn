@@ -287,11 +287,11 @@ body,
 
 /* Wrong/timeout → next: slower upward slide (success stays 450ms) */
 .reel-page.is-entering.is-gentle {
-  animation: reel-page-enter 0.8s var(--reel-soft) both;
+  animation: reel-page-enter 1.7s var(--reel-soft) both;
 }
 
 .reel-page.is-exiting.is-gentle {
-  animation: reel-page-exit 0.8s var(--reel-soft) forwards;
+  animation: reel-page-exit 1.7s var(--reel-soft) forwards;
 }
 
 @keyframes reel-page-enter {

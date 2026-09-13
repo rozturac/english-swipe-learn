@@ -1,3 +1,10 @@
+## Mechanics — wrong Reels even slower + longer Doğru cevap
+
+- Wrong/timeout Reels exit+enter: 800ms → **1700ms** (`--reel-soft`); success stays 450ms
+- FEEDBACK_LEARN_GREEN_MS (Doğru cevap dwell): 2200 → **3200ms**
+- JS reel-clear timeout stays in sync with CSS (REEL_WRONG_MS = 1700)
+- prefers-reduced-motion: still short fade, not a forced slow slide
+
 ## Mechanics — slower Reels slide after wrong
 
 - Wrong lock / timeout+reveal → next: Reels exit/enter 800ms with soft cubic-bezier (success stays 450ms)
