@@ -574,6 +574,35 @@ body,
 }
 
 .option-card.is-reveal {
+  /* Teach/fail: neutral dark + thin green left stripe — not success green fill */
+  border: 1.2px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg, #12121c 0%, #0c0c14 100%);
+  box-shadow:
+    inset 3px 0 0 0 #34d399,
+    0 8px 22px rgba(0, 0, 0, 0.35);
+  opacity: 1;
+  transform: scale(1);
+  filter: none;
+}
+
+.option-card.is-reveal .reveal-label {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  z-index: 2;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6ee7b7;
+  opacity: 0.92;
+}
+
+.option-card.is-reveal .option-text {
+  padding-top: 14px;
+}
+
+.option-card.is-success {
   border: 1.35px solid transparent;
   background-origin: border-box;
   background-clip: padding-box, border-box;
@@ -581,10 +610,16 @@ body,
     linear-gradient(#0e1a16, #0e1a16),
     linear-gradient(100deg, #34d399, #6ee7b7);
   box-shadow:
-    0 0 0 1px rgba(52, 211, 153, 0.35),
-    0 10px 28px rgba(52, 211, 153, 0.12);
+    0 0 0 1px rgba(52, 211, 153, 0.4),
+    0 10px 28px rgba(52, 211, 153, 0.16);
   opacity: 1;
-  transform: scale(1);
+  filter: none;
+}
+
+.option-card.is-selected.is-success::before,
+.option-card.is-selected.is-success::after {
+  content: none;
+  display: none;
   filter: none;
 }
 

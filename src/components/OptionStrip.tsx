@@ -10,6 +10,8 @@ type Props = {
   onStep?: (step: number) => void
   /** Card-only wrong flash (no scene veil). */
   wrongFlash?: boolean
+  /** Brief success green on correct lock. */
+  successFlash?: boolean
   /** One-shot ghost gesture on first card. */
   showGhost?: boolean
 }
@@ -32,6 +34,7 @@ export function OptionStrip({
   frozen = false,
   onStep,
   wrongFlash = false,
+  successFlash = false,
   showGhost = false,
 }: Props) {
   const viewportRef = useRef<HTMLDivElement>(null)
@@ -185,12 +188,16 @@ export function OptionStrip({
                 isReveal ? 'is-reveal' : '',
                 isWrongSel ? 'is-wrong' : '',
                 wrongFlash && isWrongSel ? 'is-wrong-flash' : '',
+                successFlash && isSel ? 'is-success' : '',
                 frozen ? 'is-locked' : '',
               ]
                 .filter(Boolean)
                 .join(' ')}
               style={{ width: cardW, marginRight: GAP_PX }}
             >
+              {isReveal ? (
+                <span className="reveal-label">Doğru cevap</span>
+              ) : null}
               <p className="option-text" lang="tr">
                 {text}
               </p>

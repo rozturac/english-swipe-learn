@@ -1,7 +1,15 @@
 import type { ProgressEntry, ProgressMap, VocabItem } from '../types'
 
 const STORAGE_KEY = 'esl-progress-v1'
-const SESSION_SIZE = 8
+
+/** Main session length. */
+export const SESSION_SIZE = 8
+/** Timed / challenge runs use the same length as a normal session. */
+export const CHALLENGE_SIZE = SESSION_SIZE
+/** Cap for "Yanlışları tekrarla" mini-runs. */
+export const RETRY_SIZE = SESSION_SIZE
+/** @deprecated Prefer SESSION_SIZE — kept for existing imports. */
+export const SESSION_LEN = SESSION_SIZE
 
 export function loadProgress(): ProgressMap {
   try {
@@ -30,7 +38,7 @@ function score(item: VocabItem, p: ProgressEntry | undefined, now: number): numb
   return wrongBoost - streakPenalty + due + (item.d <= 2 ? 15 : 0)
 }
 
-/** Build a ~8 item session: weakest / due first, unique exTr, shuffle within bands. */
+/** Build a ~SESSION_SIZE item session: weakest / due first, unique by en (+ exTr). */
 export function pickSession(vocab: VocabItem[], progress: ProgressMap): VocabItem[] {
   const now = Date.now()
   const ranked = [...vocab]
@@ -45,11 +53,14 @@ export function pickSession(vocab: VocabItem[], progress: ProgressMap): VocabIte
     ;[weak[i], weak[j]] = [weak[j], weak[i]]
   }
 
+  const usedEn = new Set<string>()
   const usedTr = new Set<string>()
   const chosen: VocabItem[] = []
   const tryAdd = (item: VocabItem) => {
     if (chosen.length >= SESSION_SIZE) return
+    if (usedEn.has(item.en)) return
     if (usedTr.has(item.exTr)) return
+    usedEn.add(item.en)
     usedTr.add(item.exTr)
     chosen.push(item)
   }
@@ -104,5 +115,3 @@ export function requeueWrong(
   copy.splice(pos, 0, item)
   return copy
 }
-
-export const SESSION_LEN = SESSION_SIZE

@@ -32,7 +32,7 @@ const REGISTER_RULES: { tag: Register; re: RegExp }[] = [
   },
   {
     tag: 'farewell',
-    re: /\b(catch you later|have a good one|talk soon|I'?ll let you go|it was great chatting|let'?s do this again|yakında görüş|iyi eğlence|sonra arar|tutmayayım)\b/i,
+    re: /\b(catch you later|have a good one|talk soon|I'?ll let you go|it was great chatting|let'?s do this again|yakında görüş|sonra görüş|iyi günler|iyi eğlence|tutmayayım)\b/i,
   },
   {
     tag: 'greeting',

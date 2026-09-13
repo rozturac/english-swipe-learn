@@ -5,18 +5,18 @@ import { OptionStrip } from './components/OptionStrip'
 import { useSwipe } from './hooks/useSwipe'
 import { buildOptions } from './lib/distractors'
 import {
+  RETRY_SIZE,
   SESSION_LEN,
   loadProgress,
   pickSession,
   recordAnswer,
-  requeueWrong,
 } from './lib/progress'
 import type { FlashKind, ProgressMap, VocabItem } from './types'
 import './App.css'
 
 const vocab = vocabRaw as VocabItem[]
 
-const TIMER_OPTIONS = [0, 3, 5, 8, 10] as const
+const TIMER_OPTIONS = [0, 6, 5, 8, 10] as const
 type TimerSec = (typeof TIMER_OPTIONS)[number]
 const TIMER_KEY = 'esl-timer-sec'
 const COACH_KEY = 'esl-coach-v1'
@@ -159,6 +159,7 @@ function PlayPane({
           frozen={frozen}
           onStep={onStripStep}
           wrongFlash={flash === 'wrong'}
+          successFlash={flash === 'correct'}
           showGhost={showGhost}
         />
       </section>
@@ -201,8 +202,13 @@ export default function App() {
   const snapIdRef = useRef(0)
   /** Session-wide exTr used as correct or distractor. */
   const usedExTrRef = useRef<Set<string>>(new Set())
+  /** Session-wide EN prompts already shown (main session uniqueness). */
+  const usedEnRef = useRef<Set<string>>(new Set())
   const sessionLenRef = useRef(SESSION_LEN)
   const selectedRef = useRef(0)
+  /** Timer preference to restore after a retry run forced Off. */
+  const timerBeforeRetryRef = useRef<TimerSec | null>(null)
+  const retryRunRef = useRef(false)
 
   const current = !sessionOver ? (queue[0] ?? null) : null
   const reeling = exiting !== null
@@ -210,6 +216,7 @@ export default function App() {
   const builtForEn = useRef<string | null>(null)
 
   const rebuildOptions = useCallback((item: VocabItem, unlock = true) => {
+    usedEnRef.current.add(item.en)
     const used = usedExTrRef.current
     const { options: opts, correctIndex: ci } = buildOptions(item, vocab, used)
     for (const o of opts) used.add(o)
@@ -274,6 +281,7 @@ export default function App() {
       if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
       setExiting(null)
       usedExTrRef.current = new Set()
+      usedEnRef.current = new Set()
       sessionLenRef.current = Math.max(1, next.length)
       setSessionLen(sessionLenRef.current)
       setQueue(next)
@@ -300,6 +308,15 @@ export default function App() {
   )
 
   const startNewSession = useCallback(() => {
+    if (retryRunRef.current) {
+      const prior = timerBeforeRetryRef.current
+      retryRunRef.current = false
+      timerBeforeRetryRef.current = null
+      if (prior !== null) {
+        setTimerSec(prior)
+        saveTimerPref(prior)
+      }
+    }
     const p = loadProgress()
     setProgress(p)
     beginSession(pickSession(vocab, p))
@@ -310,19 +327,25 @@ export default function App() {
       startNewSession()
       return
     }
-    // Dedupe by en, keep order
+    // Dedupe by en, keep order — retry may intentionally re-show prior EN
     const seen = new Set<string>()
     const mini: VocabItem[] = []
     for (const m of missed) {
       if (seen.has(m.en)) continue
       seen.add(m.en)
       mini.push(m)
+      if (mini.length >= RETRY_SIZE) break
     }
+    if (!retryRunRef.current) {
+      timerBeforeRetryRef.current = timerSec
+      retryRunRef.current = true
+    }
+    setTimerSec(0)
     setProgress(loadProgress())
     beginSession(mini)
-  }, [missed, beginSession, startNewSession])
+  }, [missed, beginSession, startNewSession, timerSec])
 
-  const goNext = useCallback((wasCorrect: boolean, item: VocabItem) => {
+  const goNext = useCallback((_wasCorrect: boolean, _item: VocabItem) => {
     const nextDone = doneRef.current + 1
     doneRef.current = nextDone
     setDoneCount(nextDone)
@@ -344,20 +367,14 @@ export default function App() {
     let nextQueue: VocabItem[] = []
     setQueue((q) => {
       const rest = q.slice(1)
-      if (!wasCorrect) nextQueue = requeueWrong(rest, item)
-      else {
-        const entry = loadProgress()[item.en]
-        const streak = entry?.streak ?? 0
-        if (streak >= 3 && Math.random() < 0.12) {
-          nextQueue = [...rest, item]
-        } else if (rest.length === 0) {
-          const filler = pickSession(vocab, loadProgress()).filter(
-            (x) => x.en !== item.en && !usedExTrRef.current.has(x.exTr),
-          )
-          nextQueue = filler.slice(0, 3)
-        } else {
-          nextQueue = rest
-        }
+      // Main session stays unique by en — wrongs go to retry CTA, not requeue.
+      if (rest.length === 0) {
+        const filler = pickSession(vocab, loadProgress()).filter(
+          (x) => !usedEnRef.current.has(x.en) && !usedExTrRef.current.has(x.exTr),
+        )
+        nextQueue = filler.slice(0, 3)
+      } else {
+        nextQueue = rest
       }
       return nextQueue
     })
@@ -376,9 +393,9 @@ export default function App() {
   }, [rebuildOptions])
 
   const resolveAnswer = useCallback(
-    (forceWrong = false) => {
+    () => {
       if (!current || lockingRef.current || exiting) return
-      if (!forceWrong && options.length !== 3) return
+      if (options.length !== 3) return
       lockingRef.current = true
       setLocking(true)
       setDragX(0)
@@ -387,11 +404,13 @@ export default function App() {
       setRemain(null)
       dismissGhost()
 
-      const ok = !forceWrong && options.length === 3 && selected === correctIndex
+      // Timeout and swipe-up both grade the centered / selected card.
+      const sel = selectedRef.current
+      const ok = sel === correctIndex
       const nextScore = ok
         ? { ok: score.ok + 1, wrong: score.wrong }
         : { ok: score.ok, wrong: score.wrong + 1 }
-      const nextReveal = ok ? null : options.length === 3 ? correctIndex : null
+      const nextReveal = ok ? null : correctIndex
 
       setProgress((p) => recordAnswer(p, current.en, ok))
       setScore(nextScore)
@@ -402,6 +421,7 @@ export default function App() {
       const item = current
       const snapOptions = options
       const snapCorrect = correctIndex
+      const snapSelected = sel
 
       if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
       if (learnTimer.current) window.clearTimeout(learnTimer.current)
@@ -439,10 +459,10 @@ export default function App() {
         setFlash('correct')
         setRevealCorrect(null)
         advanceTimer.current = window.setTimeout(() => {
-          finishAdvance(selected, 'correct', null)
+          finishAdvance(snapSelected, 'correct', null)
         }, FEEDBACK_OK_MS)
       } else {
-        // Card-only red flash (no scene veil), then center GREEN correct ≥800ms.
+        // × on selected, then teach/reveal (neutral + Doğru cevap) 800–1200ms.
         setFlash('wrong')
         if (nextReveal !== null) setRevealCorrect(nextReveal)
         learnTimer.current = window.setTimeout(() => {
@@ -460,7 +480,6 @@ export default function App() {
       current,
       exiting,
       options,
-      selected,
       correctIndex,
       score,
       goNext,
@@ -473,7 +492,7 @@ export default function App() {
   resolveRef.current = resolveAnswer
 
   const lockAnswer = useCallback(() => {
-    resolveAnswer(false)
+    resolveAnswer()
   }, [resolveAnswer])
 
   useEffect(() => {
@@ -488,7 +507,7 @@ export default function App() {
       if (fired || lockingRef.current) return
       fired = true
       setRemain(null)
-      resolveRef.current(true)
+      resolveRef.current()
     }
     setRemain(timerSec)
     const id = window.setInterval(() => {
@@ -652,7 +671,7 @@ export default function App() {
               aria-pressed={timerSec === sec}
               tabIndex={frozen ? -1 : 0}
             >
-              {sec === 0 ? 'Off' : sec === 3 ? 'Hızlı' : `${sec}s`}
+              {sec === 0 ? 'Off' : sec === 6 ? 'Hızlı · 6s' : `${sec}s`}
             </button>
           ))}
           {showRemain && remain !== null && (
@@ -677,7 +696,7 @@ export default function App() {
                   : `Oturum bitti — ${score.wrong} kalıp kaçtı`}
               </h1>
               <p className="session-end-sub">
-                {sessionLen} cümle · %{accuracy} isabet
+                {sessionLen} cümle · {accuracy}% isabet
               </p>
               <div className="session-end-stats">
                 <div className="stat-pill ok">
@@ -764,7 +783,7 @@ export default function App() {
                   <span className="coach-key">↑</span> kilitle
                 </li>
                 <li>
-                  <span className="coach-key">⏱</span> süre dolarsa · yanlış
+                  <span className="coach-key">⏱</span> süre dolarsa seçili kart kilitlenir
                 </li>
               </ul>
               <button type="button" className="primary coach-cta" onClick={dismissCoach}>
