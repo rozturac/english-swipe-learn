@@ -1903,9 +1903,9 @@
     "d": 12,
     "t": "İş İngilizcesi",
     "en": "what's the bar for...",
-    "tr": "...için standart nedir",
+    "tr": "... için çıta nedir",
     "ex": "What's the bar for promoting to senior this cycle?",
-    "exTr": "Bu dönemde senior’a yükselmek için standart nedir?"
+    "exTr": "Bu cycle’da senior’a terfi çıtası nedir?"
   },
   {
     "d": 12,
@@ -2503,7 +2503,7 @@
     "en": "happy to...",
     "tr": "seve seve ...yaparım",
     "ex": "Happy to walk through the runbook after standup.",
-    "exTr": "Ayaküstü toplantıdan sonra runbook’u birlikte gezmeye hazırım."
+    "exTr": "Standup’tan sonra runbook’u birlikte üzerinden geçmeye hazırım."
   },
   {
     "d": 16,
@@ -4328,9 +4328,9 @@
     "d": 27,
     "t": "İş İngilizcesi",
     "en": "ad hoc",
-    "tr": "gelişigüzel, o ana özel",
+    "tr": "plansız, o ana özel",
     "ex": "Let's stop the ad hoc requests and route them through the intake form.",
-    "exTr": "Gelişigüzel talepleri bırakalım ve bunları giriş formu üzerinden yönlendirelim."
+    "exTr": "Plansız / anlık talepleri bırakalım; intake formundan geçirelim."
   },
   {
     "d": 27,
