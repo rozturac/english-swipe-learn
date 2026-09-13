@@ -27,9 +27,9 @@
     "d": 1,
     "t": "Günlük konuşma",
     "en": "bear with my English",
-    "tr": "İngilizceme biraz katlan",
+    "tr": "İngilizcemi idare et",
     "ex": "I might mix up a few words, so please bear with my English.",
-    "exTr": "Birkaç kelimeyi karıştırabilirim, İngilizceme biraz katlan."
+    "exTr": "Birkaç kelimeyi karıştırabilirim, İngilizcemi idare et."
   },
   {
     "d": 1,
@@ -211,9 +211,9 @@
     "d": 2,
     "t": "Günlük konuşma",
     "en": "I'm based in...",
-    "tr": "...'de yaşıyorum",
+    "tr": "...'dayım, ... merkezliyim",
     "ex": "I'm based in... Istanbul near the old ferry stop.",
-    "exTr": "İstanbul'da, eski iskele durağının yakınında yaşıyorum."
+    "exTr": "İstanbul'dayım, eski iskele durağının yakınında."
   },
   {
     "d": 2,
@@ -411,9 +411,9 @@
     "d": 3,
     "t": "Günlük konuşma",
     "en": "tell me about your journey here",
-    "tr": "buraya geliş yolculuğunu anlatır mısın",
+    "tr": "buraya nasıl geldiğini, kariyer yolculuğunu anlatır mısın",
     "ex": "In the interview she asked, tell me about your journey here.",
-    "exTr": "Görüşmede sordu: buraya geliş yolculuğunu anlatır mısın?"
+    "exTr": "Görüşmede sordu: buraya nasıl geldiğini, kariyer yolculuğunu anlatır mısın?"
   },
   {
     "d": 3,
