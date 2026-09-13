@@ -4,6 +4,8 @@ type SwipeHandlers = {
   /** Index delta: +1 next card, -1 previous. Carousel-matched, not screen-edge named. */
   onHorizontal: (deltaIndexes: number) => void
   onUp: () => void
+  /** Optional: swipe down (review previous). */
+  onDown?: () => void
 }
 
 type DragState = {
@@ -33,8 +35,8 @@ export function snapIndexDelta(dx: number, step: number): number {
 }
 
 /**
- * Touch + pointer swipe. L/R horizontal selection; UP to lock.
- * Down swipe is intentionally ignored.
+ * Touch + pointer swipe. L/R horizontal selection; UP to lock / exit review;
+ * DOWN to enter / deepen review (when handler provided).
  *
  * Drag lifecycle: onDragStart → onDrag(dx,dy) → finish(commit) → onDragEnd.
  * finish runs before onDragEnd so selected + drag clear batch in one frame
@@ -81,10 +83,19 @@ export function useSwipe(
     const ax = Math.abs(dx)
     const ay = Math.abs(dy)
 
-    // UP lock / Reels exit — keep vertical dominance so L/R does not steal it.
+    // UP lock / review exit — keep vertical dominance so L/R does not steal it.
     if (dy < -THRESH_Y && ay > ax * UP_DOMINANCE) {
       locked.current = true
       handlersRef.current.onUp()
+      return
+    }
+
+    // DOWN → review previous (ignored if no onDown handler).
+    if (dy > THRESH_Y && ay > ax * UP_DOMINANCE) {
+      if (handlersRef.current.onDown) {
+        locked.current = true
+        handlersRef.current.onDown()
+      }
       return
     }
 

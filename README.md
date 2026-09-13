@@ -9,9 +9,9 @@ Turkish speakers recognizing **work English** (meeting / Slack / 1:1) — not Du
 ## Gestures
 
 - **Swipe left / right** — move among 3 Turkish sentence options (selected stays centered)
-- **Swipe up** — lock the selected card (green = correct; wrong = brief × then “Doğru cevap” teach reveal)
-- No down swipe
-- Keyboard: ← → select, ↑ / Enter / Space lock
+- **Swipe up** — lock the selected card (green = correct; wrong = brief × then “Doğru cevap” teach reveal); from review, return to the active card
+- **Swipe down** — read-only review of the previous completed card (frozen outcome; no re-select / re-lock). Further ↓ walks older cards in the session stack; no history → soft rubber-band ignore
+- Keyboard: ← → select, ↑ / Enter / Space lock, ↓ review previous
 
 ## Deck picker
 

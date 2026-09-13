@@ -14,6 +14,10 @@ type Props = {
   successFlash?: boolean
   /** One-shot ghost gesture on first card. */
   showGhost?: boolean
+  /** Read-only review of a prior card — hint becomes ↑ geri. */
+  reviewMode?: boolean
+  /** After ≥1 completed card: show ↓ önceki on the active jest line. */
+  showReviewHint?: boolean
 }
 
 /** Wider / more landscape selected card — mock is longer horizontally. */
@@ -36,6 +40,8 @@ export function OptionStrip({
   wrongFlash = false,
   successFlash = false,
   showGhost = false,
+  reviewMode = false,
+  showReviewHint = false,
 }: Props) {
   const viewportRef = useRef<HTMLDivElement>(null)
   const [vw, setVw] = useState(360)
@@ -215,23 +221,47 @@ export function OptionStrip({
             />
           ))}
         </div>
-        <p className="jest-hint">
-          <span className="jest-part">
-            <span className="jest-ico" aria-hidden>
-              ↔
-            </span>{' '}
-            seç
-          </span>
-          <span className="jest-sep" aria-hidden>
-            ·
-          </span>
-          <span className="jest-part">
-            <span className="jest-ico" aria-hidden>
-              ↑
-            </span>{' '}
-            kilitle
-          </span>
-        </p>
+        {reviewMode ? (
+          <p className="jest-hint">
+            <span className="jest-part">
+              <span className="jest-ico" aria-hidden>
+                ↑
+              </span>{' '}
+              geri
+            </span>
+          </p>
+        ) : (
+          <p className="jest-hint">
+            <span className="jest-part">
+              <span className="jest-ico" aria-hidden>
+                ↔
+              </span>{' '}
+              seç
+            </span>
+            <span className="jest-sep" aria-hidden>
+              ·
+            </span>
+            <span className="jest-part">
+              <span className="jest-ico" aria-hidden>
+                ↑
+              </span>{' '}
+              kilitle
+            </span>
+            {showReviewHint ? (
+              <>
+                <span className="jest-sep" aria-hidden>
+                  ·
+                </span>
+                <span className="jest-part">
+                  <span className="jest-ico" aria-hidden>
+                    ↓
+                  </span>{' '}
+                  önceki
+                </span>
+              </>
+            ) : null}
+          </p>
+        )}
         {showGhost ? (
           <div className="ghost-gesture" aria-hidden>
             <span className="ghost-hand">👆</span>

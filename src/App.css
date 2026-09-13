@@ -267,7 +267,7 @@ body,
   -webkit-backface-visibility: hidden;
 }
 
-.reel-page:not(.is-exiting):not(.is-entering) {
+.reel-page:not(.is-exiting):not(.is-entering):not(.is-exiting-down):not(.is-entering-from-top) {
   transform: translate3d(0, 0, 0);
   z-index: 1;
 }
@@ -283,6 +283,19 @@ body,
   z-index: 2;
   pointer-events: none;
   animation: reel-page-exit 0.45s var(--reel-out) forwards;
+}
+
+/* ↓ review: previous enters from TOP */
+.reel-page.is-entering-from-top {
+  z-index: 1;
+  animation: reel-page-enter-top 0.45s var(--reel-out) both;
+}
+
+/* ↓ review: current / newer exits DOWN */
+.reel-page.is-exiting-down {
+  z-index: 2;
+  pointer-events: none;
+  animation: reel-page-exit-down 0.45s var(--reel-out) forwards;
 }
 
 /* Wrong/timeout → next: dwell+slide fused into one gentle upward (success stays 450ms) */
@@ -310,6 +323,32 @@ body,
   to {
     transform: translate3d(0, -100%, 0);
   }
+}
+
+@keyframes reel-page-enter-top {
+  from {
+    transform: translate3d(0, -100%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes reel-page-exit-down {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+.reel-page-inner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
 }
 
 /* Play stage fills each reel page (flash veil only here — chrome stays fixed) */
@@ -1038,7 +1077,8 @@ body,
 
 
 @media (prefers-reduced-motion: reduce) {
-  .reel-page.is-entering {
+  .reel-page.is-entering,
+  .reel-page.is-entering-from-top {
     animation: reel-page-enter-fade 0.3s ease both;
   }
 
@@ -1046,7 +1086,8 @@ body,
     animation: reel-page-enter-fade 1s ease both;
   }
 
-  .reel-page.is-exiting {
+  .reel-page.is-exiting,
+  .reel-page.is-exiting-down {
     animation: reel-page-exit-fade 0.3s ease forwards;
   }
 

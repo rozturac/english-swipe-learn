@@ -36,6 +36,9 @@ const REEL_MS = 450
 const REEL_WRONG_MS = 4900
 /** prefers-reduced-motion wrong path: short fade, not a 4.9s transform. */
 const REEL_WRONG_REDUCED_MS = 1000
+/** Review enter/exit Reels (↓ previous / ↑ back) — same snap as success. */
+const REVIEW_REEL_MS = 450
+const REVIEW_REEL_REDUCED_MS = 300
 /** Brief feedback before the below-line content turns. */
 const FEEDBACK_OK_MS = 220
 /** Wrong/timeout: brief red flash, then teach reveal + immediate gentle exit. */
@@ -138,6 +141,28 @@ type PageSnap = {
   gentle?: boolean
 }
 
+/** Completed-card snapshot for ↓ read-only review. */
+type HistorySnap = {
+  id: string
+  item: VocabItem
+  options: string[]
+  selected: number
+  correctIndex: number
+  revealCorrect: number | null
+  flash: FlashKind
+  wasCorrect: boolean
+}
+
+type ReviewPane = { kind: 'active' } | { kind: 'review'; snap: HistorySnap }
+
+/** Dual-page transit while entering / leaving / browsing review. */
+type ReviewNav = {
+  dir: 'up' | 'down'
+  leaving: ReviewPane
+  entering: ReviewPane
+  nextIndex: number | null
+}
+
 type PlayPaneProps = {
   item: VocabItem
   options: string[]
@@ -152,6 +177,8 @@ type PlayPaneProps = {
   /** Stable key for OptionStrip remount per sentence (not mid-exit). */
   stripKey: string
   showGhost?: boolean
+  reviewMode?: boolean
+  showReviewHint?: boolean
 }
 
 /** EN + TR + jest hint — lives inside the sliding reel page. */
@@ -168,6 +195,8 @@ function PlayPane({
   onStripStep,
   stripKey,
   showGhost = false,
+  reviewMode = false,
+  showReviewHint = false,
 }: PlayPaneProps) {
   // Correct may keep a soft veil; wrong/timeout flash is card-only (cosmos stays still).
   const flashClass = flash === 'correct' ? 'flash-correct' : ''
@@ -196,6 +225,8 @@ function PlayPane({
           wrongFlash={flash === 'wrong'}
           successFlash={flash === 'correct'}
           showGhost={showGhost}
+          reviewMode={reviewMode}
+          showReviewHint={showReviewHint}
         />
       </section>
     </div>
@@ -229,9 +260,16 @@ export default function App() {
   )
   /** Snapshot of the below-line page sliding UP — kept mounted for the full exit. */
   const [exiting, setExiting] = useState<PageSnap | null>(null)
+  /** Session stack of completed cards (chronological) for ↓ review. */
+  const [history, setHistory] = useState<HistorySnap[]>([])
+  /** null = active play; index into history while reviewing. */
+  const [reviewIndex, setReviewIndex] = useState<number | null>(null)
+  /** Dual-page Reels transit for review enter/exit/browse. */
+  const [reviewNav, setReviewNav] = useState<ReviewNav | null>(null)
   const advanceTimer = useRef<number | null>(null)
   const learnTimer = useRef<number | null>(null)
   const reelClearTimer = useRef<number | null>(null)
+  const reviewNavTimer = useRef<number | null>(null)
   const doneRef = useRef(0)
   const lockingRef = useRef(false)
   const snapIdRef = useRef(0)
@@ -244,9 +282,16 @@ export default function App() {
   /** Timer preference to restore after a retry run forced Off. */
   const timerBeforeRetryRef = useRef<TimerSec | null>(null)
   const retryRunRef = useRef(false)
+  const historyRef = useRef<HistorySnap[]>([])
+  historyRef.current = history
+  const reviewIndexRef = useRef<number | null>(null)
+  reviewIndexRef.current = reviewIndex
+  const reviewingRef = useRef(false)
 
   const current = !sessionOver ? (queue[0] ?? null) : null
   const reeling = exiting !== null
+  const reviewing = reviewIndex !== null || reviewNav !== null
+  reviewingRef.current = reviewing
 
   const builtForEn = useRef<string | null>(null)
 
@@ -290,6 +335,7 @@ export default function App() {
       if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
       if (learnTimer.current) window.clearTimeout(learnTimer.current)
       if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
+      if (reviewNavTimer.current) window.clearTimeout(reviewNavTimer.current)
     }
   }, [])
 
@@ -321,7 +367,13 @@ export default function App() {
       if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
       if (learnTimer.current) window.clearTimeout(learnTimer.current)
       if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
+      if (reviewNavTimer.current) window.clearTimeout(reviewNavTimer.current)
       setExiting(null)
+      setHistory([])
+      historyRef.current = []
+      setReviewIndex(null)
+      reviewIndexRef.current = null
+      setReviewNav(null)
       usedExTrRef.current = new Set()
       usedEnRef.current = new Set()
       sessionLenRef.current = Math.max(1, next.length)
@@ -392,6 +444,10 @@ export default function App() {
     setSessionOver(false)
     setQueue([])
     setExiting(null)
+    setHistory([])
+    historyRef.current = []
+    setReviewIndex(null)
+    setReviewNav(null)
     setPickingDeck(true)
     lockingRef.current = false
     setLocking(false)
@@ -471,7 +527,7 @@ export default function App() {
 
   const resolveAnswer = useCallback(
     () => {
-      if (!current || lockingRef.current || exiting) return
+      if (!current || lockingRef.current || exiting || reviewingRef.current) return
       if (options.length !== 3) return
       lockingRef.current = true
       setLocking(true)
@@ -504,6 +560,23 @@ export default function App() {
       if (learnTimer.current) window.clearTimeout(learnTimer.current)
 
       const finishAdvance = (exitSelected: number, exitFlash: FlashKind, exitReveal: number | null) => {
+        snapIdRef.current += 1
+        const hist: HistorySnap = {
+          id: `hist-${item.en}-${snapIdRef.current}`,
+          item,
+          options: snapOptions,
+          selected: exitSelected,
+          correctIndex: snapCorrect,
+          revealCorrect: exitReveal,
+          flash: exitFlash,
+          wasCorrect: ok,
+        }
+        setHistory((h) => {
+          const next = [...h, hist]
+          historyRef.current = next
+          return next
+        })
+
         const willEnd = doneRef.current + 1 >= sessionLenRef.current
         if (willEnd) {
           // 8/8 (or mini-set end) → results card directly; no empty cosmos + hint frame.
@@ -515,7 +588,6 @@ export default function App() {
           setLocking(false)
           return
         }
-        snapIdRef.current += 1
         setExiting({
           id: `${item.en}-${snapIdRef.current}`,
           item,
@@ -576,7 +648,14 @@ export default function App() {
   const resolveRef = useRef(resolveAnswer)
   resolveRef.current = resolveAnswer
 
+  const exitReviewRef = useRef<() => boolean>(() => false)
+
   const lockAnswer = useCallback(() => {
+    // ↑ in review exits (or steps toward active) — never re-locks / re-scores.
+    if (reviewIndexRef.current !== null || reviewingRef.current) {
+      exitReviewRef.current()
+      return
+    }
     resolveAnswer()
   }, [resolveAnswer])
 
@@ -588,15 +667,29 @@ export default function App() {
     const totalMs = timerSec * 1000
     const started = performance.now()
     let fired = false
+    let pausedAt: number | null = null
+    let pauseAccum = 0
     const fire = () => {
-      if (fired || lockingRef.current) return
+      if (fired || lockingRef.current || reviewingRef.current) return
       fired = true
       setRemain(null)
       resolveRef.current()
     }
+    const effectiveElapsed = () => {
+      if (pausedAt !== null) return pausedAt - started - pauseAccum
+      return performance.now() - started - pauseAccum
+    }
     setRemain(timerSec)
     const id = window.setInterval(() => {
-      const left = totalMs - (performance.now() - started)
+      if (reviewingRef.current) {
+        if (pausedAt === null) pausedAt = performance.now()
+        return
+      }
+      if (pausedAt !== null) {
+        pauseAccum += performance.now() - pausedAt
+        pausedAt = null
+      }
+      const left = totalMs - effectiveElapsed()
       if (left <= 80) {
         window.clearInterval(id)
         fire()
@@ -604,41 +697,104 @@ export default function App() {
       }
       setRemain(left / 1000)
     }, 50)
-    const to = window.setTimeout(fire, totalMs)
     return () => {
       window.clearInterval(id)
-      window.clearTimeout(to)
     }
   }, [current?.en, doneCount, timerSec, sessionOver, locking, reeling, showCoach, pickingDeck])
 
+  const clearReviewNav = useCallback(() => {
+    setReviewNav(null)
+  }, [])
+
+  const startReviewNav = useCallback(
+    (dir: 'up' | 'down', leaving: ReviewPane, entering: ReviewPane, nextIndex: number | null) => {
+      if (reviewNavTimer.current) window.clearTimeout(reviewNavTimer.current)
+      setDragX(0)
+      setDragY(0)
+      setDragging(false)
+      setReviewNav({ dir, leaving, entering, nextIndex })
+      const ms = prefersReducedMotion() ? REVIEW_REEL_REDUCED_MS : REVIEW_REEL_MS
+      reviewNavTimer.current = window.setTimeout(() => {
+        setReviewIndex(nextIndex)
+        reviewIndexRef.current = nextIndex
+        clearReviewNav()
+      }, ms)
+    },
+    [clearReviewNav],
+  )
+
+  const enterOrDeepenReview = useCallback(() => {
+    if (lockingRef.current || exiting || reviewNav || showCoach || pickingDeck || sessionOver) return
+    const hist = historyRef.current
+    const idx = reviewIndexRef.current
+    if (idx === null) {
+      if (hist.length === 0) return
+      const target = hist.length - 1
+      startReviewNav('down', { kind: 'active' }, { kind: 'review', snap: hist[target]! }, target)
+      return
+    }
+    if (idx <= 0) return
+    const older = idx - 1
+    startReviewNav(
+      'down',
+      { kind: 'review', snap: hist[idx]! },
+      { kind: 'review', snap: hist[older]! },
+      older,
+    )
+  }, [exiting, reviewNav, showCoach, pickingDeck, sessionOver, startReviewNav])
+
+  const exitOrShallowReview = useCallback(() => {
+    if (exiting || reviewNav || showCoach || pickingDeck) return false
+    const hist = historyRef.current
+    const idx = reviewIndexRef.current
+    if (idx === null) return false
+    if (idx < hist.length - 1) {
+      const newer = idx + 1
+      startReviewNav(
+        'up',
+        { kind: 'review', snap: hist[idx]! },
+        { kind: 'review', snap: hist[newer]! },
+        newer,
+      )
+      return true
+    }
+    // Back to the live active card
+    startReviewNav('up', { kind: 'review', snap: hist[idx]! }, { kind: 'active' }, null)
+    return true
+  }, [exiting, reviewNav, showCoach, pickingDeck, startReviewNav])
+
+  useEffect(() => {
+    exitReviewRef.current = exitOrShallowReview
+  }, [exitOrShallowReview])
+
   const selectPrev = useCallback(() => {
-    if (locking || reeling) return
+    if (locking || reeling || reviewing) return
     setSelected((s) => {
       const n = wrapIndex(s - 1, 3)
       selectedRef.current = n
       return n
     })
-  }, [locking, reeling])
+  }, [locking, reeling, reviewing])
 
   const selectNext = useCallback(() => {
-    if (locking || reeling) return
+    if (locking || reeling || reviewing) return
     setSelected((s) => {
       const n = wrapIndex(s + 1, 3)
       selectedRef.current = n
       return n
     })
-  }, [locking, reeling])
+  }, [locking, reeling, reviewing])
 
   const onHorizontal = useCallback(
     (deltaIndexes: number) => {
-      if (locking || reeling || !deltaIndexes) return
+      if (locking || reeling || reviewing || !deltaIndexes) return
       setSelected((s) => {
         const n = wrapIndex(s + deltaIndexes, 3)
         selectedRef.current = n
         return n
       })
     },
-    [locking, reeling],
+    [locking, reeling, reviewing],
   )
 
   const stepRef = useRef(360 * 0.93 + 14)
@@ -647,17 +803,30 @@ export default function App() {
   }, [])
 
   const swipe = useSwipe(
-    { onHorizontal, onUp: lockAnswer },
+    { onHorizontal, onUp: lockAnswer, onDown: enterOrDeepenReview },
     {
-      disabled: locking || reeling || !current || showCoach || pickingDeck,
+      disabled:
+        locking ||
+        reeling ||
+        !!reviewNav ||
+        showCoach ||
+        pickingDeck ||
+        sessionOver ||
+        (!current && reviewIndex === null),
       getStep: () => stepRef.current,
       onDragStart: () => {
-        if (lockingRef.current || exiting) return
+        if (lockingRef.current || exiting || reviewNav) return
         dismissGhost()
         setDragging(true)
       },
       onDrag: (dx, dy) => {
-        if (lockingRef.current || exiting) return
+        if (lockingRef.current || exiting || reviewNav) return
+        if (reviewIndex !== null) {
+          // Review: vertical only (no L/R re-selection).
+          setDragX(0)
+          setDragY(dy)
+          return
+        }
         setDragX(dx)
         setDragY(dy)
       },
@@ -678,10 +847,24 @@ export default function App() {
         }
         return
       }
-      if (pickingDeck || locking || reeling || !current) return
+      if (pickingDeck || locking || reeling || reviewNav) return
+      if (reviewIndex !== null) {
+        if (e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          exitOrShallowReview()
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault()
+          enterOrDeepenReview()
+        }
+        return
+      }
+      if (!current) return
       if (e.key === 'ArrowLeft') selectPrev()
       else if (e.key === 'ArrowRight') selectNext()
-      else if (e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
+      else if (e.key === 'ArrowDown') {
+        e.preventDefault()
+        enterOrDeepenReview()
+      } else if (e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
         e.preventDefault()
         lockAnswer()
       }
@@ -691,10 +874,14 @@ export default function App() {
   }, [
     locking,
     reeling,
+    reviewNav,
+    reviewIndex,
     current,
     selectPrev,
     selectNext,
     lockAnswer,
+    enterOrDeepenReview,
+    exitOrShallowReview,
     showCoach,
     pickingDeck,
     dismissCoach,
@@ -705,12 +892,36 @@ export default function App() {
     saveTimerPref(sec)
   }
 
-  const frozen = locking || flash !== 'none' || reeling
-  const liftY = frozen ? 0 : Math.max(-40, Math.min(0, dragY * 0.22))
-  const stripDrag = frozen ? 0 : dragX
-  const remainUrgent = remain !== null && remain <= 2 && !frozen
+  const frozen = locking || flash !== 'none' || reeling || reviewing
+  const canPullReview =
+    history.length > 0 &&
+    !locking &&
+    !reeling &&
+    !reviewing &&
+    flash === 'none'
+  const atOldestReview = reviewIndex === 0
+  // Active: ↑ lifts EN; ↓ pulls toward review (or soft rubber if none).
+  // Review: vertical rubber only at stack ends.
+  const liftY = (() => {
+    if (reeling || reviewNav || locking || flash !== 'none') return 0
+    if (reviewIndex !== null) {
+      if (dragY < 0) return Math.max(-28, dragY * 0.18) // toward active
+      if (atOldestReview) return Math.min(22, dragY * 0.1) // rubber
+      return Math.min(36, dragY * 0.18)
+    }
+    if (dragY < 0) return Math.max(-40, dragY * 0.22)
+    if (canPullReview) return Math.min(40, dragY * 0.22)
+    return Math.min(22, dragY * 0.1) // soft rubber — no history
+  })()
+  const stripDrag = frozen || reviewIndex !== null ? 0 : dragX
+  const remainUrgent = remain !== null && remain <= 2 && !frozen && !reviewing
   const showRemain =
-    remain !== null && remain > 0.12 && !sessionOver && !reeling && !locking
+    remain !== null &&
+    remain > 0.12 &&
+    !sessionOver &&
+    !reeling &&
+    !locking &&
+    !reviewing
 
   const stopBubble = {
     onPointerDown: (e: PointerEvent) => e.stopPropagation(),
@@ -725,6 +936,78 @@ export default function App() {
   const showPicker = pickingDeck && !showCoach && !showSessionEnd
   const deckShort = DECK_SHORT[deck] ?? deck
   const missedPreview = missed.slice(0, 4)
+  const reviewSnap =
+    reviewIndex !== null ? (history[reviewIndex] ?? null) : null
+  const showReviewHint = history.length > 0 && !reviewing && !reeling
+
+  const renderActivePane = (
+    opts: {
+      frozenPane: boolean
+      stripDrag: number
+      dragging: boolean
+      liftY: number
+      flashOverride?: FlashKind
+      showGhost?: boolean
+    },
+  ) => {
+    if (!current) return null
+    return (
+      <PlayPane
+        item={current}
+        options={options}
+        selected={selected}
+        revealCorrect={revealCorrect}
+        flash={opts.flashOverride ?? (reeling ? 'none' : flash)}
+        frozen={opts.frozenPane}
+        stripDrag={opts.stripDrag}
+        dragging={opts.dragging}
+        liftY={opts.liftY}
+        onStripStep={onStripStep}
+        stripKey={current.en}
+        showGhost={opts.showGhost ?? false}
+        showReviewHint={showReviewHint}
+      />
+    )
+  }
+
+  const renderHistoryPane = (snap: HistorySnap) => (
+    <PlayPane
+      item={snap.item}
+      options={snap.options}
+      selected={snap.selected}
+      revealCorrect={snap.revealCorrect}
+      flash={snap.flash}
+      frozen
+      stripDrag={0}
+      dragging={false}
+      liftY={0}
+      onStripStep={onStripStep}
+      stripKey={`review-${snap.id}`}
+      showGhost={false}
+      reviewMode
+    />
+  )
+
+  const renderReviewPane = (pane: ReviewPane, animKey: string) => {
+    if (pane.kind === 'active') {
+      return (
+        <div className="reel-page-inner" key={`nav-active-${animKey}`}>
+          {renderActivePane({
+            frozenPane: true,
+            stripDrag: 0,
+            dragging: false,
+            liftY: 0,
+            flashOverride: 'none',
+          })}
+        </div>
+      )
+    }
+    return (
+      <div className="reel-page-inner" key={`nav-rev-${pane.snap.id}-${animKey}`}>
+        {renderHistoryPane(pane.snap)}
+      </div>
+    )
+  }
 
   return (
     <>
@@ -732,7 +1015,10 @@ export default function App() {
         <span className="cosmos-photo" />
         <span className="cosmos-vignette" />
       </div>
-      <div className={`app${frozen ? ' is-frozen' : ''}${reeling ? ' is-reeling' : ''}`} {...swipe}>
+      <div
+        className={`app${frozen ? ' is-frozen' : ''}${reeling ? ' is-reeling' : ''}${reviewing ? ' is-reviewing' : ''}`}
+        {...swipe}
+      >
         {/* FIXED chrome — never translates with the Reels page turn */}
         <header className="topbar">
           <div className="progress-row">
@@ -863,25 +1149,43 @@ export default function App() {
                 />
               </div>
             )}
-            {current && (
+            {reviewNav && (
+              <>
+                <div
+                  className={`reel-page ${
+                    reviewNav.dir === 'down' ? 'is-exiting-down' : 'is-exiting'
+                  }`}
+                  key={`rev-leave-${reviewNav.dir}`}
+                >
+                  {renderReviewPane(reviewNav.leaving, 'leave')}
+                </div>
+                <div
+                  className={`reel-page ${
+                    reviewNav.dir === 'down' ? 'is-entering-from-top' : 'is-entering'
+                  }`}
+                  key={`rev-enter-${reviewNav.dir}`}
+                >
+                  {renderReviewPane(reviewNav.entering, 'enter')}
+                </div>
+              </>
+            )}
+            {!reviewNav && reviewSnap && (
+              <div className="reel-page" key={`review-${reviewSnap.id}`}>
+                {renderHistoryPane(reviewSnap)}
+              </div>
+            )}
+            {!reviewNav && !reviewSnap && current && (
               <div
                 className={`reel-page${reeling ? ' is-entering' : ''}${exiting?.gentle ? ' is-gentle' : ''}`}
                 key={`live-${current.en}`}
               >
-                <PlayPane
-                  item={current}
-                  options={options}
-                  selected={selected}
-                  revealCorrect={revealCorrect}
-                  flash={reeling ? 'none' : flash}
-                  frozen={frozen}
-                  stripDrag={stripDrag}
-                  dragging={dragging}
-                  liftY={liftY}
-                  onStripStep={onStripStep}
-                  stripKey={current.en}
-                  showGhost={showGhost && !showCoach && !reeling && !locking}
-                />
+                {renderActivePane({
+                  frozenPane: frozen,
+                  stripDrag,
+                  dragging,
+                  liftY,
+                  showGhost: showGhost && !showCoach && !reeling && !locking,
+                })}
               </div>
             )}
           </div>
@@ -903,6 +1207,9 @@ export default function App() {
                 </li>
                 <li>
                   <span className="coach-key">↑</span> kilitle
+                </li>
+                <li>
+                  <span className="coach-key">↓</span> önceki (incele)
                 </li>
                 <li>
                   <span className="coach-key">⏱</span> süre dolarsa seçili kart kilitlenir

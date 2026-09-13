@@ -1,3 +1,11 @@
+## Mechanics — ↓ review previous (read-only)
+
+- Enable swipe **down**: Reels reverse — previous completed card enters from top; active slides down
+- Session history stack of completed cards (frozen outcome: success green or Doğru cevap teach)
+- Review locks: no L/R re-select, no ↑ re-lock / no timer tick; ↑ (or Enter/Space) returns toward active
+- No history / oldest: ignore down (soft rubber). prefers-reduced-motion: fade
+- Coach + jest: ↓ önceki; scoring / vocab unchanged
+
 ## Mechanics — wrong path: fuse dwell into gentle slide
 
 - No separate static Doğru cevap wait after reveal: red flash (~280ms) → teach on card → immediate gentle Reels up
