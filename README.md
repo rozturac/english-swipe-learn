@@ -35,6 +35,10 @@ Three decks (`İş İngilizcesi` · `Günlük konuşma` · `Genel`): pre-session
 
 Schema: `d` / `t` / `en` / `tr` / `ex` / `exTr` (+ optional `morph`).
 
+## Gold set
+
+Demo / regression pack: `src/data/gold-set.json` (64 Günlük + 16 İş). `npm run check:gold` asserts every gold `en` still matches live `vocab.json` (`ex`/`exTr`), no dashes, `en` in `ex`, sentence-case `exTr`.
+
 ## Stack
 
 Vite + React + TypeScript · GitHub Pages (`base: /english-swipe-learn/`)
@@ -46,6 +50,8 @@ npm install
 npm run dev
 npm run build
 npm run check:distractors
+npm run check:gold   # 80-card gold set regression
+npm run check         # distractors + gold
 ```
 
 2026-09-13 öğretmen yaması: 50 exTr.

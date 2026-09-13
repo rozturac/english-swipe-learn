@@ -1,3 +1,10 @@
+## Gold set — 80 cards (committee day 13–14)
+
+- Snapshot: `src/data/gold-set.json` = all 64 Günlük konuşma + 16 İş İngilizcesi (full objects)
+- İş ens: my skip · pulse check · descope · sunset · socialize · influence without authority · manage sideways · forcing function · sandbagging · low-hanging fruit · skip-level · dry run · circle back · bandwidth · good catch · take it offline
+- Polish: Günlük touched 28 (ellipsis/MT/sen align, curly quotes, thin exTr); İş touched 5 (bandwidth, good catch siz, take it offline, manage sideways, sunset apostrophe)
+- Gate: `npm run check:gold` (+ `npm run check` runs distractors then gold)
+
 # Changelog
 
 ## Vocab surgery — pass 2

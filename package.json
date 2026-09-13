@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "check:distractors": "node scripts/check-distractors.mjs"
+    "check:distractors": "node scripts/check-distractors.mjs",
+    "check:gold": "node scripts/check-gold-set.mjs",
+    "check": "npm run check:distractors && npm run check:gold"
   },
   "dependencies": {
     "react": "^19.2.8",

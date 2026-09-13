@@ -1,0 +1,646 @@
+[
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "a bit about me",
+    "tr": "kendimden biraz bahsedeyim",
+    "ex": "Before we dive into the agenda, let me share a bit about me.",
+    "exTr": "Gündeme geçmeden önce biraz kendimden bahsedeyim."
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "any plans for the weekend?",
+    "tr": "hafta sonu planın var mı?",
+    "ex": "We're wrapping up early on Friday. Any plans for the weekend?",
+    "exTr": "Cuma günü işi erken bitiriyoruz. Hafta sonu planın var mı?"
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "are you taking any time off?",
+    "tr": "izin yapacak mısın?",
+    "ex": "August is quiet here; are you taking any time off?",
+    "exTr": "Ağustos burada sakin; izin yapacak mısın?"
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "bear with my English",
+    "tr": "İngilizceme biraz katlanın",
+    "ex": "I might mix up a few words, so please bear with my English.",
+    "exTr": "Birkaç kelimeyi karıştırabilirim, İngilizceme biraz katlanın."
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "break the ice",
+    "tr": "buzları eritmek",
+    "ex": "We played a quick intro game to break the ice before the workshop.",
+    "exTr": "Atölye öncesinde buzları eritmek için hızlı bir giriş oyunu oynadık."
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "can you hear me okay?",
+    "tr": "sesimi iyi duyabiliyor musun?",
+    "ex": "I just joined the Zoom. Can you hear me okay?",
+    "exTr": "Zoom'a yeni katıldım. Sesimi iyi duyabiliyor musun?"
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "catch you later",
+    "tr": "sonra görüşürüz",
+    "ex": "I've got another call in two minutes, so I'll catch you later.",
+    "exTr": "İki dakika sonra bir aramam daha var, o yüzden sonra görüşürüz."
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "could you repeat that?",
+    "tr": "tekrar eder misin?",
+    "ex": "Sorry, the audio cut out. Could you repeat that?",
+    "exTr": "Kusura bakma, ses kesildi. Tekrar eder misin?"
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "could you say that again more slowly?",
+    "tr": "biraz daha yavaş tekrar eder misin?",
+    "ex": "The line is noisy on my side. Could you say that again more slowly?",
+    "exTr": "Bu tarafta hat gürültülü. Biraz daha yavaş tekrar eder misin?"
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "English isn't my first language",
+    "tr": "İngilizce anadilim değil",
+    "ex": "I follow most of the discussion, but English isn't my first language.",
+    "exTr": "Tartışmanın çoğunu takip ediyorum ama İngilizce anadilim değil."
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "feel free to ping me anytime",
+    "tr": "istediğin zaman yazabilirsin",
+    "ex": "If anything is unclear, feel free to ping me anytime.",
+    "exTr": "Bir şey net değilse istediğin zaman yazabilirsin."
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "go ahead",
+    "tr": "buyur, sen devam et",
+    "ex": "I'm done with my update. Go ahead whenever you're ready.",
+    "exTr": "Güncellemem bitti. Hazır olduğunda buyur, devam et."
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "great to put a face to the name",
+    "tr": "sonunda yüz yüze gelmek güzel",
+    "ex": "We've emailed for months; it's great to put a face to the name.",
+    "exTr": "Aylardır yazışıyorduk; sonunda yüz yüze gelmek güzel."
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "have a good one",
+    "tr": "iyi günler, kolay gelsin",
+    "ex": "I'm heading out now. Have a good one!",
+    "exTr": "Ben şimdi çıkıyorum. İyi günler, kolay gelsin!"
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "how are you finding it so far?",
+    "tr": "şu ana kadar nasıl buldun?",
+    "ex": "You're three weeks into the role; how are you finding it so far?",
+    "exTr": "Role üç haftadır geçtin; şu ana kadar nasıl buldun?"
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "how have you been settling in?",
+    "tr": "yeni role alışabildin mi?",
+    "ex": "It's been a busy onboarding week. How have you been settling in?",
+    "exTr": "Yoğun bir oryantasyon haftasıydı. Yeni role alışabildin mi?"
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "how long have you been with Uber?",
+    "tr": "Uber'de ne kadardır çalışıyorsun?",
+    "ex": "Over coffee she asked, how long have you been with Uber?",
+    "exTr": "Kahvede sordu: Uber'de ne kadardır çalışıyorsun?"
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "how was your weekend?",
+    "tr": "hafta sonun nasıldı?",
+    "ex": "Monday standup always starts with how was your weekend?",
+    "exTr": "Pazartesi stand-up'ı hep aynı soruyla başlar: Hafta sonun nasıldı?"
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "how's the weather over there?",
+    "tr": "orada hava nasıl?",
+    "ex": "I'm in Istanbul today. How's the weather over there?",
+    "exTr": "Bugün İstanbul'dayım. Orada hava nasıl?"
+  },
+  {
+    "d": 1,
+    "t": "Günlük konuşma",
+    "en": "how's your week going?",
+    "tr": "haftan nasıl gidiyor?",
+    "ex": "Quick check-in before we start: how's your week going?",
+    "exTr": "Başlamadan hızlı check-in: Haftan nasıl gidiyor?"
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "I can relate",
+    "tr": "anlıyorum, ben de yaşadım",
+    "ex": "When she described the onboarding chaos, I said I can relate.",
+    "exTr": "İşe alım kaosunu anlatınca “anlıyorum, ben de yaşadım” dedim."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "I come from a background in...",
+    "tr": "geçmişim ... alanında",
+    "ex": "I come from a background in... payments and distributed systems.",
+    "exTr": "Geçmişim ödemeler ve dağıtık sistemler alanında."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "I think we talked over each other",
+    "tr": "galiba aynı anda konuştuk",
+    "ex": "Hold on a second. I think we talked over each other.",
+    "exTr": "Dur bir saniye. Galiba bir an aynı anda konuştuk."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "I'll follow up with...",
+    "tr": "... ile takip edeceğim",
+    "ex": "After the call I'll follow up with... the vendor on pricing.",
+    "exTr": "Görüşmeden sonra fiyat için satıcıyla takip edeceğim."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "I'll keep it brief",
+    "tr": "kısa tutacağım",
+    "ex": "We're short on time, so I'll keep it brief.",
+    "exTr": "Zamanımız kısıtlı, o yüzden kısa tutacağım."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "I'll let you go",
+    "tr": "seni tutmayayım",
+    "ex": "I know you're busy, so I'll let you go.",
+    "exTr": "Meşgul olduğunu biliyorum, seni daha fazla tutmayayım."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "I'm based in...",
+    "tr": "...'de yaşıyorum",
+    "ex": "I'm based in... Istanbul near the old ferry stop.",
+    "exTr": "İstanbul'da, eski iskele durağının yakınında oturuyorum."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "I'm into...",
+    "tr": "... ile ilgileniyorum",
+    "ex": "I'm into... cooking and long weekend morning runs.",
+    "exTr": "Yemek yapmak ve uzun hafta sonu sabah koşuları ilgimi çekiyor."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "I'm keen to...",
+    "tr": "... konusunda istekliyim",
+    "ex": "I'm keen to... learn more about the local food scene.",
+    "exTr": "Yerel yemek sahnesini daha çok öğrenmeye istekliyim."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "I'm looking forward to...",
+    "tr": "...için sabırsızlanıyorum",
+    "ex": "I'm looking forward to... meeting the Dublin team next month.",
+    "exTr": "Önümüzdeki ay Dublin ekibiyle buluşmak için sabırsızlanıyorum."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "I'm on PTO next week",
+    "tr": "gelecek hafta izindeyim",
+    "ex": "Heads up for planning: I'm on PTO next week.",
+    "exTr": "Planlama için not: Gelecek hafta izindeyim."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "I'm three hours ahead of you",
+    "tr": "senden üç saat ilerideyim",
+    "ex": "For scheduling, remember I'm three hours ahead of you.",
+    "exTr": "Zamanlama için, senden üç saat ileride olduğumu unutma."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "I've heard a lot about you",
+    "tr": "hakkında çok şey duydum",
+    "ex": "Your old teammate said great things. I've heard a lot about you.",
+    "exTr": "Eski takım arkadaşın güzel şeyler anlattı. Hakkında çok şey duydum."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "I've just rotated into this team",
+    "tr": "bu ekibe yeni geçtim",
+    "ex": "Quick intro: I've just rotated into this team.",
+    "exTr": "Kısa giriş: bu ekibe yeni geçtim."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "I've spent the last X years...",
+    "tr": "son X yılı ... geçirdim",
+    "ex": "I've spent the last X years... building consumer apps.",
+    "exTr": "Son X yılı tüketici uygulamaları geliştirerek geçirdim."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "it was great chatting",
+    "tr": "sohbet güzeldi",
+    "ex": "Thanks again for today. It was great chatting.",
+    "exTr": "Bugün için tekrar teşekkürler. Sohbet güzeldi."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "let's do this again",
+    "tr": "bunu tekrar yapalım",
+    "ex": "This was useful; let's do this again next month.",
+    "exTr": "Bu faydalıydı; bunu gelecek ay tekrar yapalım."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "likewise",
+    "tr": "ben de, karşılıklı",
+    "ex": "Great meeting you. Likewise, hope we collaborate soon.",
+    "exTr": "Tanıştığımıza memnun oldum. Ben de, umarım yakında birlikte çalışırız."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "most recently I was working on...",
+    "tr": "en son ... üzerinde çalışıyordum",
+    "ex": "Most recently I was working on... the driver ranking service.",
+    "exTr": "En son sürücü sıralama servisi üzerinde çalışıyordum."
+  },
+  {
+    "d": 2,
+    "t": "Günlük konuşma",
+    "en": "my background is in...",
+    "tr": "geçmişim ... alanında",
+    "ex": "My background is in... distributed systems and ML.",
+    "exTr": "Geçmişim dağıtık sistemler ve ML alanında."
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "my door is always open",
+    "tr": "kapım her zaman açık",
+    "ex": "If anything feels unclear, my door is always open.",
+    "exTr": "Bir şey net değilse kapım her zaman açık."
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "nice to finally meet you",
+    "tr": "sonunda tanıştığımıza sevindim",
+    "ex": "After so many Slack threads, nice to finally meet you.",
+    "exTr": "Bu kadar Slack yazışmasından sonra sonunda tanıştığımıza sevindim."
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "outside of work I...",
+    "tr": "iş dışında ...",
+    "ex": "Outside of work I... cook a lot and run on weekends.",
+    "exTr": "İş dışında çok yemek yaparım, hafta sonları koşarım."
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "same here",
+    "tr": "ben de öyle",
+    "ex": "She said the quarter felt long; I replied same here.",
+    "exTr": "Çeyrek uzun geldi dedi; ben de öyle, dedim."
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "shout if you need anything",
+    "tr": "bir şey lazım olursa seslen",
+    "ex": "I'm around all afternoon, so shout if you need anything.",
+    "exTr": "Bütün öğleden sonra buradayım, bir şeye ihtiyacın olursa seslen."
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "small talk",
+    "tr": "hoşbeş, havadan sudan konuşma",
+    "ex": "I'm still awkward at small talk before meetings.",
+    "exTr": "Toplantılardan önce hoşbeş, havadan sudan konuşmada hâlâ garipim."
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "small world",
+    "tr": "dünya küçük",
+    "ex": "You know my old manager too? Small world!",
+    "exTr": "Eski yöneticimi de tanıyor musun? Dünya küçük!"
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "sorry, go on",
+    "tr": "pardon, devam et",
+    "ex": "I interrupted you there. Sorry, go on with your point.",
+    "exTr": "Sözünü kestim. Üzgünüm, devam et."
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "sorry, I didn't catch that",
+    "tr": "kusura bakma, anlayamadım",
+    "ex": "The audio glitched; sorry, I didn't catch that.",
+    "exTr": "Ses bozuldu; kusura bakma, anlayamadım."
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "sorry, you cut out",
+    "tr": "kusura bakma, sesin kesildi",
+    "ex": "You disappeared for a moment. Sorry, you cut out.",
+    "exTr": "Bir an ortadan kayboldun. Kusura bakma, sesin kesildi."
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "talk soon",
+    "tr": "yakında görüşürüz",
+    "ex": "Let's finalize the draft tomorrow. Talk soon after that.",
+    "exTr": "Taslağı yarın netleştirelim. Ondan sonra yakında görüşürüz."
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "tell me about your journey here",
+    "tr": "buradaki yolculuğunu anlatır mısın",
+    "ex": "In the interview she said, tell me about your journey here.",
+    "exTr": "Görüşmede sordu: buraya nasıl geldin, biraz anlatır mısın?"
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "thanks for making the time",
+    "tr": "vakit ayırdığın için teşekkürler",
+    "ex": "I know calendars are packed. Thanks for making the time.",
+    "exTr": "Takvimlerin dolu olduğunu biliyorum. Vakit ayırdığın için teşekkürler."
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "that's a coincidence",
+    "tr": "ne tesadüf",
+    "ex": "We both lived in Ankara? That's a coincidence.",
+    "exTr": "İkimiz de Ankara'da mı yaşamışız? Ne tesadüf."
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "we have that in common",
+    "tr": "bu ortak noktamız var",
+    "ex": "You also started as an intern? We have that in common.",
+    "exTr": "Sen de stajyer olarak mı başlamıştın? Bu ortak noktamız var."
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "what do you enjoy most about the role?",
+    "tr": "rolde en çok neyi seviyorsun?",
+    "ex": "In the hallway chat she asked, what do you enjoy most about the role?",
+    "exTr": "Koridorda sordu: Rolde en çok neyi seviyorsun?"
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "what do you get up to outside of work?",
+    "tr": "iş dışında ne yaparsın?",
+    "ex": "Over coffee she asked, what do you get up to outside of work?",
+    "exTr": "Kahvede sordu: İş dışında ne yaparsın?"
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "what do you wish you'd known earlier?",
+    "tr": "keşke daha önce bilseydim dediğin ne?",
+    "ex": "Before we wrap: what do you wish you'd known earlier?",
+    "exTr": "Bitirmeden sorayım: Keşke daha önce bilseydim dediğin ne?"
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "what drew me to this team is...",
+    "tr": "beni bu ekibe çeken şey...",
+    "ex": "What drew me to this team is... the ownership culture.",
+    "exTr": "Beni bu ekibe çeken şey sahiplenme kültürü."
+  },
+  {
+    "d": 3,
+    "t": "Günlük konuşma",
+    "en": "what should I be reading?",
+    "tr": "ne okumalıyım?",
+    "ex": "In the 1:1 she asked, what should I be reading?",
+    "exTr": "1:1'de sordu: Ne okumalıyım?"
+  },
+  {
+    "d": 4,
+    "t": "Günlük konuşma",
+    "en": "what's the team culture like?",
+    "tr": "ekip kültürü nasıl?",
+    "ex": "In the interview she asked, what's the team culture like?",
+    "exTr": "Görüşmede sordu: Ekip kültürü nasıl?"
+  },
+  {
+    "d": 4,
+    "t": "Günlük konuşma",
+    "en": "what's your team responsible for?",
+    "tr": "ekibin neyden sorumlu?",
+    "ex": "Quick check while you're here: what's your team responsible for?",
+    "exTr": "Madem buradasın, hızlı soru: ekibin neyden sorumlu?"
+  },
+  {
+    "d": 4,
+    "t": "Günlük konuşma",
+    "en": "who else should I be talking to?",
+    "tr": "başka kimlerle konuşmalıyım?",
+    "ex": "Before we started: who else should I be talking to?",
+    "exTr": "Başlamadan önce: başka kimlerle konuşmalıyım?"
+  },
+  {
+    "d": 4,
+    "t": "Günlük konuşma",
+    "en": "you're breaking up",
+    "tr": "sesin kopuk kopuk geliyor",
+    "ex": "I can only hear every other word. You're breaking up.",
+    "exTr": "Kelimelerin yarısını duyuyorum. Sesin kopuk kopuk geliyor."
+  },
+  {
+    "d": 5,
+    "t": "İş İngilizcesi",
+    "en": "my skip",
+    "tr": "bir üst yönetici",
+    "ex": "If this keeps blocking us, escalate to my skip.",
+    "exTr": "Bu bizi tıkamaya devam ederse bir üst yöneticime, skip'ime çıkarın."
+  },
+  {
+    "d": 11,
+    "t": "İş İngilizcesi",
+    "en": "pulse check",
+    "tr": "nabız yoklama, kısa durum kontrolü",
+    "ex": "Quick pulse check. Is everyone okay with Friday?",
+    "exTr": "Hızlı nabız yoklaması. Cuma herkese uyuyor mu?"
+  },
+  {
+    "d": 17,
+    "t": "İş İngilizcesi",
+    "en": "descope",
+    "tr": "kapsamdan çıkarmak",
+    "ex": "We had to descope dark mode to hit the date.",
+    "morph": "descope ← de- (çıkar) + scope (kapsam)",
+    "exTr": "Tarihi tutturmak için karanlık kipi kapsamdan çıkardık."
+  },
+  {
+    "d": 19,
+    "t": "İş İngilizcesi",
+    "en": "sunset",
+    "tr": "kapatmak, yürürlükten kaldırmak",
+    "ex": "We will sunset the legacy API after the October cutover.",
+    "exTr": "Ekim geçişinden sonra eski API'yi kapatacağız."
+  },
+  {
+    "d": 19,
+    "t": "İş İngilizcesi",
+    "en": "socialize",
+    "tr": "öneriyi paylaşmak",
+    "ex": "Please socialize the proposal with design before the review.",
+    "morph": "socialize ← social + -ize",
+    "exTr": "Lütfen incelemeye geçmeden öneriyi tasarımla paylaşın."
+  },
+  {
+    "d": 5,
+    "t": "İş İngilizcesi",
+    "en": "influence without authority",
+    "tr": "yetki olmadan etkilemek",
+    "ex": "Staff engineers must influence without authority across teams.",
+    "exTr": "Staff mühendisler yetkisi olmadan da diğer ekipleri etkilemek zorunda."
+  },
+  {
+    "d": 5,
+    "t": "İş İngilizcesi",
+    "en": "manage sideways",
+    "tr": "akran ekiplerle yönetmek",
+    "ex": "Staff engineers often manage sideways across partner teams.",
+    "exTr": "Staff mühendisler sık sık komşu ekiplerle yatay yönetirler."
+  },
+  {
+    "d": 4,
+    "t": "İş İngilizcesi",
+    "en": "forcing function",
+    "tr": "zorlayıcı etken",
+    "ex": "The external launch date is a forcing function for scope cuts.",
+    "exTr": "Dış lansman tarihi, kapsam kesmek için bir zorlayıcı etken."
+  },
+  {
+    "d": 6,
+    "t": "İş İngilizcesi",
+    "en": "sandbagging",
+    "tr": "bile bile düşük hedef koymak",
+    "ex": "Sandbagging the forecast this quarter will hurt credibility later.",
+    "morph": "sandbagging ← bilerek düşük hedef koymak",
+    "exTr": "Bu çeyrek tahmini bile bile düşük tutmak sonra güveni zedeler."
+  },
+  {
+    "d": 18,
+    "t": "İş İngilizcesi",
+    "en": "low-hanging fruit",
+    "tr": "kolay kazanım",
+    "ex": "Let's grab the low-hanging fruit in onboarding first.",
+    "exTr": "Önce oryantasyondaki kolay kazanımları alalım."
+  },
+  {
+    "d": 19,
+    "t": "İş İngilizcesi",
+    "en": "skip-level",
+    "tr": "bir üst yöneticiyle görüşme",
+    "ex": "I have a skip-level with the director next Thursday.",
+    "exTr": "Gelecek Perşembe direktörle bir skip-level görüşmem var."
+  },
+  {
+    "d": 18,
+    "t": "İş İngilizcesi",
+    "en": "dry run",
+    "tr": "prova",
+    "ex": "Let's do a dry run of the all-hands deck tomorrow.",
+    "exTr": "Yarın tüm ekip sunumunun provasını yapalım."
+  },
+  {
+    "d": 17,
+    "t": "İş İngilizcesi",
+    "en": "circle back",
+    "tr": "konuya geri dönmek",
+    "ex": "Let's circle back once we have the metrics.",
+    "exTr": "Metrikler gelince konuya geri dönelim."
+  },
+  {
+    "d": 17,
+    "t": "İş İngilizcesi",
+    "en": "bandwidth",
+    "tr": "zaman/enerji kapasitesi",
+    "ex": "I don't have the bandwidth for another project this sprint.",
+    "morph": "bandwidth ← band + width (mecaz: kapasite)",
+    "exTr": "Bu sprint'te başka bir proje için kapasitem yok."
+  },
+  {
+    "d": 18,
+    "t": "İş İngilizcesi",
+    "en": "good catch",
+    "tr": "iyi yakaladınız",
+    "ex": "Good catch. That null check would have bitten us.",
+    "exTr": "İyi yakaladınız. O null kontrolü bizi yakardı."
+  },
+  {
+    "d": 20,
+    "t": "İş İngilizcesi",
+    "en": "take it offline",
+    "tr": "bunu ayrıca konuşalım",
+    "ex": "This is getting detailed; let's take it offline after standup.",
+    "exTr": "Bu konu ayrıntıya kaçıyor; stand-up'tan sonra ayrıca konuşalım."
+  }
+]
