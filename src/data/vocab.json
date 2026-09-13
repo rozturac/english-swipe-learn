@@ -685,7 +685,7 @@
     "t": "İş İngilizcesi",
     "en": "I'd like to align before I take it to...",
     "tr": "...e götürmeden önce hizalanmak isterim",
-    "ex": "I'd like to align before I take it to... the steering group.",
+    "ex": "I'd like to align before I take it to the steering group.",
     "exTr": "Yönlendirme grubuna götürmeden önce hizalanmak isterim."
   },
   {
@@ -1143,7 +1143,7 @@
     "t": "İş İngilizcesi",
     "en": "do we have appetite for...",
     "tr": "...için iştahımız var mı",
-    "ex": "Do we have appetite for... another migration this quarter?",
+    "ex": "Do we have appetite for another migration this quarter?",
     "exTr": "Bu çeyrek başka bir migrasyon için iştahımız var mı?"
   },
   {
@@ -1304,7 +1304,7 @@
     "t": "İş İngilizcesi",
     "en": "I could use your support on...",
     "tr": "şu konuda desteğinize ihtiyacım var",
-    "ex": "I could use your support on... the billing migration next week.",
+    "ex": "I could use your support on the billing migration next week.",
     "exTr": "Gelecek haftaki faturalama migrasyonunda desteğinize ihtiyacım var."
   },
   {
@@ -1336,7 +1336,7 @@
     "t": "İş İngilizcesi",
     "en": "I may be wrong here, but...",
     "tr": "yanılıyor olabilirim ama",
-    "ex": "I may be wrong here, but... the spike started after the deploy.",
+    "ex": "I may be wrong here, but the spike started after the deploy.",
     "exTr": "Yanılıyor olabilirim ama sıçrama deploy’dan sonra başladı."
   },
   {
@@ -1368,7 +1368,7 @@
     "t": "İş İngilizcesi",
     "en": "I'll hand it over to...",
     "tr": "sözü ...'e bırakıyorum",
-    "ex": "I'll hand it over to... Mira for the metrics section.",
+    "ex": "I'll hand it over to Mira for the metrics section.",
     "exTr": "Metrikler bölümü için sözü Mira’ya bırakıyorum."
   },
   {
@@ -1840,8 +1840,8 @@
     "t": "İş İngilizcesi",
     "en": "we're tracking behind",
     "tr": "planın gerisindeyiz",
-    "ex": "She paused the deck and asked, we're tracking behind",
-    "exTr": "Planın gerisindeyiz."
+    "ex": "She paused the deck and asked, \"Are we tracking behind?\"",
+    "exTr": "Sunumu duraklattı ve sordu: \"Planın gerisinde miyiz?\""
   },
   {
     "d": 12,
@@ -1904,7 +1904,7 @@
     "t": "İş İngilizcesi",
     "en": "what's the bar for...",
     "tr": "...için standart nedir",
-    "ex": "What's the bar for... promoting to senior this cycle?",
+    "ex": "What's the bar for promoting to senior this cycle?",
     "exTr": "Bu dönemde senior’a yükselmek için standart nedir?"
   },
   {
@@ -1968,8 +1968,8 @@
     "t": "İş İngilizcesi",
     "en": "across the board",
     "tr": "genelinde, her alanda",
-    "ex": "A better across the board would save us hours each week.",
-    "exTr": "Her hafta gemide daha iyi bir şey bizi saatte kurtaracaktı."
+    "ex": "We're cutting travel budgets across the board this quarter.",
+    "exTr": "Bu çeyrek seyahat bütçelerini her alanda kesiyoruz."
   },
   {
     "d": 13,
@@ -2502,7 +2502,7 @@
     "t": "İş İngilizcesi",
     "en": "happy to...",
     "tr": "seve seve ...yaparım",
-    "ex": "Happy to... walk through the runbook after standup.",
+    "ex": "Happy to walk through the runbook after standup.",
     "exTr": "Ayaküstü toplantıdan sonra runbook’u birlikte gezmeye hazırım."
   },
   {
@@ -2638,8 +2638,8 @@
     "t": "İş İngilizcesi",
     "en": "a tad",
     "tr": "birazcık",
-    "ex": "Let's put a tad on the agenda for Monday.",
-    "exTr": "Pazartesi gündemine ufak bir madde ekleyelim."
+    "ex": "The estimate looks a tad high for a one-week spike.",
+    "exTr": "Tahmin, bir haftalık sıçrama için birazcık yüksek görünüyor."
   },
   {
     "d": 17,
@@ -3145,9 +3145,9 @@
     "t": "İş İngilizcesi",
     "en": "acquisition",
     "tr": "satın alma, devralma",
-    "ex": "Post-acquisition, two roadmaps still haven't merged before Friday.",
+    "ex": "Post-acquisition, the two roadmaps still haven't merged.",
     "morph": "acquisition ← acquire + -tion",
-    "exTr": "Post-acquisition, iki yol hala bir araya gelmedi Cuma’dan önce."
+    "exTr": "Satın alma sonrası iki yol haritası hâlâ birleşmedi."
   },
   {
     "d": 20,
@@ -4321,16 +4321,16 @@
     "t": "İş İngilizcesi",
     "en": "accountable",
     "tr": "hesap verebilir, sorumlu",
-    "ex": "Customers said the flow felt less accountable this week.",
-    "exTr": "Müşteriler akışın bu hafta daha az sorumlu olduğunu söyledi."
+    "ex": "I own this launch. I'm accountable if it slips.",
+    "exTr": "Bu lansmanın sahibi benim. Aksarsa sorumlusu benim."
   },
   {
     "d": 27,
     "t": "İş İngilizcesi",
     "en": "ad hoc",
     "tr": "gelişigüzel, o ana özel",
-    "ex": "We flagged ad hoc as a risk in the weekly review.",
-    "exTr": "Haftalık incelemede bir risk olarak ilan ettik."
+    "ex": "Let's stop the ad hoc requests and route them through the intake form.",
+    "exTr": "Gelişigüzel talepleri bırakalım ve bunları giriş formu üzerinden yönlendirelim."
   },
   {
     "d": 27,
@@ -4345,8 +4345,8 @@
     "t": "İş İngilizcesi",
     "en": "advocate",
     "tr": "savunmak, desteklemek",
-    "ex": "We can't advocate until security signs off before Friday.",
-    "exTr": "Güvenlik işaretlerine kadar savunamayız Cuma’dan önce."
+    "ex": "I'll advocate for the rewrite once security signs off.",
+    "exTr": "Güvenlik onaylayınca yeniden yazımı savunacağım."
   },
   {
     "d": 27,
