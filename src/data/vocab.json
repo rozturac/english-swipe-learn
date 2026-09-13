@@ -1977,7 +1977,7 @@
     "en": "addendum",
     "tr": "ek, ilave belge",
     "ex": "Please read the addendum before signing the offer letter.",
-    "exTr": "Lütfen teklif mektubu imzalamadan önce ek, ilave belge'u okuyun."
+    "exTr": "Teklif mektubunu imzalamadan önce ek belgeyi okuyun."
   },
   {
     "d": 13,
@@ -5778,7 +5778,7 @@
     "en": "addictive",
     "tr": "bağımlılık yapan",
     "ex": "Short feedback loops can feel addictive in a good way.",
-    "exTr": "Kısa geri bildirimler döngüsü iyi bir şekilde bağımlılık hissedebilir."
+    "exTr": "Kısa geri bildirim döngüleri iyi anlamda bağımlılık yapabiliyor."
   },
   {
     "d": 36,
@@ -6141,17 +6141,17 @@
     "d": 38,
     "t": "İş İngilizcesi",
     "en": "absurd",
-    "tr": "varoş",
+    "tr": "saçma, absürt",
     "ex": "The proposed timeline was absurd given the staffing.",
-    "exTr": "Önerilen zaman çizelgesi personele saçma verildi."
+    "exTr": "Önerilen zaman çizelgesi, mevcut kadroya göre saçmaydı."
   },
   {
     "d": 38,
     "t": "İş İngilizcesi",
     "en": "airhead",
-    "tr": "hava koşulları",
+    "tr": "boş kafalı (hakaret)",
     "ex": "Calling a teammate an airhead in Slack is never okay.",
-    "exTr": "Slack'de bir takım arkadaşı aramak asla iyi değildir."
+    "exTr": "Slack'te bir takım arkadaşına airhead demek asla kabul edilemez."
   },
   {
     "d": 38,
