@@ -28,13 +28,18 @@ const COACH_KEY = 'esl-coach-v1'
 
 /** Below-hairline Reels translate — keep in sync with CSS (~450ms correct). */
 const REEL_MS = 450
-/** Wrong/timeout → next: longer, gentler Reels exit/enter. Sync with CSS. */
-const REEL_WRONG_MS = 1700
+/**
+ * Wrong/timeout → next: gentle Reels exit/enter. Sync with CSS.
+ * Fuses former static Doğru cevap dwell (3200) + slide (1700) into one slide
+ * so the teach reveal stays visible on the exiting page while it moves up.
+ */
+const REEL_WRONG_MS = 4900
+/** prefers-reduced-motion wrong path: short fade, not a 4.9s transform. */
+const REEL_WRONG_REDUCED_MS = 1000
 /** Brief feedback before the below-line content turns. */
 const FEEDBACK_OK_MS = 220
-/** Wrong/timeout: brief red on card, then green correct readable hold. */
+/** Wrong/timeout: brief red flash, then teach reveal + immediate gentle exit. */
 const FEEDBACK_LEARN_RED_MS = 280
-const FEEDBACK_LEARN_GREEN_MS = 3200
 const GHOST_KEY = 'esl-ghost-v1'
 
 function wrapIndex(i: number, n: number): number {
@@ -523,8 +528,14 @@ export default function App() {
         })
         goNext(ok, item)
         if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
-        // Reduced motion stays a short fade — do not force the slow slide.
-        const reelMs = prefersReducedMotion() ? REEL_MS : ok ? REEL_MS : REEL_WRONG_MS
+        // Reduced motion: short fade (wrong ~1s); do not force the 4.9s slide.
+        const reelMs = prefersReducedMotion()
+          ? ok
+            ? REEL_MS
+            : REEL_WRONG_REDUCED_MS
+          : ok
+            ? REEL_MS
+            : REEL_WRONG_MS
         reelClearTimer.current = window.setTimeout(() => {
           clearExiting()
         }, reelMs)
@@ -537,7 +548,7 @@ export default function App() {
           finishAdvance(snapSelected, 'correct', null)
         }, FEEDBACK_OK_MS)
       } else {
-        // × on selected, then teach/reveal (neutral + Doğru cevap) ~3200ms.
+        // × flash, then teach/reveal + start gentle exit immediately (no static dwell).
         setFlash('wrong')
         if (nextReveal !== null) setRevealCorrect(nextReveal)
         learnTimer.current = window.setTimeout(() => {
@@ -545,10 +556,9 @@ export default function App() {
           setSelected(snapCorrect)
           setFlash('none')
           if (nextReveal !== null) setRevealCorrect(nextReveal)
-        }, FEEDBACK_LEARN_RED_MS)
-        advanceTimer.current = window.setTimeout(() => {
+          // Exiting snapshot keeps Doğru cevap visible for the full gentle slide.
           finishAdvance(snapCorrect, 'none', nextReveal)
-        }, FEEDBACK_LEARN_RED_MS + FEEDBACK_LEARN_GREEN_MS)
+        }, FEEDBACK_LEARN_RED_MS)
       }
     },
     [

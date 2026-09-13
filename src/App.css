@@ -285,13 +285,13 @@ body,
   animation: reel-page-exit 0.45s var(--reel-out) forwards;
 }
 
-/* Wrong/timeout → next: slower upward slide (success stays 450ms) */
+/* Wrong/timeout → next: dwell+slide fused into one gentle upward (success stays 450ms) */
 .reel-page.is-entering.is-gentle {
-  animation: reel-page-enter 1.7s var(--reel-soft) both;
+  animation: reel-page-enter 4.9s var(--reel-soft) both;
 }
 
 .reel-page.is-exiting.is-gentle {
-  animation: reel-page-exit 1.7s var(--reel-soft) forwards;
+  animation: reel-page-exit 4.9s var(--reel-soft) forwards;
 }
 
 @keyframes reel-page-enter {
@@ -1038,14 +1038,20 @@ body,
 
 
 @media (prefers-reduced-motion: reduce) {
-  .reel-page.is-entering,
-  .reel-page.is-entering.is-gentle {
+  .reel-page.is-entering {
     animation: reel-page-enter-fade 0.3s ease both;
   }
 
-  .reel-page.is-exiting,
-  .reel-page.is-exiting.is-gentle {
+  .reel-page.is-entering.is-gentle {
+    animation: reel-page-enter-fade 1s ease both;
+  }
+
+  .reel-page.is-exiting {
     animation: reel-page-exit-fade 0.3s ease forwards;
+  }
+
+  .reel-page.is-exiting.is-gentle {
+    animation: reel-page-exit-fade 1s ease forwards;
   }
 
   @keyframes reel-page-enter-fade {

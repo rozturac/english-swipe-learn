@@ -1,3 +1,10 @@
+## Mechanics — wrong path: fuse dwell into gentle slide
+
+- No separate static Doğru cevap wait after reveal: red flash (~280ms) → teach on card → immediate gentle Reels up
+- Wrong slide duration = former dwell + slide: **4900ms** (`REEL_WRONG_MS`; CSS `.is-gentle` 4.9s); success stays 450ms
+- Exiting page keeps Doğru cevap visible for the full slide
+- prefers-reduced-motion wrong path: ~1s fade (not 4.9s transform); success fade still ~0.3s
+
 ## Mechanics — wrong Reels even slower + longer Doğru cevap
 
 - Wrong/timeout Reels exit+enter: 800ms → **1700ms** (`--reel-soft`); success stays 450ms
