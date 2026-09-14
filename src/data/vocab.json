@@ -1096,7 +1096,7 @@
     "en": "check in on",
     "tr": "durumunu sormak, takip etmek",
     "ex": "I'll check in on the migration progress tomorrow morning.",
-    "exTr": "Ertesi sabah göç yolunda kontrol edeceğim."
+    "exTr": "Yarın sabah migrasyonun durumuna bakarım."
   },
   {
     "d": 7,
@@ -3259,9 +3259,9 @@
     "d": 21,
     "t": "İş İngilizcesi",
     "en": "bring someone up to speed",
-    "tr": "birini bağlama getirmek",
+    "tr": "birini hızlıca bilgilendirmek",
     "ex": "Can you bring Mira up to speed before the cutover?",
-    "exTr": "Cutover öncesi Mira’yı bağlama getirebilir misiniz?"
+    "exTr": "Cutover öncesi Mira’yı hızlıca bilgilendirebilir misiniz?"
   },
   {
     "d": 21,
@@ -3293,7 +3293,7 @@
     "en": "cadence",
     "tr": "düzenli tempo, periyot",
     "ex": "Our review cadence is every other Friday.",
-    "exTr": "Review tempomuz her iki Cuma biridir."
+    "exTr": "Review tempomuz iki haftada bir Cuma."
   },
   {
     "d": 21,
@@ -3309,7 +3309,7 @@
     "en": "catch sight of",
     "tr": "gözüne ilişmek, fark etmek",
     "ex": "I happened to catch sight of the error in the logs.",
-    "exTr": "Girişlerde hatanın gözünü yakalamak için geldim."
+    "exTr": "Loglarda hatayı rastgele fark ettim."
   },
   {
     "d": 21,
@@ -4435,7 +4435,7 @@
     "en": "breadth and depth",
     "tr": "genişlik ve derinlik",
     "ex": "We need both breadth and depth on this platform team.",
-    "exTr": "Bu platform ekibinde hem ekmek hem de derinliğine ihtiyacımız var."
+    "exTr": "Bu platform ekibinde hem genişlik hem derinlik lazım."
   },
   {
     "d": 28,
