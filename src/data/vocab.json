@@ -2681,16 +2681,16 @@
     "t": "İş İngilizcesi",
     "en": "blast radius",
     "tr": "etki alanı, patlama yarıçapı",
-    "ex": "A better blast radius would save us hours each week.",
-    "exTr": "Daha iyi bir patlama ikizi bizi her hafta saatte kurtaracaktı."
+    "ex": "Limit the blast radius by shipping behind a feature flag.",
+    "exTr": "Feature flag arkasında yayınlayarak etki alanını sınırlayın."
   },
   {
     "d": 17,
     "t": "İş İngilizcesi",
     "en": "blocked on",
     "tr": "...yüzünden takılmış",
-    "ex": "I underestimated how hard blocked on would be.",
-    "exTr": "Ne kadar sert bloke olacağını hafife aldım."
+    "ex": "I'm blocked on legal approval for the new consent copy.",
+    "exTr": "Yeni consent metni için legal onayında takılıyım."
   },
   {
     "d": 17,
@@ -3220,8 +3220,8 @@
     "t": "İş İngilizcesi",
     "en": "best suited",
     "tr": "en uygun",
-    "ex": "A better best suited would save us hours each week.",
-    "exTr": "Daha iyi bir en uygun, her hafta saatlerimizi kurtaracaktır."
+    "ex": "This role is best suited to someone with platform experience.",
+    "exTr": "Bu rol, platform deneyimi olan birine en uygundur."
   },
   {
     "d": 20,
@@ -4402,8 +4402,8 @@
     "t": "İş İngilizcesi",
     "en": "backbone",
     "tr": "belkemiği, omurga",
-    "ex": "Our OKRs now include healthier backbone before Friday.",
-    "exTr": "Bizim OKRs şimdi daha sağlıklı sırt kemiği içeriyor Cuma’dan önce."
+    "ex": "Payments is the backbone of the checkout stack.",
+    "exTr": "Ödemeler, checkout stack’inin belkemiğidir."
   },
   {
     "d": 28,
@@ -4426,8 +4426,8 @@
     "t": "İş İngilizcesi",
     "en": "boost",
     "tr": "artırmak, yükseltmek",
-    "ex": "The playbook reminds teams to boost early before Friday.",
-    "exTr": "Oyun kitabı, ekipleri erken artırmak için hatırlatıyor Cuma’dan önce."
+    "ex": "A clearer CTA should boost conversion on the pricing page.",
+    "exTr": "Daha net bir CTA, pricing sayfasındaki conversion’ı artırmalı."
   },
   {
     "d": 28,
@@ -5801,8 +5801,8 @@
     "t": "İş İngilizcesi",
     "en": "beat someone to it",
     "tr": "birinden önce davranmak",
-    "ex": "She reminded everyone to beat someone to it before cutover.",
-    "exTr": "Herkesi kesmeden önce birine vurmasını hatırlattı."
+    "ex": "I was about to file the bug, but she beat me to it.",
+    "exTr": "Bug’ı açmak üzereydim ama o benden önce davrandı."
   },
   {
     "d": 36,
