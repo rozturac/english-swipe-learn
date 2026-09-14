@@ -3236,8 +3236,8 @@
     "t": "İş İngilizcesi",
     "en": "breakdown",
     "tr": "dağılım, ayrıntılı döküm",
-    "ex": "We flagged breakdown as a risk in the weekly review.",
-    "exTr": "Haftalık incelemede risk olarak bozulduk."
+    "ex": "Can you send a cost breakdown by team?",
+    "exTr": "Ekibe göre bir maliyet dökümü gönderebilir misiniz?"
   },
   {
     "d": 21,
@@ -3260,8 +3260,8 @@
     "t": "İş İngilizcesi",
     "en": "bring someone up to speed",
     "tr": "birini bağlama getirmek",
-    "ex": "She reminded everyone to bring someone up to speed before cutover.",
-    "exTr": "Cutover öncesi herkesi bağlama getirin."
+    "ex": "Can you bring Mira up to speed before the cutover?",
+    "exTr": "Cutover öncesi Mira’yı bağlama getirebilir misiniz?"
   },
   {
     "d": 21,
@@ -3276,24 +3276,24 @@
     "t": "İş İngilizcesi",
     "en": "broken down by",
     "tr": "...e göre ayrıştırılmış",
-    "ex": "Let's put broken down by on the agenda for Monday.",
-    "exTr": "Pazartesi günü gündemin üzerine kıralım."
+    "ex": "Please send the metrics broken down by region.",
+    "exTr": "Lütfen metrikleri bölgeye göre ayrıştırılmış olarak gönderin."
   },
   {
     "d": 21,
     "t": "İş İngilizcesi",
     "en": "by default",
     "tr": "varsayılan olarak",
-    "ex": "That phrase matters here: by default before Friday.",
-    "exTr": "Bu cümle burada önemli: varsayılan olarak Cuma’dan önce."
+    "ex": "Errors are retried twice by default.",
+    "exTr": "Hatalar varsayılan olarak iki kez yeniden denenir."
   },
   {
     "d": 21,
     "t": "İş İngilizcesi",
     "en": "cadence",
     "tr": "düzenli tempo, periyot",
-    "ex": "Our review cadence is every other Friday before Friday.",
-    "exTr": "Yorumumuz her Cuma günü Cuma’dan önce."
+    "ex": "Our review cadence is every other Friday.",
+    "exTr": "Review tempomuz her iki Cuma biridir."
   },
   {
     "d": 21,
@@ -4442,8 +4442,8 @@
     "t": "İş İngilizcesi",
     "en": "breathing room",
     "tr": "nefes alacak alan",
-    "ex": "I underestimated how hard breathing room would be.",
-    "exTr": "Ne kadar sert nefes odası olacağını hafife aldım."
+    "ex": "We need breathing room in the schedule before launch.",
+    "exTr": "Launch öncesi takvimde nefes alacak alana ihtiyacımız var."
   },
   {
     "d": 28,
