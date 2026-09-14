@@ -2009,8 +2009,8 @@
     "t": "İş İngilizcesi",
     "en": "check the boxes",
     "tr": "kutucukları doldurmak",
-    "ex": "If we don't check the boxes now, the SEV will grow.",
-    "exTr": "Şimdi kutuları kontrol edemiyorsak, SEV büyüyecek."
+    "ex": "Don't just check the boxes. Verify the rollback path works.",
+    "exTr": "Sadece kutucukları doldurmayın. Rollback yolunun çalıştığını doğrulayın."
   },
   {
     "d": 13,
@@ -2705,8 +2705,8 @@
     "t": "İş İngilizcesi",
     "en": "chill out",
     "tr": "sakinleşmek, rahatlamak",
-    "ex": "She asked me to chill out the draft tonight.",
-    "exTr": "Bu gece taslağını üşütmemi istedi."
+    "ex": "Chill out. The SEV is contained.",
+    "exTr": "Sakin olun. SEV kontrol altında."
   },
   {
     "d": 17,
@@ -4458,24 +4458,24 @@
     "t": "İş İngilizcesi",
     "en": "byproduct",
     "tr": "yan ürün",
-    "ex": "I added byproduct to the decision log before Friday.",
-    "exTr": "Karar gününe ürün ekledim Cuma’dan önce."
+    "ex": "Tech debt was a byproduct of shipping so fast.",
+    "exTr": "Tech debt, bu kadar hızlı ship etmenin bir yan ürünüydü."
   },
   {
     "d": 28,
     "t": "İş İngilizcesi",
     "en": "chaotic",
     "tr": "kaotik, düzensiz",
-    "ex": "His update was clear, concise, and chaotic before Friday.",
-    "exTr": "Onun güncellemesi açıktı, koncise ve kaotik Cuma’dan önce."
+    "ex": "The on-call week felt chaotic after the region failed.",
+    "exTr": "Bölge düştükten sonra on-call haftası kaotik hissettirdi."
   },
   {
     "d": 28,
     "t": "İş İngilizcesi",
     "en": "charter",
     "tr": "görev alanı, yetki kapsamı",
-    "ex": "A charter plan beats a perfect slide deck.",
-    "exTr": "Bir charter planı mükemmel bir slayt güvertesini yendi."
+    "ex": "We need a clear team charter before we hire.",
+    "exTr": "İşe almadan önce net bir ekip charter’ına ihtiyacımız var."
   },
   {
     "d": 28,
@@ -5825,8 +5825,8 @@
     "t": "İş İngilizcesi",
     "en": "chime in",
     "tr": "söze katılmak, araya girmek",
-    "ex": "She asked me to chime in the draft tonight.",
-    "exTr": "Bu gece taslakta chime'ye sormamı istedi."
+    "ex": "Feel free to chime in if I'm missing context.",
+    "exTr": "Bağlamı kaçırıyorsam çekinmeden chime in edin."
   },
   {
     "d": 36,
