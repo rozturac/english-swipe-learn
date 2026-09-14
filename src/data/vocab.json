@@ -1064,7 +1064,7 @@
     "en": "bounce ideas off someone",
     "tr": "biriyle fikir konuşmak",
     "ex": "Can I bounce ideas off someone before the design review?",
-    "exTr": "Tasarım review'undan önce seninle fikir konuşabilir miyim?"
+    "exTr": "Tasarım review’undan önce biriyle fikir konuşabilir miyim?"
   },
   {
     "d": 7,
@@ -2674,7 +2674,7 @@
     "tr": "önemsiz ayrıntıda tartışıp asıl konuyu atlamak",
     "ex": "We're bikeshedding button colors while the outage continues.",
     "morph": "bikeshedding ← önemsiz ayrıntıda takılma",
-    "exTr": "Outage devam ederken bisikletli düğme renkleriyiz."
+    "exTr": "Kesinti sürerken düğme renklerinde bikeshedding yapıyoruz."
   },
   {
     "d": 17,
@@ -4419,7 +4419,7 @@
     "en": "bias for action",
     "tr": "harekete geçme eğilimi",
     "ex": "We value a bias for action when the data is incomplete.",
-    "exTr": "Veriler eksik olduğunda eylem için bir önyargıya değer veriyoruz."
+    "exTr": "Veri eksikken bile harekete geçme eğilimine (bias for action) değer veririz."
   },
   {
     "d": 28,
@@ -5810,7 +5810,7 @@
     "en": "beyond that",
     "tr": "bunun ötesinde, ayrıca",
     "ex": "The API is fast; beyond that, the docs still need work.",
-    "exTr": "API hızla; bunun ötesinde, docs hala işe ihtiyaç duyuyor."
+    "exTr": "API hızlı; bunun ötesinde dokümanlar hâlâ iş ister."
   },
   {
     "d": 36,
@@ -5818,7 +5818,7 @@
     "en": "bluntly",
     "tr": "dobra dobra, açık açık",
     "ex": "She put it bluntly: the design isn't ready.",
-    "exTr": "Bunu açıkça koydu: tasarım hazır değil."
+    "exTr": "Dobra dobra söyledi: tasarım hazır değil."
   },
   {
     "d": 36,
