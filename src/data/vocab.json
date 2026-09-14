@@ -2002,7 +2002,7 @@
     "en": "attain funding",
     "tr": "kaynak/bütçe elde etmek",
     "ex": "We can't attain funding until security signs off.",
-    "exTr": "Güvenlik işaretlerine kadar finansman elde edemeyiz."
+    "exTr": "Güvenlik onaylayana kadar bütçe / funding alamayız."
   },
   {
     "d": 13,
@@ -3172,7 +3172,7 @@
     "tr": "öngörmek, beklemek",
     "ex": "I anticipate pushback from finance on the headcount.",
     "morph": "anticipate ← ante- + capere",
-    "exTr": "Başkonsoloslukta finanstan geri almayı bekliyorum."
+    "exTr": "Headcount’ta finanstan itiraz geleceğini öngörüyorum."
   },
   {
     "d": 20,
@@ -3180,7 +3180,7 @@
     "en": "appeal",
     "tr": "itiraz etmek",
     "ex": "You can appeal the rating within two weeks.",
-    "exTr": "Puanı iki hafta içinde itiraz etmek edebilirsiniz."
+    "exTr": "Puana iki hafta içinde itiraz edebilirsiniz."
   },
   {
     "d": 20,
@@ -3188,7 +3188,7 @@
     "en": "arise",
     "tr": "ortaya çıkmak",
     "ex": "If conflicts arise, escalate early. Don't wait.",
-    "exTr": "Çatışmalar ortaya çıkarsa erken yükseltin. Beklemeyin."
+    "exTr": "Çatışmalar çıkarsa erkenden yukarı taşıyın. Beklemeyin."
   },
   {
     "d": 20,
@@ -3197,7 +3197,7 @@
     "tr": "varsayım",
     "ex": "Call out every assumption in the design doc.",
     "morph": "assumption ← assume + -tion",
-    "exTr": "Tasarımda her varsayımı arayın."
+    "exTr": "Tasarım dokümanındaki her varsayımı açıkça belirtin."
   },
   {
     "d": 20,
@@ -3213,7 +3213,7 @@
     "en": "attendee",
     "tr": "katılımcı",
     "ex": "Add each attendee to the notes so follow-ups land.",
-    "exTr": "Her bir katılımcıyı notlara ekleyin, böylece takip eden topraklar."
+    "exTr": "Her katılımcıyı notlara ekleyin ki follow-up’lar yerini bulsun."
   },
   {
     "d": 20,
