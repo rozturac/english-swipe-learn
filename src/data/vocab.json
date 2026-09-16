@@ -1999,9 +1999,9 @@
   {
     "d": 13,
     "t": "İş İngilizcesi",
-    "en": "attain funding",
+    "en": "secure funding",
     "tr": "kaynak/bütçe elde etmek",
-    "ex": "We can't attain funding until security signs off.",
+    "ex": "We can't secure funding until security signs off.",
     "exTr": "Güvenlik onaylayana kadar bütçe / funding alamayız."
   },
   {
@@ -2040,9 +2040,9 @@
   {
     "d": 13,
     "t": "İş İngilizcesi",
-    "en": "compact argument",
+    "en": "tight argument",
     "tr": "sıkı, kısa argüman",
-    "ex": "Bring a compact argument, not a twenty-slide deck.",
+    "ex": "Bring a tight argument, not a twenty-slide deck.",
     "exTr": "Yirmi slaytlık sunum değil, sıkı bir argüman getir."
   },
   {
@@ -2125,17 +2125,17 @@
   {
     "d": 14,
     "t": "İş İngilizcesi",
-    "en": "impact horizon",
+    "en": "time horizon",
     "tr": "etki ufku / etki süresi",
-    "ex": "What's the impact horizon if we delay the cutover?",
+    "ex": "What's the time horizon if we delay the cutover?",
     "exTr": "Cutover’ı ertelersek etki ne kadar uzağa yayılır?"
   },
   {
     "d": 14,
     "t": "İş İngilizcesi",
-    "en": "impact resume",
+    "en": "impact log",
     "tr": "etki özeti",
-    "ex": "Update your impact resume before the promotion packet.",
+    "ex": "Update your impact log before the promotion packet.",
     "exTr": "Terfi dosyasından önce etki özetini güncelle."
   },
   {
@@ -2185,9 +2185,9 @@
   {
     "d": 14,
     "t": "İş İngilizcesi",
-    "en": "keystone contribution",
+    "en": "key contribution",
     "tr": "kilit katkı",
-    "ex": "Her keystone contribution unblocked three dependent teams.",
+    "ex": "Her key contribution unblocked three dependent teams.",
     "exTr": "Onun kilit katkısı üç bağımlı ekibin önünü açtı."
   },
   {
@@ -2202,9 +2202,9 @@
     "d": 14,
     "t": "İş İngilizcesi",
     "en": "leverage",
-    "tr": "kaldıraç etkisi, güç",
+    "tr": "kaldıraç (finans)",
     "ex": "Finance pushed back on the cost of leverage.",
-    "exTr": "Finans, kaldıraç etkisi, güç pahasına geri itti."
+    "exTr": "Finans, kaldıraç maliyetine itiraz etti."
   },
   {
     "d": 14,
@@ -2251,9 +2251,9 @@
   {
     "d": 14,
     "t": "İş İngilizcesi",
-    "en": "of itself",
+    "en": "in itself",
     "tr": "kendi başına",
-    "ex": "The bug was minor of itself, but it blocked checkout.",
+    "ex": "The bug was minor in itself, but it blocked checkout.",
     "exTr": "Bug kendi küçüktü, ama checkout engelledi."
   },
   {
@@ -3745,9 +3745,9 @@
   {
     "d": 24,
     "t": "İş İngilizcesi",
-    "en": "lay the tracks as the train is moving",
+    "en": "building the plane while flying it",
     "tr": "tren giderken rayları döşemek",
-    "ex": "I blocked time after lunch to lay the tracks as the train is moving.",
+    "ex": "We're building the plane while flying it on this migration.",
     "exTr": "Tren hareket ettiği gibi parçaları bırakmak için öğle yemeğini engelledim."
   },
   {
@@ -3980,9 +3980,9 @@
   {
     "d": 25,
     "t": "İş İngilizcesi",
-    "en": "put in sweat",
+    "en": "put in the work",
     "tr": "emek vermek, ter dökmek",
-    "ex": "We put in sweat on the migration all weekend.",
+    "ex": "We put in the work on the migration all weekend.",
     "exTr": "Tüm hafta sonu migrasyona emek verdik."
   },
   {
@@ -4080,14 +4080,6 @@
     "tr": "halletmek, çözmek",
     "ex": "I'll sort out the update before standup.",
     "exTr": "Standup'tan önce güncellemeyi hallederim."
-  },
-  {
-    "d": 26,
-    "t": "İş İngilizcesi",
-    "en": "span across",
-    "tr": "yayılmak, kapsamak",
-    "ex": "Her responsibilities span across product and ops.",
-    "exTr": "Sorumlulukları ürün ve operasyonlara yayılıyor."
   },
   {
     "d": 26,
@@ -6383,7 +6375,7 @@
     "d": 40,
     "t": "Genel",
     "en": "chamber",
-    "tr": "çember",
+    "tr": "oda, hazne, bölme",
     "ex": "Echoes filled the stone chamber under the castle.",
     "exTr": "Echoes kalenin altındaki taş odayı doldurdu."
   },
@@ -6505,17 +6497,17 @@
     "d": 41,
     "t": "Genel",
     "en": "conscripted",
-    "tr": "bedelli",
+    "tr": "zorunlu askere alınan",
     "ex": "He was conscripted during the war in his twenties.",
-    "exTr": "O, yirmili yaşlarındaki savaşta tasvir edildi."
+    "exTr": "Yirmili yaşlarında savaşta zorunlu askere alındı."
   },
   {
     "d": 41,
     "t": "Genel",
     "en": "considerable",
-    "tr": "yeterli",
+    "tr": "hatırı sayılır, epeyce",
     "ex": "We still need a considerable buffer for testing.",
-    "exTr": "Hala test için önemli bir tampona ihtiyacımız var."
+    "exTr": "Test için hâlâ hatırı sayılır bir tampon lazım."
   },
   {
     "d": 41,
@@ -6754,9 +6746,9 @@
     "d": 42,
     "t": "Genel",
     "en": "effort",
-    "tr": "gücün yetmesi",
+    "tr": "çaba, emek",
     "ex": "We argued about effort over dinner last night.",
-    "exTr": "Geçen gece akşam akşam akşam yemeği üzerinde çaba tartıştık."
+    "exTr": "Dün akşam yemekte çaba / effort üzerine tartıştık."
   },
   {
     "d": 42,
@@ -7326,9 +7318,9 @@
   {
     "d": 46,
     "t": "Genel",
-    "en": "lately = recently",
+    "en": "lately",
     "tr": "son zamanlarda",
-    "ex": "He pushed back lately = recently, then offered a compromise.",
+    "ex": "He pushed back lately, then offered a compromise.",
     "exTr": "Son zamanlarda geri itti = son zamanlarda, bir uzlaşma teklif etti."
   },
   {
@@ -7584,9 +7576,9 @@
   {
     "d": 48,
     "t": "Genel",
-    "en": "on end on",
+    "en": "on end",
     "tr": "durmaksızın, sürekli",
-    "ex": "She asked me to on end on the draft tonight.",
+    "ex": "She edited the draft for hours on end tonight.",
     "exTr": "Bu gece taslakta sona erdirmemi istedi."
   },
   {
@@ -7929,17 +7921,17 @@
   {
     "d": 50,
     "t": "Genel",
-    "en": "self confidence",
+    "en": "self-confidence",
     "tr": "özgüven",
-    "ex": "She pointed to self confidence as the real issue.",
+    "ex": "She pointed to self-confidence as the real issue.",
     "exTr": "Gerçek sorun olarak kendi güvenine işaret etti."
   },
   {
     "d": 50,
     "t": "Genel",
-    "en": "self esteem",
+    "en": "self-esteem",
     "tr": "özgüven",
-    "ex": "She pointed to self esteem as the real issue.",
+    "ex": "She pointed to self-esteem as the real issue.",
     "exTr": "Gerçek konu olarak kendi saygınlığına işaret etti."
   },
   {
@@ -9516,9 +9508,9 @@
     "d": 60,
     "t": "Genel",
     "en": "fortune",
-    "tr": "kader",
+    "tr": "şans, talih",
     "ex": "We had the good fortune of clear weather.",
-    "exTr": "Açık havanın iyi serveti vardı."
+    "exTr": "Açık hava şansımız yaver gitti."
   },
   {
     "d": 60,
@@ -9528,14 +9520,6 @@
     "ex": "The memorial teaches visitors about the genocide today.",
     "morph": "genocide ← geno- + -cide",
     "exTr": "Anıt, kurbanları soykırım hakkında öğretir bugün."
-  },
-  {
-    "d": 60,
-    "t": "Genel",
-    "en": "gipsy",
-    "tr": "çingene",
-    "ex": "The old novel used the dated word gipsy.",
-    "exTr": "Eski roman, tarihli kelimeyi çingene kullandı."
   },
   {
     "d": 61,
@@ -9621,7 +9605,7 @@
     "d": 61,
     "t": "Genel",
     "en": "liver",
-    "tr": "kara ciğer",
+    "tr": "karaciğer",
     "ex": "The doctor checked his liver enzymes carefully today.",
     "exTr": "Doktor karaciğer enzimlerini dikkatle kontrol etti bugün."
   },
@@ -9629,9 +9613,9 @@
     "d": 61,
     "t": "Genel",
     "en": "loaf",
-    "tr": "tam ekmek",
+    "tr": "somun",
     "ex": "I bought a fresh loaf from the corner bakery.",
-    "exTr": "Köşe fırından taze bir tam ekmek aldım."
+    "exTr": "Köşe fırından taze bir somun aldım."
   },
   {
     "d": 61,
@@ -9790,7 +9774,7 @@
     "d": 62,
     "t": "Genel",
     "en": "slums",
-    "tr": "kara mahalle",
+    "tr": "gecekondu bölgesi, varoş",
     "ex": "We argued about slums over dinner last night.",
     "exTr": "Geçen gece akşam akşam akşam akşam akşam yemeğinin üstünden bahsettik."
   },
