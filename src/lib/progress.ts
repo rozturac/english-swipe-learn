@@ -179,6 +179,12 @@ export type SessionBucket =
   | 'review'
   | 'known'
 
+/** UI-facing mix lane from LD-v1 room targets (3 due-wrong / 3 new / 2 known). */
+export type MixTag = 'new' | 'dueWrong' | 'known'
+
+/** Session queue card: vocab + mix tag set at pick time (not re-guessed in UI). */
+export type SessionQueued = VocabItem & { mix: MixTag }
+
 export function classifyBucket(
   item: VocabItem,
   progress: ProgressMap,
@@ -225,7 +231,7 @@ export function pickSession(
   vocab: VocabItem[],
   progress: ProgressMap,
   opts: PickSessionOpts = {},
-): VocabItem[] {
+): SessionQueued[] {
   const pool = opts.theme ? vocab.filter((x) => x.t === opts.theme) : vocab
   const now = opts.now ?? Date.now()
   const missedList =
@@ -251,7 +257,7 @@ export function pickSession(
   if (cold) {
     const news = [...buckets.new].sort((a, b) => a.d - b.d)
     shuffleInPlace(news)
-    return takeUnique(news, SESSION_SIZE)
+    return takeUnique(news, SESSION_SIZE).map((item) => ({ ...item, mix: 'new' as const }))
   }
 
   // Sort / soft-shuffle within buckets.
@@ -277,57 +283,58 @@ export function pickSession(
   const hasFresh = buckets.new.length + buckets.learning.length > 0
   const dueWrongCap = hasFresh ? DUE_WRONG_CAP_WITH_FRESH : SESSION_SIZE
 
-  const picked: VocabItem[] = []
+  const picked: SessionQueued[] = []
   const usedEn = new Set<string>()
   const usedTr = new Set<string>()
 
-  const tryTake = (item: VocabItem): boolean => {
+  const tryTake = (item: VocabItem, mix: MixTag): boolean => {
     if (picked.length >= SESSION_SIZE) return false
     if (usedEn.has(item.en) || usedTr.has(item.exTr)) return false
     usedEn.add(item.en)
     usedTr.add(item.exTr)
-    picked.push(item)
+    picked.push({ ...item, mix })
     return true
   }
 
-  const takeFrom = (list: VocabItem[], n: number): number => {
+  const takeFrom = (list: VocabItem[], n: number, mix: MixTag): number => {
     let took = 0
     for (const item of list) {
       if (took >= n) break
-      if (tryTake(item)) took++
+      if (tryTake(item, mix)) took++
     }
     return took
   }
 
   // due-wrong = wrong ∪ review (wrong first, then most-overdue review).
   const dueWrongTarget = Math.min(TARGET_DUE_WRONG, dueWrongCap)
-  const wrongCount = takeFrom(buckets.wrong, dueWrongTarget)
+  const wrongCount = takeFrom(buckets.wrong, dueWrongTarget, 'dueWrong')
   const reviewCount = takeFrom(
     buckets.review,
     Math.max(0, dueWrongTarget - wrongCount),
+    'dueWrong',
   )
 
   // new (then learning if short)
-  const newCount = takeFrom(buckets.new, TARGET_NEW)
+  const newCount = takeFrom(buckets.new, TARGET_NEW, 'new')
   if (newCount < TARGET_NEW) {
-    takeFrom(buckets.learning, TARGET_NEW - newCount)
+    takeFrom(buckets.learning, TARGET_NEW - newCount, 'new')
   }
 
   // known
-  takeFrom(knownOrdered, TARGET_KNOWN)
+  takeFrom(knownOrdered, TARGET_KNOWN, 'known')
 
-  // Backfill: learning → known → new → review → wrong
-  if (picked.length < SESSION_SIZE) takeFrom(buckets.learning, SESSION_SIZE - picked.length)
-  if (picked.length < SESSION_SIZE) takeFrom(knownOrdered, SESSION_SIZE - picked.length)
-  if (picked.length < SESSION_SIZE) takeFrom(buckets.new, SESSION_SIZE - picked.length)
+  // Backfill: learning → known → new → review → wrong (tag by fill lane).
+  if (picked.length < SESSION_SIZE) takeFrom(buckets.learning, SESSION_SIZE - picked.length, 'new')
+  if (picked.length < SESSION_SIZE) takeFrom(knownOrdered, SESSION_SIZE - picked.length, 'known')
+  if (picked.length < SESSION_SIZE) takeFrom(buckets.new, SESSION_SIZE - picked.length, 'new')
   if (picked.length < SESSION_SIZE) {
     const extraReview = Math.min(
       dueWrongCap - (wrongCount + reviewCount),
       SESSION_SIZE - picked.length,
     )
-    if (extraReview > 0) takeFrom(buckets.review, extraReview)
+    if (extraReview > 0) takeFrom(buckets.review, extraReview, 'dueWrong')
   }
-  if (picked.length < SESSION_SIZE) takeFrom(buckets.wrong, SESSION_SIZE - picked.length)
+  if (picked.length < SESSION_SIZE) takeFrom(buckets.wrong, SESSION_SIZE - picked.length, 'dueWrong')
 
   // Tag items by bucket for interleave (from original classification).
   const bucketOf = new Map<string, SessionBucket>()
@@ -337,7 +344,7 @@ export function pickSession(
 
   // Round-robin: wrong → new → review → learning → known (no wrong clump).
   const lanes: SessionBucket[] = ['wrong', 'new', 'review', 'learning', 'known']
-  const queues: Record<SessionBucket, VocabItem[]> = {
+  const queues: Record<SessionBucket, SessionQueued[]> = {
     new: [],
     wrong: [],
     learning: [],
@@ -348,7 +355,7 @@ export function pickSession(
     queues[bucketOf.get(item.en) ?? 'new'].push(item)
   }
 
-  const ordered: VocabItem[] = []
+  const ordered: SessionQueued[] = []
   while (ordered.length < picked.length) {
     let progressed = false
     for (const lane of lanes) {
@@ -376,6 +383,23 @@ function takeUnique(items: VocabItem[], n: number): VocabItem[] {
     out.push(item)
   }
   return out
+}
+
+/** Count mix tags from a picked session (for start chips). */
+export function countMix(session: ReadonlyArray<{ mix: MixTag }>): {
+  due: number
+  yeni: number
+  known: number
+} {
+  let due = 0
+  let yeni = 0
+  let known = 0
+  for (const x of session) {
+    if (x.mix === 'dueWrong') due++
+    else if (x.mix === 'new') yeni++
+    else known++
+  }
+  return { due, yeni, known }
 }
 
 export function recordAnswer(

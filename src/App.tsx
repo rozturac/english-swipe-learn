@@ -10,12 +10,15 @@ import {
   PRIMARY_DECKS,
   RETRY_SIZE,
   SESSION_LEN,
+  countMix,
   loadDeckPref,
   loadProgress,
   pickSession,
   recordAnswer,
   saveDeckPref,
+  type MixTag,
   type OpenDeck,
+  type SessionQueued,
 } from './lib/progress'
 import type { FlashKind, ProgressMap, VocabItem } from './types'
 import './App.css'
@@ -127,6 +130,11 @@ function prefersReducedMotion(): boolean {
   } catch {
     return false
   }
+}
+
+
+function withMix(item: VocabItem, mix: MixTag): SessionQueued {
+  return { ...item, mix }
 }
 
 /** Snapshot of below-hairline play content for the exiting reel page. */
@@ -255,7 +263,7 @@ export default function App() {
   const [, setProgress] = useState<ProgressMap>(() => loadProgress())
   const [deck, setDeck] = useState<OpenDeck>(() => loadDeckPref())
   const [pickingDeck, setPickingDeck] = useState(() => loadCoachSeen())
-  const [queue, setQueue] = useState<VocabItem[]>([])
+  const [queue, setQueue] = useState<SessionQueued[]>([])
   const [doneCount, setDoneCount] = useState(0)
   const [selected, setSelected] = useState(0)
   const [options, setOptions] = useState<string[]>([])
@@ -274,6 +282,10 @@ export default function App() {
   const [timerSec, setTimerSec] = useState<TimerSec>(loadTimerPref)
   const [remain, setRemain] = useState<number | null>(null)
   const [score, setScore] = useState({ ok: 0, wrong: 0 })
+  /** Composition chips from pickSession tags (not live score). */
+  const [mixCounts, setMixCounts] = useState({ due: 0, yeni: 0, known: 0 })
+  /** End one-liner outcomes: pekişti / kaygan / yeni seen. */
+  const [outcomes, setOutcomes] = useState({ pekisti: 0, kaygan: 0, yeni: 0 })
   const [missed, setMissed] = useState<VocabItem[]>([])
   const [sessionLen, setSessionLen] = useState(SESSION_LEN)
   const [showCoach, setShowCoach] = useState(() => !loadCoachSeen())
@@ -395,7 +407,7 @@ export default function App() {
   }, [])
 
   const beginSession = useCallback(
-    (next: VocabItem[]) => {
+    (next: SessionQueued[]) => {
       if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
       if (learnTimer.current) window.clearTimeout(learnTimer.current)
       if (streakChipTimer.current) window.clearTimeout(streakChipTimer.current)
@@ -412,6 +424,8 @@ export default function App() {
       sessionLenRef.current = Math.max(1, next.length)
       setSessionLen(sessionLenRef.current)
       setQueue(next)
+      setMixCounts(countMix(next))
+      setOutcomes({ pekisti: 0, kaygan: 0, yeni: 0 })
       setDoneCount(0)
       doneRef.current = 0
       setScore({ ok: 0, wrong: 0 })
@@ -499,11 +513,11 @@ export default function App() {
     }
     // Dedupe by en, keep order — retry may intentionally re-show prior EN
     const seen = new Set<string>()
-    const mini: VocabItem[] = []
+    const mini: SessionQueued[] = []
     for (const m of missed) {
       if (seen.has(m.en)) continue
       seen.add(m.en)
-      mini.push(m)
+      mini.push(withMix(m, 'dueWrong'))
       if (mini.length >= RETRY_SIZE) break
     }
     if (!retryRunRef.current) {
@@ -535,7 +549,7 @@ export default function App() {
       return
     }
 
-    let nextQueue: VocabItem[] = []
+    let nextQueue: SessionQueued[] = []
     setQueue((q) => {
       const rest = q.slice(1)
       // Main session stays unique by en — wrongs go to retry CTA, not requeue.
@@ -595,6 +609,13 @@ export default function App() {
         return next
       })
       setScore(nextScore)
+      setOutcomes((o) => {
+        const next = { ...o }
+        if (current.mix === 'new') next.yeni += 1
+        if (!ok) next.kaygan += 1
+        else if (current.mix === 'dueWrong' || current.mix === 'known') next.pekisti += 1
+        return next
+      })
       if (!ok) {
         setMissed((m) => (m.some((x) => x.en === current.en) ? m : [...m, current]))
       }
@@ -1008,14 +1029,10 @@ export default function App() {
     onClick: (e: MouseEvent) => e.stopPropagation(),
   }
 
-  const answered = score.ok + score.wrong
-  const accuracy = answered > 0 ? Math.round((score.ok / answered) * 100) : 0
-
   const progressText = `${Math.min(doneCount, sessionLen)} / ${sessionLen} cümle`
   const showSessionEnd = sessionOver && !exiting && !pickingDeck
   const showPicker = pickingDeck && !showCoach && !showSessionEnd
   const deckShort = DECK_SHORT[deck] ?? deck
-  const missedPreview = missed.slice(0, 4)
   const reviewSnap =
     reviewIndex !== null ? (history[reviewIndex] ?? null) : null
   const showReviewHint = history.length > 0 && !reviewing && !reeling
@@ -1110,14 +1127,25 @@ export default function App() {
         <header className="topbar">
           <div className="progress-row">
             <div className="progress">{progressText}</div>
-            <div
-              className="session-score"
-              aria-label={`Bildin ${score.ok}, Bilemedin ${score.wrong}`}
-            >
-              <span className="score-ok">✓ {score.ok}</span>
-              <span className="score-sep">·</span>
-              <span className="score-bad">× {score.wrong}</span>
-            </div>
+            {!showPicker && !showCoach && !showSessionEnd ? (
+              <div
+                className="mix-chips"
+                aria-label={`Due ${mixCounts.due}, Yeni ${mixCounts.yeni}, Bildiğin ${mixCounts.known}`}
+              >
+                <span className="mix-chip due">
+                  <span className="mix-num">{mixCounts.due}</span>
+                  <span className="mix-label">Due</span>
+                </span>
+                <span className="mix-chip yeni">
+                  <span className="mix-num">{mixCounts.yeni}</span>
+                  <span className="mix-label">Yeni</span>
+                </span>
+                <span className="mix-chip known">
+                  <span className="mix-num">{mixCounts.known}</span>
+                  <span className="mix-label">Bildiğin</span>
+                </span>
+              </div>
+            ) : null}
           </div>
         </header>
 
@@ -1192,34 +1220,15 @@ export default function App() {
           <div className="session-end">
             <div className="session-end-card">
               <p className="session-end-kicker">Oturum tamam</p>
-              <h1>
-                {accuracy >= 75
-                  ? 'Tebrikler'
-                  : `Oturum bitti — ${score.wrong} kalıp kaçtı`}
-              </h1>
-              <p className="session-end-sub">
-                {deckShort} · {sessionLen} cümle · {accuracy}% isabet
+              <p className="session-end-line">
+                Bugün: {outcomes.pekisti} pekişti · {outcomes.kaygan} kaygan ·{' '}
+                {outcomes.yeni} yeni
               </p>
-              {missedPreview.length > 0 && (
-                <p className="session-end-missed" title={missed.map((m) => m.en).join(', ')}>
-                  Kaçan: {missedPreview.map((m) => m.en).join(' · ')}
-                  {missed.length > 4 ? '…' : ''}
-                </p>
+              {outcomes.kaygan > 0 ? (
+                <p className="session-end-micro">yarın geri gelir</p>
+              ) : (
+                <p className="session-end-sub">{deckShort} · {sessionLen} cümle</p>
               )}
-              <div className="session-end-stats">
-                <div className="stat-pill ok">
-                  <span className="stat-num">✓ {score.ok}</span>
-                  <span className="stat-label">doğru</span>
-                </div>
-                <div className="stat-pill bad">
-                  <span className="stat-num">✗ {score.wrong}</span>
-                  <span className="stat-label">yanlış</span>
-                </div>
-                <div className="stat-pill acc">
-                  <span className="stat-num">{accuracy}%</span>
-                  <span className="stat-label">isabet</span>
-                </div>
-              </div>
               <button
                 type="button"
                 className="primary"

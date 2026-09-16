@@ -182,6 +182,61 @@ body,
 .score-bad { color: var(--danger); }
 .score-sep { color: var(--muted-2); opacity: 0.85; font-weight: 500; }
 
+/* Session composition chips — soft neon, numbers + label only */
+.mix-chips {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.mix-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 3px 9px 3px 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(18, 18, 30, 0.5);
+  border: 1px solid rgba(210, 210, 230, 0.18);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.mix-chip .mix-num {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.mix-chip .mix-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0.92;
+}
+
+.mix-chip.due {
+  border-color: rgba(251, 191, 36, 0.38);
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.12);
+}
+.mix-chip.due .mix-num,
+.mix-chip.due .mix-label { color: #fbbf24; }
+
+.mix-chip.yeni {
+  border-color: rgba(96, 165, 250, 0.4);
+  box-shadow: 0 0 12px rgba(96, 165, 250, 0.14);
+}
+.mix-chip.yeni .mix-num,
+.mix-chip.yeni .mix-label { color: #60a5fa; }
+
+.mix-chip.known {
+  border-color: rgba(124, 235, 159, 0.35);
+  box-shadow: 0 0 12px rgba(124, 235, 159, 0.12);
+}
+.mix-chip.known .mix-num,
+.mix-chip.known .mix-label { color: #7ceb9f; }
+
 .timer-row {
   display: flex;
   align-items: center;
@@ -1060,6 +1115,25 @@ body,
   margin: 0;
   color: var(--muted);
   font-size: 0.92rem;
+}
+
+.session-end-line {
+  margin: 4px 0 0;
+  max-width: 22em;
+  font-size: 1.12rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  color: var(--text);
+  text-shadow: 0 0 18px rgba(167, 139, 250, 0.22);
+}
+
+.session-end-micro {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.01em;
 }
 
 .session-end-stats {
