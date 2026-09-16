@@ -6,6 +6,8 @@ export type VocabItem = {
   ex: string
   exTr: string
   morph?: string | string[] | Record<string, unknown>
+  /** Optional one-line pedagogy for teach beat — never invent if missing. */
+  why?: string
 }
 
 export type ProgressEntry = {

@@ -27,23 +27,23 @@ type TimerSec = (typeof TIMER_OPTIONS)[number]
 const TIMER_KEY = 'esl-timer-sec'
 const COACH_KEY = 'esl-coach-v1'
 
-/** Below-hairline Reels translate — keep in sync with CSS (~450ms correct). */
+/** Below-hairline Reels translate — keep in sync with CSS (~450ms). */
 const REEL_MS = 450
-/**
- * Wrong/timeout → next: gentle Reels exit/enter. Sync with CSS.
- * Fuses former static Doğru cevap dwell (3200) + slide (1700) into one slide
- * so the teach reveal stays visible on the exiting page while it moves up.
- */
-const REEL_WRONG_MS = 4900
-/** prefers-reduced-motion wrong path: short fade, not a 4.9s transform. */
-const REEL_WRONG_REDUCED_MS = 1000
+/** prefers-reduced-motion reel fade after teach / success. */
+const REEL_REDUCED_MS = 300
 /** Review enter/exit Reels (↓ previous / ↑ back) — same snap as success. */
 const REVIEW_REEL_MS = 450
 const REVIEW_REEL_REDUCED_MS = 300
-/** Brief feedback before the below-line content turns. */
-const FEEDBACK_OK_MS = 220
-/** Wrong/timeout: brief red flash, then teach reveal + immediate gentle exit. */
-const FEEDBACK_LEARN_RED_MS = 280
+/** Mastery pulse (correct lock): soft spring window 180–220ms. */
+const FEEDBACK_OK_MS = 200
+/** Micro streak chip visible window (fade out by end). */
+const STREAK_CHIP_MS = 400
+/** Teach beat: correct-answer reveal animation. */
+const TEACH_REVEAL_MS = 300
+/** Teach beat: minimum readable dwell before tap-advance. */
+const TEACH_DWELL_MIN_MS = 900
+/** Teach beat: auto-advance from reveal start. */
+const TEACH_AUTO_MS = 1400
 const GHOST_KEY = 'esl-ghost-v1'
 
 function wrapIndex(i: number, n: number): number {
@@ -180,6 +180,10 @@ type PlayPaneProps = {
   showGhost?: boolean
   reviewMode?: boolean
   showReviewHint?: boolean
+  /** Mastery streak chip (2+) — micro fade, not score farm. */
+  streakChip?: number | null
+  /** Teach beat active (wrong path dwell). */
+  teachBeat?: boolean
 }
 
 /** EN + TR + jest hint — lives inside the sliding reel page. */
@@ -198,12 +202,18 @@ function PlayPane({
   showGhost = false,
   reviewMode = false,
   showReviewHint = false,
+  streakChip = null,
+  teachBeat = false,
 }: PlayPaneProps) {
-  // Correct may keep a soft veil; wrong/timeout flash is card-only (cosmos stays still).
+  // Correct: soft green veil + mastery pulse. Wrong: no scene flash (calm teach).
   const flashClass = flash === 'correct' ? 'flash-correct' : ''
+  const why = item.why?.trim() || null
 
   return (
-    <div className={`play-stage ${flashClass}`}>
+    <div
+      className={`play-stage ${flashClass}${teachBeat ? ' is-teach' : ''}`}
+      style={teachBeat ? { ['--teach-reveal-ms' as string]: `${TEACH_REVEAL_MS}ms` } : undefined}
+    >
       <div className="flash-veil" aria-hidden />
 
       <section
@@ -214,6 +224,11 @@ function PlayPane({
       </section>
 
       <section className={`tr-area${frozen ? ' is-frozen' : ''}`}>
+        {streakChip != null && streakChip >= 2 ? (
+          <div className="streak-chip" aria-hidden>
+            {streakChip}
+          </div>
+        ) : null}
         <OptionStrip
           key={stripKey}
           options={options}
@@ -223,11 +238,13 @@ function PlayPane({
           dragging={dragging}
           frozen={frozen}
           onStep={onStripStep}
-          wrongFlash={flash === 'wrong'}
+          wrongFlash={false}
           successFlash={flash === 'correct'}
           showGhost={showGhost}
           reviewMode={reviewMode}
           showReviewHint={showReviewHint}
+          teachWhy={why}
+          teachReveal={teachBeat || revealCorrect !== null}
         />
       </section>
     </div>
@@ -245,6 +262,10 @@ export default function App() {
   const [correctIndex, setCorrectIndex] = useState(0)
   const [flash, setFlash] = useState<FlashKind>('none')
   const [revealCorrect, setRevealCorrect] = useState<number | null>(null)
+  /** Micro streak chip (2+) after correct lock — fades quickly. */
+  const [streakChip, setStreakChip] = useState<number | null>(null)
+  /** Wrong-path teach beat: reveal + readable dwell before advance. */
+  const [teachBeat, setTeachBeat] = useState(false)
   const [dragX, setDragX] = useState(0)
   const [dragY, setDragY] = useState(0)
   const [dragging, setDragging] = useState(false)
@@ -269,7 +290,12 @@ export default function App() {
   const [reviewNav, setReviewNav] = useState<ReviewNav | null>(null)
   const advanceTimer = useRef<number | null>(null)
   const learnTimer = useRef<number | null>(null)
+  const streakChipTimer = useRef<number | null>(null)
   const reelClearTimer = useRef<number | null>(null)
+  /** Teach beat: armed until finishAdvance; skip ready after min dwell. */
+  const teachArmedRef = useRef(false)
+  const teachSkipReadyRef = useRef(false)
+  const finishTeachRef = useRef<(() => void) | null>(null)
   const reviewNavTimer = useRef<number | null>(null)
   const doneRef = useRef(0)
   const lockingRef = useRef(false)
@@ -335,6 +361,7 @@ export default function App() {
     return () => {
       if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
       if (learnTimer.current) window.clearTimeout(learnTimer.current)
+      if (streakChipTimer.current) window.clearTimeout(streakChipTimer.current)
       if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
       if (reviewNavTimer.current) window.clearTimeout(reviewNavTimer.current)
     }
@@ -361,12 +388,17 @@ export default function App() {
     setExiting(null)
     lockingRef.current = false
     setLocking(false)
+    teachArmedRef.current = false
+    teachSkipReadyRef.current = false
+    finishTeachRef.current = null
+    setTeachBeat(false)
   }, [])
 
   const beginSession = useCallback(
     (next: VocabItem[]) => {
       if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
       if (learnTimer.current) window.clearTimeout(learnTimer.current)
+      if (streakChipTimer.current) window.clearTimeout(streakChipTimer.current)
       if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
       if (reviewNavTimer.current) window.clearTimeout(reviewNavTimer.current)
       setExiting(null)
@@ -386,6 +418,11 @@ export default function App() {
       setMissed([])
       setSessionOver(false)
       setRemain(null)
+      setStreakChip(null)
+      setTeachBeat(false)
+      teachArmedRef.current = false
+      teachSkipReadyRef.current = false
+      finishTeachRef.current = null
       const head = next[0]
       if (head) rebuildOptions(head)
       else {
@@ -537,6 +574,11 @@ export default function App() {
       setDragging(false)
       setRemain(null)
       dismissGhost()
+      setStreakChip(null)
+      setTeachBeat(false)
+      teachArmedRef.current = false
+      teachSkipReadyRef.current = false
+      finishTeachRef.current = null
 
       // Timeout and swipe-up both grade the centered / selected card.
       const sel = selectedRef.current
@@ -546,7 +588,12 @@ export default function App() {
         : { ok: score.ok, wrong: score.wrong + 1 }
       const nextReveal = ok ? null : correctIndex
 
-      setProgress((p) => recordAnswer(p, current.en, ok))
+      let nextStreak = 0
+      setProgress((p) => {
+        const next = recordAnswer(p, current.en, ok)
+        if (ok) nextStreak = next[current.en]?.streak ?? 0
+        return next
+      })
       setScore(nextScore)
       if (!ok) {
         setMissed((m) => (m.some((x) => x.en === current.en) ? m : [...m, current]))
@@ -559,8 +606,14 @@ export default function App() {
 
       if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
       if (learnTimer.current) window.clearTimeout(learnTimer.current)
+      if (streakChipTimer.current) window.clearTimeout(streakChipTimer.current)
 
       const finishAdvance = (exitSelected: number, exitFlash: FlashKind, exitReveal: number | null) => {
+        teachArmedRef.current = false
+        teachSkipReadyRef.current = false
+        finishTeachRef.current = null
+        setTeachBeat(false)
+
         snapIdRef.current += 1
         const hist: HistorySnap = {
           id: `hist-${item.en}-${snapIdRef.current}`,
@@ -589,6 +642,7 @@ export default function App() {
           setLocking(false)
           return
         }
+        // Teach dwell is static; reel after is the normal snap (no fused 4.9s slide).
         setExiting({
           id: `${item.en}-${snapIdRef.current}`,
           item,
@@ -597,41 +651,54 @@ export default function App() {
           correctIndex: snapCorrect,
           revealCorrect: exitReveal,
           flash: exitFlash,
-          gentle: !ok,
+          gentle: false,
         })
         goNext(ok, item)
         if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
-        // Reduced motion: short fade (wrong ~1s); do not force the 4.9s slide.
-        const reelMs = prefersReducedMotion()
-          ? ok
-            ? REEL_MS
-            : REEL_WRONG_REDUCED_MS
-          : ok
-            ? REEL_MS
-            : REEL_WRONG_MS
+        const reelMs = prefersReducedMotion() ? REEL_REDUCED_MS : REEL_MS
         reelClearTimer.current = window.setTimeout(() => {
           clearExiting()
         }, reelMs)
       }
 
       if (ok) {
+        // Mastery pulse: soft spring + green edge; micro streak chip if ≥2.
         setFlash('correct')
         setRevealCorrect(null)
+        if (nextStreak >= 2) {
+          setStreakChip(nextStreak)
+          streakChipTimer.current = window.setTimeout(() => {
+            setStreakChip(null)
+          }, STREAK_CHIP_MS)
+        }
         advanceTimer.current = window.setTimeout(() => {
           finishAdvance(snapSelected, 'correct', null)
         }, FEEDBACK_OK_MS)
       } else {
-        // × flash, then teach/reveal + start gentle exit immediately (no static dwell).
-        setFlash('wrong')
+        // Teach beat: soft stop (no harsh red) → reveal → dwell → tap/auto advance.
+        selectedRef.current = snapCorrect
+        setSelected(snapCorrect)
+        setFlash('none')
         if (nextReveal !== null) setRevealCorrect(nextReveal)
-        learnTimer.current = window.setTimeout(() => {
-          selectedRef.current = snapCorrect
-          setSelected(snapCorrect)
-          setFlash('none')
-          if (nextReveal !== null) setRevealCorrect(nextReveal)
-          // Exiting snapshot keeps Doğru cevap visible for the full gentle slide.
+        setTeachBeat(true)
+        teachArmedRef.current = true
+        teachSkipReadyRef.current = false
+
+        const runTeachAdvance = () => {
+          if (!teachArmedRef.current) return
+          if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
+          if (learnTimer.current) window.clearTimeout(learnTimer.current)
           finishAdvance(snapCorrect, 'none', nextReveal)
-        }, FEEDBACK_LEARN_RED_MS)
+        }
+        finishTeachRef.current = runTeachAdvance
+
+        learnTimer.current = window.setTimeout(() => {
+          teachSkipReadyRef.current = true
+        }, TEACH_DWELL_MIN_MS)
+
+        advanceTimer.current = window.setTimeout(() => {
+          runTeachAdvance()
+        }, TEACH_AUTO_MS)
       }
     },
     [
@@ -655,6 +722,11 @@ export default function App() {
     // ↑ in review exits (or steps toward active) — never re-locks / re-scores.
     if (reviewIndexRef.current !== null || reviewingRef.current) {
       exitReviewRef.current()
+      return
+    }
+    // Teach beat: tap / ↑ after min dwell advances early.
+    if (teachArmedRef.current) {
+      if (teachSkipReadyRef.current) finishTeachRef.current?.()
       return
     }
     resolveAnswer()
@@ -807,7 +879,7 @@ export default function App() {
     { onHorizontal, onUp: lockAnswer, onDown: enterOrDeepenReview },
     {
       disabled:
-        locking ||
+        (locking && !teachBeat) ||
         reeling ||
         !!reviewNav ||
         showCoach ||
@@ -848,6 +920,12 @@ export default function App() {
         }
         return
       }
+      // Teach beat: allow ↑ / Enter / Space to skip after min dwell.
+      if (teachBeat && (e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault()
+        lockAnswer()
+        return
+      }
       if (pickingDeck || locking || reeling || reviewNav) return
       if (reviewIndex !== null) {
         if (e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
@@ -874,6 +952,7 @@ export default function App() {
     return () => window.removeEventListener('keydown', onKey)
   }, [
     locking,
+    teachBeat,
     reeling,
     reviewNav,
     reviewIndex,
@@ -967,6 +1046,8 @@ export default function App() {
         stripKey={current.en}
         showGhost={opts.showGhost ?? false}
         showReviewHint={showReviewHint}
+        streakChip={reeling ? null : streakChip}
+        teachBeat={!reeling && teachBeat}
       />
     )
   }
@@ -1017,7 +1098,12 @@ export default function App() {
         <span className="cosmos-vignette" />
       </div>
       <div
-        className={`app${frozen ? ' is-frozen' : ''}${reeling ? ' is-reeling' : ''}${reviewing ? ' is-reviewing' : ''}`}
+        className={`app${frozen ? ' is-frozen' : ''}${reeling ? ' is-reeling' : ''}${reviewing ? ' is-reviewing' : ''}${teachBeat ? ' is-teach-beat' : ''}`}
+        onClick={() => {
+          if (teachArmedRef.current && teachSkipReadyRef.current) {
+            finishTeachRef.current?.()
+          }
+        }}
         {...swipe}
       >
         {/* FIXED chrome — never translates with the Reels page turn */}

@@ -8,9 +8,9 @@ type Props = {
   dragging?: boolean
   frozen?: boolean
   onStep?: (step: number) => void
-  /** Card-only wrong flash (no scene veil). */
+  /** Card-only wrong flash (no scene veil). Unused — teach beat is calm. */
   wrongFlash?: boolean
-  /** Brief success green on correct lock. */
+  /** Brief success green on correct lock (mastery pulse). */
   successFlash?: boolean
   /** One-shot ghost gesture on first card. */
   showGhost?: boolean
@@ -18,6 +18,10 @@ type Props = {
   reviewMode?: boolean
   /** After ≥1 completed card: show ↓ önceki on the active jest line. */
   showReviewHint?: boolean
+  /** Existing why copy for teach beat (omit if none). */
+  teachWhy?: string | null
+  /** Teach/reveal mode — soft reveal animation. */
+  teachReveal?: boolean
 }
 
 /** Wider / more landscape selected card — mock is longer horizontally. */
@@ -42,6 +46,8 @@ export function OptionStrip({
   showGhost = false,
   reviewMode = false,
   showReviewHint = false,
+  teachWhy = null,
+  teachReveal = false,
 }: Props) {
   const viewportRef = useRef<HTMLDivElement>(null)
   const [vw, setVw] = useState(360)
@@ -181,8 +187,9 @@ export function OptionStrip({
           const isSel = i === visualIdx
           // Correct answer highlight only on the real copy (side card OK when wrong)
           const isReveal = !isClone && revealCorrect !== null && realIndex === revealCorrect
+          // Soft stop only — never harsh red fail flash on teach path.
           const isWrongSel =
-            (wrongFlash || revealCorrect !== null) &&
+            wrongFlash &&
             isSel &&
             (revealCorrect === null || realIndex !== revealCorrect)
           return (
@@ -192,9 +199,10 @@ export function OptionStrip({
                 'option-card',
                 isSel ? 'is-selected' : 'is-side',
                 isReveal ? 'is-reveal' : '',
-                isWrongSel ? 'is-wrong' : '',
+                teachReveal && isReveal ? 'is-teach-reveal' : '',
+                isWrongSel ? 'is-wrong is-soft-stop' : '',
                 wrongFlash && isWrongSel ? 'is-wrong-flash' : '',
-                successFlash && isSel ? 'is-success' : '',
+                successFlash && isSel ? 'is-success is-mastery-pulse' : '',
                 frozen ? 'is-locked' : '',
               ]
                 .filter(Boolean)
@@ -207,6 +215,9 @@ export function OptionStrip({
               <p className="option-text" lang="tr">
                 {text}
               </p>
+              {isReveal && teachWhy ? (
+                <p className="teach-why">{teachWhy}</p>
+              ) : null}
             </div>
           )
         })}
