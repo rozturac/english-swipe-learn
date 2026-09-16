@@ -918,8 +918,8 @@
     "t": "İş İngilizcesi",
     "en": "stakeholder management",
     "tr": "paydaş yönetimi",
-    "ex": "Let's put stakeholder management on the agenda for Monday.",
-    "exTr": "Pazartesi günü için günde pay sahibi yönetimi koyalım."
+    "ex": "This launch needs clearer stakeholder management.",
+    "exTr": "Bu lansman daha net paydaş yönetimi gerektiriyor."
   },
   {
     "d": 6,
@@ -1184,8 +1184,8 @@
     "t": "İş İngilizcesi",
     "en": "food for thought",
     "tr": "düşünmelik, üzerine düşünülecek fikir",
-    "ex": "I underestimated how hard food for thought would be.",
-    "exTr": "Düşünce için ne kadar zor yiyecekler olacağını hafife aldım."
+    "ex": "That demo gave me some food for thought on our pricing.",
+    "exTr": "O demo fiyatlandırmamız hakkında bana biraz düşünmelik verdi."
   },
   {
     "d": 8,
@@ -1568,8 +1568,8 @@
     "t": "İş İngilizcesi",
     "en": "over to you",
     "tr": "söz sende",
-    "ex": "I've shared my notes. Over to you before Friday.",
-    "exTr": "Notlarımı paylaştım. Söz sende Cuma’dan önce."
+    "ex": "I've shared my notes. Over to you.",
+    "exTr": "Notlarımı paylaştım. Söz sende."
   },
   {
     "d": 10,
@@ -1808,8 +1808,8 @@
     "t": "İş İngilizcesi",
     "en": "under-promise and over-deliver",
     "tr": "az söz ver, fazlasını yap",
-    "ex": "I underestimated how hard under-promise and over-deliver would be.",
-    "exTr": "Ne kadar sert ve aşırı-deliver olacağını hafife aldım."
+    "ex": "Let's under-promise and over-deliver on the launch date.",
+    "exTr": "Lansman tarihinde az söz verip fazlasını yapalım."
   },
   {
     "d": 11,
@@ -2127,8 +2127,8 @@
     "t": "İş İngilizcesi",
     "en": "impact horizon",
     "tr": "etki ufku",
-    "ex": "Let's put impact horizon on the agenda for Monday.",
-    "exTr": "Pazartesi günü için günde ufkunuzu etkileyelim."
+    "ex": "What's the impact horizon if we delay the cutover?",
+    "exTr": "Cutover’ı gecikirsek etki ufku nedir?"
   },
   {
     "d": 14,
@@ -2706,7 +2706,7 @@
     "en": "chill out",
     "tr": "sakinleşmek, rahatlamak",
     "ex": "Chill out. The SEV is contained.",
-    "exTr": "Sakin olun. SEV kontrol altında."
+    "exTr": "Sakin ol. SEV kontrol altında."
   },
   {
     "d": 17,
@@ -2956,8 +2956,8 @@
     "t": "İş İngilizcesi",
     "en": "quick win",
     "tr": "hızlı kazanım",
-    "ex": "A better quick win would save us hours each week.",
-    "exTr": "Daha iyi bir hızlı kazanım, her hafta saatlerimizi kurtaracaktır."
+    "ex": "Fixing the empty state is a quick win for activation.",
+    "exTr": "Boş durumu düzeltmek aktivasyon için hızlı bir kazanım."
   },
   {
     "d": 19,
@@ -3120,8 +3120,8 @@
     "t": "İş İngilizcesi",
     "en": "whenever you get a sec",
     "tr": "bir saniyen olduğunda",
-    "ex": "A better whenever you get a sec would save us hours each week.",
-    "exTr": "Bir gizliliği aldığınızda daha iyi, her hafta saatlerimizi kurtarırdı."
+    "ex": "Whenever you get a sec, can you review the RFC?",
+    "exTr": "Bir saniyen olduğunda RFC’yi gözden geçirebilir misin?"
   },
   {
     "d": 20,
@@ -3691,8 +3691,8 @@
     "t": "İş İngilizcesi",
     "en": "in advance",
     "tr": "önceden",
-    "ex": "Use it like this: in advance before Friday.",
-    "exTr": "Bunu böyle kullanın: önceden Cuma’dan önce."
+    "ex": "Please send the deck in advance of the steering meeting.",
+    "exTr": "Lütfen deck’i steering toplantısından önce gönder."
   },
   {
     "d": 23,
@@ -4467,7 +4467,7 @@
     "en": "chaotic",
     "tr": "kaotik, düzensiz",
     "ex": "The on-call week felt chaotic after the region failed.",
-    "exTr": "Bölge düştükten sonra on-call haftası kaotik hissettirdi."
+    "exTr": "Bölge düşünce on-call haftası kaotik geçti."
   },
   {
     "d": 28,
@@ -5826,7 +5826,7 @@
     "en": "chime in",
     "tr": "söze katılmak, araya girmek",
     "ex": "Feel free to chime in if I'm missing context.",
-    "exTr": "Bağlamı kaçırıyorsam çekinmeden chime in edin."
+    "exTr": "Bağlamı kaçırıyorsam çekinmeden araya gir."
   },
   {
     "d": 36,
