@@ -1608,8 +1608,8 @@
     "t": "İş İngilizcesi",
     "en": "point taken",
     "tr": "anladım, kabul",
-    "ex": "You explained the risk clearly. Point taken before Friday.",
-    "exTr": "Riski net anlattın. Anladım, kabul Cuma’dan önce."
+    "ex": "You explained the risk clearly. Point taken.",
+    "exTr": "Riski net anlattın. Anladım, kabul."
   },
   {
     "d": 11,
@@ -1784,8 +1784,8 @@
     "t": "İş İngilizcesi",
     "en": "this is a risk, not a blocker yet",
     "tr": "bu şu an risk, henüz engel değil",
-    "ex": "I underestimated how hard this is a risk, not a blocker yet would be.",
-    "exTr": "Bunun ne kadar zor olduğunu hafife aldım, bir bloker henüz olmazdı."
+    "ex": "This is a risk, not a blocker yet. We can keep shipping.",
+    "exTr": "Bu bir risk ama henüz engel değil. Shipping’e devam edebiliriz."
   },
   {
     "d": 11,
@@ -1928,8 +1928,8 @@
     "t": "İş İngilizcesi",
     "en": "where do you want me to focus",
     "tr": "nereye odaklanmamı istersin",
-    "ex": "A better where do you want me to focus would save us hours each week.",
-    "exTr": "«Nereye odaklanmamı istersin?» sorusunu daha iyi sormak her hafta saatler kazandırırdı."
+    "ex": "Before I dig in: where do you want me to focus?",
+    "exTr": "Dalmadan önce: nereye odaklanmamı istersin?"
   },
   {
     "d": 13,
@@ -2245,8 +2245,8 @@
     "t": "İş İngilizcesi",
     "en": "no shortage of",
     "tr": "bol bol var, eksikliği yok",
-    "ex": "Let's put no shortage of on the agenda for Monday.",
-    "exTr": "Pazartesi günü gündemin eksikliğini koyalım."
+    "ex": "There's no shortage of ideas; we need a decision.",
+    "exTr": "Fikir eksikliği yok; bir karara ihtiyacımız var."
   },
   {
     "d": 14,
@@ -2389,8 +2389,8 @@
     "t": "İş İngilizcesi",
     "en": "sphere of influence",
     "tr": "etki alanı",
-    "ex": "I underestimated how hard sphere of influence would be.",
-    "exTr": "Ne kadar sert etki alanı olacağını hafife aldım."
+    "ex": "Stay inside your sphere of influence on this reorg.",
+    "exTr": "Bu reorg’ta etki alanının içinde kal."
   },
   {
     "d": 15,
@@ -3551,8 +3551,8 @@
     "t": "İş İngilizcesi",
     "en": "fast follow",
     "tr": "hemen ardından gelen iş",
-    "ex": "I underestimated how hard fast follow would be.",
-    "exTr": "Ne kadar hızlı takip olacağını hafife aldım."
+    "ex": "We'll ship the MVP now and fast follow with polish.",
+    "exTr": "MVP’yi şimdi ship ederiz, polish’i hemen ardından getiririz."
   },
   {
     "d": 22,
@@ -3827,8 +3827,8 @@
     "t": "İş İngilizcesi",
     "en": "on my end",
     "tr": "benim tarafımda",
-    "ex": "Use it like this: on my end before Friday.",
-    "exTr": "Bunu böyle kullanın: benim tarafımda Cuma’dan önce."
+    "ex": "On my end, the migration is ready to flip.",
+    "exTr": "Benim tarafımda migration flip’e hazır."
   },
   {
     "d": 24,
