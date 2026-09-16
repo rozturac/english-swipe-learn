@@ -3421,17 +3421,17 @@
     "t": "İş İngilizcesi",
     "en": "dedicated session",
     "tr": "özel/ayrılmış oturum",
-    "ex": "Who owns dedicated session after the reorg before Friday?",
-    "exTr": "Reorg'dan sonra kimin özel seansı var Cuma’dan önce?"
+    "ex": "Who owns the dedicated session after the reorg?",
+    "exTr": "Reorg'dan sonra dedicated session'ın sahibi kim?"
   },
   {
     "d": 22,
     "t": "İş İngilizcesi",
     "en": "dedupe",
     "tr": "tekrarları ayıklamak",
-    "ex": "Please dedupe the invite list before sending before Friday.",
+    "ex": "Please dedupe the invite list before sending.",
     "morph": "dedupe ← de- + duplicate",
-    "exTr": "Lütfen göndermeden önce davet listesini sil Cuma’dan önce."
+    "exTr": "Lütfen göndermeden önce davet listesini dedupe'la."
   },
   {
     "d": 22,
@@ -3462,8 +3462,8 @@
     "t": "İş İngilizcesi",
     "en": "disallow",
     "tr": "izin vermemek, yasaklamak",
-    "ex": "The gateway should disallow unsigned requests before Friday.",
-    "exTr": "Ağ geçidin imzalanmamış istekleri reddetmesi gerekir Cuma’dan önce."
+    "ex": "The gateway should disallow unsigned requests.",
+    "exTr": "Gateway imzasız isteklere izin vermemeli."
   },
   {
     "d": 22,
@@ -5395,8 +5395,8 @@
     "t": "İş İngilizcesi",
     "en": "role model",
     "tr": "örnek alınan kişi",
-    "ex": "I underestimated how hard role model would be.",
-    "exTr": "Zor bir örnek alınan kişi hafife aldım."
+    "ex": "She is a role model for how Staffs mentor ICs.",
+    "exTr": "Staff'ların IC'lere nasıl mentorluk ettiğine dair bir rol modelidir."
   },
   {
     "d": 33,
@@ -5468,8 +5468,8 @@
     "t": "İş İngilizcesi",
     "en": "sister team",
     "tr": "kardeş ekip",
-    "ex": "I underestimated how hard sister team would be.",
-    "exTr": "Kız kardeşin ne kadar zor olacağını hafife aldım."
+    "ex": "Align with the sister team before you change the API.",
+    "exTr": "API'yi değiştirmeden önce kardeş ekiple hizalan."
   },
   {
     "d": 34,
@@ -5606,8 +5606,8 @@
     "t": "İş İngilizcesi",
     "en": "symptom",
     "tr": "belirti",
-    "ex": "A better symptom would save us hours each week.",
-    "exTr": "Daha iyi bir semptom, her hafta bizi saatlerce kurtaracaktır."
+    "ex": "The alert is a symptom; find the root cause.",
+    "exTr": "Alert bir belirtidir; kök nedeni bul."
   },
   {
     "d": 35,
@@ -5671,8 +5671,8 @@
     "t": "İş İngilizcesi",
     "en": "track record",
     "tr": "geçmiş performans, sicil",
-    "ex": "I underestimated how hard track record would be.",
-    "exTr": "Kayıtların ne kadar zor olacağını hafife aldım."
+    "ex": "She has a strong track record shipping platform bets.",
+    "exTr": "Platform bahislerini hayata geçirmede güçlü bir geçmiş performansı var."
   },
   {
     "d": 35,
@@ -5729,8 +5729,8 @@
     "t": "İş İngilizcesi",
     "en": "vast majority",
     "tr": "büyük çoğunluk",
-    "ex": "I underestimated how hard vast majority would be.",
-    "exTr": "Büyük çoğunluğun ne kadar zor olacağını hafife aldım."
+    "ex": "The vast majority of incidents start with a bad deploy.",
+    "exTr": "Olayların büyük çoğunluğu kötü bir deploy ile başlar."
   },
   {
     "d": 36,
