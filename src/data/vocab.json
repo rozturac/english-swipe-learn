@@ -3471,7 +3471,7 @@
     "en": "dismissible",
     "tr": "kapatılabilir",
     "ex": "Make the banner dismissible after the first read.",
-    "exTr": "İlk okumadan sonra banner'ı dismissible yap."
+    "exTr": "İlk okumadan sonra banner'ı kapatılabilir yap."
   },
   {
     "d": 22,
@@ -3570,7 +3570,7 @@
     "tr": "kesinleştirmek",
     "ex": "Let's finalize the API contract tomorrow.",
     "morph": "finalize ← final + -ize",
-    "exTr": "Yarın API contract'ını finalize edelim."
+    "exTr": "Yarın API kontratını kesinleştirelim."
   },
   {
     "d": 22,
@@ -5738,7 +5738,7 @@
     "en": "vested stakeholder",
     "tr": "menfaati olan paydaş",
     "ex": "Talk to every vested stakeholder before the reorg lands.",
-    "exTr": "Reorg gelmeden önce her vested stakeholder ile konuş."
+    "exTr": "Reorg gelmeden her menfaat sahibi paydaşla konuş."
   },
   {
     "d": 36,
