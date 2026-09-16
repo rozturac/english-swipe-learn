@@ -2187,8 +2187,8 @@
     "t": "İş İngilizcesi",
     "en": "keystone contribution",
     "tr": "kilit katkı",
-    "ex": "Her keystone contribution unblocked three dependent teams before Friday.",
-    "exTr": "Onun kilit katkısı üç bağımlı ekibi serbest bıraktı Cuma’dan önce."
+    "ex": "Her keystone contribution unblocked three dependent teams.",
+    "exTr": "Onun kilit katkısı üç bağımlı ekibin önünü açtı."
   },
   {
     "d": 14,
@@ -2414,8 +2414,8 @@
     "t": "İş İngilizcesi",
     "en": "terminal level",
     "tr": "kalınabilecek son seviye",
-    "ex": "I underestimated how hard terminal level would be.",
-    "exTr": "Ne kadar sert kalınabilecek son seviye olacağını hafife aldım."
+    "ex": "She's operating at a terminal level on this IC track.",
+    "exTr": "Bu IC track’te kalınabilecek son seviyede ilerliyor."
   },
   {
     "d": 15,
@@ -2606,8 +2606,8 @@
     "t": "İş İngilizcesi",
     "en": "to be fair",
     "tr": "hakkını vermek gerekirse",
-    "ex": "To be fair, the requirements changed mid-sprint before Friday.",
-    "exTr": "Hakkını vermek gerekirse gereksinimler sprint ortasında değişti Cuma’dan önce."
+    "ex": "To be fair, the requirements changed mid-sprint.",
+    "exTr": "Hakkını vermek gerekirse, gereksinimler sprint ortasında değişti."
   },
   {
     "d": 17,
@@ -2875,8 +2875,8 @@
     "t": "İş İngilizcesi",
     "en": "no rush",
     "tr": "acelesi yok",
-    "ex": "Let's put no rush on the agenda for Monday.",
-    "exTr": "Pazartesi günü için günde acele etme."
+    "ex": "No rush on the design review. Quality over speed.",
+    "exTr": "Tasarım review’unda acelemiz yok. Hızdan önce kalite."
   },
   {
     "d": 18,
@@ -3380,8 +3380,8 @@
     "t": "İş İngilizcesi",
     "en": "contractually binding",
     "tr": "sözleşmeyle bağlayıcı",
-    "ex": "A better contractually binding would save us hours each week.",
-    "exTr": "Daha iyi bir sözleşmeli bağlayıcı her hafta saatlerimizi kurtaracaktır."
+    "ex": "Is this clause contractually binding, or just guidance?",
+    "exTr": "Bu madde sözleşmeyle bağlayıcı mı, yoksa sadece rehberlik mi?"
   },
   {
     "d": 21,
@@ -3577,8 +3577,8 @@
     "t": "İş İngilizcesi",
     "en": "first pass",
     "tr": "ilk tur, ilk deneme",
-    "ex": "I underestimated how hard first pass would be.",
-    "exTr": "İlk turun ne kadar zor olacağını hafife aldım."
+    "ex": "This is a first pass. Expect polish after review.",
+    "exTr": "Bu bir ilk tur. Review sonrası polish beklenir."
   },
   {
     "d": 22,
@@ -4590,8 +4590,8 @@
     "t": "İş İngilizcesi",
     "en": "cross-cutting concerns",
     "tr": "kesişen sorunlar",
-    "ex": "A better cross-cutting concerns would save us hours each week.",
-    "exTr": "Daha iyi bir kesinti endişeleri her hafta saatlerimizi kurtaracaktır."
+    "ex": "Logging and auth are cross-cutting concerns across services.",
+    "exTr": "Logging ve auth servisler arasında kesişen sorunlar."
   },
   {
     "d": 29,
@@ -4930,8 +4930,8 @@
     "t": "İş İngilizcesi",
     "en": "in accordance with",
     "tr": "-e uygun olarak",
-    "ex": "That phrase matters here: in accordance with before Friday.",
-    "exTr": "Bu cümle burada önemli: uygun olarak Cuma’dan önce."
+    "ex": "We acted in accordance with the security policy.",
+    "exTr": "Güvenlik politikasına uygun olarak hareket ettik."
   },
   {
     "d": 31,
