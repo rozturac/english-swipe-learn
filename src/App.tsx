@@ -50,12 +50,10 @@ const TEACH_DWELL_MIN_MS = 900
 const TEACH_AUTO_MS = 1400
 const GHOST_KEY = 'esl-ghost-v1'
 
-/** Compact chrome label for deliberate mid/end deck switch. */
-const DECK_COMPACT: Record<OpenDeck, string> = {
-  'İş İngilizcesi': 'İş',
-  'Günlük konuşma': 'Günlük',
-  'Genel': 'Genel',
-}
+/** Mix chips visible at session start before soft fade. */
+const MIX_INTRO_MS = 1200
+/** Soft fade duration after intro (or first interaction). */
+const MIX_FADE_MS = 320
 
 function wrapIndex(i: number, n: number): number {
   if (n <= 0) return 0
@@ -310,6 +308,10 @@ export default function App() {
   const [score, setScore] = useState({ ok: 0, wrong: 0 })
   /** Composition chips from pickSession tags (not live score). */
   const [mixCounts, setMixCounts] = useState(() => boot.mixCounts)
+  /** Session-start mix chips: show → soft fade → gone (chrome declutter). */
+  const [mixIntro, setMixIntro] = useState<'show' | 'fading' | 'hidden'>(() =>
+    boot.queue.length > 0 ? 'show' : 'hidden',
+  )
   /** End one-liner outcomes: pekişti / kaygan / yeni seen. */
   const [outcomes, setOutcomes] = useState({ pekisti: 0, kaygan: 0, yeni: 0 })
   const [missed, setMissed] = useState<VocabItem[]>([])
@@ -329,6 +331,8 @@ export default function App() {
   const advanceTimer = useRef<number | null>(null)
   const learnTimer = useRef<number | null>(null)
   const streakChipTimer = useRef<number | null>(null)
+  const mixIntroTimer = useRef<number | null>(null)
+  const mixFadeTimer = useRef<number | null>(null)
   const reelClearTimer = useRef<number | null>(null)
   /** Teach beat: armed until finishAdvance; skip ready after min dwell. */
   const teachArmedRef = useRef(false)
@@ -400,11 +404,54 @@ export default function App() {
       if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
       if (learnTimer.current) window.clearTimeout(learnTimer.current)
       if (streakChipTimer.current) window.clearTimeout(streakChipTimer.current)
+      if (mixIntroTimer.current) window.clearTimeout(mixIntroTimer.current)
+      if (mixFadeTimer.current) window.clearTimeout(mixFadeTimer.current)
       if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
       if (reviewNavTimer.current) window.clearTimeout(reviewNavTimer.current)
     }
   }, [])
 
+
+  const clearMixIntroTimers = useCallback(() => {
+    if (mixIntroTimer.current) window.clearTimeout(mixIntroTimer.current)
+    if (mixFadeTimer.current) window.clearTimeout(mixFadeTimer.current)
+    mixIntroTimer.current = null
+    mixFadeTimer.current = null
+  }, [])
+
+  /** Soft-hide Due/Yeni/Bildiğin chips (timer or first interaction). */
+  const dismissMixIntro = useCallback(() => {
+    setMixIntro((cur) => {
+      if (cur === 'hidden' || cur === 'fading') return cur
+      return 'fading'
+    })
+  }, [])
+
+  useEffect(() => {
+    if (mixIntro !== 'fading') return
+    clearMixIntroTimers()
+    const ms = prefersReducedMotion() ? 0 : MIX_FADE_MS
+    mixFadeTimer.current = window.setTimeout(() => {
+      mixFadeTimer.current = null
+      setMixIntro('hidden')
+    }, ms)
+    return () => {
+      if (mixFadeTimer.current) window.clearTimeout(mixFadeTimer.current)
+    }
+  }, [mixIntro, clearMixIntroTimers])
+
+  useEffect(() => {
+    if (mixIntro !== 'show') return
+    clearMixIntroTimers()
+    const hold = prefersReducedMotion() ? 0 : MIX_INTRO_MS
+    mixIntroTimer.current = window.setTimeout(() => {
+      mixIntroTimer.current = null
+      dismissMixIntro()
+    }, hold)
+    return () => {
+      if (mixIntroTimer.current) window.clearTimeout(mixIntroTimer.current)
+    }
+  }, [mixIntro, clearMixIntroTimers, dismissMixIntro])
 
   const dismissGhost = useCallback(() => {
     saveGhostSeen()
@@ -432,6 +479,8 @@ export default function App() {
       if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
       if (learnTimer.current) window.clearTimeout(learnTimer.current)
       if (streakChipTimer.current) window.clearTimeout(streakChipTimer.current)
+      if (mixIntroTimer.current) window.clearTimeout(mixIntroTimer.current)
+      if (mixFadeTimer.current) window.clearTimeout(mixFadeTimer.current)
       if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
       if (reviewNavTimer.current) window.clearTimeout(reviewNavTimer.current)
       setExiting(null)
@@ -446,6 +495,7 @@ export default function App() {
       setSessionLen(sessionLenRef.current)
       setQueue(next)
       setMixCounts(countMix(next))
+      setMixIntro(next.length > 0 ? 'show' : 'hidden')
       setOutcomes({ pekisti: 0, kaygan: 0, yeni: 0 })
       setDoneCount(0)
       doneRef.current = 0
@@ -526,6 +576,7 @@ export default function App() {
     }
     setSessionOver(false)
     setQueue([])
+    setMixIntro('hidden')
     setExiting(null)
     setHistory([])
     historyRef.current = []
@@ -771,6 +822,7 @@ export default function App() {
   const exitReviewRef = useRef<() => boolean>(() => false)
 
   const lockAnswer = useCallback(() => {
+    dismissMixIntro()
     // ↑ in review exits (or steps toward active) — never re-locks / re-scores.
     if (reviewIndexRef.current !== null || reviewingRef.current) {
       exitReviewRef.current()
@@ -782,7 +834,7 @@ export default function App() {
       return
     }
     resolveAnswer()
-  }, [resolveAnswer])
+  }, [resolveAnswer, dismissMixIntro])
 
   useEffect(() => {
     if (!current || sessionOver || locking || reeling || timerSec === 0 || showCoach || pickingDeck) {
@@ -894,32 +946,35 @@ export default function App() {
 
   const selectPrev = useCallback(() => {
     if (locking || reeling || reviewing) return
+    dismissMixIntro()
     setSelected((s) => {
       const n = wrapIndex(s - 1, 3)
       selectedRef.current = n
       return n
     })
-  }, [locking, reeling, reviewing])
+  }, [locking, reeling, reviewing, dismissMixIntro])
 
   const selectNext = useCallback(() => {
     if (locking || reeling || reviewing) return
+    dismissMixIntro()
     setSelected((s) => {
       const n = wrapIndex(s + 1, 3)
       selectedRef.current = n
       return n
     })
-  }, [locking, reeling, reviewing])
+  }, [locking, reeling, reviewing, dismissMixIntro])
 
   const onHorizontal = useCallback(
     (deltaIndexes: number) => {
       if (locking || reeling || reviewing || !deltaIndexes) return
+      dismissMixIntro()
       setSelected((s) => {
         const n = wrapIndex(s + deltaIndexes, 3)
         selectedRef.current = n
         return n
       })
     },
-    [locking, reeling, reviewing],
+    [locking, reeling, reviewing, dismissMixIntro],
   )
 
   const stepRef = useRef(360 * 0.93 + 14)
@@ -942,6 +997,7 @@ export default function App() {
       onDragStart: () => {
         if (lockingRef.current || exiting || reviewNav) return
         dismissGhost()
+        dismissMixIntro()
         setDragging(true)
       },
       onDrag: (dx, dy) => {
@@ -1060,7 +1116,7 @@ export default function App() {
     onClick: (e: MouseEvent) => e.stopPropagation(),
   }
 
-  const progressText = `${Math.min(doneCount, sessionLen)} / ${sessionLen} cümle`
+  const progressText = `${Math.min(doneCount, sessionLen)}/${sessionLen}`
   const showSessionEnd = sessionOver && !exiting && !pickingDeck
   const showPicker = pickingDeck && !showCoach && !showSessionEnd
   const deckShort = DECK_SHORT[deck] ?? deck
@@ -1157,11 +1213,14 @@ export default function App() {
         {/* FIXED chrome — never translates with the Reels page turn */}
         <header className="topbar">
           <div className="progress-row">
-            <div className="progress">{progressText}</div>
-            {!showPicker && !showCoach && !showSessionEnd ? (
+            <div className="progress" aria-label={`${progressText} cümle`}>
+              {progressText}
+            </div>
+            {!showPicker && !showCoach && !showSessionEnd && mixIntro !== 'hidden' ? (
               <div
-                className="mix-chips"
+                className={`mix-chips${mixIntro === 'fading' ? ' is-fading' : ''}`}
                 aria-label={`Due ${mixCounts.due}, Yeni ${mixCounts.yeni}, Bildiğin ${mixCounts.known}`}
+                aria-hidden={mixIntro === 'fading'}
               >
                 <span className="mix-chip due">
                   <span className="mix-num">{mixCounts.due}</span>
@@ -1187,9 +1246,36 @@ export default function App() {
                   openDeckPicker()
                 }}
                 aria-label={`Deck: ${deckShort}. Değiştir`}
+                title={deckShort}
                 tabIndex={frozen ? -1 : 0}
               >
-                {DECK_COMPACT[deck] ?? deckShort}
+                <svg
+                  className="deck-switch-icon"
+                  viewBox="0 0 24 24"
+                  width="15"
+                  height="15"
+                  aria-hidden
+                >
+                  <rect
+                    x="3.5"
+                    y="6.5"
+                    width="13"
+                    height="13"
+                    rx="2.2"
+                    fill="currentColor"
+                    opacity="0.38"
+                  />
+                  <rect
+                    x="7.5"
+                    y="3.5"
+                    width="13"
+                    height="13"
+                    rx="2.2"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.7"
+                  />
+                </svg>
               </button>
             ) : null}
           </div>
