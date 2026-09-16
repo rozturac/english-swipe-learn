@@ -11,6 +11,7 @@ import {
   RETRY_SIZE,
   SESSION_LEN,
   countMix,
+  hasDeckPref,
   loadDeckPref,
   loadProgress,
   pickSession,
@@ -48,6 +49,13 @@ const TEACH_DWELL_MIN_MS = 900
 /** Teach beat: auto-advance from reveal start. */
 const TEACH_AUTO_MS = 1400
 const GHOST_KEY = 'esl-ghost-v1'
+
+/** Compact chrome label for deliberate mid/end deck switch. */
+const DECK_COMPACT: Record<OpenDeck, string> = {
+  'İş İngilizcesi': 'İş',
+  'Günlük konuşma': 'Günlük',
+  'Genel': 'Genel',
+}
 
 function wrapIndex(i: number, n: number): number {
   if (n <= 0) return 0
@@ -261,9 +269,27 @@ function PlayPane({
 
 export default function App() {
   const [, setProgress] = useState<ProgressMap>(() => loadProgress())
-  const [deck, setDeck] = useState<OpenDeck>(() => loadDeckPref())
-  const [pickingDeck, setPickingDeck] = useState(() => loadCoachSeen())
-  const [queue, setQueue] = useState<SessionQueued[]>([])
+  /** One-shot boot: returning users with esl-deck skip picker and start immediately. */
+  const [boot] = useState(() => {
+    const coachSeen = loadCoachSeen()
+    const hasPref = hasDeckPref()
+    const deck = loadDeckPref()
+    const playNow = coachSeen && hasPref
+    const queue = playNow
+      ? pickSession(vocab, loadProgress(), { theme: deck, preferMissed: true })
+      : []
+    return {
+      deck,
+      pickingDeck: coachSeen && !hasPref,
+      showCoach: !coachSeen,
+      queue,
+      mixCounts: countMix(queue),
+      sessionLen: Math.max(1, queue.length || SESSION_LEN),
+    }
+  })
+  const [deck, setDeck] = useState<OpenDeck>(() => boot.deck)
+  const [pickingDeck, setPickingDeck] = useState(() => boot.pickingDeck)
+  const [queue, setQueue] = useState<SessionQueued[]>(() => boot.queue)
   const [doneCount, setDoneCount] = useState(0)
   const [selected, setSelected] = useState(0)
   const [options, setOptions] = useState<string[]>([])
@@ -283,12 +309,12 @@ export default function App() {
   const [remain, setRemain] = useState<number | null>(null)
   const [score, setScore] = useState({ ok: 0, wrong: 0 })
   /** Composition chips from pickSession tags (not live score). */
-  const [mixCounts, setMixCounts] = useState({ due: 0, yeni: 0, known: 0 })
+  const [mixCounts, setMixCounts] = useState(() => boot.mixCounts)
   /** End one-liner outcomes: pekişti / kaygan / yeni seen. */
   const [outcomes, setOutcomes] = useState({ pekisti: 0, kaygan: 0, yeni: 0 })
   const [missed, setMissed] = useState<VocabItem[]>([])
-  const [sessionLen, setSessionLen] = useState(SESSION_LEN)
-  const [showCoach, setShowCoach] = useState(() => !loadCoachSeen())
+  const [sessionLen, setSessionLen] = useState(() => boot.sessionLen)
+  const [showCoach, setShowCoach] = useState(() => boot.showCoach)
   const [showGhost, setShowGhost] = useState(
     () => !loadGhostSeen() && !prefersReducedMotion(),
   )
@@ -316,7 +342,7 @@ export default function App() {
   const usedExTrRef = useRef<Set<string>>(new Set())
   /** Session-wide EN prompts already shown (main session uniqueness). */
   const usedEnRef = useRef<Set<string>>(new Set())
-  const sessionLenRef = useRef(SESSION_LEN)
+  const sessionLenRef = useRef(boot.sessionLen)
   const selectedRef = useRef(0)
   /** Timer preference to restore after a retry run forced Off. */
   const timerBeforeRetryRef = useRef<TimerSec | null>(null)
@@ -379,11 +405,6 @@ export default function App() {
     }
   }, [])
 
-  const dismissCoach = useCallback(() => {
-    saveCoachSeen()
-    setShowCoach(false)
-    setPickingDeck(true)
-  }, [])
 
   const dismissGhost = useCallback(() => {
     saveGhostSeen()
@@ -473,6 +494,16 @@ export default function App() {
     },
     [beginSession, deck],
   )
+
+  const dismissCoach = useCallback(() => {
+    saveCoachSeen()
+    setShowCoach(false)
+    if (hasDeckPref()) {
+      startNewSession(deck)
+    } else {
+      setPickingDeck(true)
+    }
+  }, [deck, startNewSession])
 
   const chooseDeck = useCallback(
     (next: OpenDeck) => {
@@ -1146,6 +1177,21 @@ export default function App() {
                 </span>
               </div>
             ) : null}
+            {!showPicker && !showCoach ? (
+              <button
+                type="button"
+                className="deck-switch"
+                onPointerDown={(e) => e.stopPropagation()}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  openDeckPicker()
+                }}
+                aria-label={`Deck: ${deckShort}. Değiştir`}
+                tabIndex={frozen ? -1 : 0}
+              >
+                {DECK_COMPACT[deck] ?? deckShort}
+              </button>
+            ) : null}
           </div>
         </header>
 
@@ -1232,9 +1278,16 @@ export default function App() {
               <button
                 type="button"
                 className="primary"
-                onClick={missed.length > 0 ? startRetryMissed : openDeckPicker}
+                onClick={missed.length > 0 ? startRetryMissed : () => startNewSession()}
               >
                 {missed.length > 0 ? 'Yanlışları tekrarla' : 'Tekrar oyna'}
+              </button>
+              <button
+                type="button"
+                className="text-link"
+                onClick={openDeckPicker}
+              >
+                Deck değiştir
               </button>
             </div>
           </div>

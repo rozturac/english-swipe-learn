@@ -79,6 +79,15 @@ export function isOpenDeck(t: string): t is OpenDeck {
   return (OPEN_DECKS as readonly string[]).includes(t)
 }
 
+/** True when the user has deliberately saved a deck (esl-deck present). */
+export function hasDeckPref(): boolean {
+  try {
+    return localStorage.getItem(DECK_KEY) != null
+  } catch {
+    return false
+  }
+}
+
 export function loadDeckPref(): OpenDeck {
   try {
     const v = localStorage.getItem(DECK_KEY) ?? DEFAULT_DECK

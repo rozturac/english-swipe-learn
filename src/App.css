@@ -237,6 +237,50 @@ body,
 .mix-chip.known .mix-num,
 .mix-chip.known .mix-label { color: #7ceb9f; }
 
+/* Deliberate deck switch — small chrome chip (not forced on entry) */
+.deck-switch {
+  margin-left: auto;
+  flex-shrink: 0;
+  background: var(--chip-fill);
+  border: 1px solid var(--chip-stroke);
+  color: var(--meta);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 4px 10px;
+  min-height: 26px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  line-height: 1.2;
+}
+.deck-switch:hover {
+  border-color: rgba(167, 139, 250, 0.45);
+  color: var(--text);
+}
+.deck-switch:active {
+  transform: scale(0.97);
+}
+
+.text-link {
+  margin-top: 4px;
+  background: transparent;
+  border: none;
+  color: var(--meta);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 12px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(180, 182, 196, 0.35);
+}
+.text-link:hover {
+  color: var(--text);
+  text-decoration-color: rgba(167, 139, 250, 0.55);
+}
+
 .timer-row {
   display: flex;
   align-items: center;
