@@ -3388,8 +3388,8 @@
     "t": "İş İngilizcesi",
     "en": "convo",
     "tr": "konuşma",
-    "ex": "Quick convo in Slack beats another meeting before Friday.",
-    "exTr": "Slack'teki hızlı bir sohbet, başka bir toplantıyı yener Cuma’dan önce."
+    "ex": "Quick convo in Slack beats another meeting.",
+    "exTr": "Slack'teki hızlı bir sohbet başka bir toplantıyı yener."
   },
   {
     "d": 21,
@@ -3413,8 +3413,8 @@
     "t": "İş İngilizcesi",
     "en": "deck",
     "tr": "sunum",
-    "ex": "Trim the deck to eight slides max before Friday.",
-    "exTr": "Sunumu en fazla sekiz slaytta tut Cuma’dan önce."
+    "ex": "Trim the deck to eight slides max.",
+    "exTr": "Sunumu en fazla sekiz slayta indir."
   },
   {
     "d": 22,
@@ -5077,8 +5077,8 @@
     "t": "İş İngilizcesi",
     "en": "national origin",
     "tr": "ulusal köken",
-    "ex": "I underestimated how hard national origin would be.",
-    "exTr": "Ulusal kökenin ne kadar zor olacağını hafife aldım."
+    "ex": "Don't ask about national origin in interviews.",
+    "exTr": "Mülakatlarda ulusal köken sormayın."
   },
   {
     "d": 32,
@@ -5101,8 +5101,8 @@
     "t": "İş İngilizcesi",
     "en": "outage",
     "tr": "kesinti, hizmet dışı kalma",
-    "ex": "I underestimated how hard outage would be before Friday.",
-    "exTr": "Ne kadar sert kesinti olacağını hafife aldım Cuma’dan önce."
+    "ex": "We had a two-hour outage in the EU region.",
+    "exTr": "AB bölgesinde iki saatlik bir kesinti yaşadık."
   },
   {
     "d": 32,
@@ -5158,8 +5158,8 @@
     "t": "İş İngilizcesi",
     "en": "planning poker",
     "tr": "planlama pokeri",
-    "ex": "A better planning poker would save us hours each week.",
-    "exTr": "Daha iyi bir planlama poker bizi her hafta saatte kurtaracaktı."
+    "ex": "Let's run planning poker on the remaining stories.",
+    "exTr": "Kalan story'lerde planning poker yapalım."
   },
   {
     "d": 32,
@@ -5516,16 +5516,16 @@
     "t": "İş İngilizcesi",
     "en": "spend efficiency",
     "tr": "harcama verimliliği",
-    "ex": "Let's put spend efficiency on the agenda for Monday.",
-    "exTr": "Pazartesi günü için günde verimlilik yapalım."
+    "ex": "Leadership asked for better spend efficiency this quarter.",
+    "exTr": "Liderlik bu çeyrek daha iyi harcama verimliliği istedi."
   },
   {
     "d": 35,
     "t": "İş İngilizcesi",
     "en": "stakes",
     "tr": "riske atılan şey, kaybedilecekler",
-    "ex": "Let's put stakes on the agenda for Monday.",
-    "exTr": "Pazartesi günü için günde tehlikeler koyalım."
+    "ex": "The stakes are high if we miss the launch window.",
+    "exTr": "Lansman penceresini kaçırırsak riskler yüksek."
   },
   {
     "d": 35,
@@ -6053,8 +6053,8 @@
     "t": "İş İngilizcesi",
     "en": "pretty much",
     "tr": "neredeyse, hemen hemen",
-    "ex": "A better pretty much would save us hours each week.",
-    "exTr": "Daha iyi güzel bir şey her hafta saatlerimizi kurtaracaktır."
+    "ex": "The migration is pretty much done; only docs remain.",
+    "exTr": "Migration neredeyse bitti; sadece dokümanlar kaldı."
   },
   {
     "d": 38,
