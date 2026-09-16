@@ -2729,9 +2729,9 @@
     "t": "İş İngilizcesi",
     "en": "deprioritize",
     "tr": "öncelikten düşürmek",
-    "ex": "Let's deprioritize the nice-to-haves until after GA before Friday.",
+    "ex": "Let's deprioritize the nice-to-haves until after GA.",
     "morph": "deprioritize ← de- (ters) + prioritize",
-    "exTr": "GA'ya kadar olsa-iyileri öncelikten düşürelim Cuma’dan önce."
+    "exTr": "GA sonrasına kadar nice-to-have’leri öncelikten düşürelim."
   },
   {
     "d": 17,
@@ -2867,8 +2867,8 @@
     "t": "İş İngilizcesi",
     "en": "nit",
     "tr": "ufak not",
-    "ex": "Just a nit on naming. Otherwise LGTM before Friday.",
-    "exTr": "Sadece adlandırmada ufak bir not. Yoksa LGTM Cuma’dan önce."
+    "ex": "Just a nit on naming. Otherwise LGTM.",
+    "exTr": "Sadece adlandırmada ufak bir not. Yoksa LGTM."
   },
   {
     "d": 18,
@@ -4263,9 +4263,9 @@
     "t": "İş İngilizcesi",
     "en": "velocity",
     "tr": "hız, ilerleme hızı",
-    "ex": "I underestimated how hard velocity would be before Friday.",
+    "ex": "Our sprint velocity dropped after the freeze.",
     "morph": "velocity ← … + -ity",
-    "exTr": "Ne kadar sert hız olacağını hafife aldım Cuma’dan önce."
+    "exTr": "Freeze’ten sonra sprint hızımız düştü."
   },
   {
     "d": 27,
@@ -4606,8 +4606,8 @@
     "t": "İş İngilizcesi",
     "en": "cutting edge",
     "tr": "en ileri teknoloji, öncü",
-    "ex": "I underestimated how hard cutting edge would be.",
-    "exTr": "Ne kadar sert en ileri teknoloji, öncü olacağını hafife aldım."
+    "ex": "We're not chasing cutting edge; we need reliability.",
+    "exTr": "Cutting edge peşinde değiliz; güvenilirliğe ihtiyacımız var."
   },
   {
     "d": 29,
@@ -4655,8 +4655,8 @@
     "t": "İş İngilizcesi",
     "en": "distributed system",
     "tr": "dağıtık sistem",
-    "ex": "A better distributed system would save us hours each week.",
-    "exTr": "Daha iyi dağıtılmış bir sistem her hafta bizi saatte kurtaracaktı."
+    "ex": "Debugging a distributed system needs better tracing.",
+    "exTr": "Dağıtık bir sistemi debug etmek daha iyi tracing gerektirir."
   },
   {
     "d": 29,
@@ -4874,8 +4874,8 @@
     "t": "İş İngilizcesi",
     "en": "healthy debate",
     "tr": "sağlıklı tartışma",
-    "ex": "A better healthy debate would save us hours each week.",
-    "exTr": "Daha iyi bir sağlıklı tartışma bizi her hafta saatte kurtaracaktır."
+    "ex": "We want healthy debate, not personal attacks.",
+    "exTr": "Sağlıklı tartışma istiyoruz, kişisel saldırı değil."
   },
   {
     "d": 31,
@@ -5460,8 +5460,8 @@
     "t": "İş İngilizcesi",
     "en": "sexual orientation",
     "tr": "cinsel yönelim",
-    "ex": "Let's put sexual orientation on the agenda for Monday.",
-    "exTr": "Pazartesi günü için günde cinsel yönelim koyalım."
+    "ex": "Don't ask about sexual orientation in interviews.",
+    "exTr": "Mülakatlarda cinsel yönelim sormayın."
   },
   {
     "d": 34,
@@ -5988,8 +5988,8 @@
     "t": "İş İngilizcesi",
     "en": "on the flip side",
     "tr": "öte yandan, madalyonun diğer yüzünde",
-    "ex": "Use it like this: on the flip side.",
-    "exTr": "Bunu böyle kullanın: dönüş tarafında."
+    "ex": "The launch went well; on the flip side, support volume spiked.",
+    "exTr": "Lansman iyi geçti; öte yandan destek hacmi fırladı."
   },
   {
     "d": 37,
