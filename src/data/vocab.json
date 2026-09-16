@@ -3431,7 +3431,7 @@
     "tr": "tekrarları ayıklamak",
     "ex": "Please dedupe the invite list before sending.",
     "morph": "dedupe ← de- + duplicate",
-    "exTr": "Lütfen göndermeden önce davet listesini dedupe'la."
+    "exTr": "Lütfen göndermeden önce davet listesindeki tekrarları ayıkla."
   },
   {
     "d": 22,
@@ -5396,7 +5396,7 @@
     "en": "role model",
     "tr": "örnek alınan kişi",
     "ex": "She is a role model for how Staffs mentor ICs.",
-    "exTr": "Staff'ların IC'lere nasıl mentorluk ettiğine dair bir rol modelidir."
+    "exTr": "Staff'ların IC'lere mentorluğunda rol model."
   },
   {
     "d": 33,
@@ -5672,7 +5672,7 @@
     "en": "track record",
     "tr": "geçmiş performans, sicil",
     "ex": "She has a strong track record shipping platform bets.",
-    "exTr": "Platform bahislerini hayata geçirmede güçlü bir geçmiş performansı var."
+    "exTr": "Platform işlerini çıkarmada güçlü bir track record'u var."
   },
   {
     "d": 35,
