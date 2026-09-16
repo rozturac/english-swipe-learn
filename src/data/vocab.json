@@ -3470,8 +3470,8 @@
     "t": "İş İngilizcesi",
     "en": "dismissible",
     "tr": "kapatılabilir",
-    "ex": "Make the banner dismissible after first read before Friday.",
-    "exTr": "İlk okumadan sonra pankart reddedilmesini sağlayın Cuma’dan önce."
+    "ex": "Make the banner dismissible after the first read.",
+    "exTr": "İlk okumadan sonra banner'ı dismissible yap."
   },
   {
     "d": 22,
@@ -3502,8 +3502,8 @@
     "t": "İş İngilizcesi",
     "en": "draft up",
     "tr": "taslak hazırlamak",
-    "ex": "I'll draft up the update before standup before Friday.",
-    "exTr": "Ekrandan önce güncellemeyi hazırlayacağım Cuma’dan önce."
+    "ex": "I'll draft up the update before standup.",
+    "exTr": "Standup'tan önce update'in taslağını hazırlayacağım."
   },
   {
     "d": 22,
@@ -3535,8 +3535,8 @@
     "t": "İş İngilizcesi",
     "en": "exclusively",
     "tr": "yalnızca, özel olarak",
-    "ex": "This queue is exclusively for payment failures before Friday.",
-    "exTr": "Bu kuyruk sadece ödeme başarısızlıkları içindir Cuma’dan önce."
+    "ex": "This queue is exclusively for payment failures.",
+    "exTr": "Bu kuyruk yalnızca payment failure'lar içindir."
   },
   {
     "d": 22,
@@ -3568,9 +3568,9 @@
     "t": "İş İngilizcesi",
     "en": "finalize",
     "tr": "kesinleştirmek",
-    "ex": "Let's finalize the API contract tomorrow before Friday.",
+    "ex": "Let's finalize the API contract tomorrow.",
     "morph": "finalize ← final + -ize",
-    "exTr": "API sözleşmesini yarın tamamlayalım Cuma’dan önce."
+    "exTr": "Yarın API contract'ını finalize edelim."
   },
   {
     "d": 22,
@@ -3658,9 +3658,9 @@
     "t": "İş İngilizcesi",
     "en": "governance",
     "tr": "yönetişim, yönetim yapısı",
-    "ex": "We need lighter governance, not more committees before Friday.",
+    "ex": "We need lighter governance, not more committees.",
     "morph": "governance ← govern + -ance",
-    "exTr": "Daha hafif yönetime ihtiyacımız var, daha fazla komite değil Cuma’dan önce."
+    "exTr": "Daha fazla komite değil, daha hafif governance lazım."
   },
   {
     "d": 23,
@@ -5737,8 +5737,8 @@
     "t": "İş İngilizcesi",
     "en": "vested stakeholder",
     "tr": "menfaati olan paydaş",
-    "ex": "I underestimated how hard vested stakeholder would be.",
-    "exTr": "Ne kadar çalışkan hisse sahibi olacağını hafife aldım."
+    "ex": "Talk to every vested stakeholder before the reorg lands.",
+    "exTr": "Reorg gelmeden önce her vested stakeholder ile konuş."
   },
   {
     "d": 36,
@@ -5956,8 +5956,8 @@
     "t": "İş İngilizcesi",
     "en": "lifelong learner",
     "tr": "ömür boyu öğrenen",
-    "ex": "I underestimated how hard lifelong learner would be.",
-    "exTr": "Yaşam boyu öğrenmenin ne kadar zor olacağını hafife aldım."
+    "ex": "Hire lifelong learners who keep leveling up.",
+    "exTr": "Sürekli seviye atlayan lifelong learner'ları işe al."
   },
   {
     "d": 37,
@@ -5996,8 +5996,8 @@
     "t": "İş İngilizcesi",
     "en": "ought to",
     "tr": "-meli, gerekir",
-    "ex": "I underestimated how hard ought to would be.",
-    "exTr": "Ne kadar zor olacağını hafife aldım."
+    "ex": "We ought to pair on this before merging.",
+    "exTr": "Merge etmeden önce buna pair yapmalıyız."
   },
   {
     "d": 37,
