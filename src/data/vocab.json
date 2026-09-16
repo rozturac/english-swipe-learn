@@ -3861,7 +3861,7 @@
     "en": "outline",
     "tr": "ana hatlarıyla belirtmek",
     "ex": "Can you outline the migration steps for tomorrow's review?",
-    "exTr": "Yarınki inceleme için göç adımlarını ana hatlarıyla yazar mısın?"
+    "exTr": "Yarınki inceleme için migrasyon adımlarını ana hatlarıyla yazar mısın?"
   },
   {
     "d": 24,
@@ -5037,7 +5037,7 @@
     "en": "misguided",
     "tr": "yanlış yönlendirilmiş, yanılgıya dayalı",
     "ex": "Shipping without tests was a misguided shortcut.",
-    "exTr": "Testsiz çıkmak yanlış yönlendirilmiş bir kısayoldu."
+    "exTr": "Testsiz çıkmak yanlış bir kısayoldu."
   },
   {
     "d": 32,
@@ -5360,7 +5360,7 @@
     "d": 33,
     "t": "İş İngilizcesi",
     "en": "rider",
-    "tr": "yolcu; binici",
+    "tr": "ek madde, ek protokol",
     "ex": "Legal added a late rider to the vendor contract.",
     "exTr": "Hukuk vendor sözleşmesine geç bir ek madde ekledi."
   },
