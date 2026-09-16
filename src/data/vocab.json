@@ -3699,8 +3699,8 @@
     "t": "İş İngilizcesi",
     "en": "indicate",
     "tr": "göstermek, işaret etmek",
-    "ex": "Can you help the squad indicate by Thursday?",
-    "exTr": "Takımın Perşembe günü gösterdiğine yardımcı olabilir misiniz?"
+    "ex": "Early metrics indicate the experiment is working.",
+    "exTr": "Erken metrikler denemenin işe yaradığını gösteriyor."
   },
   {
     "d": 23,
@@ -3723,24 +3723,24 @@
     "t": "İş İngilizcesi",
     "en": "intent",
     "tr": "niyet, amaç",
-    "ex": "Customers said the flow felt less intent this week.",
-    "exTr": "Müşteriler, akışın bu hafta daha az niyet, amaç hissettiğini söyledi."
+    "ex": "What's the intent behind this change?",
+    "exTr": "Bu değişikliğin arkasındaki niyet ne?"
   },
   {
     "d": 24,
     "t": "İş İngilizcesi",
     "en": "intentional",
     "tr": "kasıtlı, bilinçli",
-    "ex": "A intentional plan beats a perfect slide deck.",
-    "exTr": "Bir niyet planı mükemmel bir slayt güvertesini yendi."
+    "ex": "That was an intentional trade-off for speed.",
+    "exTr": "Bu, hız için bilinçli bir trade-off’tu."
   },
   {
     "d": 24,
     "t": "İş İngilizcesi",
     "en": "key off",
     "tr": "bir şeye göre işlem yapmak",
-    "ex": "She asked me to key off the draft tonight.",
-    "exTr": "Bu gece taslaktan anahtar çıkarmamı istedi."
+    "ex": "Key off the customer research, not our opinions.",
+    "exTr": "Kendi fikirlerimizden değil, müşteri araştırmasından yola çık."
   },
   {
     "d": 24,
@@ -3755,40 +3755,40 @@
     "t": "İş İngilizcesi",
     "en": "LMK",
     "tr": "haber ver",
-    "ex": "We treat each LMK as a chance to harden the system.",
-    "exTr": "Her haber ver'yı sistemi zorlaştırmak için bir şans olarak tedavi ediyoruz."
+    "ex": "LMK if the deploy window slips.",
+    "exTr": "Deploy penceresi kayarsa LMK."
   },
   {
     "d": 24,
     "t": "İş İngilizcesi",
     "en": "loop someone in",
     "tr": "birini konuya dahil etmek",
-    "ex": "Can we loop someone in this with the stakeholders?",
-    "exTr": "Bunu paydaşlarla çözebilir miyiz?"
+    "ex": "Please loop someone in on the pricing thread. Start with Mira.",
+    "exTr": "Fiyat thread’ine birini loop in eder misin? Mira ile başla."
   },
   {
     "d": 24,
     "t": "İş İngilizcesi",
     "en": "mimic",
     "tr": "taklit etmek, benzerini yapmak",
-    "ex": "In the retro we said we should mimic.",
-    "exTr": "Arkamızda, taklit etmek, benzerini yapmak olmamız gerektiğini söylemiştik."
+    "ex": "Don't mimic the competitor's onboarding blindly.",
+    "exTr": "Rakibin onboarding’ini körü körüne taklit etme."
   },
   {
     "d": 24,
     "t": "İş İngilizcesi",
     "en": "mindful",
     "tr": "dikkatli, farkında",
-    "ex": "That was a mindful decision given the tight deadline.",
-    "exTr": "Bu, sıkı tarihe verilen dikkatli bir karardı."
+    "ex": "Be mindful of the timezone gap when you schedule.",
+    "exTr": "Zamanlarken saat farkına dikkat et."
   },
   {
     "d": 24,
     "t": "İş İngilizcesi",
     "en": "misleading",
     "tr": "yanıltıcı",
-    "ex": "We compared last year's misleading to this week's.",
-    "exTr": "Geçen yılın bu haftaki yanıltıcısını karşılaştırdık."
+    "ex": "That chart is misleading without the baseline.",
+    "exTr": "Baseline olmadan o grafik yanıltıcı."
   },
   {
     "d": 24,
@@ -3843,8 +3843,8 @@
     "t": "İş İngilizcesi",
     "en": "OOO",
     "tr": "ofis dışında",
-    "ex": "We treat each OOO as a chance to harden the system.",
-    "exTr": "Sistemi zorlaştırmak için her bir klasöre çalışıyoruz."
+    "ex": "I'm OOO Thursday. Ping my backup.",
+    "exTr": "Perşembe OOO’yum. Yedeğime yaz."
   },
   {
     "d": 24,
