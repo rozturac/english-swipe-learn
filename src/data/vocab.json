@@ -1185,7 +1185,7 @@
     "en": "food for thought",
     "tr": "düşünmelik, üzerine düşünülecek fikir",
     "ex": "That demo gave me some food for thought on our pricing.",
-    "exTr": "O demo fiyatlandırmamız hakkında bana biraz düşünmelik verdi."
+    "exTr": "O demo, fiyatlandırmamız üzerine düşünecek epey malzeme verdi."
   },
   {
     "d": 8,
@@ -2126,9 +2126,9 @@
     "d": 14,
     "t": "İş İngilizcesi",
     "en": "impact horizon",
-    "tr": "etki ufku",
+    "tr": "etki ufku / etki süresi",
     "ex": "What's the impact horizon if we delay the cutover?",
-    "exTr": "Cutover’ı gecikirsek etki ufku nedir?"
+    "exTr": "Cutover’ı ertelersek etki ne kadar uzağa yayılır?"
   },
   {
     "d": 14,
@@ -3692,7 +3692,7 @@
     "en": "in advance",
     "tr": "önceden",
     "ex": "Please send the deck in advance of the steering meeting.",
-    "exTr": "Lütfen deck’i steering toplantısından önce gönder."
+    "exTr": "Lütfen sunumu steering toplantısından önce gönderin."
   },
   {
     "d": 23,
