@@ -12,6 +12,19 @@ export const RETRY_SIZE = SESSION_SIZE
 /** @deprecated Prefer SESSION_SIZE — kept for existing imports. */
 export const SESSION_LEN = SESSION_SIZE
 
+/** Soft fill targets (room lock). */
+const TARGET_DUE_WRONG = 3
+const TARGET_NEW = 3
+const TARGET_KNOWN = 2
+/** Cap due-wrong when new/learning remain so fresh items still appear. */
+const DUE_WRONG_CAP_WITH_FRESH = 6
+
+/**
+ * Due ladder base hours for streak 1..5+ (4h → 1d → 3d → 7d → 14d).
+ * Scaled by (ease / 2.2). Review/due only applies when streak ≥ 2.
+ */
+export const DUE_BASE_HOURS = [4, 24, 72, 168, 336] as const
+
 /** Open decks (exact `t` values in vocab.json). Genel stays open but experimental. */
 export const OPEN_DECKS = [
   'Günlük konuşma',
@@ -143,96 +156,226 @@ export function resetProgress(): void {
   localStorage.removeItem(STORAGE_KEY)
 }
 
-function score(item: VocabItem, p: ProgressEntry | undefined, now: number): number {
-  if (!p) return 1000 + (5 - Math.min(item.d, 5)) * 10
+/** Interval hours for due ladder: BASE[streak clamped 1..5] * (ease / 2.2). */
+export function intervalHours(streak: number, ease: number): number {
+  const idx = Math.min(Math.max(streak, 1), 5) - 1
+  return DUE_BASE_HOURS[idx]! * (ease / 2.2)
+}
+
+/** True when streak ≥ 2 and age since lastSeen meets the scaled ladder. */
+export function isDue(
+  p: ProgressEntry,
+  now: number = Date.now(),
+): boolean {
+  if (p.streak < 2) return false
   const hours = (now - p.lastSeen) / 3_600_000
-  const wrongBoost = p.wrongs * 40
-  const streakPenalty = p.streak * 25
-  const due = (hours * (1 + p.wrongs * 0.5)) / Math.max(0.4, p.ease)
-  return wrongBoost - streakPenalty + due + (item.d <= 2 ? 15 : 0)
+  return hours >= intervalHours(p.streak, p.ease)
+}
+
+export type SessionBucket =
+  | 'new'
+  | 'wrong'
+  | 'learning'
+  | 'review'
+  | 'known'
+
+export function classifyBucket(
+  item: VocabItem,
+  progress: ProgressMap,
+  missed: ReadonlySet<string>,
+  now: number = Date.now(),
+): SessionBucket {
+  const p = progress[item.en]
+  if (!p) return 'new'
+  // Missed list OR unstable (streak < 2 with wrongs) → wrong bucket (preferMissed merges here).
+  if (missed.has(item.en) || (p.streak < 2 && p.wrongs > 0)) return 'wrong'
+  if (p.streak < 2) return 'learning'
+  if (isDue(p, now)) return 'review'
+  return 'known'
+}
+
+function shuffleInPlace<T>(arr: T[]): T[] {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[arr[i], arr[j]] = [arr[j]!, arr[i]!]
+  }
+  return arr
+}
+
+function hoursOverdue(p: ProgressEntry, now: number): number {
+  return (now - p.lastSeen) / 3_600_000 - intervalHours(p.streak, p.ease)
 }
 
 export type PickSessionOpts = {
   /** Restrict pool to a single theme (`item.t`). */
   theme?: string
   /**
-   * When local missed `en`s exist for this deck, weight ~25–40% of the
-   * next same-deck session from them. Else skip.
+   * When true (default path), missed ens merge into the wrong bucket.
+   * Kept for API compat; wrong bucket also includes streak<2 + wrongs>0.
    */
   preferMissed?: boolean
+  /** Injectable clock for tests. */
+  now?: number
+  /** Injectable missed list for tests (skips localStorage). */
+  missedEns?: string[]
 }
 
-/** Build a ~SESSION_SIZE item session: weakest / due first, unique by en (+ exTr). */
+/** Build a SESSION_SIZE session via LD-v1 buckets; unique by en (+ exTr). */
 export function pickSession(
   vocab: VocabItem[],
   progress: ProgressMap,
   opts: PickSessionOpts = {},
 ): VocabItem[] {
   const pool = opts.theme ? vocab.filter((x) => x.t === opts.theme) : vocab
-  const now = Date.now()
-  const ranked = [...pool]
-    .map((item) => ({ item, s: score(item, progress[item.en], now) }))
-    .sort((a, b) => b.s - a.s)
+  const now = opts.now ?? Date.now()
+  const missedList =
+    opts.missedEns ??
+    (opts.preferMissed === false ? [] : loadMissedEns())
+  const missed = new Set(missedList)
 
+  const buckets: Record<SessionBucket, VocabItem[]> = {
+    new: [],
+    wrong: [],
+    learning: [],
+    review: [],
+    known: [],
+  }
+
+  for (const item of pool) {
+    buckets[classifyBucket(item, progress, missed, now)].push(item)
+  }
+
+  // Cold deck: no progress entries in this pool → 8 unique new.
+  const cold =
+    pool.length > 0 && pool.every((item) => progress[item.en] === undefined)
+  if (cold) {
+    const news = [...buckets.new].sort((a, b) => a.d - b.d)
+    shuffleInPlace(news)
+    return takeUnique(news, SESSION_SIZE)
+  }
+
+  // Sort / soft-shuffle within buckets.
+  shuffleInPlace(buckets.wrong)
+  buckets.new.sort((a, b) => a.d - b.d)
+  shuffleInPlace(buckets.new)
+  buckets.learning.sort((a, b) => a.d - b.d)
+  shuffleInPlace(buckets.learning)
+  buckets.review.sort((a, b) => {
+    const pa = progress[a.en]!
+    const pb = progress[b.en]!
+    return hoursOverdue(pb, now) - hoursOverdue(pa, now)
+  })
+  // Known: rare filler — highest ease, then oldest lastSeen; soft shuffle.
+  const knownOrdered = [...buckets.known].sort((a, b) => {
+    const pa = progress[a.en]!
+    const pb = progress[b.en]!
+    if (pb.ease !== pa.ease) return pb.ease - pa.ease
+    return pa.lastSeen - pb.lastSeen
+  })
+  shuffleInPlace(knownOrdered)
+
+  const hasFresh = buckets.new.length + buckets.learning.length > 0
+  const dueWrongCap = hasFresh ? DUE_WRONG_CAP_WITH_FRESH : SESSION_SIZE
+
+  const picked: VocabItem[] = []
   const usedEn = new Set<string>()
   const usedTr = new Set<string>()
-  const chosen: VocabItem[] = []
-  const tryAdd = (item: VocabItem) => {
-    if (chosen.length >= SESSION_SIZE) return
-    if (usedEn.has(item.en)) return
-    if (usedTr.has(item.exTr)) return
+
+  const tryTake = (item: VocabItem): boolean => {
+    if (picked.length >= SESSION_SIZE) return false
+    if (usedEn.has(item.en) || usedTr.has(item.exTr)) return false
     usedEn.add(item.en)
     usedTr.add(item.exTr)
-    chosen.push(item)
+    picked.push(item)
+    return true
   }
 
-  // P1: weight 25–40% of session from locally stored wrongs in this deck.
-  if (opts.preferMissed && opts.theme) {
-    const missed = loadMissedEns()
-    if (missed.length > 0) {
-      const frac = 0.25 + Math.random() * 0.15 // 25–40%
-      const slot = Math.max(1, Math.min(SESSION_SIZE - 1, Math.round(SESSION_SIZE * frac)))
-      const byEn = new Map(pool.map((x) => [x.en, x]))
-      const missedItems = missed
-        .map((en) => byEn.get(en))
-        .filter((x): x is VocabItem => !!x)
-      for (let i = missedItems.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1))
-        ;[missedItems[i], missedItems[j]] = [missedItems[j], missedItems[i]]
-      }
-      for (const m of missedItems) {
-        if (chosen.length >= slot) break
-        tryAdd(m)
+  const takeFrom = (list: VocabItem[], n: number): number => {
+    let took = 0
+    for (const item of list) {
+      if (took >= n) break
+      if (tryTake(item)) took++
+    }
+    return took
+  }
+
+  // due-wrong = wrong ∪ review (wrong first, then most-overdue review).
+  const dueWrongTarget = Math.min(TARGET_DUE_WRONG, dueWrongCap)
+  const wrongCount = takeFrom(buckets.wrong, dueWrongTarget)
+  const reviewCount = takeFrom(
+    buckets.review,
+    Math.max(0, dueWrongTarget - wrongCount),
+  )
+
+  // new (then learning if short)
+  const newCount = takeFrom(buckets.new, TARGET_NEW)
+  if (newCount < TARGET_NEW) {
+    takeFrom(buckets.learning, TARGET_NEW - newCount)
+  }
+
+  // known
+  takeFrom(knownOrdered, TARGET_KNOWN)
+
+  // Backfill: learning → known → new → review → wrong
+  if (picked.length < SESSION_SIZE) takeFrom(buckets.learning, SESSION_SIZE - picked.length)
+  if (picked.length < SESSION_SIZE) takeFrom(knownOrdered, SESSION_SIZE - picked.length)
+  if (picked.length < SESSION_SIZE) takeFrom(buckets.new, SESSION_SIZE - picked.length)
+  if (picked.length < SESSION_SIZE) {
+    const extraReview = Math.min(
+      dueWrongCap - (wrongCount + reviewCount),
+      SESSION_SIZE - picked.length,
+    )
+    if (extraReview > 0) takeFrom(buckets.review, extraReview)
+  }
+  if (picked.length < SESSION_SIZE) takeFrom(buckets.wrong, SESSION_SIZE - picked.length)
+
+  // Tag items by bucket for interleave (from original classification).
+  const bucketOf = new Map<string, SessionBucket>()
+  for (const b of Object.keys(buckets) as SessionBucket[]) {
+    for (const item of buckets[b]) bucketOf.set(item.en, b)
+  }
+
+  // Round-robin: wrong → new → review → learning → known (no wrong clump).
+  const lanes: SessionBucket[] = ['wrong', 'new', 'review', 'learning', 'known']
+  const queues: Record<SessionBucket, VocabItem[]> = {
+    new: [],
+    wrong: [],
+    learning: [],
+    review: [],
+    known: [],
+  }
+  for (const item of picked) {
+    queues[bucketOf.get(item.en) ?? 'new'].push(item)
+  }
+
+  const ordered: VocabItem[] = []
+  while (ordered.length < picked.length) {
+    let progressed = false
+    for (const lane of lanes) {
+      const next = queues[lane].shift()
+      if (next) {
+        ordered.push(next)
+        progressed = true
       }
     }
+    if (!progressed) break
   }
 
-  const take = ranked.slice(0, Math.min(SESSION_SIZE * 4, ranked.length))
-  const weak = take.slice(0, SESSION_SIZE)
-  const rest = take.slice(SESSION_SIZE)
-  for (let i = weak.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[weak[i], weak[j]] = [weak[j], weak[i]]
-  }
+  return ordered.slice(0, SESSION_SIZE)
+}
 
-  for (const x of weak) tryAdd(x.item)
-  for (const r of rest) tryAdd(r.item)
-  if (chosen.length < SESSION_SIZE) {
-    for (const r of ranked) tryAdd(r.item)
+function takeUnique(items: VocabItem[], n: number): VocabItem[] {
+  const usedEn = new Set<string>()
+  const usedTr = new Set<string>()
+  const out: VocabItem[] = []
+  for (const item of items) {
+    if (out.length >= n) break
+    if (usedEn.has(item.en) || usedTr.has(item.exTr)) continue
+    usedEn.add(item.en)
+    usedTr.add(item.exTr)
+    out.push(item)
   }
-
-  const mid = Math.ceil(chosen.length / 2)
-  const head = chosen.slice(0, mid)
-  const tail = chosen.slice(mid)
-  for (let i = head.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[head[i], head[j]] = [head[j], head[i]]
-  }
-  for (let i = tail.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[tail[i], tail[j]] = [tail[j], tail[i]]
-  }
-  return [...head, ...tail].slice(0, SESSION_SIZE)
+  return out
 }
 
 export function recordAnswer(
