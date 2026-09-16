@@ -4191,8 +4191,8 @@
     "t": "İş İngilizcesi",
     "en": "tinker with",
     "tr": "kurcalamak, üzerinde oynamak",
-    "ex": "She asked me to tinker with the draft tonight.",
-    "exTr": "Bu gece taslakla tinker'e sormamı istedi."
+    "ex": "Don't tinker with prod without a rollback.",
+    "exTr": "Rollback’suz prod’da tinker etme."
   },
   {
     "d": 26,
@@ -4566,8 +4566,8 @@
     "t": "İş İngilizcesi",
     "en": "count on",
     "tr": "güvenmek, bel bağlamak",
-    "ex": "She asked me to count on the draft tonight.",
-    "exTr": "Bu gece taslakta saymamı istedi."
+    "ex": "You can count on me for the Friday deploy.",
+    "exTr": "Cuma deploy’unda bana count on edebilirsin."
   },
   {
     "d": 29,
@@ -4988,8 +4988,8 @@
     "t": "İş İngilizcesi",
     "en": "keep abreast of",
     "tr": "-den haberdar kalmak",
-    "ex": "Can we keep abreast of this with the stakeholders?",
-    "exTr": "Bunu paydaşlarla biraz tutabilir miyiz?"
+    "ex": "Keep abreast of the privacy reviews.",
+    "exTr": "Privacy review’larını yakından takip et."
   },
   {
     "d": 31,
@@ -5227,8 +5227,8 @@
     "t": "İş İngilizcesi",
     "en": "put yourself in the shoes of",
     "tr": "kendini onun yerine koymak",
-    "ex": "She asked me to put yourself in the shoes of the draft tonight.",
-    "exTr": "Bu gece draft ayakkabılarına kendinizi koymamı istedi."
+    "ex": "Put yourself in the shoes of a new user.",
+    "exTr": "Kendini yeni kullanıcının yerine koy."
   },
   {
     "d": 33,
@@ -5328,8 +5328,8 @@
     "t": "İş İngilizcesi",
     "en": "resort to",
     "tr": "-e başvurmak (çaresizlikten)",
-    "ex": "She asked me to resort to the draft tonight.",
-    "exTr": "Bu gece taslağına başvurmamı istedi."
+    "ex": "We had to resort to a manual failover.",
+    "exTr": "Manuel failover’a başvurmak zorunda kaldık."
   },
   {
     "d": 33,
@@ -5761,8 +5761,8 @@
     "t": "İş İngilizcesi",
     "en": "wrestle with",
     "tr": "boğuşmak, uğraşmak",
-    "ex": "Can we wrestle with this with the stakeholders?",
-    "exTr": "Bunu paydaşlarla koruyabilir miyiz?"
+    "ex": "We've been wrestling with the flaky tests all week.",
+    "exTr": "Bütün hafta flaky testlerle boğuşuyoruz."
   },
   {
     "d": 36,
@@ -5857,8 +5857,8 @@
     "t": "İş İngilizcesi",
     "en": "engage in",
     "tr": "katılmak, içine girmek",
-    "ex": "Can we engage in this with the stakeholders?",
-    "exTr": "Bunu paydaşlarla katılabilir miyiz?"
+    "ex": "Don't engage in blame during the SEV.",
+    "exTr": "SEV sırasında suçlamaya girme."
   },
   {
     "d": 37,
@@ -6085,8 +6085,8 @@
     "t": "İş İngilizcesi",
     "en": "turn out",
     "tr": "üretmek, ortaya koymak; sonuçlanmak",
-    "ex": "Can we turn out this with the stakeholders?",
-    "exTr": "Bunu paydaşlarla çıkarabilir miyiz?"
+    "ex": "It turned out the cache was the bottleneck.",
+    "exTr": "Meğer darboğaz cache’miş."
   },
   {
     "d": 38,
