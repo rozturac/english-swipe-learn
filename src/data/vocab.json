@@ -2355,8 +2355,8 @@
     "t": "İş İngilizcesi",
     "en": "refrain from",
     "tr": "kaçınmak, yapmamak",
-    "ex": "She asked me to refrain from the draft tonight.",
-    "exTr": "Bu gece taslaktan kaçınmamı istedi."
+    "ex": "Please refrain from debating scope in the incident channel.",
+    "exTr": "Incident kanalında kapsam tartışmasından kaçının."
   },
   {
     "d": 15,
@@ -2470,8 +2470,8 @@
     "t": "İş İngilizcesi",
     "en": "correct me if I'm wrong",
     "tr": "yanılıyorsam düzelt",
-    "ex": "Who owns correct me if I'm wrong after the reorg?",
-    "exTr": "Reorg'dan sonra yanlış olup olmadığımı kim düzeltti?"
+    "ex": "Correct me if I'm wrong, but the launch is Tuesday.",
+    "exTr": "Yanlıyorsam düzeltin ama lansman salı."
   },
   {
     "d": 16,
@@ -2747,8 +2747,8 @@
     "t": "İş İngilizcesi",
     "en": "double-click on",
     "tr": "derinine inmek",
-    "ex": "She asked me to double-click on the draft tonight.",
-    "exTr": "Bu gece taslakta derinine inmekmamı istedi."
+    "ex": "Let's double-click on the latency numbers.",
+    "exTr": "Latency rakamlarına bir double-click yapalım."
   },
   {
     "d": 18,
@@ -2819,8 +2819,8 @@
     "t": "İş İngilizcesi",
     "en": "I'll own that",
     "tr": "onu ben üstleniyorum",
-    "ex": "In the meeting someone mentioned I'll own that before we moved on.",
-    "exTr": "Toplantıda ilerlemadan önce biri onu ben üstleniyorum dedi."
+    "ex": "The missed deadline. I'll own that.",
+    "exTr": "Kaçırılan deadline. Onu ben üstleniyorum."
   },
   {
     "d": 18,
@@ -2916,16 +2916,16 @@
     "t": "İş İngilizcesi",
     "en": "over-index on",
     "tr": "bir şeye gereğinden fazla ağırlık vermek",
-    "ex": "Can we over-index on this with the stakeholders?",
-    "exTr": "Bunu paydaşlarla birlikte aşırı aşamalar yapabilir miyiz?"
+    "ex": "We're going to over-index on polish and under-shipping.",
+    "exTr": "Cilaya fazla yüklenip yeterince ship etmiyoruz."
   },
   {
     "d": 19,
     "t": "İş İngilizcesi",
     "en": "own it",
     "tr": "sahiplenmek, sorumluluğunu almak",
-    "ex": "We can't own it until security signs off.",
-    "exTr": "Güvenlik işaretlerine kadar buna sahip olamayız."
+    "ex": "If the migration slips, we own it as a team.",
+    "exTr": "Migrasyon kayarsa ekip olarak üstleniriz."
   },
   {
     "d": 19,
@@ -3087,8 +3087,8 @@
     "t": "İş İngilizcesi",
     "en": "that's on me",
     "tr": "o benim hatam",
-    "ex": "In the meeting someone mentioned that's on me before we moved on.",
-    "exTr": "Toplantıda ilerlemadan önce biri o benim hatam dedi."
+    "ex": "The bad estimate. That's on me.",
+    "exTr": "Kötü tahmin. O bende."
   },
   {
     "d": 20,
@@ -3332,8 +3332,8 @@
     "t": "İş İngilizcesi",
     "en": "clarify",
     "tr": "açıklığa kavuşturmak / açıklama",
-    "ex": "In the retro we said we should clarify / clarification.",
-    "exTr": "Retro’de netleştirmemiz gerektiğini söylemiştik."
+    "ex": "Can you clarify what done means for this story?",
+    "exTr": "Bu story için done'un ne demek olduğunu netleştirir misin?"
   },
   {
     "d": 21,
@@ -3396,8 +3396,8 @@
     "t": "İş İngilizcesi",
     "en": "cut down",
     "tr": "azaltmak, kısaltmak",
-    "ex": "We can't cut down until security signs off.",
-    "exTr": "Güvenlik işaretlerine kadar kesemeyiz."
+    "ex": "We need to cut down the slide count before the all-hands.",
+    "exTr": "All-hands'ten önce slayt sayısını kısmamız lazım."
   },
   {
     "d": 22,
@@ -3438,8 +3438,8 @@
     "t": "İş İngilizcesi",
     "en": "defer to",
     "tr": "birine bırakmak, ona öncelik tanımak",
-    "ex": "Can we defer to this with the stakeholders?",
-    "exTr": "Bunu paydaşlarla silebilir miyiz?"
+    "ex": "I'll defer to legal on the wording.",
+    "exTr": "İfadede hukuk ekibine defer ederim."
   },
   {
     "d": 22,
@@ -3748,7 +3748,7 @@
     "en": "building the plane while flying it",
     "tr": "tren giderken rayları döşemek",
     "ex": "We're building the plane while flying it on this migration.",
-    "exTr": "Bu migrasyonda tren giderken rayları döşüyoruz."
+    "exTr": "Bu migrasyonda uçağı uçururken inşa ediyoruz."
   },
   {
     "d": 24,
