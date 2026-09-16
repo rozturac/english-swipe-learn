@@ -2803,8 +2803,8 @@
     "t": "İş İngilizcesi",
     "en": "hand off",
     "tr": "devretmek",
-    "ex": "She asked me to hand off the draft tonight.",
-    "exTr": "Bu gece taslaktan çıkarmamı istedi."
+    "ex": "I'll hand off the incident to the EU on-call.",
+    "exTr": "Incident’i AB on-call’a hand off ederim."
   },
   {
     "d": 18,
@@ -3128,8 +3128,8 @@
     "t": "İş İngilizcesi",
     "en": "wrap up",
     "tr": "toparlamak, bitirmek",
-    "ex": "She asked me to wrap up the draft tonight.",
-    "exTr": "Bu gece taslakı kapatmamı istedi."
+    "ex": "Let's wrap up and send the notes.",
+    "exTr": "Wrap up edip notları gönderelim."
   },
   {
     "d": 20,
@@ -3933,16 +3933,16 @@
     "t": "İş İngilizcesi",
     "en": "polling",
     "tr": "sürekli sorgulama",
-    "ex": "The room went quiet after her polling remark.",
-    "exTr": "Oda onun anket remark sonra sessiz kaldı."
+    "ex": "Stop polling every 100ms. Use a webhook.",
+    "exTr": "Her 100ms polling yapmayı bırak. Webhook kullan."
   },
   {
     "d": 25,
     "t": "İş İngilizcesi",
     "en": "pop up",
     "tr": "belirmek, çıkmak",
-    "ex": "She asked me to pop up the draft tonight.",
-    "exTr": "O bana bu gece taslağını poplamamı istedi."
+    "ex": "A consent modal will pop up on first launch.",
+    "exTr": "İlk açılışta bir consent modalı pop up olacak."
   },
   {
     "d": 25,
@@ -3998,8 +3998,8 @@
     "t": "İş İngilizcesi",
     "en": "ramp up",
     "tr": "hızlanmak, adapte olmak",
-    "ex": "She asked me to ramp up the draft tonight.",
-    "exTr": "Bu gece taslakları hızlandırmamı istedi."
+    "ex": "We need to ramp up hiring before Q4.",
+    "exTr": "Q4’ten önce işe alımı ramp up etmemiz lazım."
   },
   {
     "d": 25,
@@ -4054,8 +4054,8 @@
     "t": "İş İngilizcesi",
     "en": "run into",
     "tr": "karşılaşmak, denk gelmek",
-    "ex": "Can we run into this with the stakeholders?",
-    "exTr": "Bunu paydaşlarla yönetebilir miyiz?"
+    "ex": "We ran into a permissions issue on staging.",
+    "exTr": "Staging’de bir izin sorununa takıldık."
   },
   {
     "d": 26,
@@ -4183,8 +4183,8 @@
     "t": "İş İngilizcesi",
     "en": "tie in",
     "tr": "bağlamak, ilişkilendirmek",
-    "ex": "Can we tie in this with the stakeholders?",
-    "exTr": "Bunu paydaşlarla bağlayabilir miyiz?"
+    "ex": "How does this tie in with the pricing work?",
+    "exTr": "Bu fiyat işiyle nasıl bağlanıyor?"
   },
   {
     "d": 26,
@@ -4264,8 +4264,8 @@
     "t": "İş İngilizcesi",
     "en": "walk through",
     "tr": "adım adım anlatmak",
-    "ex": "Can we walk through this with the stakeholders?",
-    "exTr": "Bunu paydaşlarla geçebilir miyiz?"
+    "ex": "Can we walk through the runbook with the stakeholders?",
+    "exTr": "Runbook’u paydaşlarla birlikte walk through eder miyiz?"
   },
   {
     "d": 27,
@@ -4980,8 +4980,8 @@
     "t": "İş İngilizcesi",
     "en": "jump in",
     "tr": "atlamak, devreye girmek",
-    "ex": "She asked me to jump in the draft tonight.",
-    "exTr": "Bu gece taslakta atlamak istedi."
+    "ex": "Jump in if you disagree with the estimate.",
+    "exTr": "Tahmine katılmıyorsan jump in et."
   },
   {
     "d": 31,
@@ -8762,8 +8762,8 @@
     "t": "Genel",
     "en": "flare up",
     "tr": "alevlenmek, nüksetmek",
-    "ex": "She asked me to flare up the draft tonight.",
-    "exTr": "Bu gece taslakları kapatmamı istedi."
+    "ex": "Complaints flared up after the deploy.",
+    "exTr": "Deploy’dan sonra şikayetler alevlendi."
   },
   {
     "d": 55,
