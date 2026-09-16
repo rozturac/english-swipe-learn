@@ -1609,7 +1609,7 @@
     "en": "point taken",
     "tr": "anladım, kabul",
     "ex": "You explained the risk clearly. Point taken.",
-    "exTr": "Riski net anlattın. Anladım, kabul."
+    "exTr": "Riski net anlattın. Nokta alındı."
   },
   {
     "d": 11,
@@ -3828,7 +3828,7 @@
     "en": "on my end",
     "tr": "benim tarafımda",
     "ex": "On my end, the migration is ready to flip.",
-    "exTr": "Benim tarafımda migration flip’e hazır."
+    "exTr": "Benim tarafımda migrasyon geçişe hazır."
   },
   {
     "d": 24,
