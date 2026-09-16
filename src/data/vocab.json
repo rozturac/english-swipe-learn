@@ -677,8 +677,8 @@
     "t": "İş İngilizcesi",
     "en": "how's the team doing?",
     "tr": "ekip nasıl?",
-    "ex": "In the meeting someone mentioned how's the team doing? before we moved on.",
-    "exTr": "Toplantıda ilerlemadan önce biri ekip nasıl? dedi."
+    "ex": "Quick check before we dig in: how's the team doing?",
+    "exTr": "Dalmadan önce hızlı check: ekip nasıl?"
   },
   {
     "d": 5,
@@ -958,8 +958,8 @@
     "t": "İş İngilizcesi",
     "en": "top performer",
     "tr": "üstün performans gösteren",
-    "ex": "Without solid top performer, the timeline won't hold.",
-    "exTr": "Katı üst performans olmadan, zaman süresi tutmaz."
+    "ex": "Without a solid top performer, the timeline won't hold.",
+    "exTr": "Sağlam bir top performer olmadan timeline tutmaz."
   },
   {
     "d": 7,
@@ -1224,8 +1224,8 @@
     "t": "İş İngilizcesi",
     "en": "give me a steer",
     "tr": "bana yön ver",
-    "ex": "She offered to give me a steer so the team could focus.",
-    "exTr": "Bana bir yönlendirme teklif etti, böylece takım odaklanabiliyordu."
+    "ex": "Can you give me a steer on the pricing options?",
+    "exTr": "Fiyat seçeneklerinde bana bir yön (steer) verir misin?"
   },
   {
     "d": 8,
@@ -1264,8 +1264,8 @@
     "t": "İş İngilizcesi",
     "en": "hit the ground running",
     "tr": "hemen tam hızda başlamak",
-    "ex": "In the retro we said we should hit the ground running.",
-    "exTr": "Retroda hemen tam hızda başlamamız gerektiğini söyledik."
+    "ex": "She hit the ground running in week one.",
+    "exTr": "İlk hafta tam gaz başladı."
   },
   {
     "d": 8,
@@ -1480,8 +1480,8 @@
     "t": "İş İngilizcesi",
     "en": "let me sit with it",
     "tr": "biraz üzerinde düşüneyim",
-    "ex": "I blocked time after lunch to let me sit with it.",
-    "exTr": "Öğle yemeğinden sonra biraz üzerinde düşüneyimdim."
+    "ex": "Let me sit with it overnight and reply tomorrow.",
+    "exTr": "Bunu bir gece düşüneyim, yarın dönerim."
   },
   {
     "d": 10,
@@ -1632,16 +1632,16 @@
     "t": "İş İngilizcesi",
     "en": "put a pin in it",
     "tr": "bunu şimdilik askıya alalım",
-    "ex": "She offered to put a pin in it so the team could focus.",
-    "exTr": "Bunu şimdilik askıya alalım ki ekip odaklanabilsin."
+    "ex": "Let's put a pin in it and come back Friday.",
+    "exTr": "Bunu şimdilik askıya alıp Cuma’ya bırakalım."
   },
   {
     "d": 11,
     "t": "İş İngilizcesi",
     "en": "put myself forward for",
     "tr": "kendimi aday göstermek",
-    "ex": "She asked me to put myself forward for the draft tonight.",
-    "exTr": "Bu gece draft için kendimi ileri götürmemi istedi."
+    "ex": "I'm going to put myself forward for the tech lead role.",
+    "exTr": "Tech lead rolü için kendimi aday göstereceğim."
   },
   {
     "d": 11,
@@ -1800,8 +1800,8 @@
     "t": "İş İngilizcesi",
     "en": "track for promo",
     "tr": "terfi yolunda olmak",
-    "ex": "I blocked time after lunch to track for promo.",
-    "exTr": "Öğleden sonra promo'yu takip etmek için zaman engelledim."
+    "ex": "She's on track for promo this cycle.",
+    "exTr": "Bu cycle’da terfi yolunda."
   },
   {
     "d": 11,
@@ -1872,8 +1872,8 @@
     "t": "İş İngilizcesi",
     "en": "what falls off?",
     "tr": "ne düşer?",
-    "ex": "In the meeting someone mentioned what falls off? before we moved on.",
-    "exTr": "Toplantıda ilerlemadan önce biri ne düşer? dedi."
+    "ex": "If we cut scope, what falls off?",
+    "exTr": "Kapsamı kesersek ne düşer?"
   },
   {
     "d": 12,
@@ -1952,8 +1952,8 @@
     "t": "İş İngilizcesi",
     "en": "zoom out",
     "tr": "geniş açıdan bakmak",
-    "ex": "Can we zoom out this with the stakeholders?",
-    "exTr": "Bunu paydaşlarla koordine edebilir miyiz?"
+    "ex": "Can we zoom out on this with the stakeholders?",
+    "exTr": "Paydaşlarla bir adım geri çıkıp bakabilir miyiz?"
   },
   {
     "d": 13,
@@ -2128,7 +2128,7 @@
     "en": "time horizon",
     "tr": "etki ufku / etki süresi",
     "ex": "What's the time horizon if we delay the cutover?",
-    "exTr": "Cutover’ı ertelersek etki ne kadar uzağa yayılır?"
+    "exTr": "Cutover'ı ertelersek zaman ufku ne olur?"
   },
   {
     "d": 14,
@@ -2254,7 +2254,7 @@
     "en": "in itself",
     "tr": "kendi başına",
     "ex": "The bug was minor in itself, but it blocked checkout.",
-    "exTr": "Bug kendi küçüktü, ama checkout engelledi."
+    "exTr": "Bug kendi başına küçüktü, ama checkout'u engelledi."
   },
   {
     "d": 15,
@@ -3748,7 +3748,7 @@
     "en": "building the plane while flying it",
     "tr": "tren giderken rayları döşemek",
     "ex": "We're building the plane while flying it on this migration.",
-    "exTr": "Tren hareket ettiği gibi parçaları bırakmak için öğle yemeğini engelledim."
+    "exTr": "Bu migrasyonda tren giderken rayları döşüyoruz."
   },
   {
     "d": 24,
@@ -7321,7 +7321,7 @@
     "en": "lately",
     "tr": "son zamanlarda",
     "ex": "He pushed back lately, then offered a compromise.",
-    "exTr": "Son zamanlarda geri itti = son zamanlarda, bir uzlaşma teklif etti."
+    "exTr": "Son zamanlarda geri itti, sonra bir uzlaşma teklif etti."
   },
   {
     "d": 46,
@@ -7579,7 +7579,7 @@
     "en": "on end",
     "tr": "durmaksızın, sürekli",
     "ex": "She edited the draft for hours on end tonight.",
-    "exTr": "Bu gece taslakta sona erdirmemi istedi."
+    "exTr": "Bu gece taslağı saatlerce durmaksızın düzenledi."
   },
   {
     "d": 48,
