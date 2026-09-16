@@ -2314,8 +2314,8 @@
     "t": "İş İngilizcesi",
     "en": "promotion readiness",
     "tr": "terfiye hazır olma",
-    "ex": "We flagged promotion readiness as a risk in the weekly review.",
-    "exTr": "Haftalık incelemede risk olarak promosyon hazırlıyoruz."
+    "ex": "We raised promotion readiness gaps in the weekly review.",
+    "exTr": "Haftalık incelemede terfi hazırlığı boşluklarını gündeme getirdik."
   },
   {
     "d": 15,
@@ -2948,8 +2948,8 @@
     "t": "İş İngilizcesi",
     "en": "quick one",
     "tr": "kısa bir soru",
-    "ex": "We flagged quick one as a risk in the weekly review.",
-    "exTr": "Haftalık incelemede bir risk olarak hızlı bayrak verdik."
+    "ex": "Got a quick one: can you glance at the PR title?",
+    "exTr": "Kısa bir şey: PR başlığına bakar mısın?"
   },
   {
     "d": 19,
@@ -3650,8 +3650,8 @@
     "t": "İş İngilizcesi",
     "en": "go-live",
     "tr": "yayına geçiş",
-    "ex": "Her promo story leaned hard on go-live before Friday.",
-    "exTr": "Onun promo hikayesi devam etmek için sert eğildi Cuma’dan önce."
+    "ex": "We delayed go-live until the rollback plan was ready.",
+    "exTr": "Geri alma planı hazır olana kadar go-live'ı erteledik."
   },
   {
     "d": 23,
@@ -3667,24 +3667,24 @@
     "t": "İş İngilizcesi",
     "en": "hence",
     "tr": "dolayısıyla, bu yüzden",
-    "ex": "A clearer hence would unblock three teams before Friday.",
-    "exTr": "Daha net bir şekilde üç takımı engellerdi Cuma’dan önce."
+    "ex": "Latency spiked; hence we rolled back the change.",
+    "exTr": "Gecikme arttı; dolayısıyla değişikliği geri aldık."
   },
   {
     "d": 23,
     "t": "İş İngilizcesi",
     "en": "hop",
     "tr": "sıçrama, ara durak",
-    "ex": "Our OKRs now include healthier hop before Friday.",
-    "exTr": "Bizim OKRs şimdi daha sağlıklı umutlar içeriyor Cuma’dan önce."
+    "ex": "Each hop on that path adds about 20 ms of latency.",
+    "exTr": "O yoldaki her hop yaklaşık 20 ms gecikme ekliyor."
   },
   {
     "d": 23,
     "t": "İş İngilizcesi",
     "en": "hunch",
     "tr": "sezgi, içine doğan his",
-    "ex": "We flagged hunch as a risk in the weekly review.",
-    "exTr": "Haftalık incelemede bir risk olarak sezgi, içine doğan his bayrağını bayrağı altına aldık."
+    "ex": "My hunch is the cache is the real bottleneck.",
+    "exTr": "Sezgim asıl darboğazın önbellek olduğu yönünde."
   },
   {
     "d": 23,
@@ -3715,8 +3715,8 @@
     "t": "İş İngilizcesi",
     "en": "instance",
     "tr": "örnek; sunucu kopyası",
-    "ex": "Our OKRs now include healthier instance before Friday.",
-    "exTr": "Bizim OKRs şimdi daha sağlıklı örnek içeriyor Cuma’dan önce."
+    "ex": "Restart the unhealthy instance before traffic shifts.",
+    "exTr": "Trafik kaymadan önce sağlıksız instance'ı yeniden başlat."
   },
   {
     "d": 23,
@@ -3803,8 +3803,8 @@
     "t": "İş İngilizcesi",
     "en": "moving forward",
     "tr": "bundan sonra, ileriye dönük",
-    "ex": "Moving forward, let's review designs before coding before Friday.",
-    "exTr": "İleriye devam edin, kodlamadan önce inceleme tasarımları yapalım Cuma’dan önce."
+    "ex": "Let's agree, moving forward, to review designs before coding.",
+    "exTr": "Bundan sonra kodlamadan önce tasarımları gözden geçirmeyi kabul edelim."
   },
   {
     "d": 24,
@@ -3835,8 +3835,8 @@
     "t": "İş İngilizcesi",
     "en": "on the ground",
     "tr": "sahada, yerinde",
-    "ex": "My default reply is on the ground before Friday.",
-    "exTr": "Varsayılan cevabım zeminde Cuma’dan önce."
+    "ex": "We need someone on the ground during the cutover.",
+    "exTr": "Cutover sırasında sahada birine ihtiyacımız var."
   },
   {
     "d": 24,
@@ -3860,25 +3860,25 @@
     "t": "İş İngilizcesi",
     "en": "outline",
     "tr": "ana hatlarıyla belirtmek",
-    "ex": "Can you outline the migration steps before Friday's review?",
-    "exTr": "Cuma günkü incelemeden önce göç adımlarını açıklayabilir misiniz?"
+    "ex": "Can you outline the migration steps for tomorrow's review?",
+    "exTr": "Yarınki inceleme için göç adımlarını ana hatlarıyla yazar mısın?"
   },
   {
     "d": 24,
     "t": "İş İngilizcesi",
     "en": "outreach",
     "tr": "iletişim girişimi, temas kurma",
-    "ex": "The hiring packet emphasizes strong outreach before Friday.",
-    "exTr": "İşe alım paketi güçlü bir erişimi vurgulamaktadır Cuma’dan önce."
+    "ex": "Our hiring outreach this quarter focused on backend roles.",
+    "exTr": "Bu çeyrekteki işe alım outreach'imiz backend rollerine odaklandı."
   },
   {
     "d": 24,
     "t": "İş İngilizcesi",
     "en": "parity",
     "tr": "denklik, eşitlik",
-    "ex": "A clearer parity would unblock three teams before Friday.",
+    "ex": "We need feature parity with the old mobile app.",
     "morph": "parity ← … + -ity",
-    "exTr": "Daha net bir parite üç takımı engellerdi Cuma’dan önce."
+    "exTr": "Eski mobil uygulamayla özellik paritesine ihtiyacımız var."
   },
   {
     "d": 24,
@@ -3901,8 +3901,8 @@
     "t": "İş İngilizcesi",
     "en": "pinned",
     "tr": "sabitlenmiş",
-    "ex": "We flagged pinned as a risk in the weekly review.",
-    "exTr": "Haftalık incelemede risk olarak belirledik."
+    "ex": "I pinned the decision thread so nobody misses it.",
+    "exTr": "Kimse kaçırmasın diye karar thread'ini sabitledim."
   },
   {
     "d": 25,
@@ -3925,8 +3925,8 @@
     "t": "İş İngilizcesi",
     "en": "pointed",
     "tr": "net, hedefe yönelik",
-    "ex": "Her promo story leaned hard on pointed before Friday.",
-    "exTr": "Onun promo hikayesi işaret etmeye zor eğildi Cuma’dan önce."
+    "ex": "Her feedback was pointed but fair in the design review.",
+    "exTr": "Tasarım incelemesinde geri bildirimi net ama adildi."
   },
   {
     "d": 25,
@@ -3966,8 +3966,8 @@
     "t": "İş İngilizcesi",
     "en": "proceed",
     "tr": "ilerlemek, devam etmek",
-    "ex": "The playbook reminds teams to proceed early before Friday.",
-    "exTr": "Oyun kitabı, ekiplerin erken ilerlemelerini hatırlatıyor Cuma’dan önce."
+    "ex": "The playbook says we can proceed once QA signs off.",
+    "exTr": "Oyun kitabına göre QA onaylayınca ilerleyebiliriz."
   },
   {
     "d": 25,
@@ -4022,32 +4022,32 @@
     "t": "İş İngilizcesi",
     "en": "recurring",
     "tr": "tekrar eden, düzenli",
-    "ex": "That approach felt recurring given the constraints before Friday.",
-    "exTr": "Bu yaklaşım tekrar tekrarlanan kısıtlamaları verdi Cuma’dan önce."
+    "ex": "Let's make this a recurring sync every other week.",
+    "exTr": "Bunu iki haftada bir tekrarlayan sync yapalım."
   },
   {
     "d": 25,
     "t": "İş İngilizcesi",
     "en": "redirect",
     "tr": "yönlendirmek",
-    "ex": "We can't redirect until security signs off before Friday.",
-    "exTr": "Güvenlik işaretlerine kadar yönlendirmeyiz Cuma’dan önce."
+    "ex": "We can't redirect traffic until security signs off.",
+    "exTr": "Güvenlik onaylayana kadar trafiği yönlendiremeyiz."
   },
   {
     "d": 25,
     "t": "İş İngilizcesi",
     "en": "restate",
     "tr": "yeniden ifade etmek",
-    "ex": "Please restate once the flag is on before Friday.",
-    "exTr": "Lütfen bayrakta bir kez dinlenin Cuma’dan önce."
+    "ex": "Please restate the decision so the notes are clear.",
+    "exTr": "Notlar net olsun diye lütfen kararı yeniden ifade et."
   },
   {
     "d": 25,
     "t": "İş İngilizcesi",
     "en": "retention policy",
     "tr": "saklama politikası",
-    "ex": "Who owns retention policy after the reorg before Friday?",
-    "exTr": "Reorg'dan sonra kim tutma politikası var Cuma’dan önce?"
+    "ex": "Who owns the retention policy after the reorg?",
+    "exTr": "Reorg sonrası saklama politikasının sahibi kim?"
   },
   {
     "d": 26,
@@ -4078,16 +4078,16 @@
     "t": "İş İngilizcesi",
     "en": "sort out",
     "tr": "halletmek, çözmek",
-    "ex": "I'll sort out the update before standup before Friday.",
-    "exTr": "Ayağa çıkmadan önce güncellemeyi sıralayacağım Cuma’dan önce."
+    "ex": "I'll sort out the update before standup.",
+    "exTr": "Standup'tan önce güncellemeyi hallederim."
   },
   {
     "d": 26,
     "t": "İş İngilizcesi",
     "en": "span across",
     "tr": "yayılmak, kapsamak",
-    "ex": "Her responsibilities span across product and ops before Friday.",
-    "exTr": "Onun sorumlulukları ürün ve aflar arasında yayılıyor Cuma’dan önce."
+    "ex": "Her responsibilities span across product and ops.",
+    "exTr": "Sorumlulukları ürün ve operasyonlara yayılıyor."
   },
   {
     "d": 26,
@@ -4102,8 +4102,8 @@
     "t": "İş İngilizcesi",
     "en": "sticky",
     "tr": "yapışkan, sabit kalan",
-    "ex": "That approach felt sticky given the constraints before Friday.",
-    "exTr": "Bu yaklaşım, bary'nin kısıtlamaları verdiğini hissetti Cuma’dan önce."
+    "ex": "That decision is sticky; changing it later is costly.",
+    "exTr": "O karar yapışkan; sonra değiştirmek maliyetli olur."
   },
   {
     "d": 26,
@@ -4118,16 +4118,16 @@
     "t": "İş İngilizcesi",
     "en": "straightforward",
     "tr": "kolay, anlaşılır, dolambaçsız",
-    "ex": "The migration path is surprisingly straightforward before Friday.",
-    "exTr": "Göç yolu şaşırtıcı derecede basittir Cuma’dan önce."
+    "ex": "The migration path is surprisingly straightforward.",
+    "exTr": "Göç yolu şaşırtıcı derecede dolambaçsız."
   },
   {
     "d": 26,
     "t": "İş İngilizcesi",
     "en": "submit",
     "tr": "göndermek, sunmak",
-    "ex": "She reminded everyone to submit before cutover before Friday.",
-    "exTr": "Herkesi kesmeden önce göndermek, sunmakmesini hatırlattı Cuma’dan önce."
+    "ex": "She reminded everyone to submit forms before cutover.",
+    "exTr": "Herkese cutover'dan önce formları göndermeyi hatırlattı."
   },
   {
     "d": 26,
@@ -4142,25 +4142,25 @@
     "t": "İş İngilizcesi",
     "en": "substitution",
     "tr": "ikame, yerine koyma",
-    "ex": "He volunteered to drive substitution this quarter before Friday.",
+    "ex": "He volunteered to drive the substitution plan this quarter.",
     "morph": "substitution ← … + -tion",
-    "exTr": "Bu çeyreği altüst etmeye gönüllü oldu Cuma’dan önce."
+    "exTr": "Bu çeyrekte ikame planını yürütmeye gönüllü oldu."
   },
   {
     "d": 26,
     "t": "İş İngilizcesi",
     "en": "suffice",
     "tr": "yeterli olmak",
-    "ex": "We can't suffice until security signs off before Friday.",
-    "exTr": "Güvenlik işaretlerine kadar yeterli olamayız Cuma’dan önce."
+    "ex": "A short note will suffice for the audit trail.",
+    "exTr": "Denetim izi için kısa bir not yeterli olur."
   },
   {
     "d": 26,
     "t": "İş İngilizcesi",
     "en": "suite",
     "tr": "takım, set",
-    "ex": "He volunteered to drive suite this quarter before Friday.",
-    "exTr": "Bu çeyreği takım, set etmeye gönüllü oldu Cuma’dan önce."
+    "ex": "He volunteered to own the test suite this quarter.",
+    "exTr": "Bu çeyrekte test suite'inin sahibi olmaya gönüllü oldu."
   },
   {
     "d": 26,
@@ -4183,8 +4183,8 @@
     "t": "İş İngilizcesi",
     "en": "ticket",
     "tr": "talep kaydı, iş kaydı",
-    "ex": "Our OKRs now include healthier ticket before Friday.",
-    "exTr": "TamamRs şimdi daha sağlıklı bilet içeriyor Cuma’dan önce."
+    "ex": "Please open a ticket if the job fails twice.",
+    "exTr": "İş iki kez başarısız olursa lütfen ticket aç."
   },
   {
     "d": 26,
@@ -4247,8 +4247,8 @@
     "t": "İş İngilizcesi",
     "en": "urgent",
     "tr": "acil",
-    "ex": "The prototype was rough but surprisingly urgent before Friday.",
-    "exTr": "Prototip kaba ama şaşırtıcı derecede acildi Cuma’dan önce."
+    "ex": "The prototype was rough but the request felt urgent.",
+    "exTr": "Prototip kabaydı ama istek acil geldi."
   },
   {
     "d": 27,
@@ -4280,16 +4280,16 @@
     "t": "İş İngilizcesi",
     "en": "when convenient",
     "tr": "uygun olduğunda",
-    "ex": "We flagged when convenient as a risk in the weekly review.",
-    "exTr": "Haftalık incelemede risk olarak uygun bir şekilde bayraktık."
+    "ex": "Reply when convenient; this is not blocking launch.",
+    "exTr": "Uygun olduğunda cevapla; lansmanı engellemiyor."
   },
   {
     "d": 27,
     "t": "İş İngilizcesi",
     "en": "whereas",
     "tr": "oysa, halbuki",
-    "ex": "The hiring packet emphasizes strong whereas before Friday.",
-    "exTr": "İşe alım paketi güçlü bir şekilde vurgulamaktadır Cuma’dan önce."
+    "ex": "We ship weekly, whereas that team ships monthly.",
+    "exTr": "Biz haftalık çıkıyoruz, oysa o ekip aylık çıkıyor."
   },
   {
     "d": 27,
@@ -4482,8 +4482,8 @@
     "t": "İş İngilizcesi",
     "en": "coasting",
     "tr": "yağ çekerek gitmek, asgari çabayla takılmak",
-    "ex": "We can't coasting until security signs off before Friday.",
-    "exTr": "Güvenlik işaretlerine kadar sahile geçemeyiz Cuma’dan önce."
+    "ex": "The team was coasting after two easy sprints.",
+    "exTr": "İki kolay sprintten sonra ekip yağ çekerek ilerliyordu."
   },
   {
     "d": 28,
@@ -4499,8 +4499,8 @@
     "t": "İş İngilizcesi",
     "en": "compliance",
     "tr": "uygunluk, mevzuata uyma",
-    "ex": "He volunteered to drive compliance this quarter before Friday.",
-    "exTr": "Bu çeyreke uymaya gönüllü oldu Cuma’dan önce."
+    "ex": "He volunteered to drive compliance this quarter.",
+    "exTr": "Bu çeyrekte compliance işini yürütmeye gönüllü oldu."
   },
   {
     "d": 28,
@@ -4540,8 +4540,8 @@
     "t": "İş İngilizcesi",
     "en": "consensus",
     "tr": "uzlaşı, fikir birliği",
-    "ex": "A clearer consensus would unblock three teams before Friday.",
-    "exTr": "Daha net bir uzlaşı üç ekibin önünü açardı Cuma’dan önce."
+    "ex": "We need consensus before changing the pricing model.",
+    "exTr": "Fiyat modelini değiştirmeden önce uzlaşıya ihtiyacımız var."
   },
   {
     "d": 29,
@@ -4557,8 +4557,8 @@
     "t": "İş İngilizcesi",
     "en": "convergence",
     "tr": "yakınsama, ortak noktada buluşma",
-    "ex": "A clearer convergence would unblock three teams before Friday.",
-    "exTr": "Daha net bir yakınsama, ortak noktada buluşma üç takımı engellerdi Cuma’dan önce."
+    "ex": "We finally saw convergence between product and eng priorities.",
+    "exTr": "Ürün ve mühendislik öncelikleri arasında sonunda yakınsama gördük."
   },
   {
     "d": 29,
@@ -4582,8 +4582,8 @@
     "t": "İş İngilizcesi",
     "en": "craft",
     "tr": "ustalık, zanaat",
-    "ex": "The hiring packet emphasizes strong craft before Friday.",
-    "exTr": "İşe alım paketi güçlü ustalık, zanaatı vurgulamaktadır Cuma’dan önce."
+    "ex": "The hiring packet emphasizes strong craft over buzzwords.",
+    "exTr": "İşe alım paketi slogan yerine güçlü craft'ı vurguluyor."
   },
   {
     "d": 29,
@@ -4598,8 +4598,8 @@
     "t": "İş İngilizcesi",
     "en": "customer-obsessed",
     "tr": "müşteri odaklı (takıntı derecesinde)",
-    "ex": "Who owns customer-obsessed after the reorg before Friday?",
-    "exTr": "Reorg'dan sonra kim müşteri takıntılı Cuma’dan önce?"
+    "ex": "We want a customer-obsessed PM for the growth team.",
+    "exTr": "Büyüme ekibi için müşteri odaklı bir PM istiyoruz."
   },
   {
     "d": 29,
@@ -4614,16 +4614,16 @@
     "t": "İş İngilizcesi",
     "en": "decompose",
     "tr": "parçalara ayırmak, çözümlemek",
-    "ex": "She reminded everyone to decompose before cutover before Friday.",
-    "exTr": "Herkesi kesmeden önce dekopose’ye anımsattı Cuma’dan önce."
+    "ex": "She reminded everyone to decompose the epic before sprint planning.",
+    "exTr": "Herkese sprint planlamadan önce epic'i parçalamayı hatırlattı."
   },
   {
     "d": 29,
     "t": "İş İngilizcesi",
     "en": "defect",
     "tr": "kusur, hata",
-    "ex": "The board deck highlights progress on defect before Friday.",
-    "exTr": "Gemi güvertesi defekt üzerinde ilerlemektedir Cuma’dan önce."
+    "ex": "The board deck highlights progress on defect burn-down.",
+    "exTr": "Yönetim sunumu kusur azaltma (defect burn-down) ilerlemesini vurguluyor."
   },
   {
     "d": 29,
@@ -4638,17 +4638,17 @@
     "t": "İş İngilizcesi",
     "en": "diff",
     "tr": "kod değişikliği",
-    "ex": "After the incident we rebuilt our diff before Friday.",
-    "exTr": "Olaydan sonra kod değişikliğiimizi yeniden inşa ettik Cuma’dan önce."
+    "ex": "After the incident we rebuilt how we review every risky diff.",
+    "exTr": "Olaydan sonra riskli her diff'i nasıl incelediğimizi yeniden kurduk."
   },
   {
     "d": 29,
     "t": "İş İngilizcesi",
     "en": "disability",
     "tr": "engellilik",
-    "ex": "I added disability to the decision log before Friday.",
+    "ex": "I added disability accommodations to the decision log.",
     "morph": "disability ← … + -ity",
-    "exTr": "Karar gününe engelliliği ekledim Cuma’dan önce."
+    "exTr": "Karar kaydına engellilik düzenlemelerini ekledim."
   },
   {
     "d": 29,
@@ -4663,8 +4663,8 @@
     "t": "İş İngilizcesi",
     "en": "diverse",
     "tr": "çeşitli, farklı türde",
-    "ex": "He volunteered to drive diverse this quarter before Friday.",
-    "exTr": "Bu çeyreği farklı tutmak için gönüllü oldu Cuma’dan önce."
+    "ex": "He volunteered to drive a more diverse hiring slate this quarter.",
+    "exTr": "Bu çeyrekte daha çeşitli bir aday listesini yürütmeye gönüllü oldu."
   },
   {
     "d": 29,
@@ -4695,16 +4695,16 @@
     "t": "İş İngilizcesi",
     "en": "emphasis",
     "tr": "vurgu, ağırlık",
-    "ex": "After the incident we rebuilt our emphasis before Friday.",
-    "exTr": "Olaydan sonra dikkatimizi yeniden inşa ettik Cuma’dan önce."
+    "ex": "After the incident we rebuilt our emphasis on runbooks.",
+    "exTr": "Olaydan sonra runbook vurgumuzu yeniden kurduk."
   },
   {
     "d": 30,
     "t": "İş İngilizcesi",
     "en": "energized",
     "tr": "enerji dolu, motive olmuş",
-    "ex": "A clearer energized would unblock three teams before Friday.",
-    "exTr": "Daha net bir enerjik üç takımı engellerdi Cuma’dan önce."
+    "ex": "The team felt energized after shipping the beta.",
+    "exTr": "Beta'yı çıkardıktan sonra ekip enerji dolu hissetti."
   },
   {
     "d": 30,
@@ -4719,9 +4719,9 @@
     "t": "İş İngilizcesi",
     "en": "equity",
     "tr": "hisse, pay; adalet",
-    "ex": "We flagged equity as a risk in the weekly review.",
+    "ex": "We discussed equity refresh timing in the weekly review.",
     "morph": "equity ← … + -ity",
-    "exTr": "Eşitliği haftalık incelemede bir risk olarak indirdik."
+    "exTr": "Haftalık incelemede equity yenileme zamanını konuştuk."
   },
   {
     "d": 30,
@@ -4736,42 +4736,42 @@
     "t": "İş İngilizcesi",
     "en": "evangelize",
     "tr": "yaymak, savunuculuğunu yapmak",
-    "ex": "I blocked time after lunch to evangelize before Friday.",
+    "ex": "I blocked time after lunch to evangelize the new API.",
     "morph": "evangelize ← evangel + -ize",
-    "exTr": "Öğleden sonra akşamları yaymak, savunuculuğunu yapmak etmek için engelledim Cuma’dan önce."
+    "exTr": "Öğleden sonra yeni API'yi yaymak için zaman ayırdım."
   },
   {
     "d": 30,
     "t": "İş İngilizcesi",
     "en": "evolution",
     "tr": "evrim, gelişim",
-    "ex": "The board deck highlights progress on evolution before Friday.",
+    "ex": "The board deck highlights progress on platform evolution.",
     "morph": "evolution ← … + -tion",
-    "exTr": "Gemi güverte, evrim üzerinde ilerlemeyi vurgulamaktadır Cuma’dan önce."
+    "exTr": "Yönetim sunumu platform evrimindeki ilerlemeyi vurguluyor."
   },
   {
     "d": 30,
     "t": "İş İngilizcesi",
     "en": "evolve",
     "tr": "gelişmek, evrilmek",
-    "ex": "Please evolve this before Friday in the meeting.",
-    "exTr": "Lütfen bunu Cuma gününden önce evrim toplantıda."
+    "ex": "Please evolve this proposal after the stakeholder meeting.",
+    "exTr": "Lütfen paydaş toplantısından sonra bu teklifi geliştir."
   },
   {
     "d": 30,
     "t": "İş İngilizcesi",
     "en": "excellence",
     "tr": "mükemmellik, üstün nitelik",
-    "ex": "We hire for excellence, not just headcount before Friday.",
-    "exTr": "Sadece kadro için değil, mükemmellik için işe alıyoruz Cuma’dan önce."
+    "ex": "We hire for excellence, not just headcount.",
+    "exTr": "Sadece kadro doldurmak için değil, mükemmellik için işe alıyoruz."
   },
   {
     "d": 30,
     "t": "İş İngilizcesi",
     "en": "extensible",
     "tr": "genişletilebilir / genişletilebilirlik",
-    "ex": "Skip-level notes mentioned weak extensible / extensibility before Friday.",
-    "exTr": "Skip- level notlar zayıf extensible / extenabil bahsetti Cuma’dan önce."
+    "ex": "Skip-level notes flagged a weak extensible plugin API.",
+    "exTr": "Skip-level notlar zayıf genişletilebilir bir eklenti API'sine işaret etti."
   },
   {
     "d": 30,
@@ -4786,8 +4786,8 @@
     "t": "İş İngilizcesi",
     "en": "fault-tolerant",
     "tr": "hataya dayanıklı",
-    "ex": "The board deck highlights progress on fault-tolerant before Friday.",
-    "exTr": "Gemi güvertesi hataya karşı ilerlemeyi vurgulamaktadır Cuma’dan önce."
+    "ex": "The board deck highlights progress on a fault-tolerant queue.",
+    "exTr": "Yönetim sunumu hataya dayanıklı kuyruk ilerlemesini vurguluyor."
   },
   {
     "d": 30,
@@ -4834,16 +4834,16 @@
     "t": "İş İngilizcesi",
     "en": "genuinely",
     "tr": "gerçekten, hakikaten",
-    "ex": "Review the diff genuinely before merging before Friday.",
-    "exTr": "Diff'i gerçekten birleşmeden önce gözden geçirin Cuma’dan önce."
+    "ex": "Review the diff genuinely before merging.",
+    "exTr": "Birleştirmeden önce diff'i gerçekten gözden geçir."
   },
   {
     "d": 30,
     "t": "İş İngilizcesi",
     "en": "granular",
     "tr": "ince taneli, ayrıntılı",
-    "ex": "Without solid granular, the timeline won't hold before Friday.",
-    "exTr": "Katı ince taneli, ayrıntılı olmadan, zaman süresi tutmaz Cuma’dan önce."
+    "ex": "Without solid granular metrics, the timeline won't hold.",
+    "exTr": "Sağlam ince taneli metrikler olmadan zaman çizelgesi tutmaz."
   },
   {
     "d": 30,
@@ -4882,16 +4882,16 @@
     "t": "İş İngilizcesi",
     "en": "hidden agenda",
     "tr": "gizli gündem, art niyet",
-    "ex": "We flagged hidden agenda as a risk in the weekly review.",
-    "exTr": "Haftalık incelemede bir risk olarak gizli bir gündemi bayrağı altına aldık."
+    "ex": "Please don't assume a hidden agenda in that proposal.",
+    "exTr": "Lütfen o teklifte gizli bir niyet varsayma."
   },
   {
     "d": 31,
     "t": "İş İngilizcesi",
     "en": "high-precision",
     "tr": "yüksek hassasiyetli",
-    "ex": "Without solid high-precision, the timeline won't hold before Friday.",
-    "exTr": "Katı yüksek hassasiyetli olmadan, zaman süresi tutmaz Cuma’dan önce."
+    "ex": "Without solid high-precision timers, the timeline won't hold.",
+    "exTr": "Sağlam yüksek hassasiyetli zamanlayıcılar olmadan zaman çizelgesi tutmaz."
   },
   {
     "d": 31,
@@ -4914,16 +4914,16 @@
     "t": "İş İngilizcesi",
     "en": "hygiene",
     "tr": "hijyen; düzen, temizlik",
-    "ex": "Our OKRs now include healthier hygiene before Friday.",
-    "exTr": "TamamRs şimdi daha sağlıklı hijyen içerir Cuma’dan önce."
+    "ex": "Our OKRs now include healthier backlog hygiene.",
+    "exTr": "OKR'lerimiz artık daha iyi backlog hijyenini de içeriyor."
   },
   {
     "d": 31,
     "t": "İş İngilizcesi",
     "en": "impose",
     "tr": "dayatmak",
-    "ex": "Please impose once the flag is on before Friday.",
-    "exTr": "Lütfen bayrağı bir kez empoze edin Cuma’dan önce."
+    "ex": "Please don't impose a freeze without warning the teams.",
+    "exTr": "Lütfen ekipleri uyarmadan dondurma dayatmayın."
   },
   {
     "d": 31,
@@ -4938,9 +4938,9 @@
     "t": "İş İngilizcesi",
     "en": "inception",
     "tr": "başlangıç, doğuş",
-    "ex": "A clearer inception would unblock three teams before Friday.",
+    "ex": "We need a clearer inception workshop before building.",
     "morph": "inception ← … + -tion",
-    "exTr": "Daha net bir giriş, üç takımı engellerdi Cuma’dan önce."
+    "exTr": "İnşa etmeden önce daha net bir başlangıç atölyesine ihtiyacımız var."
   },
   {
     "d": 31,
@@ -4963,25 +4963,25 @@
     "t": "İş İngilizcesi",
     "en": "inquiry",
     "tr": "soru, talep",
-    "ex": "The board deck highlights progress on inquiry before Friday.",
-    "exTr": "Gemi güverte soruşturmaya devam ediyor Cuma’dan önce."
+    "ex": "The board deck highlights progress on the customer inquiry queue.",
+    "exTr": "Yönetim sunumu müşteri talep kuyruğundaki ilerlemeyi vurguluyor."
   },
   {
     "d": 31,
     "t": "İş İngilizcesi",
     "en": "interdependencies",
     "tr": "karşılıklı bağımlılıklar",
-    "ex": "Let's clarify interdependencies in the next sync before Friday.",
-    "exTr": "Sonraki senkronizasyonda karşılıklı bağımlılıklarları açıklayalım Cuma’dan önce."
+    "ex": "Let's clarify interdependencies in the next sync.",
+    "exTr": "Bir sonraki sync'te karşılıklı bağımlılıkları netleştirelim."
   },
   {
     "d": 31,
     "t": "İş İngilizcesi",
     "en": "judgment",
     "tr": "muhakeme, karar verme yetisi",
-    "ex": "After the incident we rebuilt our judgment before Friday.",
+    "ex": "After the incident we rebuilt our judgment calls on pages.",
     "morph": "judgment ← … + -ment",
-    "exTr": "Olaydan sonra yargımızı yeniden inşa ettik Cuma’dan önce."
+    "exTr": "Olaydan sonra pager çağrılarındaki muhakeme kararlarını yeniden kurduk."
   },
   {
     "d": 31,
@@ -5028,25 +5028,25 @@
     "t": "İş İngilizcesi",
     "en": "lockdown",
     "tr": "kilitleme, erişimi kapatma",
-    "ex": "Who owns lockdown after the reorg before Friday?",
-    "exTr": "Reorg'dan sonra kim kilitlenir Cuma’dan önce?"
+    "ex": "Who owns lockdown of prod access after the reorg?",
+    "exTr": "Reorg sonrası prod erişim kilidinin sahibi kim?"
   },
   {
     "d": 32,
     "t": "İş İngilizcesi",
     "en": "misguided",
     "tr": "yanlış yönlendirilmiş, yanılgıya dayalı",
-    "ex": "Shipping without tests was a misguided shortcut before Friday.",
-    "exTr": "Kargo testleri olmadan yanlış yönlendirilmiş, yanılgıya dayalı bir kısayoldu Cuma’dan önce."
+    "ex": "Shipping without tests was a misguided shortcut.",
+    "exTr": "Testsiz çıkmak yanlış yönlendirilmiş bir kısayoldu."
   },
   {
     "d": 32,
     "t": "İş İngilizcesi",
     "en": "mitigation",
     "tr": "hafifletme, zararı azaltma",
-    "ex": "He volunteered to drive mitigation this quarter before Friday.",
+    "ex": "He volunteered to drive mitigation this quarter.",
     "morph": "mitigation ← … + -tion",
-    "exTr": "Bu çeyreği terk etmeye gönüllü oldu Cuma’dan önce."
+    "exTr": "Bu çeyrekte risk azaltmayı yürütmeye gönüllü oldu."
   },
   {
     "d": 32,
@@ -5061,8 +5061,8 @@
     "t": "İş İngilizcesi",
     "en": "multi-tier",
     "tr": "çok katmanlı",
-    "ex": "Her promo story leaned hard on multi-tier before Friday.",
-    "exTr": "Onun promo hikayesi çok katmanlı üzerine eğildi Cuma’dan önce."
+    "ex": "Her promo story leaned hard on the multi-tier redesign.",
+    "exTr": "Terfi hikayesi çok katmanlı yeniden tasarıma ağırlık verdi."
   },
   {
     "d": 32,
@@ -5085,16 +5085,16 @@
     "t": "İş İngilizcesi",
     "en": "observable",
     "tr": "gözlemlenebilir",
-    "ex": "The feedback felt observable but fair before Friday.",
-    "exTr": "Geri bildirimler gözlemlenebilir ama adil hissetti Cuma’dan önce."
+    "ex": "The feedback felt tough but observable in the metrics.",
+    "exTr": "Geri bildirim sert geldi ama metriklerde gözlemlenebilirdi."
   },
   {
     "d": 32,
     "t": "İş İngilizcesi",
     "en": "open-ended",
     "tr": "ucu açık",
-    "ex": "Let's talk about open-ended in tomorrow's sync before Friday.",
-    "exTr": "Yarının senkronizasyonunda açık uçalım hakkında konuşalım Cuma’dan önce."
+    "ex": "Let's talk about open-ended questions in tomorrow's sync.",
+    "exTr": "Yarınki sync'te ucu açık soruları konuşalım."
   },
   {
     "d": 32,
@@ -5109,8 +5109,8 @@
     "t": "İş İngilizcesi",
     "en": "oversight",
     "tr": "gözetim, denetim",
-    "ex": "We still need clarity on oversight before Friday.",
-    "exTr": "Hala gözetim konusunda netliğe ihtiyacımız var Cuma’dan önce."
+    "ex": "We still need clarity on oversight for the vendor work.",
+    "exTr": "Tedarikçi işi için gözetim konusunda hâlâ netliğe ihtiyacımız var."
   },
   {
     "d": 32,
@@ -5125,8 +5125,8 @@
     "t": "İş İngilizcesi",
     "en": "passionate",
     "tr": "sabırlı / tutkulu",
-    "ex": "A clearer take on passionate would help before Friday.",
-    "exTr": "Daha net bir şekilde tutkulu olmak yardımcı olacaktır Cuma’dan önce."
+    "ex": "We need passionate owners for the reliability roadmap.",
+    "exTr": "Güvenilirlik yol haritası için tutkulu sahipler istiyoruz."
   },
   {
     "d": 32,
@@ -5141,8 +5141,8 @@
     "t": "İş İngilizcesi",
     "en": "payout",
     "tr": "ödeme, ödenek aktarımı",
-    "ex": "We flagged payout as a risk in the weekly review.",
-    "exTr": "Haftalık incelemede bir risk olarak ödeme yaptık."
+    "ex": "Finance clarified the bonus payout date for this cycle.",
+    "exTr": "Finans bu dönem için bonus ödeme tarihini netleştirdi."
   },
   {
     "d": 32,
@@ -5166,9 +5166,9 @@
     "t": "İş İngilizcesi",
     "en": "prescriptive",
     "tr": "kural koyucu, tarif edici",
-    "ex": "She prefers prescriptive specs over long essays before Friday.",
+    "ex": "She prefers prescriptive specs over long essays.",
     "morph": "prescriptive ← prescribe + -ive",
-    "exTr": "Kural koyucu, tarif edici specs uzun denemeler üzerinde tercih eder Cuma’dan önce."
+    "exTr": "Uzun denemelere göre kural koyucu spec'leri tercih ediyor."
   },
   {
     "d": 32,
@@ -5183,9 +5183,9 @@
     "t": "İş İngilizcesi",
     "en": "prioritisation",
     "tr": "önceliklendirme",
-    "ex": "The hiring packet emphasizes strong prioritisation before Friday.",
+    "ex": "The hiring packet emphasizes strong prioritisation skills.",
     "morph": "prioritisation ← priority + -isation",
-    "exTr": "İşe alım paketi güçlü bir öncekileme vurgulamaktadır Cuma’dan önce."
+    "exTr": "İşe alım paketi güçlü önceliklendirme becerilerini vurguluyor."
   },
   {
     "d": 33,
@@ -5243,8 +5243,8 @@
     "t": "İş İngilizcesi",
     "en": "qualified applicant",
     "tr": "nitelikli aday",
-    "ex": "Who owns qualified applicant after the reorg before Friday?",
-    "exTr": "Reorg'dan sonra kim nitelikli aday Cuma’dan önce?"
+    "ex": "Who owns screening each qualified applicant after the reorg?",
+    "exTr": "Reorg sonrası her nitelikli adayı elemenin sahibi kim?"
   },
   {
     "d": 33,
@@ -5259,9 +5259,9 @@
     "t": "İş İngilizcesi",
     "en": "quantitatively",
     "tr": "niceliksel olarak, sayısal biçimde",
-    "ex": "Review the diff quantitatively before merging before Friday.",
+    "ex": "Review the diff quantitatively before merging.",
     "morph": "quantitatively ← quantity + -ative + -ly",
-    "exTr": "Diff, birleşmeden önce niceliksel olarak, sayısal biçimde gözden geçirin Cuma’dan önce."
+    "exTr": "Birleştirmeden önce diff'i sayısal olarak gözden geçir."
   },
   {
     "d": 33,
@@ -5276,17 +5276,17 @@
     "t": "İş İngilizcesi",
     "en": "rapidly",
     "tr": "hızla",
-    "ex": "I rapidly disagree with parking this decision before Friday.",
-    "exTr": "Bu kararı park etmeye hızla aynı fikirde değilim Cuma’dan önce."
+    "ex": "Incidents escalate rapidly when paging is unclear.",
+    "exTr": "Çağrı net değilse olaylar hızla büyür."
   },
   {
     "d": 33,
     "t": "İş İngilizcesi",
     "en": "readiness",
     "tr": "hazır olma durumu",
-    "ex": "Our OKRs now include healthier readiness before Friday.",
+    "ex": "Our OKRs now include healthier launch readiness.",
     "morph": "readiness ← ready + -ness",
-    "exTr": "TamamRs şimdi daha sağlıklı hazırlığı içeriyor Cuma’dan önce."
+    "exTr": "OKR'lerimiz artık daha iyi lansman hazırlığını da içeriyor."
   },
   {
     "d": 33,
@@ -5310,18 +5310,18 @@
     "t": "İş İngilizcesi",
     "en": "regression",
     "tr": "gerileme, eski hatanın geri dönmesi",
-    "ex": "Our OKRs now include healthier regression before Friday.",
+    "ex": "Our OKRs now include healthier regression coverage.",
     "morph": "regression ← re- + gress",
-    "exTr": "TamamRs şimdi daha sağlıklı gerileme, eski hatanın geri dönmesi içerir Cuma’dan önce."
+    "exTr": "OKR'lerimiz artık daha iyi regresyon kapsamını da içeriyor."
   },
   {
     "d": 33,
     "t": "İş İngilizcesi",
     "en": "regulatory",
     "tr": "düzenleyici, mevzuata dair",
-    "ex": "The feedback felt regulatory but fair before Friday.",
+    "ex": "The feedback felt regulatory but fair to the risk.",
     "morph": "regulatory ← regulate + -ory",
-    "exTr": "Geri bildirim düzenleyici hissettim ancak adil Cuma’dan önce."
+    "exTr": "Geri bildirim mevzuata dairdi ama riske göre adildi."
   },
   {
     "d": 33,
@@ -5344,9 +5344,9 @@
     "t": "İş İngilizcesi",
     "en": "retain",
     "tr": "korumak, elde tutmak",
-    "ex": "We can't retain until security signs off before Friday.",
+    "ex": "We can't retain customers if support stays this slow.",
     "morph": "retain ← re- + tenere",
-    "exTr": "Güvenlik işaretlerine kadar tutamayız Cuma’dan önce."
+    "exTr": "Destek bu kadar yavaşsa müşterileri elde tutamayız."
   },
   {
     "d": 33,
@@ -5361,8 +5361,8 @@
     "t": "İş İngilizcesi",
     "en": "rider",
     "tr": "yolcu; binici",
-    "ex": "The prototype was rough but surprisingly rider before Friday.",
-    "exTr": "Prototip kaba ama şaşırtıcı bir şekilde biniciydi Cuma’dan önce."
+    "ex": "Legal added a late rider to the vendor contract.",
+    "exTr": "Hukuk vendor sözleşmesine geç bir ek madde ekledi."
   },
   {
     "d": 33,
@@ -5403,8 +5403,8 @@
     "t": "İş İngilizcesi",
     "en": "rut",
     "tr": "çıkmaz, tekdüze bataklık",
-    "ex": "Our OKRs now include healthier rut before Friday.",
-    "exTr": "Bizim OKRs şimdi daha sağlıklı çıkmaz, tekdüze bataklık içerir Cuma’dan önce."
+    "ex": "Our OKRs now include ways to escape a delivery rut.",
+    "exTr": "OKR'lerimiz artık teslimat çıkmazından çıkma yollarını da içeriyor."
   },
   {
     "d": 33,
@@ -5419,17 +5419,17 @@
     "t": "İş İngilizcesi",
     "en": "seamless",
     "tr": "kesintisiz, pürüzsüz",
-    "ex": "Keep the summary seamless; execs skim before Friday.",
+    "ex": "Keep the customer handoff seamless across teams.",
     "morph": "seamless ← seam + -less",
-    "exTr": "Özeti kesintisiz, pürüzsüz tut; execs skim Cuma’dan önce."
+    "exTr": "Ekipler arası müşteri devrini kesintisiz tut."
   },
   {
     "d": 33,
     "t": "İş İngilizcesi",
     "en": "self-directed",
     "tr": "kendi kendini yöneten",
-    "ex": "Without solid self-directed, the timeline won't hold before Friday.",
-    "exTr": "Katı kendini idare etmeden, zaman süresi tutmaz Cuma’dan önce."
+    "ex": "Without solid self-directed owners, the timeline won't hold.",
+    "exTr": "Sağlam kendi kendini yöneten sahipler olmadan zaman çizelgesi tutmaz."
   },
   {
     "d": 33,
@@ -5476,8 +5476,8 @@
     "t": "İş İngilizcesi",
     "en": "sloppily",
     "tr": "özensizce",
-    "ex": "Review the diff sloppily before merging before Friday.",
-    "exTr": "Ölmeden önce diff incelenir Cuma’dan önce."
+    "ex": "Don't review the diff sloppily before merging.",
+    "exTr": "Birleştirmeden önce diff'i özensizce gözden geçirme."
   },
   {
     "d": 34,
@@ -5492,24 +5492,24 @@
     "t": "İş İngilizcesi",
     "en": "sow distrust",
     "tr": "güvensizlik tohumu ekmek",
-    "ex": "Surprise reorgs sow distrust across the org before Friday.",
-    "exTr": "Sürpriz reorgs, org'a karşı bu kadar güvensiz Cuma’dan önce."
+    "ex": "Surprise reorgs sow distrust across the org.",
+    "exTr": "Sürpriz reorg'lar organizasyonda güvensizlik tohumu eker."
   },
   {
     "d": 34,
     "t": "İş İngilizcesi",
     "en": "span",
     "tr": "kapsamak, uzanmak",
-    "ex": "Please span once the flag is on before Friday.",
-    "exTr": "Lütfen bayrakta bir kez girin Cuma’dan önce."
+    "ex": "Her scope will span three product lines after the merge.",
+    "exTr": "Birleşmeden sonra kapsamı üç ürün hattına uzanacak."
   },
   {
     "d": 34,
     "t": "İş İngilizcesi",
     "en": "spell out",
     "tr": "açık açık yazmak, netleştirmek",
-    "ex": "I'll spell out the update before standup before Friday.",
-    "exTr": "Ekrandan önce güncellemeyi büyüyeceğim Cuma’dan önce."
+    "ex": "I'll spell out the update before standup.",
+    "exTr": "Standup'tan önce güncellemeyi açık açık yazarım."
   },
   {
     "d": 34,
@@ -5548,33 +5548,33 @@
     "t": "İş İngilizcesi",
     "en": "stifling",
     "tr": "boğucu, bunaltıcı",
-    "ex": "A clearer stifling would unblock three teams before Friday.",
-    "exTr": "Daha net bir boğucu, bunaltıcı üç takımı engellerdi Cuma’dan önce."
+    "ex": "Micromanagement is stifling debate on the architecture.",
+    "exTr": "Mikro yönetim mimari tartışmayı boğuyor."
   },
   {
     "d": 35,
     "t": "İş İngilizcesi",
     "en": "stipend",
     "tr": "ödenek, maddi destek",
-    "ex": "Her promo story leaned hard on stipend before Friday.",
-    "exTr": "Onun promo hikayesi ödenek, maddi destek üzerinde sert eğildi Cuma’dan önce."
+    "ex": "Her promo story leaned hard on the learning stipend.",
+    "exTr": "Terfi hikayesi öğrenim ödeneğine ağırlık verdi."
   },
   {
     "d": 35,
     "t": "İş İngilizcesi",
     "en": "story points",
     "tr": "hikâye puanı",
-    "ex": "We flagged story points as a risk in the weekly review.",
-    "exTr": "Hikayenin haftalık incelemede bir risk olarak işaret ettik."
+    "ex": "We recalibrated story points after the last sprint review.",
+    "exTr": "Son sprint incelemesinden sonra story point'leri yeniden ayarladık."
   },
   {
     "d": 35,
     "t": "İş İngilizcesi",
     "en": "streamline",
     "tr": "sadeleştirmek, akıcı hâle getirmek",
-    "ex": "I blocked time after lunch to streamline before Friday.",
+    "ex": "I blocked time after lunch to streamline the onboarding flow.",
     "morph": "streamline ← stream + line",
-    "exTr": "Öğleden sonra zamanı kolaylaştırdım Cuma’dan önce."
+    "exTr": "Öğleden sonra onboarding akışını sadeleştirmek için zaman ayırdım."
   },
   {
     "d": 35,
@@ -5597,9 +5597,9 @@
     "t": "İş İngilizcesi",
     "en": "sustainable",
     "tr": "sürdürülebilir",
-    "ex": "Keep the summary sustainable; execs skim before Friday.",
+    "ex": "We need a sustainable on-call rotation, not heroics.",
     "morph": "sustainable ← sustain + -able",
-    "exTr": "Özeti sürdürülebilir tutun; execs skim Cuma’dan önce."
+    "exTr": "Kahramanlık değil, sürdürülebilir bir on-call rotasyonu lazım."
   },
   {
     "d": 35,
@@ -5614,9 +5614,9 @@
     "t": "İş İngilizcesi",
     "en": "systemic",
     "tr": "sistemik, yapısal",
-    "ex": "The prototype was rough but surprisingly systemic before Friday.",
+    "ex": "The prototype was rough but the bug looked systemic.",
     "morph": "systemic ← system + -ic",
-    "exTr": "Prototip kaba ama şaşırtıcı derecede sistemikti Cuma’dan önce."
+    "exTr": "Prototip kabaydı ama hata sistemik görünüyordu."
   },
   {
     "d": 35,
@@ -5639,8 +5639,8 @@
     "t": "İş İngilizcesi",
     "en": "tenured",
     "tr": "kıdemli, uzun süredir çalışan",
-    "ex": "After the incident we rebuilt our tenured before Friday.",
-    "exTr": "Olaydan sonra, kıdemli, uzun süredir çalışanimizi yeniden inşa ettik Cuma’dan önce."
+    "ex": "After the incident we rebuilt trust with tenured engineers.",
+    "exTr": "Olaydan sonra kıdemli mühendislerle güveni yeniden kurduk."
   },
   {
     "d": 35,
@@ -5655,8 +5655,8 @@
     "t": "İş İngilizcesi",
     "en": "thrive",
     "tr": "gelişmek, başarıyla yol almak",
-    "ex": "We can't thrive until security signs off before Friday.",
-    "exTr": "Güvenlik işaretlerine kadar gelişmeyiz Cuma’dan önce."
+    "ex": "We can't thrive until security signs off on the new path.",
+    "exTr": "Güvenlik yeni yolu onaylayana kadar gelişemeyiz."
   },
   {
     "d": 35,
@@ -5688,9 +5688,9 @@
     "t": "İş İngilizcesi",
     "en": "transportation",
     "tr": "ulaşım, taşımacılık",
-    "ex": "City transportation data feeds our ETA model before Friday.",
+    "ex": "City transportation data feeds our ETA model.",
     "morph": "transportation ← … + -tion",
-    "exTr": "Şehir ulaşım verileri ETA modelimizi besler Cuma’dan önce."
+    "exTr": "Şehir ulaşım verileri ETA modelimizi besliyor."
   },
   {
     "d": 36,
@@ -5721,8 +5721,8 @@
     "t": "İş İngilizcesi",
     "en": "upstream",
     "tr": "kaynağa doğru, yukarı akış",
-    "ex": "Fix it upstream so every client benefits before Friday.",
-    "exTr": "Bunu her müşteri faydalarını düzeltin Cuma’dan önce."
+    "ex": "Fix it upstream so every client benefits.",
+    "exTr": "Her istemcinin faydalanması için kaynağa doğru düzelt."
   },
   {
     "d": 36,
@@ -5761,8 +5761,8 @@
     "t": "İş İngilizcesi",
     "en": "world-class",
     "tr": "dünya standartlarında",
-    "ex": "We flagged world-class as a risk in the weekly review.",
-    "exTr": "Haftalık incelemede bir risk olarak dünya standartlarındanı bayrağı altına aldık."
+    "ex": "We want world-class onboarding, not just a checklist.",
+    "exTr": "Sadece kontrol listesi değil, dünya standartlarında onboarding istiyoruz."
   },
   {
     "d": 36,
@@ -5793,8 +5793,8 @@
     "t": "İş İngilizcesi",
     "en": "attention to detail",
     "tr": "ayrıntıya gösterilen özen",
-    "ex": "This role needs careful attention to detail before Friday.",
-    "exTr": "Bu rol detaya dikkat etmelidir Cuma’dan önce."
+    "ex": "This role needs careful attention to detail under pressure.",
+    "exTr": "Bu rol baskı altında ayrıntıya özen ister."
   },
   {
     "d": 36,
@@ -5907,8 +5907,8 @@
     "t": "İş İngilizcesi",
     "en": "in touch",
     "tr": "temas hâlinde, haberdar",
-    "ex": "We flagged in touch as a risk in the weekly review.",
-    "exTr": "Haftalık incelemede risk olarak temasa geçtik."
+    "ex": "I'll stay in touch with legal until the contract lands.",
+    "exTr": "Sözleşme gelene kadar hukukla iletişimde kalacağım."
   },
   {
     "d": 37,
@@ -5948,8 +5948,8 @@
     "t": "İş İngilizcesi",
     "en": "laid-back",
     "tr": "rahat, sakin, telaşsız",
-    "ex": "Our OKRs now include healthier laid-back before Friday.",
-    "exTr": "Bizim OKRs şimdi daha sağlıklı bir geri dönüş içerir Cuma’dan önce."
+    "ex": "The new manager is laid-back but still holds a high bar.",
+    "exTr": "Yeni yönetici rahat ama çıtayı yine de yüksek tutuyor."
   },
   {
     "d": 37,
@@ -6045,8 +6045,8 @@
     "t": "İş İngilizcesi",
     "en": "poorly defined",
     "tr": "iyi tanımlanmamış, muğlak",
-    "ex": "Who owns poorly defined after the reorg before Friday?",
-    "exTr": "Reorg'dan sonra kim kötü tanımlanmış Cuma’dan önce?"
+    "ex": "Who owns cleaning up poorly defined ownership after the reorg?",
+    "exTr": "Reorg sonrası iyi tanımlanmamış sahipliği temizlemenin sahibi kim?"
   },
   {
     "d": 38,
@@ -6117,8 +6117,8 @@
     "t": "İş İngilizcesi",
     "en": "up and running",
     "tr": "çalışır hâle gelmiş, ayağa kalkmış",
-    "ex": "We flagged up and running as a risk in the weekly review.",
-    "exTr": "Hafta içi incelemede bir risk olarak bayraktık ve koşuyoruz."
+    "ex": "The new queue is up and running in staging.",
+    "exTr": "Yeni kuyruk staging'de ayakta ve çalışıyor."
   },
   {
     "d": 38,
