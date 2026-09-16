@@ -2413,9 +2413,9 @@
     "d": 15,
     "t": "İş İngilizcesi",
     "en": "terminal level",
-    "tr": "kalınabilecek son seviye",
+    "tr": "terminal seviye, kalınabilecek son seviye",
     "ex": "She's operating at a terminal level on this IC track.",
-    "exTr": "Bu IC track’te kalınabilecek son seviyede ilerliyor."
+    "exTr": "Bu IC track’te terminal seviyede ilerliyor."
   },
   {
     "d": 15,
@@ -3380,8 +3380,8 @@
     "t": "İş İngilizcesi",
     "en": "contractually binding",
     "tr": "sözleşmeyle bağlayıcı",
-    "ex": "Is this clause contractually binding, or just guidance?",
-    "exTr": "Bu madde sözleşmeyle bağlayıcı mı, yoksa sadece rehberlik mi?"
+    "ex": "Is this clause contractually binding, or just advice?",
+    "exTr": "Bu madde sözleşmeyle bağlayıcı mı, yoksa sadece tavsiye mi?"
   },
   {
     "d": 21,
@@ -4591,7 +4591,7 @@
     "en": "cross-cutting concerns",
     "tr": "kesişen sorunlar",
     "ex": "Logging and auth are cross-cutting concerns across services.",
-    "exTr": "Logging ve auth servisler arasında kesişen sorunlar."
+    "exTr": "Logging ve auth, servisler arası kesişen (cross-cutting) konular."
   },
   {
     "d": 29,
