@@ -8,6 +8,7 @@ import {
   DECK_SHORT,
   EXPERIMENTAL_DECKS,
   PRIMARY_DECKS,
+  RETRY_SIZE,
   SESSION_LEN,
   countMix,
   hasDeckPref,
@@ -16,6 +17,7 @@ import {
   pickSession,
   recordAnswer,
   saveDeckPref,
+  type MixTag,
   type OpenDeck,
   type SessionQueued,
 } from './lib/progress'
@@ -136,6 +138,10 @@ function prefersReducedMotion(): boolean {
   }
 }
 
+
+function withMix(item: VocabItem, mix: MixTag): SessionQueued {
+  return { ...item, mix }
+}
 
 /** Snapshot of below-hairline play content for the exiting reel page. */
 type PageSnap = {
@@ -308,6 +314,7 @@ export default function App() {
   )
   /** End one-liner outcomes: pekişti / kaygan / yeni seen. */
   const [outcomes, setOutcomes] = useState({ pekisti: 0, kaygan: 0, yeni: 0 })
+  const [missed, setMissed] = useState<VocabItem[]>([])
   const [sessionLen, setSessionLen] = useState(() => boot.sessionLen)
   const [showCoach, setShowCoach] = useState(() => boot.showCoach)
   const [showGhost, setShowGhost] = useState(
@@ -341,6 +348,9 @@ export default function App() {
   const usedEnRef = useRef<Set<string>>(new Set())
   const sessionLenRef = useRef(boot.sessionLen)
   const selectedRef = useRef(0)
+  /** Timer preference to restore after a retry run forced Off. */
+  const timerBeforeRetryRef = useRef<TimerSec | null>(null)
+  const retryRunRef = useRef(false)
   const historyRef = useRef<HistorySnap[]>([])
   historyRef.current = history
   const reviewIndexRef = useRef<number | null>(null)
@@ -490,6 +500,7 @@ export default function App() {
       setDoneCount(0)
       doneRef.current = 0
       setScore({ ok: 0, wrong: 0 })
+      setMissed([])
       setSessionOver(false)
       setRemain(null)
       setStreakChip(null)
@@ -515,6 +526,15 @@ export default function App() {
 
   const startNewSession = useCallback(
     (theme: OpenDeck = deck) => {
+      if (retryRunRef.current) {
+        const prior = timerBeforeRetryRef.current
+        retryRunRef.current = false
+        timerBeforeRetryRef.current = null
+        if (prior !== null) {
+          setTimerSec(prior)
+          saveTimerPref(prior)
+        }
+      }
       const p = loadProgress()
       setProgress(p)
       setPickingDeck(false)
@@ -545,6 +565,15 @@ export default function App() {
   )
 
   const openDeckPicker = useCallback(() => {
+    if (retryRunRef.current) {
+      const prior = timerBeforeRetryRef.current
+      retryRunRef.current = false
+      timerBeforeRetryRef.current = null
+      if (prior !== null) {
+        setTimerSec(prior)
+        saveTimerPref(prior)
+      }
+    }
     setSessionOver(false)
     setQueue([])
     setMixIntro('hidden')
@@ -559,6 +588,29 @@ export default function App() {
     builtForEn.current = null
   }, [])
 
+  const startRetryMissed = useCallback(() => {
+    if (missed.length === 0) {
+      startNewSession()
+      return
+    }
+    // Dedupe by en, keep order — retry may intentionally re-show prior EN
+    const seen = new Set<string>()
+    const mini: SessionQueued[] = []
+    for (const m of missed) {
+      if (seen.has(m.en)) continue
+      seen.add(m.en)
+      mini.push(withMix(m, 'dueWrong'))
+      if (mini.length >= RETRY_SIZE) break
+    }
+    if (!retryRunRef.current) {
+      timerBeforeRetryRef.current = timerSec
+      retryRunRef.current = true
+    }
+    setTimerSec(0)
+    setPickingDeck(false)
+    setProgress(loadProgress())
+    beginSession(mini)
+  }, [missed, beginSession, startNewSession, timerSec])
 
   const goNext = useCallback((_wasCorrect: boolean, _item: VocabItem) => {
     const nextDone = doneRef.current + 1
@@ -646,6 +698,10 @@ export default function App() {
         else if (current.mix === 'dueWrong' || current.mix === 'known') next.pekisti += 1
         return next
       })
+      if (!ok) {
+        setMissed((m) => (m.some((x) => x.en === current.en) ? m : [...m, current]))
+      }
+
       const item = current
       const snapOptions = options
       const snapCorrect = correctIndex
@@ -1312,6 +1368,15 @@ export default function App() {
               >
                 Bir tur daha
               </button>
+              {missed.length > 0 && (
+                <button
+                  type="button"
+                  className="text-link"
+                  onClick={startRetryMissed}
+                >
+                  Yanlışları tekrarla
+                </button>
+              )}
               <button
                 type="button"
                 className="text-link"
