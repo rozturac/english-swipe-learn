@@ -185,69 +185,59 @@ body,
 .score-bad { color: var(--danger); }
 .score-sep { color: var(--muted-2); opacity: 0.85; font-weight: 500; }
 
-/* Session composition chips — session-start only, then soft fade */
-.mix-chips {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  flex-wrap: nowrap;
+/* Session mix why-line — ephemeral at start, then soft fade to mini progress only */
+.mix-why {
+  margin: 0;
   min-width: 0;
-  opacity: 1;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 550;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--meta);
+  opacity: 0.92;
   transform: translateY(0);
   transition: opacity 0.32s ease, transform 0.32s ease;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
 }
 
-.mix-chips.is-fading {
+.mix-why.is-fading {
   opacity: 0;
   transform: translateY(-3px);
   pointer-events: none;
 }
 
-.mix-chip {
+/* Off-state timer arm — single glyph; tap arms Hızlı · 6s (full row returns) */
+.timer-arm {
+  flex-shrink: 0;
   display: inline-flex;
-  align-items: baseline;
-  gap: 3px;
-  padding: 2px 7px 2px 6px;
-  border-radius: var(--radius-pill);
-  background: rgba(18, 18, 30, 0.5);
-  border: 1px solid rgba(210, 210, 230, 0.18);
-  font-variant-numeric: tabular-nums;
-  line-height: 1.15;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--muted-2);
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+  opacity: 0.72;
 }
-
-.mix-chip .mix-num {
-  font-size: 12.5px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
+.timer-arm:hover {
+  opacity: 1;
+  color: var(--meta);
+  border-color: rgba(210, 210, 230, 0.22);
+  background: var(--chip-fill);
 }
-
-.mix-chip .mix-label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  opacity: 0.92;
+.timer-arm:active {
+  transform: scale(0.94);
 }
-
-.mix-chip.due {
-  border-color: rgba(251, 191, 36, 0.38);
-  box-shadow: 0 0 12px rgba(251, 191, 36, 0.12);
-}
-.mix-chip.due .mix-num,
-.mix-chip.due .mix-label { color: #fbbf24; }
-
-.mix-chip.yeni {
-  border-color: rgba(96, 165, 250, 0.4);
-  box-shadow: 0 0 12px rgba(96, 165, 250, 0.14);
-}
-.mix-chip.yeni .mix-num,
-.mix-chip.yeni .mix-label { color: #60a5fa; }
-
-.mix-chip.known {
-  border-color: rgba(124, 235, 159, 0.35);
-  box-shadow: 0 0 12px rgba(124, 235, 159, 0.12);
-}
-.mix-chip.known .mix-num,
-.mix-chip.known .mix-label { color: #7ceb9f; }
 
 /* Deliberate deck switch — icon-only corner control */
 .deck-switch {
@@ -270,6 +260,10 @@ body,
   display: block;
   flex-shrink: 0;
 }
+.timer-arm + .deck-switch {
+  margin-left: 0;
+}
+
 .deck-switch:hover {
   border-color: rgba(167, 139, 250, 0.45);
   color: var(--text);
@@ -868,30 +862,32 @@ body,
   text-align: center;
 }
 
-/* Micro streak chip — number only, fades ~400ms; not score farm */
+/* Soft “tuttu” competence pulse — ephemeral, not a digit score farm */
 .streak-chip {
   position: absolute;
-  top: -6px;
+  top: -8px;
   left: 50%;
   z-index: 4;
   transform: translateX(-50%);
-  min-width: 28px;
+  min-width: 0;
   height: 22px;
-  padding: 0 8px;
+  padding: 0 10px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-pill);
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 650;
-  letter-spacing: 0.02em;
-  color: #0a1a12;
-  background: linear-gradient(100deg, #6ee7b7, #34d399);
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: #d8ffe9;
+  background: rgba(16, 40, 28, 0.72);
+  border: 1px solid rgba(110, 231, 183, 0.42);
   box-shadow:
-    0 0 0 1px rgba(110, 231, 183, 0.45),
-    0 6px 16px rgba(52, 211, 153, 0.28);
+    0 0 14px rgba(52, 211, 153, 0.28),
+    0 4px 12px rgba(0, 0, 0, 0.25);
   pointer-events: none;
-  animation: streak-chip-fade 400ms ease both;
+  animation: streak-chip-fade 400ms var(--spring-soft) both;
 }
 
 @keyframes streak-chip-fade {
@@ -1274,31 +1270,37 @@ body,
 }
 
 .coach-title {
-  margin: 0 0 10px;
+  margin: 0 0 12px;
   font-size: 1.05rem;
   font-weight: 700;
 }
 
-.coach-list {
-  margin: 0 0 14px;
-  padding: 0;
-  list-style: none;
+.coach-lines {
+  margin: 0 0 16px;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 10px;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.coach-line {
+  display: inline-flex;
+  align-items: center;
   gap: 8px;
 }
 
-.coach-list li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.9rem;
-  color: var(--muted);
+.coach-dot {
+  opacity: 0.45;
+  color: var(--muted-2);
+  font-weight: 600;
 }
 
 .coach-key {
   flex: 0 0 auto;
-  min-width: 42px;
+  min-width: 36px;
   text-align: center;
   font-weight: 700;
   font-size: 0.82rem;
@@ -1306,7 +1308,7 @@ body,
   background: var(--accent-soft);
   border: 1px solid rgba(64, 224, 255, 0.3);
   border-radius: var(--radius-sm);
-  padding: 6px 8px;
+  padding: 5px 8px;
 }
 
 .coach-cta {
@@ -1379,8 +1381,8 @@ body,
     to { opacity: 1; }
   }
 
-  .mix-chips,
-  .mix-chips.is-fading {
+  .mix-why,
+  .mix-why.is-fading {
     transition: none;
     transform: none;
   }

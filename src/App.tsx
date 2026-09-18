@@ -194,7 +194,7 @@ type PlayPaneProps = {
   showGhost?: boolean
   reviewMode?: boolean
   showReviewHint?: boolean
-  /** Mastery streak chip (2+) — micro fade, not score farm. */
+  /** Soft “tuttu” competence pulse (2+) — ephemeral, not a digit score. */
   streakChip?: number | null
   /** Teach beat active (wrong path dwell). */
   teachBeat?: boolean
@@ -240,7 +240,7 @@ function PlayPane({
       <section className={`tr-area${frozen ? ' is-frozen' : ''}`}>
         {streakChip != null && streakChip >= 2 ? (
           <div className="streak-chip" aria-hidden>
-            {streakChip}
+            tuttu
           </div>
         ) : null}
         <OptionStrip
@@ -294,7 +294,7 @@ export default function App() {
   const [correctIndex, setCorrectIndex] = useState(0)
   const [flash, setFlash] = useState<FlashKind>('none')
   const [revealCorrect, setRevealCorrect] = useState<number | null>(null)
-  /** Micro streak chip (2+) after correct lock — fades quickly. */
+  /** Soft “tuttu” pulse (streak 2+) after correct lock — ephemeral, not a score. */
   const [streakChip, setStreakChip] = useState<number | null>(null)
   /** Wrong-path teach beat: reveal + readable dwell before advance. */
   const [teachBeat, setTeachBeat] = useState(false)
@@ -308,7 +308,7 @@ export default function App() {
   const [score, setScore] = useState({ ok: 0, wrong: 0 })
   /** Composition chips from pickSession tags (not live score). */
   const [mixCounts, setMixCounts] = useState(() => boot.mixCounts)
-  /** Session-start mix chips: show → soft fade → gone (chrome declutter). */
+  /** Session-start mix why-line: show → soft fade → only mini progress. */
   const [mixIntro, setMixIntro] = useState<'show' | 'fading' | 'hidden'>(() =>
     boot.queue.length > 0 ? 'show' : 'hidden',
   )
@@ -419,7 +419,7 @@ export default function App() {
     mixFadeTimer.current = null
   }, [])
 
-  /** Soft-hide Due/Yeni/Bildiğin chips (timer or first interaction). */
+  /** Soft-hide mix why-line (timer or first interaction). */
   const dismissMixIntro = useCallback(() => {
     setMixIntro((cur) => {
       if (cur === 'hidden' || cur === 'fading') return cur
@@ -765,7 +765,7 @@ export default function App() {
       }
 
       if (ok) {
-        // Mastery pulse: soft spring + green edge; micro streak chip if ≥2.
+        // Mastery pulse: soft spring + green edge; ephemeral “tuttu” if streak ≥2.
         setFlash('correct')
         setRevealCorrect(null)
         if (nextStreak >= 2) {
@@ -1217,24 +1217,29 @@ export default function App() {
               {progressText}
             </div>
             {!showPicker && !showCoach && !showSessionEnd && mixIntro !== 'hidden' ? (
-              <div
-                className={`mix-chips${mixIntro === 'fading' ? ' is-fading' : ''}`}
-                aria-label={`Due ${mixCounts.due}, Yeni ${mixCounts.yeni}, Bildiğin ${mixCounts.known}`}
+              <p
+                className={`mix-why${mixIntro === 'fading' ? ' is-fading' : ''}`}
+                aria-label={`${mixCounts.due} due, ${mixCounts.known} kaygan, ${mixCounts.yeni} yeni`}
                 aria-hidden={mixIntro === 'fading'}
               >
-                <span className="mix-chip due">
-                  <span className="mix-num">{mixCounts.due}</span>
-                  <span className="mix-label">Due</span>
-                </span>
-                <span className="mix-chip yeni">
-                  <span className="mix-num">{mixCounts.yeni}</span>
-                  <span className="mix-label">Yeni</span>
-                </span>
-                <span className="mix-chip known">
-                  <span className="mix-num">{mixCounts.known}</span>
-                  <span className="mix-label">Bildiğin</span>
-                </span>
-              </div>
+                {mixCounts.due} due · {mixCounts.known} kaygan · {mixCounts.yeni} yeni
+              </p>
+            ) : null}
+            {timerSec === 0 && !showPicker && !showCoach && !showSessionEnd ? (
+              <button
+                type="button"
+                className="timer-arm"
+                onPointerDown={(e) => e.stopPropagation()}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  chooseTimer(6)
+                }}
+                aria-label="Süreyi aç · Hızlı 6s"
+                title="Süre"
+                tabIndex={frozen ? -1 : 0}
+              >
+                ⏱
+              </button>
             ) : null}
             {!showPicker && !showCoach ? (
               <button
@@ -1281,28 +1286,30 @@ export default function App() {
           </div>
         </header>
 
-        <div className="timer-row" {...stopBubble}>
-          {TIMER_OPTIONS.map((sec) => (
-            <button
-              key={sec}
-              type="button"
-              className={timerSec === sec ? 'timer-chip on' : 'timer-chip'}
-              onClick={() => chooseTimer(sec)}
-              aria-pressed={timerSec === sec}
-              tabIndex={frozen ? -1 : 0}
-            >
-              {sec === 0 ? 'Off' : sec === 6 ? 'Hızlı · 6s' : `${sec}s`}
-            </button>
-          ))}
-          {showRemain && remain !== null && (
-            <span
-              className={`timer-count ${remainUrgent ? 'urgent' : ''}`}
-              aria-live="polite"
-            >
-              {remain.toFixed(1)}
-            </span>
-          )}
-        </div>
+        {timerSec !== 0 ? (
+          <div className="timer-row" {...stopBubble}>
+            {TIMER_OPTIONS.map((sec) => (
+              <button
+                key={sec}
+                type="button"
+                className={timerSec === sec ? 'timer-chip on' : 'timer-chip'}
+                onClick={() => chooseTimer(sec)}
+                aria-pressed={timerSec === sec}
+                tabIndex={frozen ? -1 : 0}
+              >
+                {sec === 0 ? 'Off' : sec === 6 ? 'Hızlı · 6s' : `${sec}s`}
+              </button>
+            ))}
+            {showRemain && remain !== null && (
+              <span
+                className={`timer-count ${remainUrgent ? 'urgent' : ''}`}
+                aria-live="polite"
+              >
+                {remain.toFixed(1)}
+              </span>
+            )}
+          </div>
+        ) : null}
         <div className="top-rule" aria-hidden />
 
         {/* BELOW the hairline — dual-page Reels (EN + TR + SWIPE only) */}
@@ -1356,7 +1363,7 @@ export default function App() {
                 Bugün: {outcomes.pekisti} pekişti · {outcomes.kaygan} kaygan ·{' '}
                 {outcomes.yeni} yeni
               </p>
-              {outcomes.kaygan > 0 ? (
+              {outcomes.kaygan > 0 || missed.length > 0 ? (
                 <p className="session-end-micro">yarın geri gelir</p>
               ) : (
                 <p className="session-end-sub">{deckShort} · {sessionLen} cümle</p>
@@ -1461,20 +1468,17 @@ export default function App() {
           >
             <div className="coach-card">
               <p className="coach-title">Nasıl oynanır</p>
-              <ul className="coach-list">
-                <li>
+              <p className="coach-lines">
+                <span className="coach-line">
                   <span className="coach-key">↔</span> seç
-                </li>
-                <li>
+                </span>
+                <span className="coach-dot" aria-hidden>
+                  ·
+                </span>
+                <span className="coach-line">
                   <span className="coach-key">↑</span> kilitle
-                </li>
-                <li>
-                  <span className="coach-key">↓</span> önceki (incele)
-                </li>
-                <li>
-                  <span className="coach-key">⏱</span> süre dolarsa seçili kart kilitlenir
-                </li>
-              </ul>
+                </span>
+              </p>
               <button type="button" className="primary coach-cta" onClick={dismissCoach}>
                 Anladım
               </button>
