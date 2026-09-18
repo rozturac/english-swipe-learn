@@ -26,6 +26,7 @@ import {
   cancelTts,
   clearTtsLatch,
   loadTtsPref,
+  onTtsSilentFail,
   preloadClip,
   saveTtsPref,
   speakEnAuto,
@@ -148,6 +149,19 @@ function prefersReducedMotion(): boolean {
   }
 }
 
+/** Picker subtitle bound to the selected deck chip. */
+function pickerSubtitle(d: OpenDeck): string {
+  switch (d) {
+    case 'Günlük konuşma':
+      return '~3 dk · 8 kalıp · günlük sohbet'
+    case 'İş İngilizcesi':
+      return '~3 dk · 8 kalıp · iş İngilizcesi'
+    case 'Genel':
+      return '~3 dk · 8 kalıp · deneysel · karışık'
+    default:
+      return '~3 dk · 8 kalıp'
+  }
+}
 
 function withMix(item: VocabItem, mix: MixTag): SessionQueued {
   return { ...item, mix }
@@ -214,6 +228,8 @@ type PlayPaneProps = {
   showTtsIcon?: boolean
   ttsOn?: boolean
   onToggleTts?: () => void
+  /** Soft pulse after silent TTS abort (no toast). */
+  ttsPulse?: boolean
 }
 
 /** EN + TR + jest hint — lives inside the sliding reel page. */
@@ -238,6 +254,7 @@ function PlayPane({
   showTtsIcon = false,
   ttsOn = true,
   onToggleTts,
+  ttsPulse = false,
 }: PlayPaneProps) {
   // Correct: soft green veil + mastery pulse. Wrong: no scene flash (calm teach).
   const flashClass = flash === 'correct' ? 'flash-correct' : ''
@@ -258,7 +275,7 @@ function PlayPane({
         {showTtsIcon && isNew ? (
           <button
             type="button"
-            className={`tts-btn${ttsOn ? '' : ' is-muted'}`}
+            className={`tts-btn${ttsOn ? '' : ' is-muted'}${ttsPulse ? ' is-soft-pulse' : ''}`}
             aria-label={ttsOn ? 'Ses açık' : 'Ses kapalı'}
             aria-pressed={ttsOn}
             onPointerDown={(e) => e.stopPropagation()}
@@ -339,6 +356,9 @@ export default function App() {
   const [streakChip, setStreakChip] = useState<number | null>(null)
   /** Wrong-path teach beat: reveal + readable dwell before advance. */
   const [teachBeat, setTeachBeat] = useState(false)
+  /** Soft pulse on 🔊 after silent TTS abort. */
+  const [ttsPulse, setTtsPulse] = useState(false)
+  const ttsPulseTimer = useRef<number | null>(null)
   const [dragX, setDragX] = useState(0)
   const [dragY, setDragY] = useState(0)
   const [dragging, setDragging] = useState(false)
@@ -383,6 +403,8 @@ export default function App() {
   const reviewNavTimer = useRef<number | null>(null)
   const doneRef = useRef(0)
   const lockingRef = useRef(false)
+  /** Card en already scored this turn — lock XOR timeout / rapid key (single progress). */
+  const scoredEnRef = useRef<string | null>(null)
   const snapIdRef = useRef(0)
   /** Session-wide exTr used as correct or distractor. */
   const usedExTrRef = useRef<Set<string>>(new Set())
@@ -468,6 +490,7 @@ export default function App() {
     if (unlock) {
       lockingRef.current = false
       setLocking(false)
+      scoredEnRef.current = null
     }
     setDragX(0)
     setDragY(0)
@@ -491,6 +514,7 @@ export default function App() {
       if (mixFadeTimer.current) window.clearTimeout(mixFadeTimer.current)
       if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
       if (reviewNavTimer.current) window.clearTimeout(reviewNavTimer.current)
+      if (ttsPulseTimer.current) window.clearTimeout(ttsPulseTimer.current)
     }
   }, [])
 
@@ -551,6 +575,7 @@ export default function App() {
     setExiting(null)
     lockingRef.current = false
     setLocking(false)
+    scoredEnRef.current = null
     teachArmedRef.current = false
     teachSkipReadyRef.current = false
     finishTeachRef.current = null
@@ -568,6 +593,7 @@ export default function App() {
       if (mixFadeTimer.current) window.clearTimeout(mixFadeTimer.current)
       if (reelClearTimer.current) window.clearTimeout(reelClearTimer.current)
       if (reviewNavTimer.current) window.clearTimeout(reviewNavTimer.current)
+      if (ttsPulseTimer.current) window.clearTimeout(ttsPulseTimer.current)
       setExiting(null)
       setHistory([])
       historyRef.current = []
@@ -593,6 +619,12 @@ export default function App() {
       teachArmedRef.current = false
       teachSkipReadyRef.current = false
       finishTeachRef.current = null
+      scoredEnRef.current = null
+      setTtsPulse(false)
+      if (ttsPulseTimer.current) {
+        window.clearTimeout(ttsPulseTimer.current)
+        ttsPulseTimer.current = null
+      }
       const head = next[0]
       if (head) rebuildOptions(head)
       else {
@@ -600,6 +632,7 @@ export default function App() {
         setRevealCorrect(null)
         lockingRef.current = false
         setLocking(false)
+        scoredEnRef.current = null
         setDragX(0)
         setDragY(0)
         setDragging(false)
@@ -659,6 +692,17 @@ export default function App() {
     })
   }, [queue])
 
+  // Silent TTS abort → soft pulse on 🔊, then idle (no toast).
+  useEffect(() => {
+    return onTtsSilentFail(() => {
+      setTtsPulse(true)
+      if (ttsPulseTimer.current) window.clearTimeout(ttsPulseTimer.current)
+      ttsPulseTimer.current = window.setTimeout(() => {
+        ttsPulseTimer.current = null
+        setTtsPulse(false)
+      }, 420)
+    })
+  }, [])
 
   const chooseDeck = useCallback(
     (next: OpenDeck) => {
@@ -768,6 +812,9 @@ export default function App() {
     () => {
       if (!current || lockingRef.current || exiting || reviewingRef.current) return
       if (options.length !== 3) return
+      // Single progress source: lock XOR timeout (and rapid keyboard) — one score per card.
+      if (scoredEnRef.current === current.en) return
+      scoredEnRef.current = current.en
       lockingRef.current = true
       setLocking(true)
       setDragX(0)
@@ -848,6 +895,7 @@ export default function App() {
           setRevealCorrect(null)
           lockingRef.current = false
           setLocking(false)
+          // Session end — keep scoredEn until beginSession; do not re-score.
           return
         }
         // Teach dwell is static; reel after is the normal snap (no fused 4.9s slide).
@@ -953,6 +1001,7 @@ export default function App() {
     let pauseAccum = 0
     const fire = () => {
       if (fired || lockingRef.current || reviewingRef.current) return
+      if (scoredEnRef.current != null) return
       fired = true
       setRemain(null)
       resolveRef.current()
@@ -1140,7 +1189,7 @@ export default function App() {
         lockAnswer()
         return
       }
-      if (pickingDeck || locking || reeling || reviewNav) return
+      if (pickingDeck || locking || lockingRef.current || reeling || reviewNav) return
       if (reviewIndex !== null) {
         if (e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
           e.preventDefault()
@@ -1269,6 +1318,7 @@ export default function App() {
         }
         ttsOn={ttsOn}
         onToggleTts={toggleTts}
+        ttsPulse={ttsPulse}
       />
     )
   }
@@ -1333,6 +1383,16 @@ export default function App() {
             <div className="progress" aria-label={`${progressText} cümle`}>
               {progressText}
             </div>
+            {!showPicker && !showCoach ? (
+              <div
+                className="session-score"
+                aria-label={`Bildin ${score.ok}, Bilemedin ${score.wrong}`}
+              >
+                <span className="score-ok">✓{score.ok}</span>
+                <span className="score-sep">·</span>
+                <span className="score-bad">✗{score.wrong}</span>
+              </div>
+            ) : null}
             {!showPicker && !showCoach && !showSessionEnd && mixIntro !== 'hidden' ? (
               <p
                 className={`mix-why${mixIntro === 'fading' ? ' is-fading' : ''}`}
@@ -1342,7 +1402,7 @@ export default function App() {
                 {mixCounts.due} due · {mixCounts.known} kaygan · {mixCounts.yeni} yeni
               </p>
             ) : null}
-            {timerSec === 0 && !showPicker && !showCoach && !showSessionEnd ? (
+            {timerSec === 0 && !showPicker && !showCoach && !showSessionEnd && !teachBeat ? (
               <button
                 type="button"
                 className="timer-arm"
@@ -1358,7 +1418,7 @@ export default function App() {
                 ⏱
               </button>
             ) : null}
-            {!showPicker && !showCoach ? (
+            {!showPicker && !showCoach && !showSessionEnd ? (
               <button
                 type="button"
                 className="deck-switch"
@@ -1403,7 +1463,7 @@ export default function App() {
           </div>
         </header>
 
-        {timerSec !== 0 ? (
+        {timerSec !== 0 && !showPicker && !showCoach && !showSessionEnd && !teachBeat ? (
           <div className="timer-row" {...stopBubble}>
             {TIMER_OPTIONS.map((sec) => (
               <button
@@ -1436,7 +1496,7 @@ export default function App() {
               <p className="session-end-kicker">Deck seç</p>
               <h1>Ne çalışalım?</h1>
               <p className="session-end-sub">
-                ~3 dk · 8 kalıp · iş İngilizcesi
+                {pickerSubtitle(deck)}
               </p>
               <div className="deck-chips" role="listbox" aria-label="Deck">
                 {PRIMARY_DECKS.map((d) => (
@@ -1476,15 +1536,25 @@ export default function App() {
           <div className="session-end">
             <div className="session-end-card">
               <p className="session-end-kicker">Oturum tamam</p>
-              <p className="session-end-line">
-                Bugün: {outcomes.pekisti} pekişti · {outcomes.kaygan} kaygan ·{' '}
-                {outcomes.yeni} yeni
+              <p
+                className="session-end-line session-score-final"
+                aria-label={`Bildin ${score.ok}, Bilemedin ${score.wrong}`}
+              >
+                <span className="score-ok">✓{score.ok}</span>
+                <span className="score-sep"> · </span>
+                <span className="score-bad">✗{score.wrong}</span>
               </p>
-              {outcomes.kaygan > 0 || missed.length > 0 ? (
-                <p className="session-end-micro">yarın geri gelir</p>
+              {score.wrong > 0 ? (
+                <p className="session-end-micro">{score.wrong} yarın tekrar</p>
               ) : (
                 <p className="session-end-sub">{deckShort} · {sessionLen} cümle</p>
               )}
+              {outcomes.pekisti > 0 || outcomes.kaygan > 0 || outcomes.yeni > 0 ? (
+                <p className="session-end-micro">
+                  {outcomes.pekisti} pekişti · {outcomes.kaygan} kaygan · {outcomes.yeni}{' '}
+                  yeni
+                </p>
+              ) : null}
               <button
                 type="button"
                 className="primary"

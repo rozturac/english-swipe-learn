@@ -556,7 +556,7 @@ body,
 .en-highlight {
   display: inline;
   padding: 1px 6px 2px;
-  margin: 0 1px;
+  margin: 0;
   border-radius: 6px;
   border: none;
   color: #fff;
@@ -632,6 +632,24 @@ body,
 .tts-btn.is-muted:hover,
 .tts-btn.is-muted:focus-visible {
   color: rgba(180, 190, 220, 0.55);
+}
+
+/* Silent TTS fail — soft pulse then idle (no toast) */
+.tts-btn.is-soft-pulse {
+  animation: tts-soft-pulse 420ms ease-out both;
+}
+@keyframes tts-soft-pulse {
+  0% { color: rgba(200, 210, 255, 0.38); transform: scale(1); }
+  35% { color: rgba(180, 230, 255, 0.85); transform: scale(1.12); }
+  100% { color: rgba(200, 210, 255, 0.38); transform: scale(1); }
+}
+.tts-btn.is-muted.is-soft-pulse {
+  animation-name: tts-soft-pulse-muted;
+}
+@keyframes tts-soft-pulse-muted {
+  0% { color: rgba(160, 170, 200, 0.28); transform: scale(1); }
+  35% { color: rgba(180, 190, 220, 0.7); transform: scale(1.12); }
+  100% { color: rgba(160, 170, 200, 0.28); transform: scale(1); }
 }
 
 .tr-area {

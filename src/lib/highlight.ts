@@ -31,10 +31,15 @@ export function boldPhrase(
   for (const needle of boldPhraseCandidates(en)) {
     const idx = lower.indexOf(needle.toLowerCase())
     if (idx !== -1) {
+      let length = needle.length
+      // Fold immediately adjacent trailing .?! into the highlight (no orphan space).
+      while (idx + length < ex.length && /[.?!]/.test(ex[idx + length]!)) {
+        length += 1
+      }
       return {
         index: idx,
-        length: needle.length,
-        match: ex.slice(idx, idx + needle.length),
+        length,
+        match: ex.slice(idx, idx + length),
       }
     }
   }

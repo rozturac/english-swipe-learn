@@ -26,6 +26,24 @@ let lastSpokenKey: string | null = null
 let speakGen = 0
 let startDeadlineTimer: ReturnType<typeof setTimeout> | null = null
 let startedForGen = false
+/** Optional UI hook — soft pulse on silent abort (no toast). */
+let silentFailListener: (() => void) | null = null
+
+/** Subscribe to silent TTS abort (300ms no-start). Returns unsubscribe. */
+export function onTtsSilentFail(fn: () => void): () => void {
+  silentFailListener = fn
+  return () => {
+    if (silentFailListener === fn) silentFailListener = null
+  }
+}
+
+function notifySilentFail() {
+  try {
+    silentFailListener?.()
+  } catch {
+    /* ignore */
+  }
+}
 /** Currently playing (or last) clip element. */
 let clipAudio: HTMLAudioElement | null = null
 const preloadCache = new Map<string, HTMLAudioElement>()
@@ -101,6 +119,7 @@ function armStartDeadline(gen: number) {
         /* ignore */
       }
     }
+    notifySilentFail()
   }, START_DEADLINE_MS)
 }
 
