@@ -22,6 +22,15 @@ import {
   type SessionQueued,
 } from './lib/progress'
 import type { FlashKind, ProgressMap, VocabItem } from './types'
+import {
+  cancelTts,
+  clearTtsLatch,
+  loadTtsPref,
+  saveTtsPref,
+  speakEnAuto,
+  speakEnNow,
+  unlockTts,
+} from './lib/tts'
 import './App.css'
 
 const vocab = vocabRaw as VocabItem[]
@@ -198,6 +207,12 @@ type PlayPaneProps = {
   streakChip?: number | null
   /** Teach beat active (wrong path dwell). */
   teachBeat?: boolean
+  /** Session mix tag — drives new-only stagger + TTS chrome. */
+  mix?: MixTag
+  /** Show corner 🔊/🔇 on live new cards only. */
+  showTtsIcon?: boolean
+  ttsOn?: boolean
+  onToggleTts?: () => void
 }
 
 /** EN + TR + jest hint — lives inside the sliding reel page. */
@@ -218,10 +233,15 @@ function PlayPane({
   showReviewHint = false,
   streakChip = null,
   teachBeat = false,
+  mix,
+  showTtsIcon = false,
+  ttsOn = true,
+  onToggleTts,
 }: PlayPaneProps) {
   // Correct: soft green veil + mastery pulse. Wrong: no scene flash (calm teach).
   const flashClass = flash === 'correct' ? 'flash-correct' : ''
   const why = item.why?.trim() || null
+  const isNew = mix === 'new'
 
   return (
     <div
@@ -234,7 +254,27 @@ function PlayPane({
         className="en-area"
         style={frozen ? undefined : { transform: `translate3d(0, ${liftY}px, 0)` }}
       >
-        <EnglishSentence ex={item.ex} en={item.en} category={item.t} />
+        {showTtsIcon && isNew ? (
+          <button
+            type="button"
+            className={`tts-btn${ttsOn ? '' : ' is-muted'}`}
+            aria-label={ttsOn ? 'Ses açık' : 'Ses kapalı'}
+            aria-pressed={ttsOn}
+            onPointerDown={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation()
+              onToggleTts?.()
+            }}
+          >
+            {ttsOn ? '🔊' : '🔇'}
+          </button>
+        ) : null}
+        <EnglishSentence
+          ex={item.ex}
+          en={item.en}
+          category={item.t}
+          staggerReveal={isNew && !reviewMode}
+        />
       </section>
 
       <section className={`tr-area${frozen ? ' is-frozen' : ''}`}>
@@ -317,6 +357,7 @@ export default function App() {
   const [missed, setMissed] = useState<VocabItem[]>([])
   const [sessionLen, setSessionLen] = useState(() => boot.sessionLen)
   const [showCoach, setShowCoach] = useState(() => boot.showCoach)
+  const [ttsOn, setTtsOn] = useState(() => loadTtsPref())
   const [showGhost, setShowGhost] = useState(
     () => !loadGhostSeen() && !prefersReducedMotion(),
   )
@@ -361,6 +402,36 @@ export default function App() {
   const reeling = exiting !== null
   const reviewing = reviewIndex !== null || reviewNav !== null
   reviewingRef.current = reviewing
+
+  /** New-card EN TTS — fire-and-forget; cancel/replace on card change. Never blocks swipe. */
+  useEffect(() => {
+    if (
+      !current ||
+      sessionOver ||
+      showCoach ||
+      pickingDeck ||
+      reviewing ||
+      current.mix !== 'new' ||
+      !ttsOn
+    ) {
+      return () => {
+        cancelTts()
+      }
+    }
+    speakEnAuto(current.ex?.trim() || current.en, current.en)
+    return () => {
+      cancelTts()
+    }
+  }, [
+    current?.en,
+    current?.mix,
+    current?.ex,
+    ttsOn,
+    sessionOver,
+    showCoach,
+    pickingDeck,
+    reviewing,
+  ])
 
   const builtForEn = useRef<string | null>(null)
 
@@ -476,6 +547,8 @@ export default function App() {
 
   const beginSession = useCallback(
     (next: SessionQueued[]) => {
+      clearTtsLatch()
+      cancelTts()
       if (advanceTimer.current) window.clearTimeout(advanceTimer.current)
       if (learnTimer.current) window.clearTimeout(learnTimer.current)
       if (streakChipTimer.current) window.clearTimeout(streakChipTimer.current)
@@ -546,6 +619,7 @@ export default function App() {
   )
 
   const dismissCoach = useCallback(() => {
+    unlockTts()
     saveCoachSeen()
     setShowCoach(false)
     if (hasDeckPref()) {
@@ -554,6 +628,25 @@ export default function App() {
       setPickingDeck(true)
     }
   }, [deck, startNewSession])
+
+  const toggleTts = useCallback(() => {
+    setTtsOn((prev) => {
+      const next = !prev
+      saveTtsPref(next)
+      if (!next) {
+        cancelTts()
+      } else {
+        unlockTts()
+        const card = queue[0]
+        if (card?.mix === 'new') {
+          clearTtsLatch(card.en)
+          speakEnNow(card.ex?.trim() || card.en, card.en)
+        }
+      }
+      return next
+    })
+  }, [queue])
+
 
   const chooseDeck = useCallback(
     (next: OpenDeck) => {
@@ -997,6 +1090,7 @@ export default function App() {
       onDragStart: () => {
         if (lockingRef.current || exiting || reviewNav) return
         dismissGhost()
+        unlockTts()
         dismissMixIntro()
         setDragging(true)
       },
@@ -1152,6 +1246,17 @@ export default function App() {
         showReviewHint={showReviewHint}
         streakChip={reeling ? null : streakChip}
         teachBeat={!reeling && teachBeat}
+        mix={current.mix}
+        showTtsIcon={
+          !showCoach &&
+          !showPicker &&
+          !showSessionEnd &&
+          !reviewing &&
+          !reeling &&
+          current.mix === 'new'
+        }
+        ttsOn={ttsOn}
+        onToggleTts={toggleTts}
       />
     )
   }
