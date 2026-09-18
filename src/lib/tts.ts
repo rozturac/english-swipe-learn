@@ -1,20 +1,34 @@
-/** Web Speech API — EN prompt only; fire-and-forget; never blocks swipe. */
+/** EN prompt TTS — pre-rendered clips when available; Web Speech fallback. Never blocks swipe.
+ *
+ * Sync model (new cards): audio leads; EN word stagger is its own ≤450ms visual track.
+ * Start within ~100–150ms of card mount. If audio has not begun by 300ms → abort, stay silent
+ * (no late echo after the user has moved on).
+ */
+
+import clipManifest from '../data/clip-manifest.json'
 
 const TTS_KEY = 'esl-tts'
-/** Default pacing — human-ish, not monologue-fast. */
-const RATE = 0.85
+/** Comfortable full-sentence rate (audio-lead path; not lockstep). */
+const RATE = 0.9
 const PITCH = 1
-/** Inter-word gap (ms) — loosely aligned with EN stagger. */
-const WORD_GAP_MS = 150
+/** If playback has not started by then, cancel — no late echo. */
+const START_DEADLINE_MS = 300
+
+const CLIPS: Record<string, string> = clipManifest as Record<string, string>
+const CLIP_BASE = '/audio/clips/'
 
 let gestureUnlocked = false
 let pendingText: string | null = null
 let pendingKey: string | null = null
-/** Latch only after an utterance actually starts (or is intentionally skipped). */
+/** Latch only after audio actually starts. */
 let lastSpokenKey: string | null = null
-/** Bumps on cancel — drops in-flight word chains / timeouts. */
+/** Bumps on cancel / late-abort — drops in-flight plays. */
 let speakGen = 0
-let gapTimer: ReturnType<typeof setTimeout> | null = null
+let startDeadlineTimer: ReturnType<typeof setTimeout> | null = null
+let startedForGen = false
+/** Currently playing (or last) clip element. */
+let clipAudio: HTMLAudioElement | null = null
+const preloadCache = new Map<string, HTMLAudioElement>()
 
 function synth(): SpeechSynthesis | null {
   try {
@@ -23,17 +37,6 @@ function synth(): SpeechSynthesis | null {
       : null
   } catch {
     return null
-  }
-}
-
-function prefersReducedMotion(): boolean {
-  try {
-    return (
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    )
-  } catch {
-    return false
   }
 }
 
@@ -59,6 +62,75 @@ export function saveTtsPref(on: boolean): void {
   }
 }
 
+/** Public URL for a pre-rendered clip of this exact ex text, or null. */
+export function clipUrlFor(text: string): string | null {
+  const file = CLIPS[text.trim()]
+  return file ? CLIP_BASE + file : null
+}
+
+function clearStartDeadline() {
+  if (startDeadlineTimer != null) {
+    clearTimeout(startDeadlineTimer)
+    startDeadlineTimer = null
+  }
+}
+
+function markStarted(gen: number, key?: string | null) {
+  if (gen !== speakGen) return
+  startedForGen = true
+  clearStartDeadline()
+  if (key) lastSpokenKey = key
+}
+
+/** Arm 300ms start gate for this generation. */
+function armStartDeadline(gen: number) {
+  clearStartDeadline()
+  startedForGen = false
+  startDeadlineTimer = setTimeout(() => {
+    startDeadlineTimer = null
+    if (gen !== speakGen) return
+    if (startedForGen) return
+    // Too late — kill attempt, stay silent (no echo after swipe-away).
+    speakGen += 1
+    stopClip()
+    const s = synth()
+    if (s) {
+      try {
+        s.cancel()
+      } catch {
+        /* ignore */
+      }
+    }
+  }, START_DEADLINE_MS)
+}
+
+function ensureClipAudio(): HTMLAudioElement | null {
+  if (typeof Audio === 'undefined') return null
+  if (!clipAudio) {
+    clipAudio = new Audio()
+    clipAudio.preload = 'auto'
+  }
+  return clipAudio
+}
+
+function stopClip() {
+  if (!clipAudio) return
+  try {
+    clipAudio.onplay = null
+    clipAudio.onplaying = null
+    clipAudio.onended = null
+    clipAudio.onerror = null
+    clipAudio.pause()
+    try {
+      clipAudio.currentTime = 0
+    } catch {
+      /* ignore */
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
 /**
  * Prefer natural en-US voices: Google US English, Samantha, similar;
  * then any en-US; then other en-*.
@@ -72,7 +144,6 @@ function scoreEnVoice(v: SpeechSynthesisVoice): number {
   else if (/en-GB/i.test(lang)) score += 15
   else score += 5
 
-  // Named preferences (highest first)
   if (/google\s*us\s*english/i.test(name) || (/google/i.test(name) && /en-US/i.test(lang)))
     score += 100
   if (/samantha/i.test(name)) score += 90
@@ -100,13 +171,6 @@ function pickEnVoice(s: SpeechSynthesis): SpeechSynthesisVoice | null {
   return best
 }
 
-function clearGapTimer() {
-  if (gapTimer != null) {
-    clearTimeout(gapTimer)
-    gapTimer = null
-  }
-}
-
 function makeUtterance(text: string, voice: SpeechSynthesisVoice | null): SpeechSynthesisUtterance {
   const u = new SpeechSynthesisUtterance(text)
   u.lang = voice?.lang || 'en-US'
@@ -116,93 +180,133 @@ function makeUtterance(text: string, voice: SpeechSynthesisVoice | null): Speech
   return u
 }
 
-function wordsOf(text: string): string[] {
-  return text.trim().split(/\s+/).filter(Boolean)
-}
-
 /**
- * Speak EN text: word-by-word with ~150ms gaps (human pacing).
- * prefers-reduced-motion → single slow utterance (no chain).
- * Always cancel() before starting so mid-card swipe drops mid-utterance.
+ * Web Speech fallback — single full-sentence utterance (audio-lead).
+ * Starts immediately; no word-chain / no voiceschanged wait (those caused lag).
  */
-function speakNow(text: string, key?: string | null) {
+function speakWebSpeech(text: string, key: string | null | undefined, gen: number) {
+  if (gen !== speakGen) return
   const s = synth()
   if (!s || !text.trim()) return
   try {
-    clearGapTimer()
     s.cancel()
-    const gen = ++speakGen
-    const trimmed = text.trim()
-
-    const run = () => {
-      if (gen !== speakGen) return
-      try {
-        const voice = pickEnVoice(s)
-        const words = wordsOf(trimmed)
-        const reduced = prefersReducedMotion()
-
-        // Reduced motion or single token: one utterance at slow rate.
-        if (reduced || words.length <= 1) {
-          const u = makeUtterance(trimmed, voice)
-          if (key) {
-            u.onstart = () => {
-              if (gen === speakGen) lastSpokenKey = key
-            }
-          }
-          s.speak(u)
-          return
-        }
-
-        // Word-by-word with inter-word pause (aligned with stagger feel).
-        let i = 0
-        const gap = WORD_GAP_MS
-        const speakNext = () => {
-          if (gen !== speakGen) return
-          if (i >= words.length) return
-          const u = makeUtterance(words[i]!, voice)
-          if (i === 0 && key) {
-            u.onstart = () => {
-              if (gen === speakGen) lastSpokenKey = key
-            }
-          }
-          u.onend = () => {
-            if (gen !== speakGen) return
-            i += 1
-            if (i >= words.length) return
-            clearGapTimer()
-            gapTimer = setTimeout(() => {
-              gapTimer = null
-              if (gen !== speakGen) return
-              speakNext()
-            }, gap)
-          }
-          u.onerror = () => {
-            /* stop chain on error / cancel */
-          }
-          try {
-            s.speak(u)
-          } catch {
-            /* best-effort */
-          }
-        }
-        speakNext()
-      } catch {
-        /* best-effort */
-      }
+    const voice = pickEnVoice(s)
+    const u = makeUtterance(text.trim(), voice)
+    u.onstart = () => markStarted(gen, key)
+    u.onerror = () => {
+      /* cancelled / failed — deadline may still abort */
     }
-
-    if (s.getVoices().length === 0) {
-      const once = () => {
-        s.removeEventListener('voiceschanged', once)
-        run()
-      }
-      s.addEventListener('voiceschanged', once)
-      window.setTimeout(run, 120)
-    } else {
-      run()
-    }
+    s.speak(u)
   } catch {
     /* best-effort */
+  }
+}
+
+/**
+ * Play pre-rendered clip (prefer warm preload cache for ≤150ms start).
+ * On hard failure before deadline, fall back to Web Speech once.
+ */
+function playClip(url: string, text: string, key: string | null | undefined, gen: number): boolean {
+  if (typeof Audio === 'undefined') return false
+  try {
+    const s = synth()
+    if (s) {
+      try {
+        s.cancel()
+      } catch {
+        /* ignore */
+      }
+    }
+
+    // Prefer warm preload so play() can start within ~100–150ms.
+    let audio = preloadCache.get(url) ?? ensureClipAudio()
+    if (!audio) return false
+    stopClip()
+    clipAudio = audio
+    try {
+      const abs = new URL(url, window.location.href).href
+      if (audio.src !== abs) audio.src = url
+    } catch {
+      audio.src = url
+    }
+    // Re-bind after stopClip cleared handlers.
+    audio.onplaying = () => markStarted(gen, key)
+    audio.onplay = () => markStarted(gen, key)
+    audio.onended = () => {
+      /* noop */
+    }
+    audio.onerror = () => {
+      if (gen !== speakGen) return
+      if (startedForGen) return
+      speakWebSpeech(text, key, gen)
+    }
+    try {
+      audio.currentTime = 0
+    } catch {
+      /* ignore */
+    }
+    const p = audio.play()
+    if (p && typeof p.catch === 'function') {
+      p.catch(() => {
+        if (gen !== speakGen) return
+        if (startedForGen) return
+        speakWebSpeech(text, key, gen)
+      })
+    }
+    return true
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Speak EN text ASAP: clip if manifest hit, else Web Speech.
+ * Arms 300ms start deadline. Cancel on card change via cancelTts().
+ */
+function speakNow(text: string, key?: string | null) {
+  if (!text.trim()) return
+  speakGen += 1
+  const gen = speakGen
+  stopClip()
+  const s = synth()
+  if (s) {
+    try {
+      s.cancel()
+    } catch {
+      /* ignore */
+    }
+  }
+  armStartDeadline(gen)
+
+  const trimmed = text.trim()
+  const url = clipUrlFor(trimmed)
+  if (url) {
+    if (playClip(url, trimmed, key, gen)) return
+  }
+  speakWebSpeech(trimmed, key, gen)
+}
+
+/**
+ * Warm a card's clip (current or next-in-queue) so play() can start ≤150ms.
+ */
+export function preloadClip(text: string | null | undefined): void {
+  if (!text?.trim()) return
+  const url = clipUrlFor(text)
+  if (!url || typeof Audio === 'undefined') return
+  if (preloadCache.has(url)) return
+  try {
+    const a = new Audio()
+    a.preload = 'auto'
+    a.src = url
+    // Touch load without playing.
+    try {
+      a.load()
+    } catch {
+      /* ignore */
+    }
+    preloadCache.set(url, a)
+  } catch {
+    /* ignore */
   }
 }
 
@@ -223,6 +327,26 @@ export function unlockTts(): void {
       /* ignore */
     }
   }
+  try {
+    const a = ensureClipAudio()
+    if (a) {
+      a.src =
+        'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA='
+      a.volume = 0
+      const p = a.play()
+      if (p && typeof p.catch === 'function') p.catch(() => {})
+      a.pause()
+      a.volume = 1
+      a.removeAttribute('src')
+      try {
+        a.load()
+      } catch {
+        /* ignore */
+      }
+    }
+  } catch {
+    /* ignore */
+  }
   if (pendingText && loadTtsPref()) {
     const t = pendingText
     const k = pendingKey
@@ -240,7 +364,9 @@ export function cancelTts(): void {
   pendingText = null
   pendingKey = null
   speakGen += 1
-  clearGapTimer()
+  clearStartDeadline()
+  startedForGen = false
+  stopClip()
   const s = synth()
   if (!s) return
   try {
@@ -252,19 +378,21 @@ export function cancelTts(): void {
 
 /**
  * Auto-read EN prompt 1× per card key when pref ON.
- * If not yet gesture-unlocked, queues until unlockTts().
+ * Fire immediately on mount (caller should useLayoutEffect) — do not wait for stagger.
  */
 export function speakEnAuto(text: string, key: string): void {
   if (!loadTtsPref()) return
   if (!text.trim()) return
   if (lastSpokenKey === key) return
-  if (!synth()) return
+  if (!clipUrlFor(text) && !synth()) return
+
+  // Warm current clip before play for faster start.
+  preloadClip(text)
 
   if (gestureUnlocked) {
     speakNow(text, key)
     return
   }
-  // Queue for coach Anladım / first swipe — do not latch until spoken.
   pendingText = text
   pendingKey = key
 }
@@ -275,6 +403,7 @@ export function speakEnNow(text: string, key?: string): void {
   gestureUnlocked = true
   pendingText = null
   pendingKey = null
+  preloadClip(text)
   speakNow(text, key ?? null)
 }
 

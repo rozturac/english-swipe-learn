@@ -26,6 +26,7 @@ import {
   cancelTts,
   clearTtsLatch,
   loadTtsPref,
+  preloadClip,
   saveTtsPref,
   speakEnAuto,
   speakEnNow,
@@ -403,8 +404,11 @@ export default function App() {
   const reviewing = reviewIndex !== null || reviewNav !== null
   reviewingRef.current = reviewing
 
-  /** New-card EN TTS — fire-and-forget; cancel/replace on card change. Never blocks swipe. */
-  useEffect(() => {
+  /**
+   * New-card EN TTS — start ASAP on mount (useLayoutEffect, do not wait for stagger).
+   * Audio leads; EN stagger is its own ≤450ms visual track. Cancel on card change.
+   */
+  useLayoutEffect(() => {
     if (
       !current ||
       sessionOver ||
@@ -418,7 +422,14 @@ export default function App() {
         cancelTts()
       }
     }
-    speakEnAuto(current.ex?.trim() || current.en, current.en)
+    const ex = current.ex?.trim() || current.en
+    preloadClip(ex)
+    speakEnAuto(ex, current.en)
+    // Warm next new-card clip in queue for ≤150ms start on swipe-in.
+    const next = queue[1]
+    if (next?.mix === 'new') {
+      preloadClip(next.ex?.trim() || next.en)
+    }
     return () => {
       cancelTts()
     }
@@ -431,6 +442,7 @@ export default function App() {
     showCoach,
     pickingDeck,
     reviewing,
+    queue,
   ])
 
   const builtForEn = useRef<string | null>(null)
