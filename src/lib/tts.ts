@@ -1,18 +1,20 @@
 /** EN prompt TTS — pre-rendered clips when available; Web Speech fallback. Never blocks swipe.
  *
- * Sync model (new cards): audio leads; EN word stagger is its own ≤450ms visual track.
- * Start within ~100–150ms of card mount. If audio has not begun by 300ms → abort, stay silent
- * (no late echo after the user has moved on).
+ * Sync model (new cards): FULL EN text + TTS/clip start the same frame (≤100ms).
+ * No word-stagger race; text never waits on audio. Decision timer starts after audio ends.
  */
 
 import clipManifest from '../data/clip-manifest.json'
 
 const TTS_KEY = 'esl-tts'
-/** Comfortable full-sentence rate (audio-lead path; not lockstep). */
-const RATE = 0.9
+const PACE_KEY = 'esl-tts-pace'
 const PITCH = 1
 /** If playback has not started by then, cancel — no late echo. */
 const START_DEADLINE_MS = 300
+/** Extra slack after known duration when `ended` never fires. */
+const END_FALLBACK_PAD_MS = 400
+
+export type TtsPace = 'normal' | 'slow'
 
 const CLIPS: Record<string, string> = clipManifest as Record<string, string>
 const CLIP_BASE = import.meta.env.BASE_URL + 'audio/clips/'
@@ -25,15 +27,31 @@ let lastSpokenKey: string | null = null
 /** Bumps on cancel / late-abort — drops in-flight plays. */
 let speakGen = 0
 let startDeadlineTimer: ReturnType<typeof setTimeout> | null = null
+let endFallbackTimer: ReturnType<typeof setTimeout> | null = null
+let pendingDecisionTimer: ReturnType<typeof setTimeout> | null = null
 let startedForGen = false
+let endNotifiedForGen = -1
 /** Optional UI hook — soft pulse on silent abort (no toast). */
 let silentFailListener: (() => void) | null = null
+/** Fires once per speak gen when decision timer may start (ended / fallback / silent abort). */
+let decisionReadyListener: (() => void) | null = null
+/** Currently playing (or last) clip element. */
+let clipAudio: HTMLAudioElement | null = null
+const preloadCache = new Map<string, HTMLAudioElement>()
 
 /** Subscribe to silent TTS abort (300ms no-start). Returns unsubscribe. */
 export function onTtsSilentFail(fn: () => void): () => void {
   silentFailListener = fn
   return () => {
     if (silentFailListener === fn) silentFailListener = null
+  }
+}
+
+/** Subscribe to “audio done / aborted” — App starts decision timer. Returns unsubscribe. */
+export function onTtsDecisionReady(fn: () => void): () => void {
+  decisionReadyListener = fn
+  return () => {
+    if (decisionReadyListener === fn) decisionReadyListener = null
   }
 }
 
@@ -44,18 +62,48 @@ function notifySilentFail() {
     /* ignore */
   }
 }
-/** Currently playing (or last) clip element. */
-let clipAudio: HTMLAudioElement | null = null
-const preloadCache = new Map<string, HTMLAudioElement>()
 
-function synth(): SpeechSynthesis | null {
+function notifyDecisionReady(gen: number) {
+  if (gen !== speakGen) return
+  if (endNotifiedForGen === gen) return
+  endNotifiedForGen = gen
+  clearEndFallback()
   try {
-    return typeof window !== 'undefined' && 'speechSynthesis' in window
-      ? window.speechSynthesis
-      : null
+    decisionReadyListener?.()
   } catch {
-    return null
+    /* ignore */
   }
+}
+
+function loadPaceRaw(): TtsPace {
+  try {
+    const v = localStorage.getItem(PACE_KEY)
+    if (v === 'slow') return 'slow'
+    if (v === 'normal') return 'normal'
+    localStorage.setItem(PACE_KEY, 'normal')
+    return 'normal'
+  } catch {
+    return 'normal'
+  }
+}
+
+/** Default Normal; persist esl-tts-pace. */
+export function loadPacePref(): TtsPace {
+  return loadPaceRaw()
+}
+
+export function savePacePref(pace: TtsPace): void {
+  try {
+    localStorage.setItem(PACE_KEY, pace)
+  } catch {
+    /* ignore */
+  }
+}
+
+/** Clip playbackRate + Web Speech rate for current pace. */
+export function paceRates(pace: TtsPace = loadPaceRaw()): { clipRate: number; speechRate: number } {
+  if (pace === 'slow') return { clipRate: 0.85, speechRate: 0.8 }
+  return { clipRate: 1.0, speechRate: 0.9 }
 }
 
 /** Default ON — missing key → write esl-tts=1. */
@@ -93,6 +141,39 @@ function clearStartDeadline() {
   }
 }
 
+function clearEndFallback() {
+  if (endFallbackTimer != null) {
+    clearTimeout(endFallbackTimer)
+    endFallbackTimer = null
+  }
+}
+
+function clearPendingDecision() {
+  if (pendingDecisionTimer != null) {
+    clearTimeout(pendingDecisionTimer)
+    pendingDecisionTimer = null
+  }
+}
+
+/** Gate open when auto-speak never starts a gen (skip / pending timeout). */
+function notifyDecisionReadyImmediate() {
+  clearPendingDecision()
+  try {
+    decisionReadyListener?.()
+  } catch {
+    /* ignore */
+  }
+}
+
+function armEndFallback(gen: number, ms: number) {
+  clearEndFallback()
+  if (!(ms > 0) || !Number.isFinite(ms)) return
+  endFallbackTimer = setTimeout(() => {
+    endFallbackTimer = null
+    notifyDecisionReady(gen)
+  }, ms)
+}
+
 function markStarted(gen: number, key?: string | null) {
   if (gen !== speakGen) return
   startedForGen = true
@@ -109,6 +190,8 @@ function armStartDeadline(gen: number) {
     if (gen !== speakGen) return
     if (startedForGen) return
     // Too late — kill attempt, stay silent (no echo after swipe-away).
+    // Notify decision-ready BEFORE bumping gen so the listener still matches.
+    notifyDecisionReady(gen)
     speakGen += 1
     stopClip()
     const s = synth()
@@ -121,6 +204,16 @@ function armStartDeadline(gen: number) {
     }
     notifySilentFail()
   }, START_DEADLINE_MS)
+}
+
+function synth(): SpeechSynthesis | null {
+  try {
+    return typeof window !== 'undefined' && 'speechSynthesis' in window
+      ? window.speechSynthesis
+      : null
+  } catch {
+    return null
+  }
 }
 
 function ensureClipAudio(): HTMLAudioElement | null {
@@ -139,6 +232,7 @@ function stopClip() {
     clipAudio.onplaying = null
     clipAudio.onended = null
     clipAudio.onerror = null
+    clipAudio.onloadedmetadata = null
     clipAudio.pause()
     try {
       clipAudio.currentTime = 0
@@ -193,15 +287,29 @@ function pickEnVoice(s: SpeechSynthesis): SpeechSynthesisVoice | null {
 function makeUtterance(text: string, voice: SpeechSynthesisVoice | null): SpeechSynthesisUtterance {
   const u = new SpeechSynthesisUtterance(text)
   u.lang = voice?.lang || 'en-US'
-  u.rate = RATE
+  u.rate = paceRates().speechRate
   u.pitch = PITCH
   if (voice) u.voice = voice
   return u
 }
 
+/** Rough Web Speech duration estimate when `onend` is flaky. */
+function estimateSpeechMs(text: string, rate: number): number {
+  const words = text.trim().split(/\s+/).filter(Boolean).length
+  const base = Math.max(800, words * 320)
+  return base / Math.max(0.5, rate) + END_FALLBACK_PAD_MS
+}
+
+function armClipEndFallback(audio: HTMLAudioElement, gen: number) {
+  const dur = audio.duration
+  if (!Number.isFinite(dur) || dur <= 0) return
+  const rate = audio.playbackRate > 0 ? audio.playbackRate : 1
+  armEndFallback(gen, (dur / rate) * 1000 + END_FALLBACK_PAD_MS)
+}
+
 /**
- * Web Speech fallback — single full-sentence utterance (audio-lead).
- * Starts immediately; no word-chain / no voiceschanged wait (those caused lag).
+ * Web Speech fallback — single full-sentence utterance.
+ * Starts immediately; no word-chain / no voiceschanged wait.
  */
 function speakWebSpeech(text: string, key: string | null | undefined, gen: number) {
   if (gen !== speakGen) return
@@ -211,9 +319,13 @@ function speakWebSpeech(text: string, key: string | null | undefined, gen: numbe
     s.cancel()
     const voice = pickEnVoice(s)
     const u = makeUtterance(text.trim(), voice)
-    u.onstart = () => markStarted(gen, key)
+    u.onstart = () => {
+      markStarted(gen, key)
+      armEndFallback(gen, estimateSpeechMs(text, u.rate))
+    }
+    u.onend = () => notifyDecisionReady(gen)
     u.onerror = () => {
-      /* cancelled / failed — deadline may still abort */
+      /* cancelled / failed — deadline or fallback may still fire */
     }
     s.speak(u)
   } catch {
@@ -222,7 +334,7 @@ function speakWebSpeech(text: string, key: string | null | undefined, gen: numbe
 }
 
 /**
- * Play pre-rendered clip (prefer warm preload cache for ≤150ms start).
+ * Play pre-rendered clip (prefer warm preload cache for ≤100ms start).
  * On hard failure before deadline, fall back to Web Speech once.
  */
 function playClip(url: string, text: string, key: string | null | undefined, gen: number): boolean {
@@ -237,7 +349,7 @@ function playClip(url: string, text: string, key: string | null | undefined, gen
       }
     }
 
-    // Prefer warm preload so play() can start within ~100–150ms.
+    // Prefer warm preload so play() can start within ~100ms.
     let audio = preloadCache.get(url) ?? ensureClipAudio()
     if (!audio) return false
     stopClip()
@@ -248,12 +360,24 @@ function playClip(url: string, text: string, key: string | null | undefined, gen
     } catch {
       audio.src = url
     }
-    // Re-bind after stopClip cleared handlers.
-    audio.onplaying = () => markStarted(gen, key)
-    audio.onplay = () => markStarted(gen, key)
-    audio.onended = () => {
-      /* noop */
+    const { clipRate } = paceRates()
+    try {
+      audio.playbackRate = clipRate
+    } catch {
+      /* ignore */
     }
+    // Re-bind after stopClip cleared handlers.
+    const onStart = () => {
+      markStarted(gen, key)
+      armClipEndFallback(audio, gen)
+    }
+    audio.onplaying = onStart
+    audio.onplay = onStart
+    audio.onloadedmetadata = () => {
+      if (gen !== speakGen) return
+      if (startedForGen) armClipEndFallback(audio, gen)
+    }
+    audio.onended = () => notifyDecisionReady(gen)
     audio.onerror = () => {
       if (gen !== speakGen) return
       if (startedForGen) return
@@ -286,6 +410,9 @@ function speakNow(text: string, key?: string | null) {
   if (!text.trim()) return
   speakGen += 1
   const gen = speakGen
+  endNotifiedForGen = -1
+  clearEndFallback()
+  clearPendingDecision()
   stopClip()
   const s = synth()
   if (s) {
@@ -306,7 +433,7 @@ function speakNow(text: string, key?: string | null) {
 }
 
 /**
- * Warm a card's clip (current or next-in-queue) so play() can start ≤150ms.
+ * Warm a card's clip (current or next-in-queue) so play() can start ≤100ms.
  */
 export function preloadClip(text: string | null | undefined): void {
   if (!text?.trim()) return
@@ -371,19 +498,23 @@ export function unlockTts(): void {
     const k = pendingKey
     pendingText = null
     pendingKey = null
+    clearPendingDecision()
     speakNow(t, k)
   } else {
     pendingText = null
     pendingKey = null
+    clearPendingDecision()
   }
 }
 
-/** Cancel in-flight / pending (card change, mute, unmount). */
+/** Cancel in-flight / pending (card change, mute, unmount). Does NOT fire decision-ready. */
 export function cancelTts(): void {
   pendingText = null
   pendingKey = null
   speakGen += 1
   clearStartDeadline()
+  clearEndFallback()
+  clearPendingDecision()
   startedForGen = false
   stopClip()
   const s = synth()
@@ -397,23 +528,43 @@ export function cancelTts(): void {
 
 /**
  * Auto-read EN prompt 1× per card key when pref ON.
- * Fire immediately on mount (caller should useLayoutEffect) — do not wait for stagger.
+ * Fire immediately on mount (caller should useLayoutEffect) — same frame as full EN text.
  */
 export function speakEnAuto(text: string, key: string): void {
-  if (!loadTtsPref()) return
-  if (!text.trim()) return
-  if (lastSpokenKey === key) return
-  if (!clipUrlFor(text) && !synth()) return
+  if (!loadTtsPref()) {
+    notifyDecisionReadyImmediate()
+    return
+  }
+  if (!text.trim()) {
+    notifyDecisionReadyImmediate()
+    return
+  }
+  if (lastSpokenKey === key) {
+    // Already auto-read this card — do not block decision timer.
+    notifyDecisionReadyImmediate()
+    return
+  }
+  if (!clipUrlFor(text) && !synth()) {
+    notifyDecisionReadyImmediate()
+    return
+  }
 
   // Warm current clip before play for faster start.
   preloadClip(text)
 
   if (gestureUnlocked) {
+    clearPendingDecision()
     speakNow(text, key)
     return
   }
   pendingText = text
   pendingKey = key
+  // No start deadline until speakNow — open decision gate if unlock never comes.
+  clearPendingDecision()
+  pendingDecisionTimer = setTimeout(() => {
+    pendingDecisionTimer = null
+    if (pendingText) notifyDecisionReadyImmediate()
+  }, START_DEADLINE_MS)
 }
 
 /** Fire-and-forget speak now (pref must be ON). */

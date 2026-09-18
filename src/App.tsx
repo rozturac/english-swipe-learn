@@ -25,13 +25,17 @@ import type { FlashKind, ProgressMap, VocabItem } from './types'
 import {
   cancelTts,
   clearTtsLatch,
+  loadPacePref,
   loadTtsPref,
+  onTtsDecisionReady,
   onTtsSilentFail,
   preloadClip,
+  savePacePref,
   saveTtsPref,
   speakEnAuto,
   speakEnNow,
   unlockTts,
+  type TtsPace,
 } from './lib/tts'
 import './App.css'
 
@@ -230,6 +234,13 @@ type PlayPaneProps = {
   onToggleTts?: () => void
   /** Soft pulse after silent TTS abort (no toast). */
   ttsPulse?: boolean
+  /** Slow · Normal — new + unmuted only. */
+  ttsPace?: TtsPace
+  onPaceChange?: (pace: TtsPace) => void
+  /** Show pace segment (hide on teach/end/due/known). */
+  showPace?: boolean
+  /** Long-press 🔊 to mute. */
+  onMuteTts?: () => void
 }
 
 /** EN + TR + jest hint — lives inside the sliding reel page. */
@@ -255,6 +266,10 @@ function PlayPane({
   ttsOn = true,
   onToggleTts,
   ttsPulse = false,
+  ttsPace = 'normal',
+  onPaceChange,
+  showPace = false,
+  onMuteTts,
 }: PlayPaneProps) {
   // Correct: soft green veil + mastery pulse. Wrong: no scene flash (calm teach).
   const flashClass = flash === 'correct' ? 'flash-correct' : ''
@@ -273,25 +288,82 @@ function PlayPane({
         style={frozen ? undefined : { transform: `translate3d(0, ${liftY}px, 0)` }}
       >
         {showTtsIcon && isNew ? (
-          <button
-            type="button"
-            className={`tts-btn${ttsOn ? '' : ' is-muted'}${ttsPulse ? ' is-soft-pulse' : ''}`}
-            aria-label={ttsOn ? 'Ses açık' : 'Ses kapalı'}
-            aria-pressed={ttsOn}
-            onPointerDown={(e) => e.stopPropagation()}
-            onClick={(e) => {
-              e.stopPropagation()
-              onToggleTts?.()
-            }}
-          >
-            {ttsOn ? '🔊' : '🔇'}
-          </button>
+          <div className="tts-chrome" onPointerDown={(e) => e.stopPropagation()}>
+            {showPace && ttsOn ? (
+              <div className="tts-pace" role="group" aria-label="Konuşma hızı">
+                <button
+                  type="button"
+                  className={`tts-pace-btn${ttsPace === 'slow' ? ' on' : ''}`}
+                  aria-pressed={ttsPace === 'slow'}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onPaceChange?.('slow')
+                  }}
+                >
+                  Yavaş
+                </button>
+                <button
+                  type="button"
+                  className={`tts-pace-btn${ttsPace === 'normal' ? ' on' : ''}`}
+                  aria-pressed={ttsPace === 'normal'}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onPaceChange?.('normal')
+                  }}
+                >
+                  Normal
+                </button>
+              </div>
+            ) : null}
+            <button
+              type="button"
+              className={`tts-btn${ttsOn ? '' : ' is-muted'}${ttsPulse ? ' is-soft-pulse' : ''}`}
+              aria-label={ttsOn ? 'Tekrar dinle' : 'Ses kapalı · aç'}
+              aria-pressed={ttsOn}
+              title={ttsOn ? 'Tekrar · uzun bas = kapat' : 'Sesi aç'}
+              onClick={(e) => {
+                e.stopPropagation()
+                const el = e.currentTarget as HTMLButtonElement & { __muteFired?: boolean }
+                if (el.__muteFired) {
+                  el.__muteFired = false
+                  return
+                }
+                onToggleTts?.()
+              }}
+              onContextMenu={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                if (ttsOn) onMuteTts?.()
+              }}
+              onPointerDown={(e) => {
+                e.stopPropagation()
+                if (!ttsOn || e.button !== 0) return
+                const el = e.currentTarget as HTMLButtonElement & { __muteFired?: boolean }
+                el.__muteFired = false
+                const tid = window.setTimeout(() => {
+                  el.__muteFired = true
+                  onMuteTts?.()
+                }, 450)
+                const clear = () => {
+                  window.clearTimeout(tid)
+                  el.removeEventListener('pointerup', clear)
+                  el.removeEventListener('pointercancel', clear)
+                  el.removeEventListener('pointerleave', clear)
+                }
+                el.addEventListener('pointerup', clear)
+                el.addEventListener('pointercancel', clear)
+                el.addEventListener('pointerleave', clear)
+              }}
+            >
+              {ttsOn ? '🔊' : '🔇'}
+            </button>
+          </div>
         ) : null}
         <EnglishSentence
           ex={item.ex}
           en={item.en}
           category={item.t}
-          staggerReveal={isNew && !reviewMode}
+          staggerReveal={false}
         />
       </section>
 
@@ -379,6 +451,9 @@ export default function App() {
   const [sessionLen, setSessionLen] = useState(() => boot.sessionLen)
   const [showCoach, setShowCoach] = useState(() => boot.showCoach)
   const [ttsOn, setTtsOn] = useState(() => loadTtsPref())
+  const [ttsPace, setTtsPace] = useState<TtsPace>(() => loadPacePref())
+  /** Decision timer may run only after audio ended / aborted (or immediately if no TTS). */
+  const [audioDecisionReady, setAudioDecisionReady] = useState(true)
   const [showGhost, setShowGhost] = useState(
     () => !loadGhostSeen() && !prefersReducedMotion(),
   )
@@ -427,31 +502,36 @@ export default function App() {
   reviewingRef.current = reviewing
 
   /**
-   * New-card EN TTS — start ASAP on mount (useLayoutEffect, do not wait for stagger).
-   * Audio leads; EN stagger is its own ≤450ms visual track. Cancel on card change.
+   * New-card EN TTS — same frame as full EN text (useLayoutEffect).
+   * No stagger race. Decision timer waits for ended / silent abort.
    */
   useLayoutEffect(() => {
-    if (
-      !current ||
-      sessionOver ||
-      showCoach ||
-      pickingDeck ||
-      reviewing ||
-      current.mix !== 'new' ||
-      !ttsOn
-    ) {
+    const wantsAudio =
+      !!current &&
+      !sessionOver &&
+      !showCoach &&
+      !pickingDeck &&
+      !reviewing &&
+      current.mix === 'new' &&
+      ttsOn
+
+    if (!wantsAudio) {
+      setAudioDecisionReady(true)
       return () => {
         cancelTts()
       }
     }
+
+    setAudioDecisionReady(false)
     const ex = current.ex?.trim() || current.en
     preloadClip(ex)
     speakEnAuto(ex, current.en)
-    // Warm next new-card clip in queue for ≤150ms start on swipe-in.
+    // Warm next new-card clip in queue for ≤100ms start on swipe-in.
     const next = queue[1]
     if (next?.mix === 'new') {
       preloadClip(next.ex?.trim() || next.en)
     }
+    // Decision gate opens via onTtsDecisionReady (ended / silent abort / skip / pending).
     return () => {
       cancelTts()
     }
@@ -674,33 +754,69 @@ export default function App() {
     }
   }, [deck, startNewSession])
 
+  /** 🔊 tap: unmute+play when off; replay when on (countdown stays if open). Long-press mutes. */
   const toggleTts = useCallback(() => {
-    setTtsOn((prev) => {
-      const next = !prev
-      saveTtsPref(next)
-      if (!next) {
-        cancelTts()
+    if (!ttsOn) {
+      saveTtsPref(true)
+      setTtsOn(true)
+      unlockTts()
+      const card = queue[0]
+      if (card?.mix === 'new') {
+        setAudioDecisionReady(false)
+        clearTtsLatch(card.en)
+        speakEnNow(card.ex?.trim() || card.en, card.en)
       } else {
-        unlockTts()
-        const card = queue[0]
-        if (card?.mix === 'new') {
-          clearTtsLatch(card.en)
-          speakEnNow(card.ex?.trim() || card.en, card.en)
-        }
+        setAudioDecisionReady(true)
       }
-      return next
-    })
-  }, [queue])
+      return
+    }
+    const card = queue[0]
+    if (card?.mix === 'new') {
+      // Replay only — do not close decision gate / restart countdown.
+      unlockTts()
+      speakEnNow(card.ex?.trim() || card.en, card.en)
+    }
+  }, [queue, ttsOn])
 
-  // Silent TTS abort → soft pulse on 🔊, then idle (no toast).
+  const muteTts = useCallback(() => {
+    saveTtsPref(false)
+    setTtsOn(false)
+    cancelTts()
+    setAudioDecisionReady(true)
+  }, [])
+
+  const choosePace = useCallback(
+    (pace: TtsPace) => {
+      setTtsPace(pace)
+      savePacePref(pace)
+      const card = queue[0]
+      if (ttsOn && card?.mix === 'new' && !lockingRef.current && !reviewingRef.current) {
+        setAudioDecisionReady(false)
+        clearTtsLatch(card.en)
+        unlockTts()
+        speakEnNow(card.ex?.trim() || card.en, card.en)
+      }
+    },
+    [queue, ttsOn],
+  )
+
+  // Silent TTS abort → soft pulse on 🔊 + open decision gate (no toast).
   useEffect(() => {
     return onTtsSilentFail(() => {
+      setAudioDecisionReady(true)
       setTtsPulse(true)
       if (ttsPulseTimer.current) window.clearTimeout(ttsPulseTimer.current)
       ttsPulseTimer.current = window.setTimeout(() => {
         ttsPulseTimer.current = null
         setTtsPulse(false)
       }, 420)
+    })
+  }, [])
+
+  // Clip/utterance end (or duration+400 fallback) → open decision timer gate.
+  useEffect(() => {
+    return onTtsDecisionReady(() => {
+      setAudioDecisionReady(true)
     })
   }, [])
 
@@ -821,6 +937,9 @@ export default function App() {
       setDragY(0)
       setDragging(false)
       setRemain(null)
+      // Teach/wrong (and correct lock): cancel audio; no decision timer.
+      cancelTts()
+      setAudioDecisionReady(true)
       dismissGhost()
       setStreakChip(null)
       setTeachBeat(false)
@@ -994,6 +1113,11 @@ export default function App() {
       if (timerSec === 0 || !current || sessionOver || showCoach || pickingDeck) setRemain(null)
       return
     }
+    // Decision timer starts after audio ends (or silent abort / no-TTS).
+    if (!audioDecisionReady) {
+      setRemain(null)
+      return
+    }
     const totalMs = timerSec * 1000
     const started = performance.now()
     let fired = false
@@ -1031,7 +1155,7 @@ export default function App() {
     return () => {
       window.clearInterval(id)
     }
-  }, [current?.en, doneCount, timerSec, sessionOver, locking, reeling, showCoach, pickingDeck])
+  }, [current?.en, doneCount, timerSec, sessionOver, locking, reeling, showCoach, pickingDeck, audioDecisionReady])
 
   const clearReviewNav = useCallback(() => {
     setReviewNav(null)
@@ -1319,6 +1443,19 @@ export default function App() {
         ttsOn={ttsOn}
         onToggleTts={toggleTts}
         ttsPulse={ttsPulse}
+        ttsPace={ttsPace}
+        onPaceChange={choosePace}
+        showPace={
+          !showCoach &&
+          !showPicker &&
+          !showSessionEnd &&
+          !reviewing &&
+          !reeling &&
+          !teachBeat &&
+          current.mix === 'new' &&
+          ttsOn
+        }
+        onMuteTts={muteTts}
       />
     )
   }
