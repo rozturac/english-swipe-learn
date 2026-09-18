@@ -15,7 +15,7 @@ const PITCH = 1
 const START_DEADLINE_MS = 300
 
 const CLIPS: Record<string, string> = clipManifest as Record<string, string>
-const CLIP_BASE = '/audio/clips/'
+const CLIP_BASE = import.meta.env.BASE_URL + 'audio/clips/'
 
 let gestureUnlocked = false
 let pendingText: string | null = null
